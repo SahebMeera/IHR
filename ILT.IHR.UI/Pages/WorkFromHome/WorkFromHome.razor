@@ -1,0 +1,55 @@
+﻿@inherits WorkFromHomeBase
+@using BlazorTable
+@using IHR.DTO
+@page "/wfhrequests"
+@inject NavigationManager NavigationManager
+
+@if (WFHRolePermission != null && WFHRolePermission.View == false)
+{
+    NavigationManager.NavigateTo("");
+}
+<h3 style="margin-bottom:1px;">WFH Request</h3>
+<TabControl @ref="WFHTabControl">
+    <TabPage Text="WFH" >
+        <div class="row reduce-margin-top">
+            <div class="col-12 pl-1 pr-1">
+                @if (lstOfWFH != null)
+                {
+                    <Table TableItem="DTO.WFH" Items="lstOfWFH" TableRowActionClass="@(x=>x.Status.ToLower() != "Pending".ToLower() ? "disable" : "")" ColumnReorder="true" ShowSearchBar="true" DropDown="lstStatus" DropDownLabel="Status:" onDropDownChange="onSatusChange" DefaultID="DefaultStatusID" PageSize="DefaultPageSize"
+                           SelectionType="SelectionType.Single" RowClickAction="RowClick" RowActions="RowActions" HeaderActions="HeaderAction">
+                        <Column TableItem="DTO.WFH" Title="Start Date" Field="@(x => x.StartDate)" Sortable="true" Align="Align.Right" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="true">
+                            <Template>
+                                @(context.StartDate.ToShortDateString())
+                            </Template>
+                        </Column>
+                        <Column TableItem="DTO.WFH" Title="End Date" Field="@(x => x.EndDate)" Align="Align.Right" Sortable="true" Filterable="false">
+                            <Template>
+                                @(context.EndDate.ToShortDateString())
+                            </Template>
+                        </Column>
+                        @*<Column TableItem="Leave" Title="Employee" Field="@(x => x.EmployeeID)" Sortable="true" Filterable="false" />*@
+                        <Column TableItem="WFH" Title="Title" Field="@(x => x.Title)" Sortable="true" Filterable="false" />
+                        @*<Column TableItem="Leave" Title="Requester" Field="@(x => x.Requester)" Sortable="true" Filterable="false" />*@
+                        <Column TableItem="WFH" Title="Approver" Field="@(x => x.Approver)" Sortable="true" Filterable="false" />
+                        <Column TableItem="WFH" Title="Status" Field="@(x => x.Status)" Sortable="true" Filterable="false" />
+                        <EmptyDataTemplate>
+                            <div class="text-center">
+                                No rows found!
+                            </div>
+                        </EmptyDataTemplate>
+                        <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                    </Table>
+                }
+                else
+                {
+                    <span></span>
+                }
+            </div>
+        </div>
+    </TabPage>
+    <TabPage Text="Approve/Deny WFH">
+        <ILT.IHR.UI.Pages.WorkFromHome.WFHApproval UpdateWFHList="RefreshList"></ILT.IHR.UI.Pages.WorkFromHome.WFHApproval>
+    </TabPage>
+</TabControl>
+
+<AddEditWFH @ref="AddEditWFHModal" UpdateWFHList="LoadWFHRequest"></AddEditWFH>

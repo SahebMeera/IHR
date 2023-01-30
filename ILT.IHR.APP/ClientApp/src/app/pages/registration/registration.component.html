@@ -1,0 +1,18 @@
+<div class="wraper">
+<div class="signInBlock">
+    <div class="signUp-form-block">
+        <div class="ui-g ui-fluid mobile-display-block">
+            <div class="ui-g-12 p-sm-12 card steps-item" style="background-color: #0d89ec;">
+                <div class="registrationHeading">ATS Registration</div>
+            </div>
+        </div>
+        <div class="ui-g ui-fluid mobile-display-block" style="min-height:300px;">
+            <div class="ui-g-12 p-sm-12 card steps-item">
+                <p-steps [model]="items" [readonly]="true">
+                </p-steps>
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

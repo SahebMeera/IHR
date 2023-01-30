@@ -1,0 +1,710 @@
+﻿@page "/AddEmployee"
+@page "/employeeDetails"
+@inherits EmployeeDetailsBase
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+
+<div class="row">
+    <div class="col-12 pr-0">
+        <div class="col-12 row pr-0">
+            <div class="col-12 card card-border ihr-blue not-rounded clearfix pl-0 mb-1 text-white">
+                <div class="card-body pl-1">
+                    <div class="row no-gutters display-block mobile-transform-Details">
+                        <div class="col-md-4">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0  col-4 d-flex justify-content-end" style="font-weight:600">Emp Code:</label>
+                                <div class="col-8 col-control pl-2">
+                                    @Employee.EmployeeCode
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0  col-4 d-flex justify-content-end nowrap-white-space" style="font-weight:600">Employee Name:</label>
+                                <div class="col-8 col-control">
+                                    @(Employee.FirstName + " " + Employee.LastName)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 pl-4 padding-left-set">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0  col-4 d-flex justify-content-end" style="font-weight:600">Title:</label>
+                                <div class="col-8 col-control">
+                                    @Employee.Title
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-gutters display-block mobile-transform-Details">
+                        <div class="col-md-4">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0  col-4 d-flex justify-content-end" style="font-weight:600">Department:</label>
+                                <div class="col-8 col-control">
+                                    @Employee.Department
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0 pl-0 col-4 d-flex justify-content-end nowrap-white-space" style="font-weight:600">Work Authorization:</label>
+                                <div class="col-8 col-control">
+                                    @Employee.WorkAuthorization
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 pl-4 padding-left-set">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0  col-4 d-flex justify-content-end" style="font-weight:600">Employment Type:</label>
+                                <div class="col-8 col-control">
+                                    @Employee.EmploymentType
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<TabControl @ref="EmployeeDetailsTabControl">
+    <TabPage Text="Employee">
+        <div class="row pl-2 pr-2">
+            <div class="col-12" style="@(ErrorMessage == null || ErrorMessage == "" ? "padding-top: 6px;" : "padding-top: 0px;")">
+                <EditForm Model="@Employee" OnValidSubmit="checkEmailExist" OnInvalidSubmit="CheckCurrentAddress">
+                    <div class="col-12 align-center remove-padding" style="@(ErrorMessage == null || ErrorMessage == "" ? "display: none;" : "display: block;")">
+                        <span class="error-message-color">@ErrorMessage &nbsp;</span>
+                    </div>
+                    <div class="row form-group d-flex justify-content-end mb-0">
+                        @if (canUpdate)
+                        {
+                            <button type="submit" class="btn btn-primary btn-line-height btn-width-height" style="@(showSpinner != false ? "min-width:110px" : "")" disabled="@isSaveButtonDisabled">
+                                Save
+                                @if (showSpinner)
+                                {
+                                    <div class="spinner1  mt-1"></div>
+                                }
+                            </button>
+                        }
+                        <button type="button" class="btn btn-danger btn-line-height btn-width-height ml-1" @onclick="Cancel">Back</button>
+                    </div>
+                    <DataAnnotationsValidator />
+                    <div class="row ">
+                        <div class="col-12 card card-border not-rounded clearfix mt-2 pl-0">
+                            <div class="card-body pl-1">
+                                <div class="row display-end">
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">* Emp Code</label>
+                                            <div class="col-8 col-control">
+                                                <InputText class="form-control form-control-sm autofocus" @bind-Value="Employee.EmployeeCode" maxlength="12" disabled="@(Employee != null && Employee.EmployeeID != 0 ? false : true)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0 col-4 d-flex justify-content-end">* Department</label>
+                                            <div class="col-8 col-control">
+                                                <CustomInputSelect class="form-control form-control-sm" id="gender" @bind-Value="Employee.DepartmentID" @oninput="onDepartmentChange">
+                                                    <option value="">select</option>
+                                                    @if (DepartmentList != null)
+                                                    {
+                                                        @foreach (var department in DepartmentList)
+                                                        {
+                                                            <option value="@department.DepartmentID">@department.DeptName</option>
+                                                        }
+                                                    }
+
+                                                </CustomInputSelect>
+                                                @*<ValidationMessage For="@(() => Employee.GenderID)" />*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label for="title" class="control-label pr-0 col-4 d-flex justify-content-end">* Title</label>
+                                            <div class="col-8 col-control">
+                                                <CustomInputSelect class="form-control form-control-sm" id="title" @bind-Value="Employee.TitleID" @oninput="onTitleChange">
+                                                    <option value="0">select</option>
+                                                    @if (TitleList != null)
+                                                    {
+                                                        @foreach (var Title in TitleList)
+                                                        {
+                                                            <option value="@Title.ListValueID">@Title.ValueDesc</option>
+                                                        }
+                                                    }
+                                                </CustomInputSelect>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">* First Name</label>
+                                            <div class="col-8 col-control">
+                                                <InputText class="form-control form-control-sm" @bind-Value="Employee.FirstName" maxlength="50" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">* Last Name</label>
+                                            <div class="col-8 col-control">
+                                                <InputText class="form-control form-control-sm" @bind-Value="Employee.LastName" maxlength="50" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">Middle Name</label>
+                                            <div class="col-8 col-control">
+                                                <InputText class="form-control form-control-sm" @bind-Value="Employee.MiddleName" maxlength="50" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 card card-border not-rounded clearfix mt-3 pl-0">
+                            <div class="card-body pl-1">
+                                <div class="row display-block">
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0 col-4 d-flex justify-content-end">* Gender</label>
+                                            <div class="col-8 col-control">
+                                                <CustomInputSelect class="form-control form-control-sm" id="gender" @bind-Value="Employee.GenderID" @oninput="onGenderChange">
+                                                    <option value="0">select</option>
+                                                    @if (GenderList != null)
+                                                    {
+                                                        @foreach (var gender in GenderList)
+                                                        {
+                                                            <option value="@gender.ListValueID">@gender.ValueDesc</option>
+                                                        }
+                                                    }
+
+                                                </CustomInputSelect>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">* Birth Date</label>
+                                            <div class="col-8 col-control">
+                                                <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="Employee.BirthDate" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0 col-4 d-flex justify-content-end">* Marital Status</label>
+                                            <div class="col-8 col-control">
+                                                <CustomInputSelect class="form-control form-control-sm" id="MaritalStatus" @bind-Value="Employee.MaritalStatusID" @oninput="onMaritalStatusChange">
+                                                    <option value="0">select</option>
+                                                    @if (MaritalStautsList != null)
+                                                    {
+                                                        @foreach (var MaritalStauts in MaritalStautsList)
+                                                        {
+                                                            <option value="@MaritalStauts.ListValueID">@MaritalStauts.ValueDesc</option>
+                                                        }
+                                                    }
+                                                </CustomInputSelect>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">* Hire Date</label>
+                                            <div class="col-8 col-control">
+                                                <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="Employee.HireDate" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0 col-4 d-flex justify-content-end">* Work Auth</label>
+                                            <div class="col-8 col-control">
+                                                <CustomInputSelect class="form-control form-control-sm" id="workauthorization" @bind-Value="Employee.WorkAuthorizationID" @oninput="onWorkAuthorizationChange">
+                                                    <option value="0">select</option>
+                                                    @if (WorkAuthorizationList != null)
+                                                    {
+                                                        @foreach (var WorkAuthorization in WorkAuthorizationList)
+                                                        {
+                                                            <option value="@WorkAuthorization.ListValueID">@WorkAuthorization.ValueDesc</option>
+                                                        }
+                                                    }
+                                                </CustomInputSelect>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0 col-4 d-flex justify-content-end nowrap-white-space">* Employee Type</label>
+                                            <div class="col-8 col-control">
+                                                <CustomInputSelect class="form-control form-control-sm" id="gender" @bind-Value="Employee.EmploymentTypeID" @oninput="onEmployeeTypeChange">
+                                                    <option value="0">select</option>
+                                                    @if (EmployMentList != null)
+                                                    {
+                                                        @foreach (var employment in EmployMentList)
+                                                        {
+                                                            <option value="@employment.ListValueID">@employment.ValueDesc</option>
+                                                        }
+                                                    }
+
+                                                </CustomInputSelect>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label for="country" class="control-label pr-0 col-4 d-flex justify-content-end">* Country</label>
+                                            <div class="col-8 col-control">
+                                                <CustomInputSelect class="@(Employee.EmployeeID != 0 ? "form-control form-control-sm disabled" :"form-control form-control-sm")" id="country" @bind-Value="Employee.Country" maxlength="50" @oninput="onChangeEmployeeCountry">
+                                                    @if (CountryList != null)
+                                                    {
+                                                        @foreach (var country in CountryList)
+                                                        {
+                                                            <option value="@country.CountryDesc">@country.CountryDesc</option>
+                                                        }
+                                                    }
+
+                                                </CustomInputSelect>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(Employee.Country) && Employee.Country.ToUpper() == "United States".ToUpper())
+                                    {
+                                        @if (@isEditPermissionForNPIRole)
+                                        {
+                                            <div class="col-md-4">
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="control-label pr-0  col-4 d-flex justify-content-end">SSN</label>
+                                                    <div class="col-8 col-control">
+                                                        <InputMask @ref="mask" class="@(Employee.SSN != null ? "form-control form-control-sm disabled" :"form-control form-control-sm")" @bind-Value="SSNNumber" style=" @(empSSN == true ? "outline: 1px solid red;" : "" )" data-mask="@(isViewPermissionForNPIRole == true? "000-00-0000" : "***-**-****" )" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-4">
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="control-label pr-0  col-4 d-flex justify-content-end">SSN</label>
+                                                    <div class="col-8 col-control">
+                                                        <InputMask @ref="mask" class="form-control form-control-sm" @bind-Value="SSNNumber" style=" @(empSSN == true ? "outline: 1px solid red;" : "" )" data-mask="@(isViewPermissionForNPIRole == true? "000-00-0000" : "***-**-****" )" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    }
+                                    @if (!string.IsNullOrEmpty(Employee.Country) && Employee.Country.ToUpper() == "India".ToUpper())
+                                    {
+                                        @if (@isEditPermissionForNPIRole)
+                                        {
+                                            <div class="col-md-4">
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="control-label pr-0  col-4 d-flex justify-content-end">PAN</label>
+                                                    <div class="col-8 col-control">
+                                                        <InputText class="form-control form-control-sm text-upper-case disabled"
+                                                                   style="@(empPAN == true ? "outline: 1px solid red;" : "")"
+                                                                   @bind-Value="PanCardNumber" @onfocusout="onChangeEmpPAN" maxlength="10" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-4">
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="control-label pr-0  col-4 d-flex justify-content-end">PAN</label>
+                                                    <div class="col-8 col-control">
+                                                        <InputText class="form-control form-control-sm text-upper-case"
+                                                                   style="@(empPAN == true ? "outline: 1px solid red;" : "")"
+                                                                   @bind-Value="PanCardNumber" @onfocusout="onChangeEmpPAN" maxlength="10" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (@isEditPermissionForNPIRole)
+                                        {
+                                            <div class="col-md-4">
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="control-label pr-0  col-4 d-flex justify-content-end">AadharNumber</label>
+                                                    <div class="col-8 col-control">
+                                                        <InputMask class="form-control form-control-sm disabled"
+                                                                   style=" @(empAadharNumber == true ? "outline: 1px solid red;" : "" )"
+                                                                   data-mask="@(isViewPermissionForNPIRole == true ? "000000000000" : "************" )" @onfocusout="onChangeEmpAadharNumber" @bind-Value="AadharNumber" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-4">
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="control-label pr-0  col-4 d-flex justify-content-end">AadharNumber</label>
+                                                    <div class="col-8 col-control">
+                                                        <InputMask class="form-control form-control-sm" style=" @(empAadharNumber == true ? "outline: 1px solid red;" : "" )" data-mask="@(isViewPermissionForNPIRole == true ? "000000000000" : "************" )" @onfocusout="onChangeEmpAadharNumber" @bind-Value="AadharNumber" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+
+                                    }
+                                    <div class="col-md-8">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 card card-border not-rounded clearfix mt-3 pl-0">
+                            <div class="card-body pl-1">
+                                <h4 class="card-title mb-1">Address</h4>
+                                <div class="row mobile-address">
+                                    <div class="col-md-4">
+
+                                        <div class="row ">
+                                            <label class="col-4 control-label pr-0 d-flex mb-1 font-weight-bold justify-content-end">Current</label>
+                                            <div class="col-8 col-control">
+                                                <div class="card card-border not-rounded clearfix mt-1" style="@(isAddressInvalid == true ? "outline: 1px solid red;" : "" )">
+                                                    <div class="card-body address-height">
+                                                        <div class="row">
+                                                            @if (!string.IsNullOrEmpty(currentAddress.Address1))
+                                                            {
+                                                                <label class="control-label pr-0 col-12 d-flex mb-0" style="white-space:break-spaces !important;">@currentAddress.Address1</label>
+                                                            }
+                                                            @if (!string.IsNullOrEmpty(currentAddress.Address2))
+                                                            {
+                                                                <label class="control-label pr-0 col-12 d-flex mb-0" style="white-space:break-spaces !important;">@currentAddress.Address2</label>
+                                                            }
+                                                            <label class="control-label pr-0 col-12 d-flex mb-0">@currentAddress.City</label>
+                                                            @if (!string.IsNullOrEmpty(currentAddress.State))
+                                                            {
+                                                                <label class="control-label pr-0 col-12 d-flex mb-0">@currentAddress.State - @currentAddress.ZipCode</label>
+                                                            }
+                                                            @if (string.IsNullOrEmpty(currentAddress.Address1))
+                                                            {
+                                                                <label class="col-12" style="min-height: 67px;"></label>
+                                                            }
+                                                            <label class="control-label pr-0 col-8 d-flex mb-0">@currentAddress.Country</label>
+                                                            <div class="col-4 address-card-action-align">
+                                                                @if (canUpdate)
+                                                                {
+                                                                    @if (currentAddress.EmployeeAddressID != 0 || string.IsNullOrEmpty(currentAddress.Address1))
+                                                                    {
+                                                                        <button type="button" class="btn btn-primary address-row-action" @onclick="(()=>addAddress(EmployeeAddresses.CURRADD))">
+                                                                            <i class="fas fa-plus" aria-hidden="true"></i>
+                                                                        </button>
+                                                                    }
+                                                                    @if (!string.IsNullOrEmpty(currentAddress.Address1))
+                                                                    {
+                                                                        <button type="button" class="btn btn-primary ml-1 address-row-action" @onclick="(()=>EditAddress(currentAddress))">
+                                                                            <i class="oi oi-pencil" aria-hidden="true"></i>
+                                                                        </button>
+                                                                    }
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row ">
+                                            <label class="col-4 control-label pr-0 d-flex mb-1 font-weight-bold justify-content-end">Mailing</label>
+                                            <div class="col-8 col-control ">
+                                                <div class="card card-border not-rounded clearfix mt-1">
+                                                    <div class="card-body address-height">
+                                                        <div class="row">
+                                                            @if (!string.IsNullOrEmpty(mailingAddress.Address1))
+                                                            {
+                                                                <label class="control-label pr-0 col-12 d-flex mb-0" style="white-space:break-spaces !important;">@mailingAddress.Address1</label>
+                                                            }
+                                                            @if (!string.IsNullOrEmpty(mailingAddress.Address2))
+                                                            {
+                                                                <label class="control-label pr-0 col-12 d-flex mb-0" style="white-space:break-spaces !important;">@mailingAddress.Address2</label>
+                                                            }
+                                                            <label class="control-label pr-0 col-12 d-flex mb-0">@mailingAddress.City</label>
+                                                            @if (!string.IsNullOrEmpty(mailingAddress.State))
+                                                            {
+                                                                <label class="control-label pr-0 col-12 d-flex mb-0">@mailingAddress.State - @mailingAddress.ZipCode</label>
+                                                            }
+                                                            @if (string.IsNullOrEmpty(mailingAddress.Address1))
+                                                            {
+                                                                <label class="col-12" style="min-height: 67px;;"></label>
+                                                            }
+                                                            <label class="control-label pr-0 col-8 d-flex mb-0">@mailingAddress.Country</label>
+                                                            <div class="col-4 address-card-action-align">
+                                                                @if (canUpdate)
+                                                                {
+                                                                    @if (mailingAddress.EmployeeAddressID != 0 || string.IsNullOrEmpty(mailingAddress.Address1))
+                                                                    {
+                                                                        <button type="button" class="btn btn-primary address-row-action" @onclick="(() => addAddress(EmployeeAddresses.MAILADD))">
+                                                                            <i class="fas fa-plus" aria-hidden="true"></i>
+                                                                        </button>
+                                                                    }
+                                                                    @if (!string.IsNullOrEmpty(mailingAddress.Address1))
+                                                                    {
+                                                                        <button type="button" class="btn btn-primary ml-1 address-row-action" @onclick="@(() => EditAddress(mailingAddress))">
+                                                                            <i class="oi oi-pencil" aria-hidden="true"></i>
+                                                                        </button>
+                                                                    }
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 ">
+                                        <div class="row ">
+                                            <label class="col-4 control-label pr-0 pl-0 d-flex mb-1 font-weight-bold justify-content-end mobile-transform-translate">Permanent</label>
+                                            <div class="col-8 col-control">
+                                                <div class="card card-border not-rounded clearfix mt-1">
+                                                    <div class="card-body address-height">
+                                                        <div class="row">
+                                                            @if (!string.IsNullOrEmpty(permanentAddress.Address1))
+                                                            {
+                                                                <label class="control-label pr-0 col-12 d-flex mb-0" style="white-space:break-spaces !important;">@permanentAddress.Address1</label>
+                                                            }
+                                                            @if (!string.IsNullOrEmpty(permanentAddress.Address2))
+                                                            {
+                                                                <label class="control-label pr-0 col-12 d-flex mb-0" style="white-space:break-spaces !important;">@permanentAddress.Address2</label>
+                                                            }
+                                                            <label class="control-label pr-0 col-12 d-flex mb-0">@permanentAddress.City</label>
+                                                            @if (!string.IsNullOrEmpty(permanentAddress.State))
+                                                            {
+                                                                <label class="control-label pr-0 col-12 d-flex mb-0">@permanentAddress.State - @permanentAddress.ZipCode</label>
+                                                            }
+                                                            @if (string.IsNullOrEmpty(permanentAddress.Address1))
+                                                            {
+                                                                <label class="col-12" style="min-height: 67px;"></label>
+                                                            }
+                                                            <label class="control-label pr-0 col-8 d-flex mb-0">@permanentAddress.Country</label>
+                                                            <div class="col-4 address-card-action-align">
+                                                                @if (canUpdate)
+                                                                {
+                                                                    @if (permanentAddress.EmployeeAddressID != 0 || string.IsNullOrEmpty(permanentAddress.Address1))
+                                                                    {
+                                                                        <button type="button" class="btn btn-primary address-row-action" @onclick="(() => addAddress(EmployeeAddresses.PERMADD))">
+                                                                            <i class="fas fa-plus" aria-hidden="true"></i>
+                                                                        </button>
+                                                                    }
+                                                                    @if (!string.IsNullOrEmpty(permanentAddress.Address1))
+                                                                    {
+                                                                        <button type="button" class="btn btn-primary ml-1 address-row-action" @onclick="(() => EditAddress(permanentAddress))">
+                                                                            <i class="oi oi-pencil" aria-hidden="true"></i>
+                                                                        </button>
+                                                                    }
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 card card-border not-rounded clearfix mt-3 pl-0">
+                            <div class="card-body pl-1">
+                                <h4 class="card-title mb-1">Contact Info</h4>
+                                <div class="row display-end">
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">* Phone</label>
+                                            <div class="col-8 col-control">
+                                                <InputMask class="form-control form-control-sm" @bind-Value="Employee.Phone" data-mask="0000000000" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">* Email</label>
+                                            <div class="col-8 col-control">
+                                                <InputText class="form-control form-control-sm" @bind-Value="Employee.Email" maxlength="50" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">Work Email</label>
+                                            <div class="col-8 col-control">
+                                                <InputText class="form-control form-control-sm" @bind-Value="Employee.WorkEmail" maxlength="50" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">Home Phone</label>
+                                            <div class="col-8 col-control">
+                                                <InputMask class="form-control form-control-sm" @bind-Value="Employee.HomePhone" data-mask="0000000000" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">Work Phone</label>
+                                            <div class="col-8 col-control">
+                                                <InputMask class="form-control form-control-sm" @bind-Value="Employee.WorkPhone" data-mask="0000000000" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0 col-4 d-flex justify-content-end">Manager</label>
+                                            <div class="col-8 col-control">
+                                                <CustomInputSelect class="form-control form-control-sm" id="manager" @bind-Value="Employee.ManagerID" @oninput="onEmpManagerChange">
+                                                    <option value="">select</option>
+                                                    @if (ManagerList != null)
+                                                    {
+                                                        @foreach (var manager in ManagerList)
+                                                        {
+                                                            @if (manager.TermDate == null || DateTime.Now <= manager.TermDate)
+                                                            {
+                                                                <option value="@manager.EmployeeID">@(manager.EmployeeName)</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@manager.EmployeeID">@manager.EmployeeName *</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </CustomInputSelect>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 card card-border not-rounded clearfix mt-3 pl-0">
+                            <div class="card-body pl-1">
+                                <div class="row display-end">
+                                    @if (!@isEditPermissionForNPIRole)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-group row align-items-baseline">
+                                                <label class="control-label pr-0  col-4 d-flex justify-content-end">Salary</label>
+                                                <div class="col-8 col-control">
+                                                    <InputMask class="form-control form-control-sm disabled" @bind-Value="empSalary" data-mask="@(isViewPermissionForNPIRole == true? "000000000.00" : "*********.**" )" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-group row align-items-baseline">
+                                                <label class="control-label pr-0  col-4 d-flex justify-content-end">Salary</label>
+                                                <div class="col-8 col-control">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="empSalary" data-mask="@(isViewPermissionForNPIRole == true? "000000000.00" : "*********.**" )" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (!@isEditPermissionForNPIRole)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-group row align-items-baseline">
+                                                <label class="control-label pr-0  col-4 d-flex justify-content-end">Variable Pay</label>
+                                                <div class="col-8 col-control">
+                                                    <InputMask class="form-control form-control-sm disabled" @bind-Value="empVariablePay" data-mask="@(isViewPermissionForNPIRole == true? "000000000.00" : "*********.**" )" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-group row align-items-baseline">
+                                                <label class="control-label pr-0  col-4 d-flex justify-content-end">Variable Pay</label>
+                                                <div class="col-8 col-control">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="empVariablePay" data-mask="@(isViewPermissionForNPIRole == true? "000000000.00" : "*********.**" )" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="col-md-4">
+                                        <div class="form-group row align-items-baseline">
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">Term Date</label>
+                                            <div class="col-8 col-control">
+                                                <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="Employee.TermDate" @onfocusout="onchangeTermDate" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </EditForm>
+
+            </div>
+        </div>
+    </TabPage>
+    @if (EmployeeInfoRolePermission != null && EmployeeInfoRolePermission.View == true)
+    {
+        <TabPage Text="Emergency Contact" IsDisable="@(Employee.EmployeeID == 0 ? true : false)">
+            <div>
+                <ILT.IHR.UI.Pages.Employee.EmployeeEmergency.EmployeeEmergency Id="Employee.EmployeeID" Name="@(Employee.FirstName + " " + Employee.LastName)"></ILT.IHR.UI.Pages.Employee.EmployeeEmergency.EmployeeEmergency>
+            </div>
+        </TabPage>
+        <TabPage Text="Direct Deposits" IsDisable="@(Employee.EmployeeID == 0 ? true : false)">
+            <ILT.IHR.UI.Pages.Employee.EmployeeDirectDeposit.EmployeeDirectDeposit Id="Employee.EmployeeID" Name="@(Employee.FirstName + " " + Employee.LastName)"></ILT.IHR.UI.Pages.Employee.EmployeeDirectDeposit.EmployeeDirectDeposit>
+        </TabPage>
+        <TabPage Text="Dependents" IsDisable="@(Employee.EmployeeID == 0 ? true : false)">
+            <ILT.IHR.UI.Pages.Employee.EmployeeDependent.EmployeeDependent Id="Employee.EmployeeID" Name="@(Employee.FirstName + " " + Employee.LastName)"></ILT.IHR.UI.Pages.Employee.EmployeeDependent.EmployeeDependent>
+        </TabPage>
+    }
+    @if (EmployeeAssigmentRolePermission != null && EmployeeAssigmentRolePermission.View == true)
+    {
+        <TabPage Text="Assignments" IsDisable="@(Employee.EmployeeID == 0 ? true : false)">
+            <ILT.IHR.UI.Pages.Employee.EmployeeAssignment.EmployeAssignment Id="Employee.EmployeeID" Name="@(Employee.FirstName + " " + Employee.LastName)"></ILT.IHR.UI.Pages.Employee.EmployeeAssignment.EmployeAssignment>
+        </TabPage>
+    }
+    @if (W4InfoPermission != null && W4InfoPermission.View == true)
+    {
+        <TabPage Text="W4 Info" IsHide="@isShowW4I9Info" IsDisable="@(Employee.EmployeeID == 0 ? true : false)">
+            <ILT.IHR.UI.Pages.Employee.EmployeeW4.EmployeeW4 Id="Employee.EmployeeID" SSN=@Employee.SSN Name="@(Employee.FirstName + " " + Employee.LastName)"></ILT.IHR.UI.Pages.Employee.EmployeeW4.EmployeeW4>
+        </TabPage>
+    }
+    @if (I9InfoPermission != null && I9InfoPermission.View == true)
+    {
+        <TabPage Text="I9 Info" IsHide="@isShowW4I9Info" IsDisable="@(Employee.EmployeeID == 0 ? true : false)">
+            <ILT.IHR.UI.Pages.Employee.FormI9.FormI9 Id="Employee.EmployeeID" Name="@(Employee.FirstName + " " + Employee.LastName)"></ILT.IHR.UI.Pages.Employee.FormI9.FormI9>
+        </TabPage>
+    }
+    @if (SalaryInfoPermission != null && SalaryInfoPermission.View == true)
+    {
+        <TabPage Text="Salary" IsDisable="@(Employee.EmployeeID == 0 ? true : false)">
+            <ILT.IHR.UI.Pages.Employee.EmployeeSalary.EmployeeSalary Id="Employee.EmployeeID" Name="@(Employee.FirstName + " " + Employee.LastName)"></ILT.IHR.UI.Pages.Employee.EmployeeSalary.EmployeeSalary>
+        </TabPage>
+    }
+
+    @if (SKillInfoPermission != null && SKillInfoPermission.View == true)
+    {
+        <TabPage Text="Skills" IsDisable="@(Employee.EmployeeID == 0 ? true : false)">
+            <ILT.IHR.UI.Pages.Employee.EmployeeSkill.EmployeeSkill Id="Employee.EmployeeID" Name="@(Employee.FirstName + " " + Employee.LastName)"></ILT.IHR.UI.Pages.Employee.EmployeeSkill.EmployeeSkill>
+        </TabPage>
+    }
+</TabControl>
+<AddEditAddress @ref="AddEditAddressModal" updatedEmpAddress="updateEmpAddressList" EmployeeName="@(Employee.FirstName + " " + Employee.LastName)"></AddEditAddress>
+
+<Confirm @ref="SubmitConfirmation" ConfirmationChanged="ConfirmSubmit_Click"
+         ConfirmationTitle="Confirmation"
+         buttonType="Ok"
+         ConfirmationMessage=@ConfirmMessage>
+</Confirm>
+@*<Confirm @ref="TermDateChangeConfirmation" ConfirmationChanged="TermDateChangeConfirm_Click"
+             ConfirmationTitle="Confirmation"
+             buttonType="Ok"
+             ConfirmationMessage=@TermDateChangeConfirmMessage>
+    </Confirm>
+
+    <Confirm @ref="TermDateChangeConfirmation" ConfirmationChanged="TermDateChangeConfirm_Click"
+             ConfirmationTitle="Confirmation"
+             buttonType="Ok"
+             ConfirmationMessage=@TermDateChangeConfirmMessage>
+    </Confirm>*@

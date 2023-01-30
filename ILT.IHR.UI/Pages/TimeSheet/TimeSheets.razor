@@ -1,0 +1,173 @@
+﻿@page "/timesheet"
+@using BlazorTable;
+@using ILT.IHR.DTO;
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+@inherits TimeSheetsBase;
+@inject NavigationManager NavigationManager
+
+@if (TimeSheetRolePermission != null && TimeSheetRolePermission.View == false)
+{
+    NavigationManager.NavigateTo("");
+}
+<h3 style="margin-bottom:1px;">Timesheet</h3>
+<TabControl @ref="TimesheetTabControl">
+    <TabPage Text="Timesheet">
+        <div class="row reduce-margin-top hidden-web">
+            <div class="col-12 set-left-right">
+                @if (lstTimeSheetRequest != null)
+                {
+                    <Table TableItem="TimeSheet" Items="lstTimeSheetRequest" ColumnReorder="true" ShowSearchBar="true" SelectionType="SelectionType.Single"
+                           DropDown="lstStatus" DropDownLabel="Status:" onDropDownChange="onSatusChange" DefaultID="DefaultStatusID"
+                           RowActions="RowActions" RowClickAction="RowClick" HeaderActions="HeaderAction" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize">
+                        <Column TableItem="TimeSheet" Title="Emp Name" Field="@(x => x.EmployeeName)" Sortable="true" Filterable="false">
+                        </Column>
+                        <Column TableItem="TimeSheet" Title="Week Ending" Field="@(x => x.WeekEnding)" Sortable="true" Filterable="false" DefaultSortColumn="true">
+                            <Template>
+                                @FormatDate(context.WeekEnding)
+                            </Template>
+                        </Column>
+                        <Column TableItem="TimeSheet" Title="Total Hours" Field="@(x => x.TotalHours)" Sortable="true" Filterable="false">
+                        </Column>
+                        <Column TableItem="TimeSheet" Title="Status" Field="@(x => x.Status)" Sortable="true" Filterable="false">
+                        </Column>
+                        <Column TableItem="TimeSheet" Title="Submitted By" Field="@(x => x.SubmittedBy)" Sortable="true" Filterable="false">
+                        </Column>
+                        <Column TableItem="TimeSheet" Title="Submitted Date" Field="@(x => x.SubmittedDate)" Sortable="true" Filterable="false">
+                            <Template>
+                                @(context.SubmittedDate != null ? context.SubmittedDate.ToString("MM/dd/yyyy") : "")
+                            </Template>
+                        </Column>
+                        <Column TableItem="TimeSheet" Title="App/Rej By Email" Field="@(x => x.ApprovedByEmail)" Sortable="true" Filterable="false">
+                        </Column>
+                        <Column TableItem="TimeSheet" Title="App/Rej Date" Field="@(x => x.ApprovedDate)" Sortable="true" Filterable="false">
+                            <Template>
+                                @FormatDate(context.ApprovedDate)
+                            </Template>
+                        </Column>
+                        <EmptyDataTemplate>
+                            <div class="text-center">
+                                No rows found!
+                            </div>
+                        </EmptyDataTemplate>
+                        <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                    </Table>
+                }
+                else
+                {
+                    @*<NoResultMessage></NoResultMessage>*@
+                    <span></span>
+                }
+            </div>
+        </div>
+        <div class="row mt-2 hidden-web hidden-mobile">
+            <div class="col-12 ">
+                <div class="row mr-0  display-flex mobile-display">
+                    <div class="col-12 col-sm-3 pr-1 mobile-padding-remove mobile-pad-left-add">
+                        <input type="text" id="myFilter" class="form-control form-control-sm float-left" placeholder="Global Search..." @onkeyup="SearchFuntion" />
+                    </div>
+                    <div class="col-12 col-sm-3 pl-0  mobile-pad-right-add" style="display: flow-root; justify-content: center; align-items: center;">
+                        @if (lstStatus != null)
+                        {
+                            <div class="row align-items-center mobile-pad-top-add">
+                                <label class="col-5 col-form-label mobile-transform-translate">Status:</label>
+                                <div class="col-7 pl-0 pr-0 mobile-first-dropdown-padding">
+                                    <select class="form-control form-control-sm" @bind="DefaultStatusID" @oninput=OnDrpDwnChange>
+                                        @if (lstStatus != null)
+                                        {
+                                            @foreach (var item in lstStatus)
+                                            {
+                                                <option value="@item.ID">@item.Value</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-12 col-sm-6 header-actions mobile-pad-top-add pt-0">
+                        <div class="col-12 col-sm-12 display-end pl-0 pr-0 ">
+                            <div class="col-12 col-sm-8 display-dropdown2 pr-0 ">
+                            </div>
+                            <div class="col-sm-4 header-buttons  pr-0 pt-2">
+                                @if (HeaderAction != null)
+                                {
+                                    @foreach (var HeaderAction in HeaderAction)
+                                    {
+                                        @if (HeaderAction.IsShow)
+                                        {
+                                            <button type="button" class="btn remove-margin-moblie @(HeaderAction.ButtonClass == null ? " btn-primary" : @HeaderAction.ButtonClass) action-btn-lineheight float-right ml-2
+                                                        @(HeaderAction.IsDisabled ? "disabled" : "" )" @onclick="HeaderAction.ActionMethod">
+                                                <i class="@HeaderAction.IconClass" style="padding-right: 7px;" aria-hidden="true"></i>@HeaderAction.ActionText
+                                            </button>
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (lstTimeSheetRequest != null && lstTimeSheetRequest.Count > 0)
+            {
+                <div class="col-12 pt-2" id="myItems">
+                    @foreach (var timeSheetRequest in lstTimeSheetRequest)
+                    {
+                        <div class="col-sm-6 pl-0 pr-0">
+                            <div class="card mobile-card-view mb-2" @onclick="(() => EditMobile(timeSheetRequest))">
+                                <div class="card-body" style="padding-bottom:0.5rem !important;">
+                                    <div class="row">
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Emp Name :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @timeSheetRequest.EmployeeName
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Week Ending :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @FormatDate(timeSheetRequest.WeekEnding)
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Total Hours :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @timeSheetRequest.TotalHours
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Status :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @timeSheetRequest.Status
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Submitted Date :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @FormatDate(timeSheetRequest.SubmittedDate)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div class="col-12" style="padding-top:10rem;"></div>
+            }
+        </div>
+    </TabPage>
+    <TabPage Text="Approve/Deny Timesheet">
+        <TimeSheetApproval UpdateTimeSheetList="RefreshList"></TimeSheetApproval>
+    </TabPage>
+</TabControl>
+
+<AddEditTimeSheet @ref="AddEditTimeSheetModal" TimeSheetUpdated="LoadTimeSheetRequest"></AddEditTimeSheet>
+
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete")>
+</Confirm>

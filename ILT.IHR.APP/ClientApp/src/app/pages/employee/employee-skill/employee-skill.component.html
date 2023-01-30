@@ -1,0 +1,76 @@
+<div class="p-grid hidden-web">
+    <div class="p-col-12 p-pl-1 p-pr-1">
+        <app-ihr-table #dt [data]="lstSkillList"
+                       [isPagination]="isPagination"
+                       [sortingField]="'skill'"
+                       [sortingFieldOrder]="1"
+                       [loading]="loading"
+                       [showCurrentPageReport]="showCurrentPageReport"
+                       [cols]="cols"
+                       [selectedColumns]="selectedColumns"
+                       [rowActions]="rowActions"
+                       [globalFilterFields]="globalFilterFields"
+                       [headerActions]="headerActions"
+                       [tableState]="patientLanding">
+        </app-ihr-table>
+    </div>
+</div>
+
+
+<div class="p-grid  hidden-web hidden-mobile" *ngIf="true">
+    <div class="p-col-12">
+        <div class="p-grid p-mr-0 p-pb-1 display-flex mobile-display">
+            <div class="p-col-12 p-pr-1 mobile-padding-remove mobile-pad-left-add">
+                <div class="p-d-grid p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Global Search..." autocomplete="off" [(ngModel)]="searchText" />
+                    <!--<input pInputText type="text" [(ngModel)]="searchText" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search..." />-->
+
+                </div>
+            </div>
+            <div class="p-col-12 p-lg-4 p-pb-0 p-pr-3">
+                <div class="p-grid grid-dropdown" style="padding-top:14px; justify-content: end;">
+                    <div class="p-md-12  p-p-0 p-text-right">
+                        <button pButton pRipple type="button" label="ADD" class=" btn-width-height p-button-raised btn-width-height btn btn-block btn-sm btn-info" style="margin: 0px !important;" (click)="add()">
+                            <i style="padding-right:6px;" class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-col-12  p-pt-2" id="myItems" *ngIf="lstSkillList != null && lstSkillList.length > 0">
+        <div class="p-col-12  p-pl-0 p-pr-0" *ngFor="let employeeContact of lstSkillList | FilterPipe: searchText : searchableList">
+            <div class="p-card mobile-card-view p-mb-2" (click)="editSkill(employeeContact)">
+                <div class="p-card-body" style="padding-bottom: 0.5rem !important; background-color: white !important; color: #495057 !important; ">
+                    <div class="p-grid" style="padding-top:7px;">
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-6 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Skill :</label>
+                            <div class="p-col-6 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{employeeContact.skill}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-6 p-pr-2  p-pt-0 p-pb-0 mobile-card-view-label">Skill Type :</label>
+                            <div class="p-col-6 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{employeeContact.skillType}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-6 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Experience :</label>
+                            <div class="p-col-6 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{employeeContact.experience}}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<app-add-edit-skill #addEditEmployeeSkillModal [EmployeeName]="Name" (ListValueUpdated)="LoadList()"></app-add-edit-skill>
+<p-toast></p-toast>

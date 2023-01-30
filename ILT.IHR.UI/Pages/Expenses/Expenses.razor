@@ -1,0 +1,61 @@
+﻿@inherits ExpensesBase
+@using BlazorTable
+@using ILT.IHR.DTO;
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+@page "/expenses"
+@inject NavigationManager NavigationManager
+
+@if (ExpenseRolePermission != null && ExpenseRolePermission.View == false)
+{
+    NavigationManager.NavigateTo("");
+}
+<h3 style="margin-bottom:1px;">Expenses</h3>
+<div class="row reduce-margin-top">
+    <div class="col-12">
+        @if (ExpensesList != null)
+        {
+            <Table TableItem="Expense" Items="lstExpensesList" ColumnReorder="true" ShowSearchBar="true" SelectionType="SelectionType.Single" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+                   RowActions="RowActions" RowClickAction="RowClick" HeaderActions="HeaderAction"
+                   DropDown="lstStatus" DropDownLabel="Status:" onDropDownChange="OnStatusTypeChange" DefaultID="DefaultStatusID">
+                <Column TableItem="Expense" Title="Employee Name" Field="@(x => x.EmployeeName)" Sortable="true" Filterable="false" DefaultSortColumn="true" />
+                <Column TableItem="Expense" Title="ExpenseType" Field="@(x => x.ExpenseType)" Sortable="true" Filterable="false">
+                </Column>
+                <Column TableItem="Expense" Title="Amount" Field="@(x => x.Amount)" Sortable="true" Filterable="false" />
+                <Column TableItem="Expense" Title="Submission Date" Field="@(x => x.SubmissionDate)" Sortable="true" Filterable="false">
+                    <Template>
+                        @commonUtils.FormatDate(context.SubmissionDate)
+                    </Template>
+                </Column>
+                <Column TableItem="Expense" Title="Amount Paid" Field="@(x => x.AmountPaid)" Sortable="true" Filterable="false" />
+                <Column TableItem="Expense" Title="Payment Date" Field="@(x => x.PaymentDate)" Sortable="true" Filterable="false">
+                    <Template>
+                        @commonUtils.FormatDate(context.PaymentDate)
+                    </Template>
+                </Column>
+                <Column TableItem="Expense" Title="Status" Field="@(x => x.Status)" Sortable="true" Filterable="false" />
+                <EmptyDataTemplate>
+                    <div class="text-center">
+                        No rows found!
+                    </div>
+                </EmptyDataTemplate>
+                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+            </Table>
+        }
+        else
+        {
+            @*<NoResultMessage></NoResultMessage>*@
+            <span></span>
+        }
+    </div>
+</div>
+
+<AddEditExpense @ref="AddEditExpenseModal" ReloadGrid="LoadExpenses"></AddEditExpense>
+
+
+@*<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+             ConfirmationMessage=@($"Are you sure you want to delete")>
+    </Confirm>*@
+
+
+
+

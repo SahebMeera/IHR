@@ -1,0 +1,87 @@
+﻿@using BlazorTable
+@using ILT.IHR.DTO;
+@inherits EmployeeNoificationBase
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="min-width: 1200px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">Employee Changes</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding-top: 0.25rem;">
+                    <div class="row">
+                        <div class="col-12" style="padding-bottom:0.25rem;" >
+                            <button type="button" class="btn  btn-primary float-right" disabled="@(employeeChangeSet != null && employeeChangeSet.Count > 1 ? false : true)" @onclick="@Acknowledge">
+                                Acknowledge
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            @if (employeeChangeSet != null)
+                            {
+                            <Table TableItem="EmployeeChangeSet" Items="employeeChangeSet"
+                                   SelectionType="SelectionType.Single">
+                                <Column TableItem="EmployeeChangeSet" Title="Employee Code" Field="@(x => x.EmployeeCode)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="First Name" Field="@(x => x.FirstName)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Middle Name" Field="@(x => x.MiddleName)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Last Name" Field="@(x => x.LastName)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Country" Field="@(x => x.Country)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Title" Field="@(x => x.Title)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Department" Field="@(x => x.Department)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Birth Date" Field="@(x => x.BirthDate)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Hire Date" Field="@(x => x.HireDate)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Term Date" Field="@(x => x.TermDate)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Work Authorization" Field="@(x => x.WorkAuthorization)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Salary" Field="@(x => x.Salary)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Variable Pay" Field="@(x => x.VariablePay)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Marital Status" Field="@(x => x.MaritalStatus)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Manager" Field="@(x => x.Manager)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Employment Type" Field="@(x => x.EmploymentType)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Modified By" Field="@(x => x.ModifiedBy)" Filterable="false">
+                                </Column>
+                                <Column TableItem="EmployeeChangeSet" Title="Modified Date" Field="@(x => x.ModifiedDate)" Filterable="false">
+                                </Column>
+
+                                <EmptyDataTemplate>
+                                    <div class="text-center">
+                                        No rows found!
+                                    </div>
+                                </EmptyDataTemplate>
+                                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                            </Table>
+                            }
+                            else
+                            {
+                                @*<NoResultMessage></NoResultMessage>*@
+                                <span></span>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

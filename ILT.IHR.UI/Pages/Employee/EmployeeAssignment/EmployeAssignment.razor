@@ -1,0 +1,154 @@
+﻿@using BlazorTable
+@using ILT.IHR.DTO;
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+
+@inherits EmployeeAssignmentBase;
+
+<div class="row reduce-margin-top hidden-web">
+    <div class="col-12 pl-1 pr-1">
+        @if (EmployeeAssignments != null)
+        {
+            <Table TableItem="Assignment" Items="EmployeeAssignments" ColumnReorder="true" ShowSearchBar="true" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize" 
+                   SelectionType="SelectionType.Single" RowClickAction="RowClick" RowActions="RowActions" HeaderActions="HeaderAction">
+                <Column TableItem="Assignment" Title="Start Date" Field="@(x => x.StartDate)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="true">
+                    <Template>
+                        @(context.StartDate.ToShortDateString())
+                    </Template>
+                </Column>
+                <Column TableItem="Assignment" Title="End Date" Field="@(x => x.EndDate)" Sortable="true" Filterable="false">
+                    <Template>
+                        @(context.EndDate != null ? FormatDate(context.EndDate): "")
+                    </Template>
+                </Column>
+                <Column TableItem="Assignment" Title="Client" Field="@(x => x.Client)" Sortable="true" Filterable="false" />
+                <Column TableItem="Assignment" Title="Vendor" Field="@(x => x.Vendor)" Sortable="true" Filterable="false"/>
+                <Column TableItem="Assignment" Title="Title" Field="@(x => x.Title)" Sortable="true" Filterable="false"/>
+                <Column TableItem="Assignment" Title="Client Manager" Field="@(x => x.ClientManager)" Sortable="true" Filterable="false" />
+                <Column TableItem="Assignment" Title="Payment Type" Field="@(x => x.PaymentType)" Sortable="true" Filterable="false" />
+                <DetailTemplate TableItem="Assignment" Context="context2">
+                    <Table TableItem="AssignmentRate" Items="EmployeeAssignmentRate" ShowSearchBar="true" ColumnReorder="true" style="background-color: white;"
+                           SelectionType="SelectionType.Single" RowClickAction="ChildRowClick" RowActions="ChildRowActions" HeaderActions="ChildHeaderAction" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize">
+                        <Column TableItem="AssignmentRate" Title="Start Date" Field="@(x => x.StartDate )" Sortable="true" DefaultSortColumn="true" DefaultSortDescending="true">
+                            <Template>
+                                @(context.StartDate.ToShortDateString())
+                            </Template>
+                        </Column>
+                        <Column TableItem="AssignmentRate" Title="End Date" Field="@(x => x.EndDate)" Sortable="true" >
+                            <Template>
+                                @(context.EndDate != null ? FormatDate(context.EndDate): "")
+                            </Template>
+                        </Column>
+                        <Column TableItem="AssignmentRate" Title="Billing Rate" Field="@(x => x.BillingRate)" Sortable="true" />
+                        <Column TableItem="AssignmentRate" Title="Payment Rate" Field="@(x => x.PaymentRate )" Sortable="true" />
+
+                        <EmptyDataTemplate>
+                            <div class="text-center">
+                                No Data found!
+                            </div>
+                        </EmptyDataTemplate>
+                    </Table>
+                </DetailTemplate>
+                <EmptyDataTemplate>
+                    <div class="text-center">
+                        No Data found!
+                    </div>
+                </EmptyDataTemplate>
+                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+            </Table>
+        }
+        else
+        {
+            @*<NoResultMessage></NoResultMessage>*@
+                                <span></span>
+                                }
+</div>
+</div>
+
+<div class="row mt-2 hidden-web hidden-mobile">
+    <div class="col-12 ">
+        <div class="row mr-0 pb-1 display-flex mobile-display">
+            <div class="col-12 col-sm-3 pr-1 mobile-padding-remove mobile-pad-left-add">
+                <input type="text" id="myFilter" class="form-control form-control-sm float-left" placeholder="Global Search..." @onkeyup="SearchFuntion" />
+            </div>
+            <div class="col-sm-4 header-buttons  pr-0 pt-2">
+                @if (HeaderAction != null)
+                {
+                    @foreach (var HeaderAction in HeaderAction)
+                    {
+                        @if (HeaderAction.IsShow)
+                        {
+                            <button type="button" class="btn remove-margin-moblie @(HeaderAction.ButtonClass == null ? " btn-primary" : @HeaderAction.ButtonClass) action-btn-lineheight float-right ml-2
+                                                    @(HeaderAction.IsDisabled ? "disabled" : "" )" @onclick="HeaderAction.ActionMethod">
+                                <i class="@HeaderAction.IconClass" style="padding-right: 7px;" aria-hidden="true"></i>@HeaderAction.ActionText
+                            </button>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    @if (EmployeeAssignments != null && EmployeeAssignments.Count > 0)
+    {
+        <div class="col-12 pt-2" id="myItems">
+            @foreach (var employeeAssignments in EmployeeAssignments)
+            {
+                <div class="col-sm-6  pl-0 pr-0">
+                    <div class="card mobile-card-view mb-2" @onclick="(() => EditMobile(employeeAssignments))">
+                        <div class="card-body" style="padding-bottom:0.5rem !important;">
+                            <div class="row">
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">StartDate :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @FormatDateCard(employeeAssignments.StartDate)
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">End Date :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @FormatDateCard(employeeAssignments.EndDate)
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Client :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @employeeAssignments.Client
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Vendor :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @employeeAssignments.Vendor
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Payment Type :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @employeeAssignments.PaymentType
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <div class="col-12" style="padding-top:10rem;"></div>
+    }
+</div>
+
+<AddEditEmployeeAssignment @ref="AddEditAssignmentModal" UpdateAssignments="LoadEmployeeAssignments" EmployeeId="Id" EmployeeName="@Name"></AddEditEmployeeAssignment>
+
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete")>
+</Confirm>
+<Confirm @ref="ChildDeleteConfirmation" ConfirmationChanged="ChildConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete")>
+</Confirm>

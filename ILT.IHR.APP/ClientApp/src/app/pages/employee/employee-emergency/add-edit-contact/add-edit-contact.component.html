@@ -1,0 +1,101 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="850" #addEditContactModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="ContactForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">* First Name </label>
+                                <input type="text" formControlName="FirstName" pInputText [ngClass]="{ 'is-invalid': submitted && addEditContactControls.FirstName.errors }" />
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2">* Last Name </label>
+                                <input type="text" formControlName="LastName" pInputText [ngClass]="{ 'is-invalid': submitted && addEditContactControls.LastName.errors }"/>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname3">* Phone </label>
+                                <p-inputMask mask="9999999999" class="p-md-8 p-p-0" formControlName="Phone" [ngClass]="{ 'is-invalid': submitted && addEditContactControls.Phone.errors }"></p-inputMask>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">* Email</label>
+                                <input type="text" formControlName="Email" pInputText [ngClass]="{ 'is-invalid': submitted && addEditContactControls.Email.errors }"/>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname5">* Address Line1 </label>
+                                <input type="text" formControlName="Address1" pInputText [ngClass]="{ 'is-invalid': submitted && addEditContactControls.Address1.errors }" />
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname7">Address Line2 </label>
+                                <input type="text" formControlName="Address2" pInputText />
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8">* City</label>
+                                <input type="text" formControlName="City" pInputText [ngClass]="{ 'is-invalid': submitted && addEditContactControls.City.errors }" />
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname9">* State </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="StateList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditContactControls.State.errors }"
+                                                appendTo="body"
+                                                formControlName="State"
+                                                placeholder="Select State"
+                                                optionValue="stateDesc"
+                                                optionLabel="stateDesc"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname10">* Country</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="CountryList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditContactControls.Country.errors }"
+                                                appendTo="body"
+                                                formControlName="Country"
+                                                (onChange)="onChangeCountry($event)"
+                                                placeholder="Select Country"
+                                                optionValue="countryDesc"
+                                                optionLabel="countryDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="first">* ZipCode </label>
+                                <div class="p-md-8 p-p-0">
+                                    <input type="text" formControlName="ZipCode" pInputText [ngClass]="{ 'is-invalid': submitted && addEditContactControls.ZipCode.errors }" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname65">* Contact Type</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="ContactTypeList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditContactControls.ContactTypeID.errors }"
+                                                appendTo="body"
+                                                formControlName="ContactTypeID"
+                                                placeholder="Select ContactType"
+                                               (onChange)="commonUtils.setDropdownvalue(ContactTypeList,'listValueID', $event, ContactForm,'ContactType', 'valueDesc', false)"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>
+

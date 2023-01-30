@@ -1,0 +1,129 @@
+<div class="p-grid p-fluid" *ngIf="true">
+    <div class="p-col-12 pathx-table hidden-web" style="font-size: 13px !important; ">
+        <p-table [value]="lstLeaveDetail" [columns]="selectedColumns" sortField="employeeName" sortOrder="1" rowGroupMode="rowspan" groupRowsBy="employeeCode" styleClass="ui-table-pathx" *ngIf="LeaveDetailReport && !LeaveSummaryReport">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th>Emp Code</th>
+                    <th>Employee Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Leave Type</th>
+                    <th>Leave Days</th>
+                    <th>Leave Balance </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="selectedColumns" let-rowgroup="rowgroup" let-rowspan="rowspan">
+                <tr>
+                    <td>{{rowData.employeeCode}}</td>
+                    <td>{{rowData.employeeName}}</td>
+                    <td>{{rowData.startDate}}</td>
+                    <td>{{rowData.endDate}}</td>
+                    <td>{{rowData.leaveType}}</td>
+                    <td>{{rowData.leaveInRange}}</td>
+                    <td *ngIf="rowgroup" [attr.rowspan]="rowspan">{{rowData.vacationBalance}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <p-table [value]="lstLeaveSummayDetail" [columns]="selectedColumns" sortField="employeeName" sortOrder="1" styleClass="ui-table-pathx" *ngIf="!LeaveDetailReport && LeaveSummaryReport">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th>Emp Code</th>
+                    <th>Employee Name</th>
+                    <th>Total</th>
+                    <th>Used</th>
+                    <th>LWP</th>
+                    <th>Leaves</th>
+                    <th>Balance</th>
+                    <th>LWP Pending</th>
+                    <th>Leave Next Month</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="selectedColumns" let-rowgroup="rowgroup" let-rowspan="rowspan">
+                <tr>
+                    <td>{{rowData.employeeCode}}</td>
+                    <td>{{rowData.employeeName}}</td>
+                    <td class="p-text-right">{{rowData.vacationTotal}}</td>
+                    <td class="p-text-right">{{rowData.vacationUsed}}</td>
+                    <td class="p-text-right">{{rowData.lwpAccounted}}</td>
+                    <td class="p-text-right">{{rowData.leaveInRange}}</td>
+                    <td class="p-text-right">{{rowData.vacationBalance}}</td>
+                    <td class="p-text-right">{{rowData.lwpPending}}</td>
+                    <td class="p-text-right">{{rowData.leaveInNextMonth}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+
+
+
+    <div class="p-col-12 pathx-table  hidden-web hidden-mobile" style="font-size: 13px !important; ">
+        <p-table [value]="lstLeaveDetail" [columns]="selectedColumns" sortField="employeeName" sortOrder="1" rowGroupMode="rowspan" groupRowsBy="employeeCode" styleClass="ui-table-pathx"
+                 [scrollable]="true"
+                 scrollHeight="400px"
+                 scrollDirection="horizontal"
+                 [resizableColumns]="true"
+                 [tableStyle]="{'min-width': '60rem'}"
+                 [autoLayout]="true"
+                 *ngIf="LeaveDetailReport && !LeaveSummaryReport">
+            <ng-template pTemplate="header" let-columns>
+                <tr >
+                    <th style="min-width:120px">Emp Code</th>
+                    <th style="min-width:180px">Employee Name</th>
+                    <th style="min-width:100px">Start Date</th>
+                    <th style="min-width:100px">End Date</th>
+                    <th style="min-width:100px">Leave Type</th>
+                    <th style="min-width:100px">Leave Days</th>
+                    <th style="min-width:100px">Leave Balance </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="selectedColumns" let-rowgroup="rowgroup" let-rowspan="rowspan">
+                <tr >
+                    <td style="min-width:120px">{{rowData.employeeCode}}</td>
+                    <td style="min-width:180px">{{rowData.employeeName}}</td>
+                    <td style="min-width:100px">{{rowData.startDate}}</td>
+                    <td style="min-width:100px">{{rowData.endDate}}</td>
+                    <td style="min-width:100px">{{rowData.leaveType}}</td>
+                    <td style="min-width:100px">{{rowData.leaveInRange}}</td>
+                    <td  style="min-width:100px">{{rowData.vacationBalance}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <p-table [value]="lstLeaveSummayDetail" [columns]="selectedColumns" sortField="employeeName"
+                 sortOrder="1" styleClass="ui-table-pathx" *ngIf="!LeaveDetailReport && LeaveSummaryReport"
+                 [scrollable]="true"
+                 scrollHeight="400px"
+                 scrollDirection="horizontal"
+                 [resizableColumns]="true"
+                 [autoLayout]="true">
+            <ng-template pTemplate="header" let-columns>
+                <tr class="white-space">
+                    <th style="min-width:120px">Emp Code</th>
+                    <th style="min-width:180px">Employee Name</th>
+                    <th style="min-width:100px">Total</th>
+                    <th style="min-width:100px">Used</th>
+                    <th style="min-width:100px">LWP</th>
+                    <th style="min-width:100px">Leaves</th>
+                    <th style="min-width:100px">Balance</th>
+                    <th style="min-width:100px">LWP Pending</th>
+                    <th style="min-width:120px">Leave Next Month</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="selectedColumns" let-rowgroup="rowgroup" let-rowspan="rowspan">
+                <tr class="white-space">
+                    <td style="min-width:120px">{{rowData.employeeCode}}</td>
+                    <td style="min-width:180px">{{rowData.employeeName}}</td>
+                    <td style="min-width:100px" class="p-text-right">{{rowData.vacationTotal}}</td>
+                    <td style="min-width:100px" class="p-text-right">{{rowData.vacationUsed}}</td>
+                    <td style="min-width:100px" class="p-text-right">{{rowData.lwpAccounted}}</td>
+                    <td style="min-width:100px" class="p-text-right">{{rowData.leaveInRange}}</td>
+                    <td style="min-width:100px" class="p-text-right">{{rowData.vacationBalance}}</td>
+                    <td style="min-width:100px" class="p-text-right">{{rowData.lwpPending}}</td>
+                    <td style="min-width:120px" class="p-text-right">{{rowData.leaveInNextMonth}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

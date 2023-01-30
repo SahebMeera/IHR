@@ -1,0 +1,328 @@
+﻿@inherits AddEditCompanyBase
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 850px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">@Title Company</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 pl-0 pr-0">
+                            <EditForm Model="@company" OnValidSubmit="checkNameExist">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="col-12 align-center remove-padding mb-1">
+                                    <span class="error-message-color">@ErrorMessage &nbsp;</span>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col-sm-12 pr-0 pl-0">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-form-label col-sm-4">* Company Name</label>
+                                                <div class="col-sm-8 pl-0 pr-2">
+                                                    <InputText class="form-control form-control-sm autofocus" @bind-Value="company.Name" maxlength="50" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex">
+                                                <label for="companyType" class="control-label col-form-label col-sm-4">* Company Type</label>
+                                                <div class="col-sm-8 pl-0 ">
+                                                    <CustomInputSelect id="companyType" @bind-Value="company.CompanyTypeID" class="form-control form-control-sm" @oninput="onChangeCompanyType">
+                                                        <option value='0'>select</option>
+                                                        @if (CompanyTypeList != null)
+                                                            {
+
+                                                            @foreach (var companyType in CompanyTypeList)
+                                                                {
+                                                                @if (companyType.Value.ToUpper() != "ENDCLIENT")
+                                                                    {
+                                                                    <option value="@companyType.ListValueID">@companyType.ValueDesc</option>
+                                                                    }
+                                                                /**/
+                                                                }
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">Is End Client</label>
+                                                <div class="col-sm-8 pl-0 pr-2">
+                                                    <InputCheckbox class="form-control form-control-checkbox" type="checkbox" disabled="@isEndClientdisable" @bind-Value="company.IsEndClient" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">* Tax</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <InputText class="form-control form-control-sm" @bind-Value="company.TaxID" maxlength="20" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">* Payment Term</label>
+                                                <div class="col-sm-8 pl-0 pr-2 ">
+                                                    <CustomInputSelect class="form-control form-control-sm" @bind-Value="company.PaymentTermID" @oninput="onChangePaymentTerm">
+                                                        <option value='0'>select</option>
+                                                        @if (PaymentTermList != null)
+                                                            {
+                                                            @foreach (var PaymentTerm in PaymentTermList)
+                                                                {
+                                                                <option value="@PaymentTerm.ListValueID">@PaymentTerm.ValueDesc</option>
+                                                                }
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">* Invoicing Period</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <CustomInputSelect class="form-control form-control-sm" @bind-Value="company.InvoicingPeriodID" @oninput="onChangeInvoicingPeriod">
+                                                        <option value='0'>select</option>
+                                                        @if (InvoicingPeriodList != null)
+                                                            {
+
+                                                            @foreach (var invoicingPeriod in InvoicingPeriodList)
+                                                                {
+                                                                <option value="@invoicingPeriod.ListValueID">@invoicingPeriod.ValueDesc</option>
+                                                                }
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 pr-2 pl-2">
+                                        <div class="card card-border not-rounded clearfix mt-2">
+                                            <div class="card-body">
+                                                <h4 class="card-title mb-1">Address</h4>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-6 pr-0 pl-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* Address1</label>
+                                                        <div class="col-sm-8 pl-0 pr-2">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="company.Address1" maxlength="100" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 pr-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Address2</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="company.Address2" maxlength="100" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-6 pr-0 pl-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* City</label>
+                                                        <div class="col-sm-8 pl-0 pr-2">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="company.City" maxlength="50" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 pr-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* State</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <CustomInputSelect id="paymentType" @bind-Value="company.State" class="form-control form-control-sm" maxlength="50">
+                                                                <option value="">select</option>
+                                                                @if (StateList != null)
+                                                                    {
+                                                                    @foreach (var State in StateList)
+                                                                        {
+                                                                        <option value="@State.StateDesc">@State.StateDesc</option>
+                                                                        }
+                                                                    /**/
+                                                                    /**/
+                                                                    }
+                                                            </CustomInputSelect>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-6 pr-0 pl-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* Country</label>
+                                                        <div class="col-sm-8 pl-0 pr-2">
+                                                            <CustomInputSelect id="paymentType" @bind-Value="company.Country" class="form-control form-control-sm" @oninput="onChangeCountry" maxlength="50">
+                                                                <option value="">select</option>
+                                                                @if (CountryList != null)
+                                                                    {
+                                                                    @foreach (var country in CountryList)
+                                                                        {
+                                                                        <option value="@country.CountryDesc">@country.CountryDesc</option>
+                                                                        }
+                                                                    /**/
+                                                                    }
+                                                                /**/
+                                                            </CustomInputSelect>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 pr-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* ZipCode</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="company.ZipCode" maxlength="10" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 pl-2">
+                                        <div class="card card-border not-rounded clearfix mt-3">
+                                            <div class="card-body pr-0 pl-2">
+                                                <h4 class="card-title mb-1">Contact</h4>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12  pl-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* Name</label>
+                                                        <div class="col-sm-8 pl-0 pr-2">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="company.ContactName" maxlength="50" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12  pl-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* Phone</label>
+                                                        <div class="col-sm-8 pl-0 pr-2">
+                                                            <InputMask class="form-control form-control-sm" @bind-Value="company.ContactPhone" data-mask="0000000000" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12  pl-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* Email</label>
+                                                        <div class="col-sm-8 pl-0 pr-2">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="company.ContactEmail" maxlength="50" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 pr-2 pl-2">
+                                        <div class="card card-border not-rounded clearfix mt-3">
+                                            <div class="card-body">
+                                                <h4 class="card-title mb-1">Alternate Contact</h4>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Name</label>
+                                                        <div class="col-sm-8 pl-0 ">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="company.AlternateContactName" maxlength="50" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Phone</label>
+                                                        <div class="col-sm-8 pl-0 ">
+                                                            <InputMask class="form-control form-control-sm" style=" @(altContPhone == true ? "outline: 1px solid red;" : "" )" @bind-Value="company.AlternateContactPhone" data-mask="0000000000" @onfocusout="onChangeAltContPhone" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Email</label>
+                                                        <div class="col-sm-8 pl-0 ">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="company.AlternateContactEmail" maxlength="50" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 pl-2">
+                                        <div class="card card-border not-rounded clearfix mt-3">
+                                            <div class="card-body pl-2 pr-0">
+                                                <h4 class="card-title mb-1">Invoice Contact</h4>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12  pl-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* Name</label>
+                                                        <div class="col-sm-8 pl-0 pr-2">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="company.InvoiceContactName" maxlength="50" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12  pl-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* Phone</label>
+                                                        <div class="col-sm-8 pl-0 pr-2">
+                                                            <InputMask class="form-control form-control-sm" @bind-Value="company.InvoiceContactPhone" data-mask="0000000000" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12  pl-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* Email</label>
+                                                        <div class="col-sm-8 pl-0 pr-2">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="company.InvoiceContactEmail" maxlength="50" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 pr-2 pl-2">
+                                        <div class="card card-border not-rounded clearfix mt-3">
+                                            <div class="card-body">
+                                                <h4 class="card-title mb-1">Alternate Invoice Contact</h4>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Name</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="company.AlternateInvoiceContactName" maxlength="50" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Phone</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputMask class="form-control form-control-sm" @bind-Value="company.AlternateInvoiceContactPhone" style=" @(altInvContPhone == true ? "outline: 1px solid red;" : "" )" data-mask="0000000000" @onfocusout="onChangeAltInvContPhone" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Email</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="company.AlternateInvoiceContactEmail" maxlength="50" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*<div class="form-group">
+                <ValidationSummary />
+            </div>*@
+                                </div>
+                                <div class="form-group pr-3 pt-2 d-flex justify-content-end">
+                                    @*<button type="submit" class="btn btn-primary" disabled="@(!context.Validate() || !context.IsModified())">Save</button>*@
+                                    <button type="submit" class="btn btn-primary btn-width-height" disabled="@isSaveButtonDisabled">Save</button>
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,187 @@
+<div class="p-grid hidden-web">
+    <div class="p-col-12 p-pt-0 p-pb-0">
+        <h3 style="margin-bottom:1px;">Company</h3>
+    </div>
+    <div class="p-col-12" *ngIf="EndClientList == null && CompanyList !== null">
+        <app-ihr-table #dt [data]="CompanyList" [isPagination]="isPagination"
+                       [DropDownLabel]="'Type :'"
+                       [DropDown]="lstCompanys"
+                       [DefaultID]="DefaultDwnDn1ID"
+                       (onDropDownChange)="OnCompanyTypeChange($event)"
+                       [sortingField]="'name'"
+                       [sortingFieldOrder]="1"
+                       [loading]="loading"
+                       [globalFilterFields]="globalFilterFields"
+                       [showCurrentPageReport]="showCurrentPageReport" [cols]="cols" [selectedColumns]="selectedColumns"
+                       [rowActions]="rowActions" [headerActions]="headerActions" [tableState]="patientLanding">
+        </app-ihr-table>
+    </div>
+
+    <div class="p-col-12" *ngIf="EndClientList != null && CompanyList == null">
+        <app-ihr-table #dt [data]="EndClientList" [isPagination]="isPagination"
+                       [DropDownLabel]="'Type :'"
+                       [DropDown]="lstCompanys"
+                       [DefaultID]="DefaultDwnDn1ID"
+                       (onDropDownChange)="OnCompanyTypeChange($event)"
+                       [sortingField]="'name'"
+                       [sortingFieldOrder]="1"
+                       [loading]="loading"
+                       [globalFilterFields]="globalFilterFields"
+                       [showCurrentPageReport]="showCurrentPageReport" [cols]="colsEndClient" [selectedColumns]="selectedEndClientColumns"
+                       [rowActions]="rowActions" [headerActions]="headerActions" [tableState]="patientLanding">
+        </app-ihr-table>
+    </div>
+</div>
+
+
+<div class="p-grid  hidden-web hidden-mobile" *ngIf="true">
+    <div class="p-col-12 p-pt-0 p-pb-0">
+        <h3 style="margin-bottom:1px;">Company</h3>
+    </div>
+    <div class="p-col-12 ">
+        <div class="p-grid p-mr-0 p-pb-1 display-flex mobile-display">
+            <div class="p-col-12 p-pr-1 mobile-padding-remove mobile-pad-left-add">
+                <div class="p-d-grid p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Global Search..." autocomplete="off" [(ngModel)]="searchText" />
+                    <!--<input pInputText type="text" [(ngModel)]="searchText" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search..." />-->
+                </div>
+            </div>
+            <div class="p-col-12 p-lg-4 p-pb-0 p-pr-3">
+                <div class="p-grid grid-dropdown" *ngIf="lstCompanys != null && lstCompanys.length > 0">
+                    <label class="p-col-5 p-pb-0 p-pl-0 col-form-label mobile-transform-translate drpdwn" style="padding-right: 7px; padding-top: 0px !important; font-weight: 600;">Type :</label>
+                    <div class="p-col-7 p-pl-0 p-pt-0 p-pr-0 p-pb-0 mobile-first-dropdown-padding text-left" *ngIf="lstCompanys != null && lstCompanys.length > 0">
+                        <p-dropdown [options]="lstCompanys"
+                                    appendTo="body"
+                                    [(ngModel)]="DefaultDwnDn1ID"
+                                    (onChange)="OnChangeCompany($event)"
+                                    placeholder="Select"
+                                    optionValue="ID"
+                                    optionLabel="Value"></p-dropdown>
+                    </div>
+                </div>
+                <div class="p-grid grid-dropdown" style="padding-top:14px; justify-content: end;">
+                    <div class="p-md-12  p-p-0 p-text-right" style=" padding-right: 16px !important;">
+                        <button pButton pRipple type="button" label="END CLIENT" class=" btn-width-height p-button-raised btn-width-height btn btn-block btn-sm btn-info" style="margin: 0px !important;" (click)="EndClient()">
+                            <i style="padding-right:6px;" class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-md-12  p-p-0 p-text-right">
+                        <button pButton pRipple type="button" label="COMPANY" class=" btn-width-height p-button-raised btn-width-height btn btn-block btn-sm btn-info" style="margin: 0px !important;" (click)="addCompany()">
+                            <i style="padding-right:6px;" class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-col-12  p-pt-2" id="myItems" *ngIf="EndClientList === null && CompanyList !== null && CompanyList.length > 0">
+        <div class="p-col-12  p-pl-0 p-pr-0" *ngFor="let company of CompanyList | FilterPipe: searchText : searchableList">
+            <div class="p-card mobile-card-view p-mb-2" (click)="editCompany(company)">
+                <div class="p-card-body" style="padding-bottom:0.5rem !important;">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Company Name :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{company.name}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2  p-pt-0 p-pb-0 mobile-card-view-label">Type :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{company.companyType}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Invoicing :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{company.invoicingPeriod}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Payment Term :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{company.paymentTerm}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">City :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{company.city}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">State :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{company.state}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Contact Name :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{company.contactName}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Phone :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{company.contactPhone}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Email :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{company.contactEmail}}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="p-col-12  p-pt-2" id="myItems" *ngIf="EndClientList !== null && CompanyList === null && EndClientList.length > 0">
+        <div class="p-col-12  p-pl-0 p-pr-0" *ngFor="let encClient of EndClientList | FilterPipe: searchText : searchableListEndClients">
+            <div class="p-card mobile-card-view p-mb-2" (click)="editCompany(encClient)">
+                <div class="p-card-body" style="padding-bottom:0.5rem !important;">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Company Name :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{encClient.name}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">City :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{encClient.city}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">State :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{encClient.state}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Country :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{encClient.country}}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<app-add-edit-company #AddEditCompanyModal (ListValueUpdated)="LoadTypeList(1)"></app-add-edit-company>
+<app-add-edit-end-client #AddEditEndClientModal (ListValueUpdated)="LoadTypeList(0)"></app-add-edit-end-client>

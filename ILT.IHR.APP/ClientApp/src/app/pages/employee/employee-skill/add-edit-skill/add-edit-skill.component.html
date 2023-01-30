@@ -1,0 +1,43 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="1100" #addEditEmployeeSkillModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="EmployeeSkillForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-1 col-form-label mobile-col-form-label" for="firstname1">* Skill </label>
+                                <div class="p-md-11 p-p-0">
+                                    <input type="text" skill formControlName="Skill" pInputText [ngClass]="{ 'is-invalid': submitted && addEditEmployeeSkillControls.Skill.errors }" />
+                                </div>
+                            </div>
+                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname1">* Skill Type </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="SkillTypeList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditEmployeeSkillControls.SkillTypeID.errors }"
+                                                appendTo="body"
+                                                formControlName="SkillTypeID"
+                                                placeholder="Select SkillType"
+                                                (onChange)="commonUtils.setDropdownvalue(SkillTypeList,'listValueID', $event, EmployeeSkillForm,'SkillType', 'valueDesc', false)"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-2 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-8 col-form-label mobile-col-form-label" for="firstname2"> * Experience(In years) </label>
+                                <div class="p-md-4 p-p-0">
+                                    <p-inputNumber inputId="integeronly" formControlName="Experience" [maxlength]="2" [ngClass]="{ 'is-invalid': submitted && addEditEmployeeSkillControls.Experience.errors }">
+                                    </p-inputNumber>
+                                </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>

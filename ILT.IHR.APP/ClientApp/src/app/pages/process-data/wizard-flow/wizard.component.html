@@ -1,0 +1,42 @@
+<div class="card container" style="padding:0px;">
+    <div class="card-header">
+        <div class="p-d-flex justify-content-center progressbar-wrapper" *ngIf="isMobileResolution"></div>
+        <ul class="p-col-12 nav nav-justified progressbar">
+            <li class="nav-item active"
+                *ngFor="let step of steps"
+                [ngClass]="{
+          active: step.isActive,
+          enabled: true,
+          completed: isCompleted
+        }">
+                <div><span>{{ step.stepNumber }}&nbsp;</span></div>
+            </li>
+        </ul>
+    </div>
+    <div class="card-block p-pt-4">
+        <ng-content></ng-content>
+    </div>
+
+    <div class="p-grid card-footer" [hidden]="isCompleted" style="text-align: right; border-top: 1px solid #ad8e8e; display:flex; justify-content:flex-end; ">
+        <div class="p-md-9 p-d-flex p-pt-0 ">
+        </div>
+        <div class="p-md-3" style="display:flex; justify-content: end;">
+            <button pButton pRipple type="button" label="Previous" style="margin-bottom: 0px !important; width:106px !important;" [ngStyle]="{'display': !hasPrevStep || !activeStep.showPrev === true ? 'none' : 'block'}" [hidden]="!hasPrevStep || !activeStep.showPrev"
+                    class="btn footer-action btn-primary not-rounded btn-width-height p-button-raised p-mr-2 p-mb-2"
+                    (click)="previous()">
+            </button>
+            <button pButton pRipple type="button" label="Next" style="margin-bottom: 0px !important; width: 106px !important;"
+                    class="btn footer-action btn-primary not-rounded btn-width-height p-button-raised p-mr-2 p-mb-2"
+                    [ngStyle]="{'display': !hasNextStep === true ? 'none' : 'block'}"
+                    (click)="next()" [hidden]="!hasNextStep">
+            </button>
+            <button pButton pRipple type="button" label="Submit" style="margin-bottom: 0px !important; width: 106px !important;"
+                    class="btn footer-action btn-primary not-rounded btn-width-height p-button-raised p-mr-2 p-mb-2"
+                    [ngStyle]="{'display': hasNextStep === true ? 'none' : 'block'}"
+                    (click)="complete()" [hidden]="hasNextStep">
+            </button>
+        </div>
+
+
+    </div>
+</div>

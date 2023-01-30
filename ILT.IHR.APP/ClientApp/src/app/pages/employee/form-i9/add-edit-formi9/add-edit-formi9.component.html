@@ -1,0 +1,333 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="1250" #addEditEmployeeI9FormModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="FormI9">
+            <div class="p-grid display-flex-block">
+                <div class="p-col-12 p-p-0 p-mt-2 p-text-center remove-padding" *ngIf="ErrorMessage !== null || ErrorMessage !== ''" [ngStyle]="{'display': ErrorMessage !== '' ? 'block' : 'none' }">
+                    <span class="error-message-color" style="color: red;">{{ErrorMessage}} &nbsp;</span>
+                </div>
+                <div class="p-md-12 p-pl-0 p-pr-0 p-mt-3">
+                    <p-fieldset class="employee-part-1">
+                        <div class="p-col-12 p-p-0">
+                            <div class="p-fluid p-formgrid">
+                                <div class="p-grid p-pb-0 mobile-display-block">
+                                    <div class="p-md-4 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">First Name </label>
+                                        <input type="text" formControlName="FirstName" pInputText disabled="true" />
+                                    </div>
+                                    <div class="p-md-4 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2">Middle Name </label>
+                                        <input type="text" formControlName="MiddleName" pInputText disabled="true" />
+                                    </div>
+                                    <div class="p-md-4 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname3">Last Name </label>
+                                        <input type="text" formControlName="LastName" pInputText disabled="true" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-fieldset>
+
+                    <p-fieldset class="employee-part-2 " legend="Address">
+                        <div class="p-col-12 p-p-0">
+                            <div class="p-fluid p-formgrid">
+                                <div class="p-grid p-pb-2 mobile-display-block">
+                                    <div class="p-md-4 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">Address 1 </label>
+                                        <input type="text" formControlName="Address1" pInputText disabled="true" />
+                                    </div>
+                                    <div class="p-md-4 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname5">Address2 </label>
+                                        <input type="text" formControlName="Address2" pInputText disabled="true" />
+                                    </div>
+                                    <div class="p-md-4 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname6">City </label>
+                                        <input type="text" formControlName="City" pInputText disabled="true" />
+                                    </div>
+                                </div>
+                                <div class="p-grid p-pb-0 mobile-display-block">
+                                    <div class="p-md-4 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname7">State</label>
+                                        <input type="text" formControlName="StateName" pInputText disabled="true" />
+                                    </div>
+                                    <div class="p-md-4 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8">Country </label>
+                                        <input type="text" formControlName="CountryName" pInputText disabled="true" />
+                                    </div>
+                                    <div class="p-md-4 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname9"> ZipCode </label>
+                                        <input type="text" formControlName="ZipCode" pInputText disabled="true" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                    <div class="p-pt-1">
+                        <p-fieldset class="employee-part-1">
+                            <div class="p-col-12 p-p-0">
+                                <div class="p-fluid p-formgrid">
+                                    <div class="p-grid p-pb-2 mobile-display-block">
+                                        <div class="p-md-4 display-flex-block p-pt-0 ">
+                                            <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname10">Birth Date </label>
+                                            <p-calendar class="p-md-8 p-p-0" formControlName="BirthDate"
+                                                        [disabled]="true"
+                                                        [showIcon]="true"
+                                                        dateFormat="mm/dd/yy"
+                                                        inputId="firstname6"
+                                                        [monthNavigator]="true"
+                                                        [yearNavigator]="true"
+                                                        [yearRange]="commonUtils.getDateRange()"
+                                                        appendTo="body"></p-calendar>
+                                        </div>
+                                        <div class="p-md-4 display-flex-block p-pt-0 ">
+                                            <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname11">SSN </label>
+                                            <p-inputMask *ngIf="isViewPermissionForNPIRole" mask="999-99-9999" class="p-md-8 p-p-0" disabled="true" formControlName="SSN"></p-inputMask>
+                                            <p-inputMask *ngIf="!isViewPermissionForNPIRole" mask="xxx-xx-xxxx" class="p-md-8 p-p-0 " disabled="true" formControlName="SSN"></p-inputMask>
+                                        </div>
+                                        <div class="p-md-4 display-flex-block p-pt-0 ">
+                                            <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname12">Work Auth </label>
+                                            <div class="p-md-8 p-p-0">
+                                                <input type="text" formControlName="WorkAuthorization" pInputText disabled="true" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid p-pb-0 mobile-display-block">
+                                        <div class="p-md-4 display-flex-block p-pt-0 ">
+                                            <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname13">Hire Date</label>
+                                            <p-calendar class="p-md-8 p-p-0" formControlName="HireDate"
+                                                        [disabled]="true"
+                                                        inputId="firstname6"
+                                                        [showIcon]="true"
+                                                        [monthNavigator]="true"
+                                                        dateFormat="mm/dd/yy"
+                                                        [yearNavigator]="true"
+                                                        [yearRange]="commonUtils.getDateRange()"
+                                                        appendTo="body"></p-calendar>
+                                        </div>
+                                        <div class="p-md-4 display-flex-block p-pt-0 ">
+                                            <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname14">Phone </label>
+                                            <p-inputMask mask="9999999999" class="p-md-8 p-p-0" disabled="true" formControlName="Phone"></p-inputMask>
+                                        </div>
+                                        <div class="p-md-4 display-flex-block p-pt-0 ">
+                                            <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname15">Email </label>
+                                            <input type="text" formControlName="Email" pInputText disabled="true" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p-fieldset>
+                    </div>
+                <div class="p-pt-1">
+                    <p-fieldset class="employee-part-1">
+                        <div class="p-col-12 p-p-0">
+                            <div class="p-fluid p-formgrid">
+                                <div class="p-grid p-pb-0 mobile-display-block">
+                                    <div class="p-md-4 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname69">A Number </label>
+                                        <p-inputNumber type="text" formControlName="ANumber" mode="decimal" inputId="withoutgrouping" maxlength="10" prefix="A" [useGrouping]="false"
+                                                       [ngStyle]="{'outline': I9ANumber === true ? '1px solid red': ''}"
+                                                       (onInput)="onANumberChange($event)">
+                                        </p-inputNumber>
+                                    </div>
+                                    <div class="p-md-4 display-flex-block p-pt-0 " *ngIf="!I94FieldsShow">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname5">USCIS Number </label>
+                                        <p-inputNumber formControlName="USCISNumber" maxlength="10" mode="decimal" inputId="withoutgrouping" [disabled]="I9USCISNumberDisabled" [ngStyle]="{'outline': I9USCISNumber === true ? '1px solid red': ''}" [useGrouping]="false" (onInput)="onUSCISNumberChange($event)">
+                                        </p-inputNumber>
+                                        <!-- <input type="text" formControlName="USCISNumber" pInputText disabled="I9USCISNumberDisabled" />-->
+                                    </div>
+                                    <div class="p-md-4 display-flex-block p-pt-0 " *ngIf="I94FieldsShow">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname5">I94 Number </label>
+                                        <input type="text" formControlName="I94Number" maxlength="11" pInputText [ngStyle]="{'outline': I9I94Number === true ? '1px solid red': ''}" maxlength="11" (input)="onI94NumberChange($event)" />
+                                    </div>
+                                    <div class="p-md-4 display-flex-block p-pt-0 " *ngIf="I94FieldsShow">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname6">I94 Expiry Date </label>
+                                        <p-calendar class="p-md-8 p-p-0" formControlName="I94ExpiryDate" [ngStyle]="{'outline': I9I94ExpiryDate === true ? '1px solid red': ''}"
+                                                    (onBlur)="onI94ExpiryDateChange($event)"
+                                                    [showIcon]="true"
+                                                    (onInput)="onI94ExpiryDateChange($event)"
+                                                    dateFormat="mm/dd/yy"
+                                                    inputId="firstname6"
+                                                    [monthNavigator]="true"
+                                                    [yearNavigator]="true"
+                                                    [yearRange]="commonUtils.getDateRange()"
+                                                    appendTo="body"></p-calendar>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                    </div>
+
+
+                    <div class="p-grid display-flex-block">
+                        <div class="p-md-4 p-pl-0 p-pr-0 p-pt-1">
+                            <p-fieldset class="employee-part-2" legend="List A">
+                                <div class="p-col-12 p-p-0">
+                                    <div class="p-grid p-pb-2 mobile-display-block">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname10">Document Title </label>
+                                        <div class="p-md-8 p-p-0">
+                                            <p-dropdown [options]="ListADocumentList"
+                                                        appendTo="body"
+                                                        (onChange)="onChangeListADocumentTitle($event)"
+                                                        formControlName="ListADocumentTitleID"
+                                                        placeholder="Select ListA"
+                                                        optionValue="i9DocumentID"
+                                                        optionLabel="i9DocName"></p-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid p-pb-2 mobile-display-block p-pt-2">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname18">Issuing Authority </label>
+                                        <div class="p-md-8 p-p-0">
+                                            <input type="text" formControlName="ListAIssuingAuthority" pInputText [ngStyle]="{'outline': I9ListAIssAuth === true ? '1px solid red': ''}" (input)="onListAIssuAuthChange($event)"/>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid p-pb-2 mobile-display-block p-pt-2">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname18">Document No</label>
+                                        <div class="p-md-8 p-p-0">
+                                            <input type="text" formControlName="ListADocumentNumber" pInputText [ngStyle]="{'outline': I9ListADocNum === true ? '1px solid red': ''}" (input)="onListADocNumChange($event)"/>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid p-pb-2 mobile-display-block p-pt-2">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname10">Start Date </label>
+                                        <p-calendar class="p-md-8 p-p-0" formControlName="ListAStartDate"
+                                                    inputId="firstname6"
+                                                    [showIcon]="true"
+                                                    [monthNavigator]="true"
+                                                    dateFormat="mm/dd/yy"
+                                                    [yearNavigator]="true"
+                                                    [yearRange]="commonUtils.getDateRange()"
+                                                    appendTo="body"></p-calendar>
+                                    </div>
+                                    <div class="p-grid p-pb-2 mobile-display-block p-pt-2">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname10">Expiration Date</label>
+                                        <p-calendar class="p-md-8 p-p-0" formControlName="ListAExpirationDate" [ngStyle]="{'outline': I9ListAExpDate === true ? '1px solid red': ''}"
+                                                    inputId="firstname6"
+                                                    [showIcon]="true"
+                                                    [monthNavigator]="true"
+                                                    dateFormat="mm/dd/yy"
+                                                    [yearNavigator]="true"
+                                                     (onSelect)="onListAExpDateChange($event)"
+                                                    [yearRange]="commonUtils.getDateRange()"
+                                                    appendTo="body"></p-calendar>
+                                    </div>
+                                </div>
+                            </p-fieldset>
+                        </div>
+
+                        <div class="p-md-4 p-pl-0 p-pr-0  p-pt-1">
+                            <p-fieldset class="employee-part-2" legend="List B">
+                                <div class="p-col-12 p-p-0">
+                                    <div class="p-grid p-pb-2 mobile-display-block">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname21">Document Title </label>
+                                        <div class="p-md-8 p-p-0">
+                                            <p-dropdown [options]="ListBDocumentList"
+                                                        appendTo="body"
+                                                        (onChange)="onChangeListBDocumentTitle($event)"
+                                                        formControlName="ListBDocumentTitleID"
+                                                        placeholder="Select ListB"
+                                                        optionValue="i9DocumentID"
+                                                        optionLabel="i9DocName"></p-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid p-pb-2 mobile-display-block p-pt-2">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname20">Issuing Authority </label>
+                                        <div class="p-md-8 p-p-0">
+                                            <input type="text" formControlName="ListBIssuingAuthority" pInputText  [ngStyle]="{'outline': I9ListBIssAuth === true ? '1px solid red': ''}" (input)="onListBIssuAuthChange($event)" />
+                                        </div>
+                                    </div>
+                                    <div class="p-grid p-pb-2 mobile-display-block p-pt-2">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname18">Document No</label>
+                                        <div class="p-md-8 p-p-0">
+                                            <input type="text" formControlName="ListBDocumentNumber" pInputText [ngStyle]="{'outline': I9ListBDocNum === true ? '1px solid red': ''}" (input)="onListBDocNumChange($event)"/>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid p-pb-2 mobile-display-block p-pt-2">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname17">Start Date </label>
+                                        <p-calendar class="p-md-8 p-p-0" formControlName="ListBStartDate"
+                                                    inputId="firstname6"
+                                                    [showIcon]="true"
+                                                    [monthNavigator]="true"
+                                                    dateFormat="mm/dd/yy"
+                                                    [yearNavigator]="true"
+                                                    [yearRange]="commonUtils.getDateRange()"
+                                                    appendTo="body"></p-calendar>
+                                    </div>
+                                    <div class="p-grid p-pb-2 mobile-display-block p-pt-2">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname19">Expiration Date</label>
+                                        <p-calendar class="p-md-8 p-p-0" formControlName="ListBExpirationDate" [ngStyle]="{'outline': I9ListBExpDate === true ? '1px solid red': ''}"
+                                                    inputId="firstname6"
+                                                    [showIcon]="true"
+                                                    [monthNavigator]="true"
+                                                    dateFormat="mm/dd/yy"
+                                                    (onSelect)="onListBExpDateChange($event)"
+                                                    [yearNavigator]="true"
+                                                    [yearRange]="commonUtils.getDateRange()"
+                                                    appendTo="body"></p-calendar>
+                                    </div>
+                                </div>
+                            </p-fieldset>
+                        </div>
+
+                        <div class="p-md-4 p-pl-0 p-pr-0  p-pt-1">
+                            <p-fieldset class="employee-part-2" legend="List C">
+                                <div class="p-col-12 p-p-0">
+                                    <div class="p-grid p-pb-2 mobile-display-block">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname21">Document Title </label>
+                                        <div class="p-md-8 p-p-0">
+                                            <p-dropdown [options]="ListCDocumentList"
+                                                        appendTo="body"
+                                                        (onChange)="onChangeListCDocumentTitle($event)"
+                                                        formControlName="ListCDocumentTitleID"
+                                                        placeholder="Select ListC"
+                                                        optionValue="i9DocumentID"
+                                                        optionLabel="i9DocName"></p-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid p-pb-2 mobile-display-block p-pt-2">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname20">Issuing Authority </label>
+                                        <div class="p-md-8 p-p-0">
+                                            <input type="text" formControlName="ListCIssuingAuthority" pInputText  [ngStyle]="{'outline': I9ListCIssAuth === true ? '1px solid red': ''}" (input)="onListCIssuAuthChange($event)"/>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid p-pb-2 mobile-display-block p-pt-2">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname18">Document No</label>
+                                        <div class="p-md-8 p-p-0">
+                                            <input type="text" formControlName="ListCDocumentNumber" pInputText [ngStyle]="{'outline': I9ListCDocNum === true ? '1px solid red': ''}"  (input)="onListCDocNumChange($event)"/>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid p-pb-2 mobile-display-block p-pt-2">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname17">Start Date </label>
+                                        <p-calendar class="p-md-8 p-p-0" formControlName="ListCStartDate"
+                                                    inputId="firstname6"
+                                                    [showIcon]="true"
+                                                    [monthNavigator]="true"
+                                                    dateFormat="mm/dd/yy"
+                                                    [yearNavigator]="true"
+                                                    [yearRange]="commonUtils.getDateRange()"
+                                                    appendTo="body"></p-calendar>
+                                    </div>
+                                    <div class="p-grid p-pb-2 mobile-display-block p-pt-2">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname19">Expiration Date</label>
+                                        <p-calendar class="p-md-8 p-p-0" formControlName="ListCExpirationDate" [disabled]="isListCExpirationDate" [ngStyle]="{'outline': I9ListCExpDate === true ? '1px solid red': ''}"
+                                                    inputId="firstname6"
+                                                    [showIcon]="true"
+                                                    [monthNavigator]="true"
+                                                    dateFormat="mm/dd/yy"
+                                                    [yearNavigator]="true"
+                                                    (onInput)="onListCExpDateChange($event)"
+                                                    [yearRange]="commonUtils.getDateRange()"
+                                                    appendTo="body"></p-calendar>
+                                    </div>
+                                </div>
+                            </p-fieldset>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>

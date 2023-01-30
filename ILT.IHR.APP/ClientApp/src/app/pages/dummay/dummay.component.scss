@@ -1,0 +1,261 @@
+#main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin5"], #main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin5"] ul, #main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin5"], #main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin5"] ul {
+    background-color: #333d54;
+}
+
+.left-sidebar {
+    padding-top: 50px;
+    width: 240px;
+    height: 100%;
+    top: 0;
+    z-index: 10;
+    /* padding-top: 60px; */
+    background: #fff;
+    box-shadow: 1px 0 20pxrgba(0,0,0,.08);
+    transition: .2s ease-in;
+}
+
+.topbar {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    height: 3.7rem;
+    margin: 0px !important;
+    flex-wrap: nowrap !important;
+    padding-top: 0px;
+}
+
+:host::ng-deep .layout-config.layout-config-active {
+    /*transform: translate(0px, 59px);*/
+}
+
+:host::ng-deep .layout-config {
+    height: auto !important;
+    top: 54px !important;
+    z-index: 1;
+    width: 420px;
+    position: fixed;
+    user-select: none;
+    background-color: #fff;
+    box-sizing: border-box;
+    box-shadow: 0 10px 20px rgb(0 0 0 / 30%), 0 0 0 1px #eee;
+    padding: 5px 0;
+}
+
+.user-display {
+    color: white;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.sidebar {
+    height: 100%;
+    /* width: 85px; */
+    position: dfft;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    background-color: #1979c5;
+    transition: 0.3s;
+    overflow-x: hidden;
+    padding-top: 60px;
+    white-space: nowrap;
+}
+
+.username-circle {
+    left: 5px;
+    top: 5px;
+    border: 2px solid black;
+    background-color: #FFFFFF;
+    height: 120px;
+    width: 120px;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+:host::ng-deep .role .p-dropdown {
+    width: 13rem !important;
+}
+
+.itemname {
+    padding-left: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.itememail {
+    padding-left: 5px;
+    font-size: 15px;
+    padding-bottom: 5px !important;
+}
+
+.itemlinkcolor {
+    min-width: 120px;
+    padding: 6px;
+    text-align: left;
+    white-space: nowrap;
+    position: relative;
+    cursor: pointer;
+    color: blue;
+    padding-top: 0px !important;
+    padding-bottom: 6px !important;
+}
+
+.itemlinkcolor:hover {
+    background-color: rgba(0,0,0,.05);
+}
+
+.role {
+    /*display: flex;*/
+    width: 18rem;
+}
+
+.user-Info {
+    display: block;
+}
+
+.hidden-web {
+    display: none;
+}
+
+.hidden-mobile {
+    display: block;
+}
+
+@media screen and (max-width: 960px) {
+    .hidden-web {
+        display: block !important;
+        /*position: fixed;*/
+    }
+
+    .hidden-mobile {
+        display: none !important;
+    }
+
+    .role {
+        display: contents !important;
+        width: 0px !important;
+    }
+
+    :host::ng-deep .role .p-dropdown {
+        width: 9rem !important;
+    }
+
+    .user-Info {
+        display: none !important;
+    }
+
+    .user-image-display {
+        display: contents;
+    }
+
+    :host::ng-deep .wrapper .sidebar {
+        padding-top: 14rem !important;
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+    }
+
+    .topbar {
+        position: fixed;
+    }
+
+    .left-sidebar {
+        padding-top: 0px !important;
+        width: 100% !important;
+    }
+
+    .login-user-display {
+        display: contents;
+        padding: 0px !important;
+        /*display: none !important;*/
+    }
+
+    .DEVShort {
+        display: none !important;
+    }
+
+    .mobile-top-bar {
+        top: 51px !important;
+        display: block !important;
+    }
+
+    /*.padding-left-add {
+        padding-left: 44px;
+    }*/
+
+    .padding-add {
+        padding-right: 10px;
+        padding-left: 10px !important;
+    }
+
+    .main {
+        margin-top: 14.7rem !important;
+    }
+
+    .layout-config {
+        top: 13.6rem !important;
+        z-index: 1;
+        width: 382px !important;
+    }
+
+    .text-start-mobile {
+        text-align: start;
+    }
+
+    .topbar {
+        height: auto !important;
+    }
+
+    :host::ng-deep .wrapper .topbar #omega-menu-button {
+        position: absolute;
+        top: -44px;
+        color: #495057 !important;
+    }
+
+    .mobile-left-padding {
+        padding-left: 6px;
+    }
+
+    .info-logo-side-icon {
+        display: contents !important;
+        justify-content: end !important;
+    }
+
+    .display-contents {
+        display: flex !important;
+        justify-content: center !important;
+        padding: 0px !important;
+    }
+}
+
+.info-logo-side-icon {
+    display: flex;
+    justify-content: end;
+}
+
+.flex-display {
+    display: flex;
+    justify-content: space-between;
+}
+
+.display-flex {
+    display: flex;
+}
+
+.display-contents {
+    display: contents;
+    justify-content: end;
+}
+
+.padding-add {
+    padding-left: 15px;
+}

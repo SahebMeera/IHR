@@ -1,0 +1,293 @@
+<div class="dashboard p-grid p-fluid">
+    <div class="p-col-12 p-md-4">
+        <div class="card summary p-d-flex p-jc-between">
+            <div>
+                <span class="title">Users</span>
+                <span class="detail">Number of visitors</span>
+            </div>
+            <div class="p-d-flex p-ai-center">
+                <span class="count visitors p-p-2">12</span>
+            </div>
+        </div>
+    </div>
+    <div class="p-col-12 p-md-4">
+        <div class="card summary p-d-flex p-jc-between">
+            <div>
+                <span class="title">Sales</span>
+                <span class="detail">Number of purchases</span>
+            </div>
+            <div class="p-d-flex p-ai-center">
+                <span class="count purchases p-p-2">534</span>
+            </div>
+        </div>
+    </div>
+    <div class="p-col-12 p-md-4">
+        <div class="card summary p-d-flex p-jc-between">
+            <div>
+                <span class="title">Revenue</span>
+                <span class="detail">Income for today</span>
+            </div>
+            <div class="p-d-flex p-ai-center">
+                <span class="count revenue p-p-2">$3,200</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-col-12 p-md-6 p-lg-3">
+        <div class="card overview-box paypal">
+            <div class="p-d-flex p-jc-between">
+                <i class="logo pi pi-paypal p-mb-3"></i>
+                <button pButton type="button" id="paypal-button" (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="p-button-rounded p-button-plain p-button-text"></button>
+            </div>
+            <p-menu #menu [popup]="true" [model]="items"></p-menu>
+            <h5 class="p-mb-3">PayPal</h5>
+            <p class="p-mb-1"><strong>$421</strong> / $1212</p>
+            <p-progressBar value="35" [showValue]="false"></p-progressBar>
+        </div>
+    </div>
+
+    <div class="p-col-12 p-md-6 p-lg-3">
+        <div class="card overview-box amazon">
+            <div class="p-d-flex p-jc-between">
+                <i class="logo pi pi-amazon p-mb-3"></i>
+                <button pButton type="button" id="amazon-button" (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="p-button-rounded p-button-plain p-button-text"></button>
+            </div>
+            <p-menu #menu [popup]="true" [model]="items"></p-menu>
+            <h5 class="p-mb-3">Amazon</h5>
+            <p class="p-mb-1"><strong>$6752</strong> / $9550</p>
+            <p-progressBar value="70" [showValue]="false"></p-progressBar>
+        </div>
+    </div>
+
+    <div class="p-col-12 p-md-6 p-lg-3">
+        <div class="card overview-box youtube">
+            <div class="p-d-flex p-jc-between">
+                <i class="logo pi pi-youtube p-mb-3"></i>
+                <button pButton type="button" id="youtube-button" (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="p-button-rounded p-button-plain p-button-text"></button>
+            </div>
+            <p-menu #menu [popup]="true" [model]="items"></p-menu>
+            <h5 class="p-mb-3">YouTube</h5>
+            <p class="p-mb-1"><strong>$1132</strong> / $6987</p>
+            <p-progressBar value="13" [showValue]="false"></p-progressBar>
+        </div>
+    </div>
+
+    <div class="p-col-12 p-md-6 p-lg-3">
+        <div class="card overview-box apple">
+            <div class="p-d-flex p-jc-between">
+                <i class="logo pi pi-apple p-mb-3"></i>
+                <button pButton type="button" id="apple-button" (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="p-button-rounded p-button-plain p-button-text"></button>
+            </div>
+            <p-menu #menu [popup]="true" [model]="items"></p-menu>
+            <h5 class="p-mb-3">Apple</h5>
+            <p class="p-mb-1"><strong>$58990</strong> / $65650</p>
+            <p-progressBar value="90" [showValue]="false"></p-progressBar>
+        </div>
+    </div>
+
+    <div class="p-col-12 p-md-6 p-lg-4">
+        <p-panel header="Tasks" [style]="{'height':'100%'}">
+            <ul class="task-list">
+                <li>
+                    <p-checkbox binary="true"></p-checkbox>
+                    <span class="task-name">Sales reports</span>
+                    <button type="button" pButton icon="pi pi-check"></button>
+                </li>
+                <li>
+                    <p-checkbox binary="true"></p-checkbox>
+                    <span class="task-name">Pay the invoices</span>
+                    <button type="button" pButton icon="pi pi-check"></button>
+                </li>
+                <li>
+                    <p-checkbox binary="true"></p-checkbox>
+                    <span class="task-name">Dinner with Tony</span>
+                    <button type="button" pButton icon="pi pi-check"></button>
+                </li>
+                <li>
+                    <p-checkbox binary="true"></p-checkbox>
+                    <span class="task-name">Team meeting</span>
+                    <button type="button" pButton icon="pi pi-check"></button>
+                </li>
+                <li>
+                    <p-checkbox binary="true"></p-checkbox>
+                    <span class="task-name">Plan the new theme</span>
+                    <button type="button" pButton icon="pi pi-check"></button>
+                </li>
+                <li>
+                    <p-checkbox binary="true"></p-checkbox>
+                    <span class="task-name">Client meeting</span>
+                    <button type="button" pButton icon="pi pi-check"></button>
+                </li>
+            </ul>
+        </p-panel>
+    </div>
+
+    <div class="p-col-12 p-md-6 p-lg-4">
+        <p-panel header="Contact Us">
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <p-dropdown [options]="cities" [(ngModel)]="selectedCity"></p-dropdown>
+                </div>
+                <div class="p-col-12">
+                    <input id="name" type="text" pInputText placeholder="Name"/>
+                </div>
+                <div class="p-col-12">
+                    <input id="age" type="text" pInputText placeholder="Age"/>
+                </div>
+                <div class="p-col-12">
+                    <input id="message" type="text" pInputText placeholder="Message"/>
+                </div>
+                <div class="p-col-12">
+                    <button type="button" label="Send" icon="pi pi-plus" pButton></button>
+                </div>
+            </div>
+        </p-panel>
+    </div>
+    <div class="p-col-12 p-lg-4">
+        <p-panel header="Contacts" [style]="{'height':'100%'}">
+            <ul class="contacts">
+                <li>
+                    <a href="#">
+                        <img src="assets/layout/images/avatar_1.png" width="35">
+                        <span class="name">Claire Williams</span>
+                        <span class="email">clare@pf-omega.com</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="assets/layout/images/avatar_2.png" width="35">
+                        <span class="name">Jason Dourne</span>
+                        <span class="email">jason@pf-omega.com</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="assets/layout/images/avatar_3.png" width="35">
+                        <span class="name">Jane Davidson</span>
+                        <span class="email">jane@pf-omega.com</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="assets/layout/images/avatar_4.png" width="35">
+                        <span class="name">Tony Corleone</span>
+                        <span class="email">tony@pf-omega.com</span>
+                    </a>
+                </li>
+            </ul>
+        </p-panel>
+    </div>
+
+    <div class="p-col-12 p-md-4">
+        <p-panel header="Recent Sales">
+            <p-table [value]="products" [paginator]="true" [rows]="5" styleClass="p-datatable-customers">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="id">ID
+                            <p-sortIcon field="id"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="category">Category
+                            <p-sortIcon field="category"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="price">Price
+                            <p-sortIcon field="price"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="inventoryStatus">Status
+                            <p-sortIcon field="inventoryStatus"></p-sortIcon>
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>
+                            <span class="p-column-title">Id</span>
+                            {{product.id}}</td>
+                        <td>
+                            <span class="p-column-title">Category</span>
+                            {{product.category}}</td>
+                        <td>
+                            <span class="p-column-title">Price</span>
+                            {{product.price | currency:'USD'}}</td>
+                        <td>
+                            <span class="p-column-title">Status</span>
+                            <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
+                        </td>
+                        <td style="text-align: center">
+                            <button pButton type="button" icon="pi pi-search"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-panel>
+    </div>
+    <div class="p-col-12 p-md-8">
+        <p-panel header="Sales Chart">
+            <p-chart type="line" [data]="chartData" responsive="true"></p-chart>
+        </p-panel>
+    </div>
+    <div class="p-col-12 p-md-8">
+        <p-panel header="Calendar" [style]="{'height':'100%'}">
+            <full-calendar [options]="fullcalendarOptions" ></full-calendar>
+        </p-panel>
+    </div>
+    <div class="p-col-12 p-md-4">
+        <p-panel header="Activity" [style]="{'height':'100%'}">
+            <div class="activity-header">
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <span style="font-weight:bold">Last Activity</span>
+                        <p>Updated 1 minute ago</p>
+                    </div>
+                    <div class="p-col-6" style="text-align:right">
+                        <button type="button" label="Refresh" icon="pi pi-refresh" pButton></button>
+                    </div>
+                </div>
+            </div>
+            <ul class="activity-list">
+                <li>
+                    <div class="p-d-flex p-jc-between p-ai-center p-mb-3">
+                        <h5 class="activity p-m-0">Income</h5>
+                        <div class="count">$900</div>
+                    </div>
+                    <p-progressBar value="95" [showValue]="false"></p-progressBar>
+                </li>
+                <li>
+                    <div class="p-d-flex p-jc-between p-ai-center p-mb-3">
+                        <h5 class="activity p-m-0">Tax</h5>
+                        <div class="count" style="background-color:#f9c851">$250</div>
+                    </div>
+                    <p-progressBar value="24" [showValue]="false"></p-progressBar>
+                </li>
+                <li>
+                    <div class="p-d-flex p-jc-between p-ai-center p-mb-3">
+                        <h5 class="activity p-m-0">Invoices</h5>
+                        <div class="count" style="background-color:#20d077">$125</div>
+                    </div>
+                    <p-progressBar value="55" [showValue]="false"></p-progressBar>
+                </li>
+                <li>
+                    <div class="p-d-flex p-jc-between p-ai-center p-mb-3">
+                        <h5 class="activity p-m-0">Expenses</h5>
+                        <div class="count" style="background-color:#f9c851">$250</div>
+                    </div>
+                    <p-progressBar value="15" [showValue]="false"></p-progressBar>
+                </li>
+                <li>
+                    <div class="p-d-flex p-jc-between p-ai-center p-mb-3">
+                        <h5 class="activity p-m-0">Bonus</h5>
+                        <div class="count" style="background-color:#007be5">$350</div>
+                    </div>
+                    <p-progressBar value="5" [showValue]="false"></p-progressBar>
+                </li>
+                <li>
+                    <div class="p-d-flex p-jc-between p-ai-center p-mb-3">
+                        <h5 class="activity p-m-0">Revenue</h5>
+                        <div class="count" style="background-color:#ef6262">$500</div>
+                    </div>
+                    <p-progressBar value="25" [showValue]="false"></p-progressBar>
+                </li>
+            </ul>
+        </p-panel>
+    </div>
+</div>

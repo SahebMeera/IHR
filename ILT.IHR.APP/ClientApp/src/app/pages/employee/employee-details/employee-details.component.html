@@ -1,0 +1,500 @@
+<div class="p-grid display-flex-block" *ngIf="true">
+    <p-card class="hidden-web hidden-mobile">
+        <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+            <label class="control-label employee-details-header p-pt-0 p-pb-0 p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Emp Code :</label>
+            <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                {{employeeCode}}
+            </div>
+        </div>
+        <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+            <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Employee Name :</label>
+            <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                {{EmployeeForm.value.FirstName + " " +EmployeeForm.value.LastName}}
+            </div>
+        </div>
+        <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+            <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Title :</label>
+            <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                {{Title}}
+            </div>
+        </div>
+        <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+            <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Department :</label>
+            <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                {{Department}}
+            </div>
+        </div>
+        <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+            <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Work Authorization :</label>
+            <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                {{WorkAuthorization}}
+            </div>
+        </div>
+        <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+            <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Employment Type :</label>
+            <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                {{EmploymentType}}
+            </div>
+        </div>
+    </p-card>
+
+
+
+    <div class="p-col-12 p-pt-1 p-pb-0 add-edit-employee hidden-web" >
+        <div class="p-col-12 row p-p-0">
+            <p-card>
+                <div class="p-grid p-md-12  p-p-0">
+                    <div class="p-md-4 p-pl-0">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label employee-details-header p-pr-0 p-md-4 display-flex-block mobile-display-block p-justify-end" style="font-weight:600">Emp Code:</label>
+                            <div class="p-md-8 p-pl-2">
+                                {{employeeCode}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-md-4 p-pl-0">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label p-pr-0 employee-details-header  p-md-4  mobile-display-block display-flex-block p-justify-end nowrap-white-space" style="font-weight:600">Employee Name:</label>
+                            <div class="p-md-8 col-control">
+                                {{EmployeeForm.value.FirstName + " " +EmployeeForm.value.LastName}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-md-4 p-pl-2">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label p-pr-0  employee-details-header p-md-4 mobile-display-block display-flex-block p-justify-end" style="font-weight:600">Title:</label>
+                            <div class="p-md-8 col-control">
+                                {{Title}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="p-grid p-md-12  p-p-0">
+                    <div class="p-md-4 p-p-0">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label p-pr-0 p-pb-0 employee-details-header mobile-display-block p-md-4 display-flex-block p-justify-end" style="font-weight:600">Department:</label>
+                            <div class="p-md-8 p-pl-2 p-pb-0 ">
+                                {{Department}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-md-4 p-p-0">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label p-pr-0 p-pb-0  employee-details-header p-md-4 mobile-display-block  display-flex-block p-justify-end nowrap-white-space" style="font-weight:600">Work Authorization:</label>
+                            <div class="p-md-8 col-control p-pb-0 ">
+                                {{WorkAuthorization}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-md-4 p-p-0 p-pl-4 ">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label p-pr-0 p-pb-0  employee-details-header p-md-4 display-flex-block p-justify-end" style="font-weight:600">Employment Type:</label>
+                            <div class="p-md-8 col-control p-pb-0">
+                                {{EmploymentType}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p-card>
+        </div>
+    </div>
+    <div class="p-col-12 p-pt-0 p-pb-0 p-mt-2 add-edit-employee">
+        <p-tabView class="p-pl-0 p-pr-0">
+            <p-tabPanel header="Employee">
+                <div class="p-col-12 p-p-0 p-text-center remove-padding" *ngIf="ErrorMessage !== null || ErrorMessage !== ''" [ngStyle]="{'display': ErrorMessage !== '' ? 'block' : 'none' }">
+                    <span class="error-message-color" style="color: red;">{{ErrorMessage}} &nbsp;</span>
+                </div>
+                <div class="p-grid p-pt-1 p-pb-1 p-pr-1 marrgin-top-bottom">
+                    <div class="p-md-9 p-p-0"></div>
+                    <div class="p-md-3 p-p-0 " style="display:flex; justify-content:end;">
+                        <div class="p-md-6 p-p-0 p-text-right">
+                        </div>
+                        <div class="p-md-3  p-p-0 p-text-right" *ngIf="canUpdate" style="margin-right:8px !important;">
+                            <button pButton pRipple type="button" [disabled]="isSaveButtonDisabled" label="Save" class=" btn-width-height p-button-raised " style="margin: 0px !important; width:81px !important;" (click)="checkEmailExist()"></button>
+                        </div>
+                        <div class="p-md-3 p-p-0 p-text-right">
+                            <button pButton pRipple type="button" label="Back" class=" btn-width-height p-button-raised p-button-danger " style="margin: 0px !important; width: 81px !important;" (click)="Back()"></button>
+                        </div>
+                    </div>
+                </div>
+                <form [formGroup]="EmployeeForm">
+                    <div class="p-grid display-flex-block">
+                        <div class="p-md-12 p-pl-0 p-pr-0">
+                            <p-fieldset class="employee-part-1">
+                                <div class="p-col-12 p-p-0">
+                                    <div class="p-fluid p-formgrid">
+                                        <div class="p-grid p-pb-2 mobile-display-block">
+                                            <div class="p-md-4 display-flex-block p-pt-0 mobile-display-block ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname6">* EmpCode </label>
+                                                <input type="text" formControlName="EmployeeCode" pInputText [ngClass]="isEditMode === false ? 'disabled' : ''" />
+                                            </div>
+                                            <div class=" form-group p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8">* Department </label>
+                                                <div class="p-md-8 p-p-0">
+                                                    <p-dropdown [options]="DepartmentList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditEmployeeFormControls.DepartmentID.errors }"
+                                                                appendTo="body"
+                                                                formControlName="DepartmentID"
+                                                                (onChange)="commonUtils.setDropdownvalue(DepartmentList,'departmentID', $event, EmployeeForm,'Department', 'deptName', false)"
+                                                                placeholder="Select Department"
+                                                                optionValue="departmentID"
+                                                                optionLabel="deptName"></p-dropdown>
+                                                </div>
+                                            </div>
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname89">* Title </label>
+                                                <div class="p-md-8 p-p-0">
+                                                    <p-dropdown [options]="TitleList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditEmployeeFormControls.TitleID.errors }"
+                                                                appendTo="body"
+                                                                formControlName="TitleID"
+                                                                (onChange)="commonUtils.setDropdownvalue(TitleList,'listValueID', $event, EmployeeForm,'Title', 'valueDesc', false)"
+                                                                placeholder="Select Title"
+                                                                optionValue="listValueID"
+                                                                optionLabel="valueDesc"></p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-grid p-pb-0 mobile-display-block">
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname6">* First Name </label>
+                                                <input type="text" formControlName="FirstName" pInputText maxlength="50" [ngClass]="{ 'is-invalid': submitted && addEditEmployeeFormControls.FirstName.errors }" />
+                                            </div>
+                                            <div class=" form-group p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8">* Last Name </label>
+                                                <input type="text" formControlName="LastName" pInputText maxlength="50" [ngClass]="{ 'is-invalid': submitted && addEditEmployeeFormControls.LastName.errors }" />
+                                            </div>
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname89">Middle Name</label>
+                                                <input type="text" formControlName="MiddleName" pInputText maxlength="50" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-fieldset>
+
+                            <p-fieldset class=" employee-part-1 field-set">
+                                <div class="p-col-12 p-p-0">
+                                    <div class="p-fluid p-formgrid">
+                                        <div class="p-grid p-pb-2 mobile-display-block">
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname6">* Gender </label>
+                                                <div class="p-md-8 p-p-0">
+                                                    <p-dropdown [options]="GenderList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditEmployeeFormControls.GenderID.errors }"
+                                                                appendTo="body"
+                                                                formControlName="GenderID"
+                                                                placeholder="Select Gender"
+                                                                (onChange)="commonUtils.setDropdownvalue(GenderList,'listValueID', $event, EmployeeForm,'Gender', 'valueDesc', false)"
+                                                                optionValue="listValueID"
+                                                                optionLabel="valueDesc"></p-dropdown>
+                                                </div>
+                                            </div>
+                                            <div class=" form-group p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8">* Birth Date </label>
+                                                <p-calendar class="p-md-8 p-p-0" formControlName="BirthDate" [ngClass]="{ 'is-invalid': submitted && addEditEmployeeFormControls.BirthDate.errors }"
+                                                            [showIcon]="true"
+                                                            dateFormat="mm/dd/yy"
+                                                            inputId="firstname6"
+                                                            [monthNavigator]="true"
+                                                            [yearNavigator]="true"
+                                                            [yearRange]="commonUtils.getDateRange()"
+                                                             [maxDate]="commonUtils.getNoFeaturesDates()"
+                                                            appendTo="body"></p-calendar>
+                                            </div>
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname89">* Marital Status </label>
+                                                <div class="p-md-8 p-p-0">
+                                                    <p-dropdown [options]="MaritalStautsList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditEmployeeFormControls.MaritalStatusID.errors }"
+                                                                appendTo="body"
+                                                                formControlName="MaritalStatusID"
+                                                                (onChange)="commonUtils.setDropdownvalue(MaritalStautsList,'listValueID', $event, EmployeeForm,'MaritalStatus', 'valueDesc', false)"
+                                                                placeholder="Select Status"
+                                                                optionValue="listValueID"
+                                                                optionLabel="valueDesc"></p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-grid p-pb-2 mobile-display-block">
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname6">* HireDate </label>
+                                                <p-calendar class="p-md-8 p-p-0" formControlName="HireDate" [ngClass]="{ 'is-invalid': submitted && addEditEmployeeFormControls.HireDate.errors }"
+                                                            [showIcon]="true"
+                                                            inputId="firstname6"
+                                                            [monthNavigator]="true"
+                                                            dateFormat="mm/dd/yy"
+                                                            [yearNavigator]="true"
+                                                            [yearRange]="commonUtils.getDateRange()"
+                                                            appendTo="body"></p-calendar>
+                                            </div>
+                                            <div class=" form-group p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8">* Work Auth </label>
+                                                <div class="p-md-8 p-p-0">
+                                                    <p-dropdown [options]="WorkAuthorizationList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditEmployeeFormControls.WorkAuthorizationID.errors }"
+                                                                appendTo="body"
+                                                                formControlName="WorkAuthorizationID"
+                                                                placeholder="Select WorkAuth"
+                                                                (onChange)="commonUtils.setDropdownvalue(WorkAuthorizationList,'listValueID', $event, EmployeeForm,'WorkAuthorization', 'valueDesc', false)"
+                                                                optionValue="listValueID"
+                                                                optionLabel="valueDesc"></p-dropdown>
+                                                </div>
+                                            </div>
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname89">* Employee Type</label>
+                                                <div class="p-md-8 p-p-0">
+                                                    <p-dropdown [options]="EmployMentList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditEmployeeFormControls.EmploymentTypeID.errors }"
+                                                                appendTo="body"
+                                                                formControlName="EmploymentTypeID"
+                                                                placeholder="Select EmpType"
+                                                                (onChange)="commonUtils.setDropdownvalue(EmployMentList,'listValueID', $event, EmployeeForm,'EmploymentType', 'valueDesc', false)"
+                                                                optionValue="listValueID"
+                                                                optionLabel="valueDesc"></p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-grid p-pb-0 mobile-display-block">
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname6">* Country </label>
+                                                <div class="p-md-8 p-p-0">
+                                                    <p-dropdown [options]="CountryList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditEmployeeFormControls.Country.errors }"
+                                                                appendTo="body"
+                                                                formControlName="Country"
+                                                                (onChange)="onChangeEmployeeCountry($event)"
+                                                                placeholder="Select Country"
+                                                                optionValue="countryDesc"
+                                                                optionLabel="countryDesc"></p-dropdown>
+                                                </div>
+                                            </div>
+                                            <div class="form-group p-md-4 display-flex-block p-pt-0" *ngIf="country !== null && country !== undefined && country.toString().toUpperCase() === countries.UNITEDSTATES">
+
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8">SSN</label>
+                                                <p-inputMask *ngIf="isEditMode && isEditPermissionForNPIRole && isViewPermissionForNPIRole" mask="999-99-9999" class="p-md-8 p-p-0" formControlName="SSN"></p-inputMask>
+                                               <!--<p-inputMask *ngIf="isEditMode && isEditPermissionForNPIRole && (isViewPermissionForNPIRole === false)" unmask="true" mask="***-**-****" [autoClear]="false" characterPattern="[A-Z,a-z,0-9]" class="p-md-8 p-p-0" formControlName="SSN" disabled="true">
+=                                                </p-inputMask>-->
+                                                <p-inputMask *ngIf="isEditMode && isEditPermissionForNPIRole && (isViewPermissionForNPIRole === false)" mask="xxx-xx-xxxx" class="p-md-8 p-p-0" formControlName="SSN" disabled="true"></p-inputMask>
+                                                <p-inputMask *ngIf="!isEditMode && !isEditPermissionForNPIRole && !isViewPermissionForNPIRole" mask="999-99-9999" class="p-md-8 p-p-0" formControlName="SSN"></p-inputMask>
+
+                                            </div>
+                                            <div class=" form-group p-md-4 display-flex-block p-pt-0 " *ngIf="country !== null && country !== undefined && country.toString().toUpperCase() !== countries.UNITEDSTATES">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8"> PAN</label>
+                                                <p-inputMask *ngIf="isEditPermissionForNPIRole" formControlName="PAN" maxlength="10" class="maskpan" disabled ="true" mask="xxxxxxxxxx" ></p-inputMask>
+                                                <input type="text" *ngIf="!isEditPermissionForNPIRole" formControlName="PAN" pInputText maxlength="10" style="text-transform: uppercase;" />
+                                            </div>
+                                            <div class="p-md-4 display-flex-block p-pt-0 " *ngIf="country !== null && country !== undefined && country.toString().toUpperCase() !== countries.UNITEDSTATES">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname89">AadharNumber</label>
+                                                <!--<input type="text" *ngIf="isEditMode && isEditPermissionForNPIRole && isViewPermissionForNPIRole" formControlName="AadharNumber" pInputText maxlength="12" />
+                                                    <p-inputMask type="text" *ngIf="isEditMode && isEditPermissionForNPIRole && (isViewPermissionForNPIRole === false)" formControlName="AadharNumber" class="maskAadhar"  disabled ="true" mask="xxxxxxxxxxxx" maxlength="12" ></p-inputMask>
+                                                    <input type="text" *ngIf="!isEditMode && !isEditPermissionForNPIRole && !isViewPermissionForNPIRole" formControlName="AadharNumber" pInputText maxlength="12" />-->
+                                                <p-inputMask *ngIf="isEditPermissionForNPIRole" formControlName="AadharNumber" maxlength="12" class="maskAadhar" disabled="true" mask="xxxxxxxxxxxx"></p-inputMask>
+                                                <input type="text" *ngIf="!isEditPermissionForNPIRole" formControlName="AadharNumber" pInputText maxlength="12" style="text-transform: uppercase;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-fieldset>
+
+                            <p-fieldset class="employee-part-2" legend="Address">
+                                <div class="p-col-12 p-p-0">
+                                    <div class="p-fluid p-formgrid">
+                                        <div class="p-grid p-pb-2 display-flex-block">
+                                            <div class="p-md-4 display-flex-block p-pt-0 employee-address" >
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" style="align-items: baseline; padding-top:0px !important;" for="firstname6">Current </label>
+                                                <div class="p-md-8 p-p-0">
+                                                    <p-card styleClass="p-card-shadow address-card" [ngClass]="{'addressValidation':  isAddressInvalid === true}">
+                                                        <div class="p-field p-m-0 address-height">
+                                                            <div class="p-md-12 p-p-0" *ngIf="currentAddress !== null && currentAddress !== undefined">
+                                                                <label *ngIf="currentAddress.Address1 !== '' && currentAddress.Address1 !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{currentAddress.Address1}}</label>
+                                                                <label *ngIf="currentAddress.Address2 !== '' && currentAddress.Address2 !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{currentAddress.Address2}}</label>
+                                                                <label *ngIf="currentAddress.City !== '' && currentAddress.City !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{currentAddress.City}}</label>
+                                                                <label *ngIf="currentAddress.State !== '' && currentAddress.State !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{currentAddress.State}}- {{currentAddress.ZipCode}}</label>
+                                                                <label *ngIf="currentAddress.Country !== '' && currentAddress.Country !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{currentAddress.Country}}</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="p-field p-m-0">
+                                                            <div class="address-card-action-align" *ngIf="canUpdate">
+                                                                <div class="address-button" *ngIf="currentAddress === undefined || currentAddress === null || currentAddress.EmployeeAddressID !== 0">
+                                                                    <p-button icon="pi pi-plus" class="address-row-action" (click)="addAddress(employeeAddresses.CURRADD)"></p-button>
+                                                                </div>
+                                                                <div class="address-button" style="padding-left:5px;" *ngIf="currentAddress !== undefined && currentAddress !== null && currentAddress.Address1 !== ''">
+                                                                    <p-button icon="pi pi-pencil" class="address-row-action" (click)="EditAddress(currentAddress)"></p-button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </p-card>
+                                                </div>
+                                            </div>
+                                            <div class=" form-group p-md-4 display-flex-block p-pt-0 employee-address">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" style="align-items: baseline; padding-top:0px !important;" for="firstname8">Mailing </label>
+                                                <div class="p-md-8 p-p-0">
+                                                    <p-card styleClass="p-card-shadow address-card">
+                                                        <div class="p-field p-m-0 address-height">
+                                                            <div class="p-md-12 p-p-0" *ngIf="mailingAddress !== null && mailingAddress !== undefined">
+                                                                <label *ngIf="mailingAddress.Address1 !== '' && mailingAddress.Address1 !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{mailingAddress.Address1}}</label>
+                                                                <label *ngIf="mailingAddress.Address2 !== '' && mailingAddress.Address2 !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{mailingAddress.Address2}}</label>
+                                                                <label *ngIf="mailingAddress.City !== '' && mailingAddress.City !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{mailingAddress.City}}</label>
+                                                                <label *ngIf="mailingAddress.State !== '' && mailingAddress.State !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{mailingAddress.State}} - {{mailingAddress.ZipCode}}</label>
+                                                                <label *ngIf="mailingAddress.Country !== '' && mailingAddress.Country !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{mailingAddress.Country}}</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="p-field p-m-0">
+                                                            <div class="address-card-action-align" *ngIf="canUpdate">
+                                                                <div class="address-button" *ngIf="mailingAddress === undefined || mailingAddress === null ||  mailingAddress.EmployeeAddressID !== 0">
+                                                                    <p-button icon="pi pi-plus" class="address-row-action" (click)="addAddress(employeeAddresses.MAILADD)"></p-button>
+                                                                </div>
+                                                                <div class="address-button" style="padding-left:5px;" *ngIf="mailingAddress !== undefined && mailingAddress !== null && mailingAddress.Address1 !== ''">
+                                                                    <p-button icon="pi pi-pencil" class="address-row-action" (click)="EditAddress(mailingAddress)"></p-button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </p-card>
+                                                </div>
+                                            </div>
+                                            <div class="p-md-4 display-flex-block p-pt-0 employee-address">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname89" style="align-items: baseline; padding-top:0px !important;"> Permanent </label>
+
+                                                <div class="p-md-8 p-p-0">
+                                                    <p-card styleClass="p-card-shadow address-card">
+                                                        <div class="p-field p-m-0 address-height">
+                                                            <div class="p-md-12 p-p-0" *ngIf="permanentAddress !== null && permanentAddress !== undefined">
+                                                                <label *ngIf="permanentAddress.Address1 !== '' && permanentAddress.Address1 !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{permanentAddress.Address1}}</label>
+                                                                <label *ngIf="permanentAddress.Address2 !== '' && permanentAddress.Address2 !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{permanentAddress.Address2}}</label>
+                                                                <label *ngIf="permanentAddress.City !== '' && permanentAddress.City !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{permanentAddress.City}}</label>
+                                                                <label *ngIf="permanentAddress.State !== '' && permanentAddress.State !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{permanentAddress.State}} - {{permanentAddress.ZipCode}}</label>
+                                                                <label *ngIf="permanentAddress.Country !== '' && permanentAddress.Country !== null" class="control-label p-p-0 p-pt-1 p-col-12 display-flex-block p-mb-0" style="white-space:break-spaces !important;">{{permanentAddress.Country}}</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="p-field p-m-0">
+                                                            <div class="address-card-action-align" *ngIf="canUpdate">
+                                                                <div class="address-button" *ngIf="permanentAddress === undefined || permanentAddress === null || permanentAddress.EmployeeAddressID !== 0">
+                                                                    <p-button icon="pi pi-plus" class="address-row-action" (click)="addAddress(employeeAddresses.PERMADD)"></p-button>
+                                                                </div>
+                                                                <div class="address-button" style="padding-left:5px;" *ngIf="permanentAddress !== undefined && permanentAddress !== null && permanentAddress.Address1 !== ''">
+                                                                    <p-button icon="pi pi-pencil" class="address-row-action" (click)="EditAddress(permanentAddress)"></p-button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </p-card>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-fieldset>
+
+
+                            <p-fieldset class="employee-part-2" legend="Contact Info">
+                                <div class="p-col-12 p-p-0">
+                                    <div class="p-fluid p-formgrid">
+                                        <div class="p-grid p-pb-2 mobile-display-block">
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname6">* Phone </label>
+                                                <p-inputMask mask="9999999999" class="p-md-8 p-p-0" formControlName="Phone" [ngClass]="{ 'is-invalid': submitted && addEditEmployeeFormControls.Phone.errors }"></p-inputMask>
+                                            </div>
+                                            <div class=" form-group p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8">* Email </label>
+                                                <input type="text" formControlName="Email" pInputText [ngClass]="{ 'is-invalid': submitted && addEditEmployeeFormControls.Email.errors }" />
+                                            </div>
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname89"> Work Email </label>
+                                                <input type="text" formControlName="WorkEmail" pInputText />
+                                            </div>
+                                        </div>
+                                        <div class="p-grid p-pb-0 mobile-display-block">
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname6"> Home Phone </label>
+                                                <p-inputMask mask="9999999999" class="p-md-8 p-p-0" formControlName="HomePhone"></p-inputMask>
+                                            </div>
+                                            <div class=" form-group p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8"> Work Phone</label>
+                                                <p-inputMask mask="9999999999" class="p-md-8 p-p-0" formControlName="WorkPhone"></p-inputMask>
+
+                                            </div>
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname89">Manager </label>
+                                                <div class="p-md-8 p-p-0">
+                                                    <p-dropdown [options]="ManagerList"
+                                                                appendTo="body"
+                                                                formControlName="ManagerID"
+                                                                placeholder="Select Manager"
+                                                                (onChange)="commonUtils.setDropdownvalue(ManagerList,'employeeID', $event, EmployeeForm,'Manager', 'employeeName', false)"
+                                                                optionValue="employeeID"
+                                                                optionLabel="employeeName">
+                                                        <ng-template let-ManagerList pTemplate="item">
+                                                            <div class="flex align-items-center ManagerList-item">
+                                                                <div>
+                                                                    {{ManagerList.employeeName}} {{(ManagerList.termDate === null || commonUtils.defaultDateTimeLocalSet(myDate) <= commonUtils.defaultDateTimeLocalSet(ManagerList.termDate) ? '' : '*')}}
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-fieldset>
+                            <p-fieldset class="employee-part-1 field-set">
+                                <div class="p-col-12 p-p-0">
+                                    <div class="p-fluid p-formgrid">
+                                        <div class="p-grid p-pb-2 mobile-display-block">
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname6">Salary </label>
+                                                <!--<input type="text" formControlName="Salary" pInputText />-->
+                                                <p-inputMask *ngIf="isEditPermissionForNPIRole" formControlName="Salary" maxlength="10" class="maskAadhar" disabled="true" mask="xxxxxxxxxx"></p-inputMask>
+                                                <input type="text" *ngIf="!isEditPermissionForNPIRole" formControlName="Salary" pInputText maxlength="10" style="text-transform: uppercase;" />
+                                            </div>
+                                            <div class=" form-group p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8"> Variable Pay </label>
+                                                <!--<input type="text" formControlName="VariablePay" pInputText />-->
+                                                <p-inputMask *ngIf="isEditPermissionForNPIRole" formControlName="VariablePay" maxlength="10" class="maskAadhar" disabled="true" mask="xxxxxxxxxx"></p-inputMask>
+                                                <input type="text" *ngIf="!isEditPermissionForNPIRole" formControlName="VariablePay" pInputText maxlength="10" style="text-transform: uppercase;" />
+                                            </div>
+                                            <div class="p-md-4 display-flex-block p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname89">Term Date </label>
+                                                <p-calendar class="p-md-8 p-p-0" formControlName="TermDate"
+                                                            [showIcon]="true"
+                                                            dateFormat="mm/dd/yy"
+                                                            inputId="firstname6"
+                                                            (onSelect)="onchangeTermDate()"
+                                                            [monthNavigator]="true"
+                                                            [yearNavigator]="true"
+                                                            [yearRange]="commonUtils.getDateRange()"
+                                                            appendTo="body"></p-calendar>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-fieldset>
+                        </div>
+                    </div>
+                </form>
+            </p-tabPanel>
+            <p-tabPanel header="Emergency Contact" [disabled]="EmployeeForm.value.EmployeeID === 0 ? true : false" (onChange)="tab2()" *ngIf="EmployeeInfoRolePermission !== null && EmployeeInfoRolePermission !== undefined && EmployeeInfoRolePermission.view === true">
+                <app-employee-emergency #emergencyModal [EmployeeID]="EmployeeID" [Name]="EmployeeForm.value.FirstName + '' + EmployeeForm.value.LastName"></app-employee-emergency>
+            </p-tabPanel>
+            <p-tabPanel header="Direct Deposits" [disabled]="EmployeeForm.value.EmployeeID === 0 ? true : false" (onChange)="tab3()" *ngIf="EmployeeInfoRolePermission !== null && EmployeeInfoRolePermission !== undefined && EmployeeInfoRolePermission.view === true">
+                <app-direct-deposit #directDopositModal [EmployeeID]="EmployeeID" [Name]="EmployeeForm.value.FirstName + '' + EmployeeForm.value.LastName"></app-direct-deposit>
+            </p-tabPanel>
+            <p-tabPanel header="Dependents" [disabled]="EmployeeForm.value.EmployeeID === 0 ? true : false" (onChange)="tab4()" *ngIf="EmployeeInfoRolePermission !== null && EmployeeInfoRolePermission !== undefined && EmployeeInfoRolePermission.view === true">
+                <app-employee-dependent #dependentModal [EmployeeID]="EmployeeID" [Name]="EmployeeForm.value.FirstName + '' + EmployeeForm.value.LastName"></app-employee-dependent>
+            </p-tabPanel>
+            <p-tabPanel header="Assignments" [disabled]="EmployeeForm.value.EmployeeID === 0 ? true : false" (onChange)="tab5()" *ngIf="EmployeeAssigmentRolePermission !== null && EmployeeAssigmentRolePermission !== undefined && EmployeeAssigmentRolePermission.view === true">
+                <app-employee-assignment #assignmentModal [EmployeeID]="EmployeeID" [Name]="EmployeeForm.value.FirstName + '' + EmployeeForm.value.LastName"></app-employee-assignment>
+            </p-tabPanel>
+            <p-tabPanel header="W4 Info" [disabled]="EmployeeForm.value.EmployeeID === 0 ? true : false" (onChange)="tab6()" *ngIf="W4InfoPermission !== null && W4InfoPermission !== undefined && W4InfoPermission.view === true && isShowW4I9Info === false">
+                <app-employee-w4 #employeeW4Modal [EmployeeID]="EmployeeID" [SSN]="EmployeeForm.value.SSN" [Name]="EmployeeForm.value.FirstName + '' + EmployeeForm.value.LastName"></app-employee-w4>
+            </p-tabPanel>
+            <p-tabPanel header="I9 Info" [disabled]="EmployeeForm.value.EmployeeID === 0 ? true : false" *ngIf="I9InfoPermission !== null && I9InfoPermission !== undefined && I9InfoPermission.view === true && isShowW4I9Info === false">
+                <app-form-i9 #employeeFormI9Modal [EmployeeID]="EmployeeID" [SSN]="EmployeeForm.value.SSN" [Name]="EmployeeForm.value.FirstName + '' + EmployeeForm.value.LastName"></app-form-i9>
+            </p-tabPanel>
+            <p-tabPanel header="Salary" [disabled]="EmployeeForm.value.EmployeeID === 0 ? true : false" *ngIf="SalaryInfoPermission !== null && SalaryInfoPermission !== undefined && SalaryInfoPermission.view === true">
+                <app-employee-salary #employeeFormI9Modal [EmployeeID]="EmployeeID" [Name]="EmployeeForm.value.FirstName + '' + EmployeeForm.value.LastName"></app-employee-salary>
+            </p-tabPanel>
+            <p-tabPanel header="Skills" [disabled]="EmployeeForm.value.EmployeeID === 0 ? true : false" (onChange)="tab9()" *ngIf="SKillInfoPermission !== null && SKillInfoPermission !== undefined && SKillInfoPermission.view === true">
+                <app-employee-skill #employeeSkillModal [EmployeeID]="EmployeeID" [SSN]="EmployeeForm.value.SSN" [Name]="EmployeeForm.value.FirstName + '' + EmployeeForm.value.LastName"></app-employee-skill>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+
+</div>
+<app-add-edit-address #AddEditAddressModal [EmployeeName]="EmployeeForm.value.FirstName+''+EmployeeForm.value.LastName" (updatedEmpAddress)="updateEmpAddressList($event)"></app-add-edit-address>
+<p-toast></p-toast>

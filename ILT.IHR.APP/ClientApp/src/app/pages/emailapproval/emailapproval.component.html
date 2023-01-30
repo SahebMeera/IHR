@@ -1,0 +1,48 @@
+
+    <div class="wrapper menu-layout-static">
+        <header>
+            <div class="topbar " style="left: 0px; padding-right: 0.5rem; padding-left: 0.5rem; height: 3.7rem;">
+                <div id="topbar-left" style="display: flex;">
+                    <div>
+                        <img class="navbar-brand" src="../../../../assets/layout/images/pages/DEV.jpg" width="160" height="40" />
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="p-grid p-d-flex  topbar mobile-top-bar" style="background-color: #1979c5; text-align:center;">
+                    <div class="p-col-12 p-pr-0 flex-display login-user-display">
+                        <div class="p-col-12 p-pr-0 ">
+                            <img src="../../../assets/layout/images/pages/InfoHRAppLogo.png" width="290px;" height="55px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="main">
+            <div class="content p-pl-3 p-pr-3 p-pt-4">
+                <div class="row">
+                    <div align="center" class="p-col-12">
+                        &nbsp;
+                    </div>
+                    <div class="p-col-12 form-group align-center" style="height:200px;">
+                        <div *ngIf="DisplayMessage !== null && DisplayMessage !== '' && DisplayMessage !== undefined">
+                            <div class="spinnerEmail"></div>
+                        </div>
+                        <div *ngIf="DisplayMessage !== null && DisplayMessage !== ''">
+                            {{DisplayMessage}}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="p-grid">
+        <div class="p-col-12">
+            <div class="p-col-2"> </div>
+            <div class="p-col-10"> </div>
+        </div>
+    </div>-->
+

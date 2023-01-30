@@ -1,0 +1,155 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="800" #addEditAssetModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="AssetForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-col-12 p-p-0 p-text-center remove-padding" style="margin-bottom: 2rem;" *ngIf="ErrorMessage !== null || ErrorMessage !== ''" [ngStyle]="{'display': ErrorMessage !== '' ? 'block' : 'none' }">
+                        <span class="error-message-color" style="color: red;">{{ErrorMessage}} &nbsp;</span>
+                    </div>
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">Asset Type </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="AssetTypeList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditTicketControls.AssetTypeID.errors }"
+                                                [disabled]="disabledvalue"
+                                                appendTo="body"
+                                                formControlName="AssetTypeID"
+                                                placeholder="Select Type"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname3">Tag</label>
+                                <div class="p-md-8 p-p-0">
+                                    <input type="text" id="disabled-input" formControlName="Tag" pInputText [ngClass]="{ 'is-invalid': submitted && addEditTicketControls.Tag.errors }" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2">Purchase Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="PurchaseDate"
+                                            [showIcon]="true"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">Warranty Exp Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="WarantyExpDate"
+                                            [showIcon]="true"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8"> Make</label>
+                                <div class="p-md-10 p-p-0">
+                                    <input type="text" id="disabled-input" formControlName="Make" pInputText />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8"> Model</label>
+                                <div class="p-md-10 p-p-0">
+                                    <input type="text" id="disabled-input" formControlName="Model" pInputText />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8" style=" display: flex !important; align-items: flex-start;">Configuration</label>
+                                <div class="p-md-10 p-p-0">
+                                    <textarea id="float-input" rows="3" cols="30" formControlName="Configuration" pInputTextarea [ngClass]="{ 'is-invalid': submitted && addEditTicketControls.Configuration.errors}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8"> OS</label>
+                                <div class="p-md-8 p-p-0">
+                                    <input type="text" id="disabled-input" formControlName="OS" pInputText />
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8"> WiFiMAC</label>
+                                <div class="p-md-8 p-p-0">
+                                    <input type="text" id="disabled-input" formControlName="WiFiMAC" pInputText />
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8"> LANMAC</label>
+                                <div class="p-md-8 p-p-0">
+                                    <input type="text" id="disabled-input" formControlName="LANMAC" pInputText />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2"> Assigned To</label>
+                                <div class="p-md-8 p-p-0" *ngIf="isAssignedTemp">
+                                    <input type="text" id="disabled-input" formControlName="AssignedTo" (focusout)="onAssignedTempChange()" pInputText [ngStyle]="{'outline':  isAssignedTempRequired === true ? '1px solid red': ''  }" />
+                                </div>
+                                <div class="p-md-8 p-p-0" *ngIf="!isAssignedTemp">
+                                    <p-dropdown [options]="Employees"
+                                                appendTo="body"
+                                                formControlName="AssignedToID"
+                                                placeholder="Select Assigned To"
+                                                (onChange)="onAssignedChange($event)"
+                                                optionValue="employeeID"
+                                                optionLabel="employeeName"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">Status</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="AssetStatusList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditTicketControls.StatusID.errors }"
+                                                appendTo="body"
+                                                formControlName="StatusID"
+                                                placeholder="Select Status"
+                                                (onChange)="onStatusChange($event)"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8" style=" display: flex !important; align-items: flex-start;">Comment</label>
+                                <div class="p-md-10 p-p-0">
+                                    <input type="text" id="disabled-input5" formControlName="Comment" pInputText />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>
+

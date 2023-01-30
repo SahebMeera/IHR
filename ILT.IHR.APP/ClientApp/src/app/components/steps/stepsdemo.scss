@@ -1,0 +1,25 @@
+:host ::ng-deep b {
+    display: block
+}
+
+:host ::ng-deep .p-card-body {
+    padding: 2rem;
+}
+
+:host ::ng-deep .p-steps .p-steps-item .p-menuitem-link  {
+    background: none !important;
+}
+:host ::ng-deep .ui-fluid {
+    display: flex;
+    justify-content: center;
+    background: #e1edf9;
+    min-height: 100vh;
+}
+.steps-item {
+    height: 10vh;
+    padding: 0;
+}
+.invalid-feedback {
+    color: #E91E63;
+    display: block;
+}

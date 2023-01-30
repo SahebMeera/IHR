@@ -1,0 +1,82 @@
+.wraper {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative;
+    width: 100%;
+    position: relative;
+}
+
+.signInBlock {
+    padding: 30px;
+    position: relative;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.signUp-form-block {
+    border-radius: 6px;
+    padding: 0;
+    // min-height: 405px;
+    max-width: 900px;
+    width: 100%;
+    margin: 0px auto;
+    background: #ffffff;
+    box-shadow: 13px 13px 9px rgb(0 0 0 / 10%);
+    //display: flex;
+}
+
+.registrationHeading {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+}
+
+:host ::ng-deep b {
+    display: block
+}
+
+:host ::ng-deep .p-card-body {
+    padding: 2rem;
+}
+
+:host ::ng-deep .p-steps .p-steps-item .p-menuitem-link {
+    background: none !important;
+}
+
+:host ::ng-deep .ui-fluid {
+    display: flex;
+    justify-content: center;
+    // background: #e1edf9;
+    // min-height: 100vh;
+}
+// .steps-item {
+//     height: 10vh;
+//     padding: 0;
+// }
+.invalid-feedback {
+    color: #E91E63;
+    display: block;
+}
+
+:host ::ng-deep .p-steps ul {
+    padding-top: 16px !important;
+}
+
+.invalid-feedback {
+    color: #E91E63;
+    display: block;
+}
+
+:host ::ng-deep .signUp-form-block {
+    display: inherit !important;
+}
+
+.text-align {
+    font-size: 42px;
+    text-align: center;
+    color: green;
+}

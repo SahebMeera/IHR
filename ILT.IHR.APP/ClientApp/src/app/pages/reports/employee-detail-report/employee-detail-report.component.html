@@ -1,0 +1,77 @@
+<div class="p-grid p-fluid" *ngIf="true">
+    <div class="p-col-12 pathx-table hidden-web" style="font-size: 13px !important; overflow: auto">
+        <p-table [value]="lstEmployees" styleClass="ui-table-pathx" sortField="employeeName" sortOrder="1">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th>ID</th>
+                    <th>Employee Name</th>
+                    <th>Hire Date</th>
+                    <th>Birth Date</th>
+                    <th>Title</th>
+                    <th>Contact No.</th>
+                    <th>Email</th>
+                    <th>Work Auth</th>
+                    <th>Department</th>
+                    <th>Client Name</th>
+                    <th>Skill</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+                <tr>
+                    <td>{{rowData.employeeCode}}</td>
+                    <td>{{rowData.employeeName}}</td>
+                    <td>{{rowData.hireDate}}</td>
+                    <td>{{rowData.birthDate}}</td>
+                    <td>{{rowData.title}}</td>
+                    <td>{{rowData.phone}}</td>
+                    <td>{{rowData.email}}</td>
+                    <td>{{rowData.workAuthorization}}</td>
+                    <td>{{rowData.department}}</td>
+                    <td>{{rowData.client}}</td>
+                    <td>{{rowData.skill}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+
+    <div class="p-col-12 pathx-table hidden-web hidden-mobile" style="font-size: 13px !important; overflow: auto">
+        <p-table [value]="lstEmployees" styleClass="ui-table-pathx" sortField="employeeName" sortOrder="1"
+                 [scrollable]="true"
+                 scrollHeight="400px"
+                 scrollDirection="horizontal"
+                 [resizableColumns]="true"
+                 [autoLayout]="true">
+            <ng-template pTemplate="header" let-columns>
+                <tr class="white-space">
+                    <th style="min-width:120px">ID</th>
+                    <th style="min-width:200px">Employee Name</th>
+                    <th style="min-width:8px">Hire Date</th>
+                    <th style="min-width:80px">Birth Date</th>
+                    <th style="min-width:200px">Title</th>
+                    <th style="min-width:100px">Contact No.</th>
+                    <th style="min-width:220px">Email</th>
+                    <th style="min-width:120px">Work Auth</th>
+                    <th style="min-width:200px">Department</th>
+                    <th style="min-width:150px">Client Name</th>
+                    <th style="min-width:200px">Skill</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+                <tr class="white-space">
+                    <td style="min-width:120px">{{rowData.employeeCode}}</td>
+                    <td style="min-width:200px">{{rowData.employeeName}}</td>
+                    <td style="min-width:80px">{{rowData.hireDate}}</td>
+                    <td style="min-width:80px">{{rowData.birthDate}}</td>
+                    <td style="min-width:200px">{{rowData.title}}</td>
+                    <td style="min-width:100px">{{rowData.phone}}</td>
+                    <td style="min-width:220px">{{rowData.email}}</td>
+                    <td style="min-width:120px">{{rowData.workAuthorization}}</td>
+                    <td style="min-width:200px">{{rowData.department}}</td>
+                    <td style="min-width:150px">{{rowData.client}}</td>
+                    <td style="min-width:200px">{{rowData.skill}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

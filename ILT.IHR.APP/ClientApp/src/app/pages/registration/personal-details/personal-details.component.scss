@@ -1,0 +1,14 @@
+.nextbutton {
+    display: flex;
+    justify-content: end;
+    padding-left: 0px;
+}
+ .invalid-feedback {
+     color: #E91E63;
+     display: block;
+ }
+:host ::ng-deep .is-invalid-dropdown {
+    .p-dropdown {
+        outline: 1px solid #E91E63;
+    }
+}

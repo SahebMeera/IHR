@@ -1,0 +1,22 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="1100" #employeeNotificationModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <div class="p-col-12">
+            <app-ihr-table #dt [data]="employeeChangeSet" [isPagination]="isPagination"
+                           [sortingField]="'employeeCode'"
+                           [sortingFieldOrder]="1"
+                           [globalFilterFields]="globalFilterFields"
+                           [loading]="loading"
+                           [showCurrentPageReport]="showCurrentPageReport"
+                           [cols]="cols"
+                           [selectedColumns]="selectedColumns"
+                           [rowActions]="rowActions"
+                           [headerActions]="headerActions"
+                           [tableState]="patientLanding">
+            </app-ihr-table>
+        </div>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>

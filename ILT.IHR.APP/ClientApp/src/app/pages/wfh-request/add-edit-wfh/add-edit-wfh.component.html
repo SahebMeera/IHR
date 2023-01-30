@@ -1,0 +1,108 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="800" #addEditWFHModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="WFHForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">Employee Name </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="lstEmployees" [disabled]="isCancel" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditWFHFormControls.EmployeeID.errors }"
+                                                appendTo="body"
+                                                formControlName="EmployeeID"
+                                                (onChange)="onEmployeeChange($event)"
+                                                placeholder="Select Employee"
+                                                optionValue="employeeID"
+                                                optionLabel="employeeName"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2"> Status </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="StatusList" [disabled]="true"
+                                                appendTo="body"
+                                                formControlName="StatusID"
+                                                placeholder="Select Status"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname3">Start Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="StartDate" [ngClass]="{ 'is-invalid': submitted && addEditWFHFormControls.StartDate.errors }"
+                                            [showIcon]="true"
+                                            [disabled]="isCancel"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            (onSelect)="startDateChange($event)"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">End Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="EndDate" [ngClass]="{ 'is-invalid': submitted && addEditWFHFormControls.EndDate.errors }"
+                                            [showIcon]="true"
+                                            [disabled]="isCancel"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8">* Title</label>
+                                <div class="p-md-10 p-p-0" >
+                                    <input type="text" id="disabled-input" formControlName="Title"  [ngClass]="isCancel === true ? 'disabled' : ''" pInputText  [ngClass]="{ 'is-invalid': submitted && addEditWFHFormControls.Title.errors }" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block" *ngIf="isShowComments">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8" style=" display: flex !important; align-items: flex-start;">Comment</label>
+                                <div class="p-md-10 p-p-0">
+                                    <textarea id="float-input" rows="3" cols="30"  disabled="true" formControlName="Comment" pInputTextarea></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">Requester </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="EmployeeList"  [ngClass]="{ 'is-invalid-dropdown': submitted && addEditWFHFormControls.RequesterID.errors }"
+                                                appendTo="body"
+                                                [disabled]="true"
+                                                formControlName="RequesterID"
+                                                placeholder="Select W4Type"
+                                                optionValue="employeeID"
+                                                optionLabel="employeeName"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2"> Approver </label>
+                                <div class="p-md-8 p-p-0">
+                                    <input type="text" formControlName="Approver" disabled="disabled" pInputText />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>
+

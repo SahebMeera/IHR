@@ -1,0 +1,68 @@
+﻿
+
+@inherits AddEditEmployeeSkillBase;
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 900px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">@Title Skill</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12  mobile-pad-right-add" style="padding-left:2rem;">
+                            <EditForm Model="@EmployeeSkill" OnValidSubmit="SaveEmployeeSkill">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="row no-gutters">
+                                    <div class="col-sm-12 pr-0 pl-0  mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 display-flex remove-padding-right">
+                                                <label class="control-label col-sm-1 col-form-label">* Skill</label>
+                                                <div class="col-sm-11 pl-0 remove-padding-right">
+                                                    <InputText class="form-control form-control-sm skill autofocus" @bind-Value="EmployeeSkill.Skill" maxlength="100" @onkeypress="@Keypress" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 pl-0 display-flex">
+                                                <label class="control-label col-sm-2 col-form-label">* Skill Type</label>
+                                                <div class="col-sm-6 pl-0 pr-0">
+                                                    <CustomInputSelect id="1" @bind-Value="EmployeeSkill.SkillTypeID" class="form-control form-control-sm ">
+                                                        <option value="0">select</option>
+                                                        @if (SkillTypeList != null)
+                                                            {
+                                                            @foreach (var W4Type in SkillTypeList)
+                                                                {
+                                                                <option value="@W4Type.ListValueID">@W4Type.ValueDesc</option>
+                                                                }
+                                                            }
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 display-flex">
+                                                <label class="control-label col-sm-8 col-form-label">* Experience(In years)</label>
+                                                <div class="col-sm-4 pl-0">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="EmployeeSkill.Experience" data-mask="[00]" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group pr-3 pt-2 d-flex justify-content-end remove-padding-right">
+                                    @if (isShow)
+                                    {
+                                       <button type="submit" class="btn btn-primary btn-width-height" disabled="@isSaveButtonDisabled">Save</button>
+                                    }
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

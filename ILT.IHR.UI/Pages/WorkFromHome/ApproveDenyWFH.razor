@@ -1,0 +1,149 @@
+﻿@inherits ApproveDenyWFHBase
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 900px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">WFH Request</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 pl-0 pr-0">
+                            <EditForm Model="@WFH" OnValidSubmit="Approve">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="row no-gutters">
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">Employee Name</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <CustomInputSelect id="weekend" disabled=true @bind-Value="WFH.EmployeeID" class="form-control form-control-sm">
+                                                        <option value='0'>select</option>
+                                                        @if (EmployeeList != null)
+                                                            {
+
+                                                            @foreach (var employee in EmployeeList)
+                                                                {
+                                                                <option value="@employee.EmployeeID">@employee.EmployeeName</option>
+                                                                }
+                                                            }
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">Status</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <CustomInputSelect id="weekend" disabled=true @bind-Value="WFH.StatusID" class="form-control form-control-sm">
+                                                        <option value='0'>select</option>
+                                                        @if (StatusList != null)
+                                                            {
+
+                                                            @foreach (var status in StatusList)
+                                                                {
+                                                                <option value="@status.ListValueID">@status.ValueDesc</option>
+                                                                }
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            }
+
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">Start Date</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <InputDate class="form-control form-control-sm" disabled=true @bind-Value="WFH.StartDate" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">End Date</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <InputDate class="form-control form-control-sm" disabled=true @bind-Value="WFH.EndDate" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-12 d-flex pl-0">
+                                                <label class="control-label col-sm-2 col-form-label pr-0">Title</label>
+                                                <div class="col-sm-10 pl-2">
+                                                    <InputTextArea class="form-control form-control-sm" rows="3" disabled=true @bind-Value="WFH.Title" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-12 d-flex pl-0">
+                                                <label class="control-label col-sm-2 col-form-label pr-0">Comment</label>
+                                                <div class="col-sm-10 pl-2">
+                                                    <InputTextArea class="form-control form-control-sm autofocus" rows="3" @bind-Value="WFH.Comment" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">Requester</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <CustomInputSelect id="weekend" disabled=true @bind-Value="WFH.RequesterID" class="form-control form-control-sm">
+                                                        <option value='0'>select</option>
+                                                        @if (EmployeeList != null)
+                                                            {
+
+                                                            @foreach (var employee in EmployeeList)
+                                                                {
+                                                                @if (employee.TermDate == null || DateTime.Now <= employee.TermDate)
+                                                                    {
+                                                                    <option value="@employee.EmployeeID">@(employee.EmployeeName)</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                    <option value="@employee.EmployeeID">@employee.EmployeeName *</option>
+                                                                    }
+                                                                }
+                                                            }
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">Approver</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <InputText class="form-control form-control-sm" disabled="true" @bind-Value="WFH.Approver" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group pr-3 pt-2 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary btn-width-height" disabled=@(WFH.Status.ToLower()=="Approved".ToLower() || WFH.Status.ToLower()!="Pending".ToLower() || isApproveButtonDisabled ? true : false)>Approve</button>
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="WFHDeny" disabled=@(WFH.Status.ToLower()=="Denied".ToLower() || WFH.Status.ToLower()!="Pending".ToLower() || isDenyButtonDisabled ? true : false)>Deny</button>
+                                    <button type="button" class="btn btn-danger btn-height ml-1" @onclick="WFHCancel" disabled=@(WFH.Status.ToLower() == "Approved".ToLower() || !isCancelButtonDisabled ? false : true )>Cancel WFH</button>
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Close</button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

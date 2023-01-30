@@ -1,0 +1,49 @@
+﻿@inherits LookupTable
+@using BlazorTable
+@using ILT.IHR.DTO;
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+@inject NavigationManager NavigationManager
+@page "/lookupTables"
+@if (LookupRolePermission != null && LookupRolePermission.View == false)
+{
+    NavigationManager.NavigateTo("");
+}
+<h3 style="margin-bottom:1px;">Lookup</h3>
+<div class="row reduce-margin-top">
+    <div class="col-12">
+        @if (LookupsList != null)
+        {
+            <Table TableItem="ListValue" Items="LookupsList" ColumnReorder="true" ShowSearchBar="true" SelectionType="SelectionType.Single" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+                   RowActions="RowActions" RowClickAction="RowClick" HeaderActions="HeaderAction"
+                   DropDown="lstLookupType" DropDownLabel="Lookup Type:" onDropDownChange="OnLookupTypeChange" DefaultID="DefaultTypeID">
+                <Column TableItem="ListValue" Title="Lookup Value" Field="@(x => x.Value)" Sortable="true" Filterable="false" DefaultSortColumn="true" />
+                <Column TableItem="ListValue" Title="Lookup Description" Field="@(x => x.ValueDesc)" Sortable="true" Filterable="false">
+                </Column>
+                <Column TableItem="ListValue" Title="Active" Field="@(x => x.IsActive)" Sortable="true" Filterable="false">
+                </Column>
+                <EmptyDataTemplate>
+                    <div class="text-center">
+                        No rows found!
+                    </div>
+                </EmptyDataTemplate>
+                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+            </Table>
+        }
+        else
+        {
+            @*<NoResultMessage></NoResultMessage>*@
+            <span></span>
+        }
+    </div>
+</div>
+
+<AddEditLookup @ref="AddEditLookupModal" ListValueUpdated="LoadList"></AddEditLookup>
+
+
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete")>
+</Confirm>
+
+
+
+

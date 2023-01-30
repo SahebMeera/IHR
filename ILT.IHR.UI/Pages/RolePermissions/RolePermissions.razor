@@ -1,0 +1,57 @@
+﻿@inherits RolePermissionsBase
+@using BlazorTable
+@using ILT.IHR.DTO;
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+@page "/rolepermission"
+@inject NavigationManager NavigationManager
+
+@if (PermissionsRolePermission != null && PermissionsRolePermission.View == false)
+{
+    NavigationManager.NavigateTo("");
+}
+<h3 style="margin-bottom:1px;">Role Permission</h3>
+
+<div class="row reduce-margin-top">
+    <div class="col-12">
+        @if (RolePermissionsList != null)
+        {
+            <Table TableItem="RolePermission" Items="RolePermissionsList" ColumnReorder="true" ShowSearchBar="true" SelectionType="SelectionType.Single"
+                   RowActions="RowActions" RowClickAction="RowClick" HeaderActions="HeaderAction" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+                   DropDown="lstRoles" DropDownLabel="Role:" onDropDownChange="onChangeRole" DefaultID="RoleId">
+                <Column TableItem="RolePermission" Title="Role" Field="@(x => x.RoleName)" Sortable="true" Filterable="false" Width="28%" />
+                <Column TableItem="RolePermission" Title="Module" Field="@(x => x.ModuleName)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="false" Width="28%">
+                </Column>
+                <Column TableItem="RolePermission" Title="View" Field="@(x => x.View)" Sortable="true" Filterable="false" Width="10%">
+                </Column>
+                <Column TableItem="RolePermission" Title="Add" Field="@(x => x.Add)" Sortable="true" Filterable="false" Width="10%">
+                </Column>
+                <Column TableItem="RolePermission" Title="Edit" Field="@(x => x.Update)" Sortable="true" Filterable="false" Width="10%">
+                </Column>
+                <Column TableItem="RolePermission" Title="Delete" Field="@(x => x.Delete)" Sortable="true" Filterable="false" Width="10%">
+                </Column>
+                <EmptyDataTemplate>
+                    <div class="text-center">
+                        No rows found!
+                    </div>
+                </EmptyDataTemplate>
+                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+            </Table>
+        }
+        else
+        {
+            @*<NoResultMessage></NoResultMessage>*@
+            <span></span>
+        }
+    </div>
+</div>
+
+<AddEditRolePermission @ref="AddEditRolePermissionModal" RolePermissionUpdated="LoadList"></AddEditRolePermission>
+
+
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete")>
+</Confirm>
+
+@code {
+
+}

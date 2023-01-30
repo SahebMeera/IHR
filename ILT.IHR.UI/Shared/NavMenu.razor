@@ -1,0 +1,445 @@
+﻿@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using ILT.IHR.DTO;
+
+<div class="top-row pt-0 navbar navbar-dark padding-left-set" style="@(!isShowNav ? "padding-left: 2px !important": "")">
+    @*<a class="navbar-brand" href="">ILT.IHR.UI</a>*@
+    @if (ClientID != null)
+    {
+        @if (isShowNav)
+        {
+            <img class="navbar-brand" src="@("images/"+ClientID+".jpg")" width="150" height="57" />
+        }
+        else
+        {
+            <img class="navbar-brand pb-2" src="@("images/"+ClientID+"_Short.jpg")" width="60" height="60" />
+        }
+    }
+
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column" style="@(!isShowNav ? "flex-wrap: unset": "flex-wrap: wrap")">
+        @if (menuList == null)
+        {
+
+        }
+        else
+        {
+            <ul class="nav flex-column" style="@(!isShowNav ? "flex-wrap: unset": "flex-wrap: wrap")">
+                @foreach (var mn in menuList)
+                {
+                    @if (mn.ParentMenuId == 0)
+                    {
+                        <li class="nav-item pl-2 pr-2" title="@mn.MenuName">
+                            <NavLink class="nav-link" href="@mn.PageName" @onclick="()=>GetIsClicked(mn)">
+                                <span class="@mn.IconName" aria-hidden="true"></span>
+                                @if (isShowNav)
+                                {
+                                    @mn.MenuName
+                                }
+                            </NavLink>
+                            <ul class="nav flex-column" style="@(!isShowNav ? "flex-wrap: unset": "flex-wrap: wrap")">
+                                @foreach (var mn1 in menuList)
+                                {
+                                    @if (mn.MenuId == mn1.ParentMenuId)
+                                    {
+                                        @if (expandSubNav && mn.MenuId == clickedMenu)
+                                        {
+                                            <li class="nav-item @(isShowNav ? "px-3" : "")">
+                                                <NavLink class="nav-link" href="@mn1.PageName">
+                                                    <span class="@mn1.IconName" aria-hidden="true"></span>
+                                                    @if (isShowNav)
+                                                    {
+                                                        @mn1.MenuName
+                                                    }
+                                                </NavLink>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </li>
+                    }
+                }
+            </ul>
+        }
+
+    </ul>
+
+</div>
+
+@code {
+    [Parameter]
+    public bool isShowNav { get; set; }
+    //private bool expandSubNav;
+    private bool collapseNavMenu = true;
+    private bool expandSubNav;
+    private int clickedMenu = 0;
+    private bool hasPageName = true;
+    private int prevClickedMenu = 0;
+    ILT.IHR.DTO.User user;
+    public List<RolePermission> RolePermissions;
+    public string ClientID { get; set; }
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        if (hasPageName && !expandSubNav)
+        {
+            collapseNavMenu = !collapseNavMenu;
+        }
+
+    }
+
+
+
+    public class MenuItems
+    {
+        public int MenuId;
+        public int ParentMenuId;
+        public String PageName;
+        public String MenuName;
+        public String IconName;
+        public bool expandSubNav;
+    }
+
+
+
+
+
+    //public class MenuItems
+    //{
+    //    public String MenuName;
+    //    public String Route;
+    //    public String IconClass;
+    //    public Boolean HasSubMenu;
+    //    public IEnumerable<SubMenu> SubMenuItems;
+    //    public Boolean expandSubNav;
+    //}
+    //public class SubMenu
+    //{
+    //    public String MenuName;
+    //    public String Route;
+    //    public String IconClass;
+    //}
+
+    public List<MenuItems> menuList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        RolePermissions = await sessionStorage.GetItemAsync<List<RolePermission>>(SessionConstants.ROLEPERMISSION);
+        ClientID = await sessionStorage.GetItemAsync<string>("ClientID");
+        await Task.Run(LoadNavMenu);
+    }
+    private void LoadNavMenu()
+    {
+        if (RolePermissions != null && RolePermissions.Count > 0)
+        {
+            RolePermission DashBoardRolePermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.DASHBOARD);
+            RolePermission EmployeeRolePermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.EMPLOYEE);
+            RolePermission CompanyRolePermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.COMPANY);
+            RolePermission LookupRolePermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.LOOKUP);
+            RolePermission RoleRolePermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.PERMISSION);
+            RolePermission UserRolePermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.USER);
+            RolePermission TimesheetRolePermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.TIMESHEET);
+            RolePermission LeaveRequestPermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.LEAVEREQUEST);
+            RolePermission HolidaysPermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.HOLIDAY);
+            RolePermission ManangeLeavePermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.MANAGELEAVE);
+            RolePermission ManangeTimeSheetPermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.MANAGETIMESHEET);
+            RolePermission ExpensesPermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.EXPENSES);
+            RolePermission WFHRequestPermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.WFHREQUEST);
+            RolePermission WizardDataPermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.PROCESSDATA);
+            RolePermission AssetPermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.ASSET);
+            RolePermission TicketPermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.TICKET);
+            RolePermission ReportsPermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.REPORTS);
+            RolePermission AppraisalPermission = RolePermissions.Find(usr => usr.ModuleShort == Constants.APPRAISAL);
+
+            MenuItems mnuDashboard = new MenuItems
+            {
+                MenuId = 19,
+                ParentMenuId = 0,
+                PageName = "/dashboard",
+                MenuName = "Dashboard",
+                IconName = "fas fa-home",
+                expandSubNav = false
+            };
+            MenuItems mnuEmployee = new MenuItems
+            {
+                MenuId = 1,
+                ParentMenuId = 0,
+                PageName = "/employees",
+                MenuName = "Employee",
+                IconName = "fas fa-user",
+                expandSubNav = false
+            };
+            MenuItems mnuCompany = new MenuItems
+            {
+                MenuId = 2,
+                ParentMenuId = 0,
+                PageName = "/company",
+                MenuName = "Company",
+                IconName = "fas fa-building",
+                expandSubNav = false
+            };
+            MenuItems mnuLookup = new MenuItems
+            {
+                MenuId = 3,
+                ParentMenuId = 0,
+                PageName = "/lookupTables",
+                MenuName = "Lookup",
+                IconName = "oi oi-list-rich",
+                expandSubNav = false
+            };
+            MenuItems mnuRolePerm = new MenuItems
+            {
+                MenuId = 4,
+                ParentMenuId = 0,
+                PageName = "/rolepermission",
+                MenuName = "Role Permission",
+                IconName = "fas fa-user-lock",
+                expandSubNav = true
+            };
+            MenuItems mnuUsers = new MenuItems
+            {
+                MenuId = 5,
+                ParentMenuId = 0,
+                PageName = "/users",
+                MenuName = "User",
+                IconName = "fas fa-users",
+                expandSubNav = true
+            };
+            MenuItems mnuTimeSheet = new MenuItems
+            {
+                MenuId = 6,
+                ParentMenuId = 0,
+                PageName = "/timesheet",
+                MenuName = "Timesheet",
+                IconName = "fas fa-business-time",
+                expandSubNav = true
+            };
+            MenuItems mnuLeaveRequest = new MenuItems
+            {
+                MenuId = 7,
+                ParentMenuId = 0,
+                PageName = "/leaverequests",
+                MenuName = "Leave Request",
+                IconName = "fas fa-calendar-plus",
+                expandSubNav = true
+            };
+            MenuItems mnuHolidays = new MenuItems
+            {
+                MenuId = 8,
+                ParentMenuId = 0,
+                PageName = "/holidays",
+                MenuName = "Holidays",
+                IconName = "fas fa-plane-departure",
+                expandSubNav = true
+            };
+            MenuItems mnuManageLeave = new MenuItems
+            {
+                MenuId = 9,
+                ParentMenuId = 0,
+                PageName = "/manageLeave",
+                MenuName = "Manage Leave",
+                IconName = "fas fa-calendar-alt",
+                expandSubNav = true
+            };
+            MenuItems mnuManageTimeSheet = new MenuItems
+            {
+                MenuId = 10,
+                ParentMenuId = 0,
+                PageName = "/managetimesheet",
+                MenuName = "Manage Timesheet",
+                IconName = "fas fa-business-time",
+                expandSubNav = true
+            };
+            MenuItems mnuLogout = new MenuItems
+            {
+                MenuId = 11,
+                ParentMenuId = 0,
+                PageName = "/",
+                MenuName = "Sign out",
+                IconName = "fas fa-sign-out-alt",
+                expandSubNav = true
+            };
+            MenuItems mnuExpenses = new MenuItems
+            {
+                MenuId = 12,
+                ParentMenuId = 0,
+                PageName = "/expenses",
+                MenuName = "Expenses",
+                IconName = "fas fa-file-invoice-dollar",
+                expandSubNav = true
+            };
+            MenuItems mnuWFHRequest = new MenuItems
+            {
+                MenuId = 13,
+                ParentMenuId = 0,
+                PageName = "/wfhrequests",
+                MenuName = "WFH Request",
+                IconName = "fas fa-calendar-plus",
+                expandSubNav = true
+            };
+
+            MenuItems mnuWizardDatas = new MenuItems
+            {
+                MenuId = 14,
+                ParentMenuId = 0,
+                PageName = "/processdatas",
+                MenuName = "Process Data",
+                IconName = "fas fa-calendar-plus",
+                expandSubNav = true
+            };
+
+            MenuItems mnuasset = new MenuItems
+            {
+                MenuId = 15,
+                ParentMenuId = 0,
+                PageName = "/asset",
+                MenuName = "Asset",
+                IconName = "fas fa-calendar-plus",
+                expandSubNav = true
+            };
+            MenuItems mnuticket = new MenuItems
+            {
+                MenuId = 16,
+                ParentMenuId = 0,
+                PageName = "/ticket",
+                MenuName = "Ticket",
+                IconName = "fas fa-ticket-alt",
+                expandSubNav = true
+            };
+            MenuItems mnureports = new MenuItems
+            {
+                MenuId = 17,
+                ParentMenuId = 0,
+                PageName = "/reports",
+                MenuName = "Reports",
+                IconName = "fas fa-file-medical-alt",
+                expandSubNav = true
+            };
+            MenuItems mnuappraisal = new MenuItems
+            {
+                MenuId = 18,
+                ParentMenuId = 0,
+                PageName = "/appraisal",
+                MenuName = "Appraisal",
+                IconName = "fas fa-file-medical-alt",
+                expandSubNav = true
+            };
+
+            menuList = new List<MenuItems> { };
+            if (DashBoardRolePermission != null && DashBoardRolePermission.View == true)
+            {
+                menuList.Add(mnuDashboard);
+            }
+            if (EmployeeRolePermission != null && EmployeeRolePermission.View == true)
+            {
+                menuList.Add(mnuEmployee);
+            }
+            if (LeaveRequestPermission != null && LeaveRequestPermission.View == true)
+            {
+                menuList.Add(mnuLeaveRequest);
+            }
+            if (WFHRequestPermission != null && WFHRequestPermission.View == true)
+            {
+                menuList.Add(mnuWFHRequest);
+            }
+            if (TimesheetRolePermission != null && TimesheetRolePermission.View == true)
+            {
+                menuList.Add(mnuTimeSheet);
+            }
+            if (HolidaysPermission != null && HolidaysPermission.View == true)
+            {
+                menuList.Add(mnuHolidays);
+            }
+            if (CompanyRolePermission != null && CompanyRolePermission.View == true)
+            {
+                menuList.Add(mnuCompany);
+            }
+            if (ManangeLeavePermission != null && ManangeLeavePermission.View == true)
+            {
+                menuList.Add(mnuManageLeave);
+            }
+            if (ManangeTimeSheetPermission != null && ManangeTimeSheetPermission.View == true)
+            {
+                menuList.Add(mnuManageTimeSheet);
+            }
+            if (LookupRolePermission != null && LookupRolePermission.View == true)
+            {
+                menuList.Add(mnuLookup);
+            }
+            if (RoleRolePermission != null && RoleRolePermission.View == true)
+            {
+                menuList.Add(mnuRolePerm);
+            }
+            if (UserRolePermission != null && UserRolePermission.View == true)
+            {
+                menuList.Add(mnuUsers);
+            }
+            if (ExpensesPermission != null && ExpensesPermission.View == true)
+            {
+                menuList.Add(mnuExpenses);
+            }
+            if (WizardDataPermission != null && WizardDataPermission.View == true)
+            {
+                menuList.Add(mnuWizardDatas);
+            }
+            if (AssetPermission != null && AssetPermission.View == true)
+            {
+                menuList.Add(mnuasset);
+            }
+            if (TicketPermission != null && TicketPermission.View == true)
+            {
+                menuList.Add(mnuticket);
+            }
+            if (ReportsPermission != null && ReportsPermission.View == true)
+            {
+                menuList.Add(mnureports);
+            }
+            if (AppraisalPermission != null && AppraisalPermission.View == true)
+            {
+                menuList.Add(mnuappraisal);
+            }
+
+            menuList.Add(mnuLogout);
+        }
+    }
+
+    public void GetIsClicked(MenuItems mn)
+    {
+        clickedMenu = mn.MenuId;
+        if (prevClickedMenu != clickedMenu)
+        {
+            expandSubNav = false;
+            if (mn.PageName != "" || mn.MenuName == "DashBoard")
+            {
+                hasPageName = true;
+            }
+            else
+            {
+                expandSubNav = !expandSubNav;
+                hasPageName = false;
+            }
+        }
+        else
+        {
+            expandSubNav = !expandSubNav;
+        }
+
+        prevClickedMenu = clickedMenu;
+        if (mn.ParentMenuId != 0)
+        {
+            expandSubNav = true;
+        }
+        if(mn.MenuId == 11)
+        {
+            ((ILT.IHR.UI.Data.CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsLoggedOut();
+            sessionStorage.RemoveItemAsync("User");
+        }
+    }
+}

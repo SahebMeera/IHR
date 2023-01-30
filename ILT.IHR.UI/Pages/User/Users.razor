@@ -1,0 +1,60 @@
+﻿@page "/users"
+@using BlazorTable;
+@using ILT.IHR.DTO;
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+@inherits UsersBase;
+@inject NavigationManager NavigationManager
+
+@if (UserRolePermission != null && UserRolePermission.View == false)
+{
+    NavigationManager.NavigateTo("");
+}
+<h3 style="margin-bottom:1px;">User</h3>
+<div class="row reduce-margin-top">
+    <div class="col-12">
+        @if (UsersList != null)
+        {
+            <Table TableItem="User" Items="UsersList" ColumnReorder="true" ShowSearchBar="true" SelectionType="SelectionType.Single" RowActions="RowActions" RowClickAction="RowClick" HeaderActions="HeaderAction" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize">
+                <Column TableItem="User" Title="EmpCode" Field="@(x => x.EmployeeCode)" Sortable="true" Filterable="false" Width="6%">
+                </Column>
+                <Column TableItem="User" Title="First Name" Field="@(x => x.FirstName)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="false" Width="15%">
+                </Column>
+                <Column TableItem="User" Title="Last Name" Field="@(x => x.LastName)" Sortable="true" Filterable="false" Width="15%">
+                </Column>
+                <Column TableItem="User" Title="Email" Field="@(x => x.Email)" Sortable="true" Filterable="false" Width="20%">
+                    <Template>
+                        <a href="mailto:@context.Email">@context.Email</a>
+                    </Template>
+                </Column>
+                <Column TableItem="User" Title="Role" Field="@(x => x.RoleName)" Sortable="true" Filterable="false" Width="12%">
+                </Column>
+                <Column TableItem="User" Title="Company" Field="@(x => x.CompanyName)" Sortable="true" Filterable="false" Width="15%">
+                </Column>
+                <Column TableItem="User" Title="OAuth" Field="@(x => x.IsOAuth)" Sortable="true" Filterable="false" Width="6%">
+                </Column>
+                <Column TableItem="User" Title="Active" Field="@(x => x.IsActive)" Sortable="true" Filterable="false" Width="6%">
+                </Column>
+                <EmptyDataTemplate>
+                    <div class="text-center">
+                        No rows found!
+                    </div>
+                </EmptyDataTemplate>
+                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+            </Table>
+        }
+        else
+        {
+            @*<NoResultMessage></NoResultMessage>*@
+            <span></span>
+        }
+    </div>
+</div>
+
+
+<AddEditUser @ref="AddEditUserModal" UserUpdated="LoadList"></AddEditUser>
+
+
+
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete")>
+</Confirm>

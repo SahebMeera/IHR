@@ -1,0 +1,207 @@
+﻿@inherits AddEditExpenseBase
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 850px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">@Title Expense</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <EditForm Model="@expense" OnValidSubmit="SaveExpense">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="row no-gutters">
+                                    <div class="col-sm-12 pr-0 pl-0">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                                <label class="col-4 control-label pr-0 d-flex justify-content-end">Employee</label>
+                                                <div class="col-8">
+                                                    <CustomInputSelect id="companyType" disabled="true" @bind-Value="expense.EmployeeID" class="form-control form-control-sm">
+                                                        <option value='0'>select</option>
+                                                        @if (EmployeeList != null)
+                                                            {
+                                                            @foreach (var employee in EmployeeList)
+                                                                {
+                                                                @if (employee.TermDate == null || DateTime.Now <= employee.TermDate)
+                                                                    {
+                                                                    <option value="@employee.EmployeeID">@(employee.EmployeeName)</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                    <option value="@employee.EmployeeID">@employee.EmployeeName *</option>
+                                                                    }
+                                                                }
+                                                            }
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                                <label for="companyType" class="col-4 control-label pr-0 d-flex justify-content-end">* Expense Type</label>
+                                                <div class="col-8">
+                                                    <CustomInputSelect id="companyType" disabled="@IsApprover" @bind-Value="expense.ExpenseTypeID" class="form-control form-control-sm autofocus" @oninput="onExpensesChange">
+                                                        <option value='0'>select</option>
+                                                        @if (ExpenseTypeList != null)
+                                                            {
+
+                                                            @foreach (var expenseType in ExpenseTypeList)
+                                                                {
+                                                                <option value="@expenseType.ListValueID">@expenseType.ValueDesc</option>
+                                                                }
+                                                            }
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                                <label class="col-4 control-label pr-0 d-flex justify-content-end">Submitted Date</label>
+                                                <div class="col-8">
+                                                    <InputDate disabled="true"  class="form-control form-control-sm" max="9999-12-31" @bind-Value="expense.SubmissionDate" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                                <label class="col-4 control-label pr-0 d-flex justify-content-end">* Amount</label>
+                                                <div class="col-8">
+                                                    <InputNumber disabled="@IsApprover" class="form-control form-control-sm" @bind-Value="expense.Amount" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-12 d-flex remove-padding margin-bottom-mobile">
+                                                <label class="col-4 col-sm-2 control-label col-form-label">Description</label>
+                                                <div class="col-8 col-sm-10 pr-0 pl-sm-1 pl-2">
+                                                    <InputText disabled="@IsApprover" class="form-control form-control-sm" rows="1" @bind-Value="expense.SubmissionComment" maxlength="100" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-12 display-flex remove-padding margin-bottom-mobile" style="align-items: baseline; justify-content:left;">
+                                                @if (expense.FileName != null && expense.FileName != "")
+                                                {
+                                                    string[] fileList = expense.FileName.Split(',');
+                                                    <label class="col-2 control-label pr-0 d-flex justify-content-end">Attachment</label>
+                                                    <div class="col-8">
+                                                        @foreach (string fName in fileList)
+                                                        {
+                                                            <a @onclick="@(() => GetBlobContentPath(fName))" target="_blank" style="font-size: 12px;color: #0366d6; cursor: pointer;">
+                                                                <span class="fas fa-file-image"></span>
+                                                                @fName
+                                                            </a>
+                                                            <br />
+                                                        }
+
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <InputFile disabled="@IsApprover" class="control-label pr-0  col-3 d-flex justify-content-end padding-left-add" OnChange="HandleFileSelected" accept="image/*" multiple />
+                                                    <div class="col-9">
+                                                        <strong></strong>
+                                                        @if (files != null)
+                                                        {
+                                                            @foreach (var currFile in files)
+                                                            {
+                                                                @currFile.Name;
+                                                                <button type="button" class="btn ml-1 p-0 font-weight-bold" @onclick="removeAttachment">X</button>
+                                                                <br />
+                                                            }
+                                                        }
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (expense.StatusID != submittedStatusID || IsApprover)
+                                    {
+                                        <div class="col-sm-12 pr-0 pl-0">
+                                            <div class="form-group row align-items-baseline">
+                                                <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                                    <label class="col-4 control-label pr-0 d-flex justify-content-end">Payment Date</label>
+                                                    <div class="col-8">
+                                                        <InputDate disabled="@(!IsApprover)" class="form-control form-control-sm" style="@(isPaymentDateInValid == true ? "outline: 1px solid red;" : "" )"
+                                                                   @bind-Value="expense.PaymentDate" @onfocusout="onPaymentDateChange"  max=@DateTime.Today.ToString("yyyy'-'MM'-'dd") />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                                    <label class="col-4 control-label pr-0 d-flex justify-content-end">Amount Paid</label>
+                                                    <div class="col-8">
+                                                        <InputNumber disabled="@(!IsApprover)" class="form-control form-control-sm" style="@(isPaymentAmountInValid == true ? "outline: 1px solid red;" : "" )" 
+                                                                     @bind-Value="expense.AmountPaid" @onfocusout="onPaymentAmountChange" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 pr-3 pl-3">
+                                            <div class="form-group row align-items-baseline">
+                                                <div class="col-12 d-flex remove-padding margin-bottom-mobile">
+                                                    <label class="col-4 col-sm-2 control-label col-form-label">Comments</label>
+                                                    <div class="col-8 col-sm-10 pr-0 pl-sm-1 pl-2">
+                                                        <InputText disabled="@(!IsApprover)"  class="form-control form-control-sm" rows="1" @bind-Value="expense.PaymentComment" maxlength="100" style="@(isPaymentCommnetInValid == true ? "outline: 1px solid red;" : "" )" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (expense.ExpenseID != 0)
+                                    {
+                                    <div class="col-sm-12 pr-0 pl-0">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                                <label class="col-4 control-label pr-0 d-flex justify-content-end">Status</label>
+                                                <div class="col-8">
+                                                    <CustomInputSelect id="companyType" disabled="true" @bind-Value="expense.StatusID" class="form-control form-control-sm">
+                                                        <option value='0'>select</option>
+                                                        @if (StatusList != null)
+                                                        {
+                                                            @foreach (var status in StatusList)
+                                                            {
+                                                                <option value="@status.ListValueID">@status.ValueDesc</option>
+                                                            }
+                                                        }
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+                                <div class="form-group pt-2 d-flex justify-content-end">
+                                    @if (!IsApprover)
+                                    {
+                                        <button type="submit" disabled="@(expense.StatusID == approveStatusID || expense.StatusID == denyStatusID || isSaveButtonDisabled ? true : false)" class="btn btn-primary btn-width-height">Submit</button>
+                                    }
+                                    @if (IsApprover)
+                                    {
+                                        <button type="button" disabled="@(expense.StatusID == approveStatusID || expense.StatusID == denyStatusID || isApproveButtonDisabled ? true : false)" class="btn btn-primary btn-width-height" @onclick="Approve">Approve</button>
+                                    }
+                                    @if (IsApprover)
+                                    {
+                                        <button type="button" disabled="@(expense.StatusID == approveStatusID || expense.StatusID == denyStatusID || isApproveButtonDisabled ? true : false)" class="btn btn-danger btn-width-height ml-1" @onclick="Deny">Deny</button>
+                                    }
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Close">Cancel</button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

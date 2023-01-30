@@ -1,0 +1,37 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="500" #addEditHolidayModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="HolidayForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-3">
+                    <div class="p-field p-formgrid p-md-12 display-flex-block p-p-0">
+                        <label  class="control-label p-md-2 col-form-label mobile-col-form-label" for="username2">Name </label>
+                        <input  class="p-md-10 p-pl-0" id="username2" type="username" aria-describedby="username2-help" formControlName="Name" class="p-invalid" pInputText [ngClass]="{ 'is-invalid': submitted && addEditHolidayFormControls.Name.errors }" />
+                    </div>
+                    <div class="p-field p-formgrid p-md-12 display-flex-block p-p-0">
+                        <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname6">Date </label>
+                        <p-calendar  class="p-md-10 p-pl-0 p-pr-0 p-pb-0" formControlName="StartDate" [ngClass]="{ 'is-invalid': submitted && addEditHolidayFormControls.StartDate.errors }"
+                                    [showIcon]="true"
+                                    inputId="firstname6"
+                                    [monthNavigator]="true"
+                                    [yearNavigator]="true"
+                                    [yearRange]="commonUtils.getDateRange()"
+                                    appendTo="body"></p-calendar>
+                    </div>
+                    <div class="p-field p-formgrid p-md-12 display-flex-block p-p-0">
+                        <label for="firstname6" class="control-label p-md-2 col-form-label mobile-col-form-label">* Country </label>
+                        <p-dropdown class="p-md-10 p-pl-0 p-pr-0" [options]="CountryList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditHolidayFormControls.Country.errors }"
+                                    appendTo="body"
+                                    formControlName="Country"
+                                    placeholder="Select Country"
+                                    optionValue="countryDesc"
+                                    optionLabel="countryDesc"></p-dropdown>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>

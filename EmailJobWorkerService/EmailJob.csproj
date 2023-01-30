@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker;Microsoft.NET.Sdk.Publish">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>dotnet-EmailJobWorkerService-F4A775BF-8F6F-494B-A511-405A90803863</UserSecretsId>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.15.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="MimeKit" Version="2.15.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ILT.IHR.DTO\ILT.IHR.DTO.csproj" />
+    <ProjectReference Include="..\ILT.IHR.Factory\ILT.IHR.Factory.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Settings.job">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

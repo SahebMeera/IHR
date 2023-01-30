@@ -1,0 +1,350 @@
+﻿@page "/appraisalDetails"
+@inherits AppraisalDetailsBase;
+@using BlazorTable;
+<div class="row">
+    <div class="col-12 pr-0">
+        <div class="col-12 row pr-0">
+            <div class="col-12 card card-border ihr-blue not-rounded clearfix pl-0 mb-1 text-white">
+                <div class="card-body pl-1">
+                    <div class="row no-gutters">
+                        <div class="col-4">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0  col-4 d-flex justify-content-end" style="font-weight:600">Emp Code:</label>
+                                <div class="col-8 col-control pl-2">
+                                    @Employee.EmployeeCode
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0  col-4 d-flex justify-content-end nowrap-white-space" style="font-weight:600">Employee Name:</label>
+                                <div class="col-8 col-control">
+                                    @(Employee.FirstName + " " + Employee.LastName)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 pl-4">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0  col-4 d-flex justify-content-end" style="font-weight:600">Title:</label>
+                                <div class="col-8 col-control">
+                                    @Employee.Title
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col-4">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0  col-4 d-flex justify-content-end" style="font-weight:600">Department:</label>
+                                <div class="col-8 col-control">
+                                    @Employee.Department
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 ">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0 pl-0 col-4 d-flex justify-content-end nowrap-white-space" style="font-weight:600">Manager Name:</label>
+                                <div class="col-8 col-control">
+                                    @appraisal.Manager
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 pl-4">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0 pl-0 col-4 d-flex justify-content-end nowrap-white-space" style="font-weight:600">Review Year:</label>
+                                <div class="col-8 col-control">
+                                    @appraisal.ReviewYear
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col-4">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0  col-4 d-flex justify-content-end" style="font-weight:600">Assigned Date:</label>
+                                <div class="col-8 col-control">
+                                    @(appraisal.AssignedDate != null ? FormatDate(appraisal.AssignedDate) : "--")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0 pl-0 col-4 d-flex justify-content-end nowrap-white-space" style="font-weight:600">Reviewer / Review Date: </label>
+                                <div class="col-8 col-control">
+                                   @appraisal.Reviewer @(appraisal.ReviewDate != null ? "/ "+FormatDate(appraisal.ReviewDate) : "")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 pl-4">
+                            <div class="form-group row align-items-baseline">
+                                <label class="control-label pr-0 pl-0 col-4 d-flex justify-content-end nowrap-white-space" style="font-weight:600">Status:</label>
+                                <div class="col-8 col-control">
+                                    @appraisal.Status
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-12 pl-1 pr-1">
+        <EditForm Model="appraisal" OnValidSubmit="ValidAppraisal">
+            <DataAnnotationsValidator />
+            <div class="col-12 remove-padding" style="padding:10px; padding-top: 5px;">
+                <div class="col-sm-12 display-flex remove-padding appraisalTableHeading">
+                    Objectives
+                </div>
+
+                <Table TableItem="DTO.AppraisalDetail" Items="AppraisalDetailPannel1List" ColumnReorder="true" ShowSearchBar="false" SelectionType="SelectionType.Single" RowClickAction="RowClick" PageSize="200">
+                    <Column TableItem="DTO.AppraisalDetail" Title="Objective" Field="@(x => x.Quality)" Sortable="false" Filterable="false">
+                    </Column>
+
+                    <Column TableItem="DTO.AppraisalDetail" Title="Employee Rating" Field="@(x => x.EmpResponse)" Sortable="false" Filterable="false">
+                        <Template Context="context1">
+                            <div class="rate pl-0" style="@(isEmployeedisable == true ? "pointer-events: none;opacity: 0.8;" : "")">
+                                <input type="radio" id="@(context1.AppraisalDetailID + "Empstar5" )" name="@(context1.AppraisalDetailID + "Empstar5demo")" class="form-control form-control-sm" checked="@(context1.EmpResponse == Convert.ToInt32("5"))" @onchange="@(() =>LoadEmpResponse("5", context1.AppraisalDetailID, context1))" />
+                                <label for="@(context1.AppraisalDetailID + "Empstar5" )" title="5 stars">5 stars</label>
+                                <input type="radio" id="@(context1.AppraisalDetailID + "Empstar4" )" name="@(context1.AppraisalDetailID + "Empstar4demo")" class="form-control form-control-sm " checked="@(context1.EmpResponse == Convert.ToInt32("4"))" @onchange="@(() =>LoadEmpResponse("4", context1.AppraisalDetailID, context1))" />
+                                <label for="@(context1.AppraisalDetailID + "Empstar4" )" title="4 stars">4 stars</label>
+                                <input type="radio" id="@(context1.AppraisalDetailID + "Empstar3" )" name="@(context1.AppraisalDetailID + "Empstar3demo" )" class="form-control form-control-sm " checked="@(context1.EmpResponse ==  Convert.ToInt32("3"))" @onchange="@(() =>LoadEmpResponse("3", context1.AppraisalDetailID, context1))" />
+                                <label for="@(context1.AppraisalDetailID + "Empstar3" )" title="3 stars">3 stars</label>
+                                <input type="radio" id="@(context1.AppraisalDetailID + "Empstar2" )" name="@(context1.AppraisalDetailID + "Empstar2demo" )" class="form-control form-control-sm " checked="@(context1.EmpResponse ==  Convert.ToInt32("2"))" @onchange="@(() =>LoadEmpResponse("2", context1.AppraisalDetailID, context1))" />
+                                <label for="@(context1.AppraisalDetailID + "Empstar2" )" title="2 stars">2 stars</label>
+                                <input type="radio" id="@(context1.AppraisalDetailID + "Empstar1" )" name="@(context1.AppraisalDetailID + "Empstar1demo" )" class="form-control form-control-sm " checked="@(context1.EmpResponse ==  Convert.ToInt32("1"))" @onchange="@(() =>LoadEmpResponse("1", context1.AppraisalDetailID, context1))" />
+                                <label for="@(context1.AppraisalDetailID + "Empstar1" )" title="1 star">1 star</label>
+                            </div>
+                        </Template>
+                    </Column>
+                    <Column TableItem="DTO.AppraisalDetail" Title="Manager Rating" Field="@(x => x.MgrResponse)" Sortable="false" Filterable="false">
+                        <Template Context="context3">
+                            <div class="rate pl-0 pr-0" style="@(isManagerdisable == true ? "pointer-events: none;opacity: 0.8;" : "")">
+                                <input type="radio" id="@(context3.AppraisalDetailID + "Mrgstar5" )" name="@(context3.AppraisalDetailID + "Mgrstar5demo")" class="form-control form-control-sm" checked="@(context3.MgrResponse ==  Convert.ToInt32("5"))" @onchange="@(() =>LoadMgrResponse("5", context3.AppraisalDetailID, context3))" />
+                                <label for="@(context3.AppraisalDetailID + "Mrgstar5" )" title="5 stars">5 stars</label>
+                                <input type="radio" id="@(context3.AppraisalDetailID + "Mrgstar4" )" name="@(context3.AppraisalDetailID + "Mgrstar4demo" )" class="form-control form-control-sm " checked="@(context3.MgrResponse ==  Convert.ToInt32("4"))" @onchange="@(() =>LoadMgrResponse("4", context3.AppraisalDetailID, context3))" />
+                                <label for="@(context3.AppraisalDetailID + "Mrgstar4" )" title="4 stars">4 stars</label>
+                                <input type="radio" id="@(context3.AppraisalDetailID + "Mrgstar3" )" name="@(context3.AppraisalDetailID + "Mgrstar3demo" )" class="form-control form-control-sm " checked="@(context3.MgrResponse ==  Convert.ToInt32("3"))" @onchange="@(() =>LoadMgrResponse("3", context3.AppraisalDetailID, context3))" />
+                                <label for="@(context3.AppraisalDetailID + "Mrgstar3" )" title="3 stars">3 stars</label>
+                                <input type="radio" id="@(context3.AppraisalDetailID + "Mrgstar2" )" name="@(context3.AppraisalDetailID + "Mgrstar2demo" )" class="form-control form-control-sm " checked="@(context3.MgrResponse ==  Convert.ToInt32("2"))" @onchange="@(() =>LoadMgrResponse("2", context3.AppraisalDetailID, context3))" />
+                                <label for="@(context3.AppraisalDetailID + "Mrgstar2" )" title="2 stars">2 stars</label>
+                                <input type="radio" id="@(context3.AppraisalDetailID + "Mrgstar1" )" name="@(context3.AppraisalDetailID + "Mgrstar1demo" )" class="form-control form-control-sm " checked="@(context3.MgrResponse ==  Convert.ToInt32("1"))" @onchange="@(() =>LoadMgrResponse("1", context3.AppraisalDetailID, context3))" />
+                                <label for="@(context3.AppraisalDetailID + "Mrgstar1" )" title="1 star">1 star</label>
+                            </div>
+                        </Template>
+                    </Column>
+                </Table>
+
+                @if (AppraisalDetailPannel3List != null)
+                {
+                    <div style="display: flex;justify-content: center;" class="appraisalTableHeading">
+                        <div class="form-group row align-items-baseline" style="margin-bottom: 0px;">
+                            <div class="col-sm-12 display-flex remove-padding">
+                                Goals
+                            </div>
+                        </div>
+                    </div>
+                    @if (AppraisalDetailPannel3List != null && AppraisalDetailPannel3List.Count > 0)
+                    {
+                        <div class="myDiv">
+                            <span>Previous Year Goals</span>
+                        </div>
+                        <div style="border: 1px solid #dee2e6; margin-bottom: 10px;">
+                            @foreach (var (index, appraisalDetail) in AppraisalDetailPannel3List.Select((appraisalDetail, i) => (i, appraisalDetail)))
+                            {
+                                <div class="form-group row align-items-baseline mt-1 mb-3">
+                                    <div class="col-sm-12 ">
+                                        <label class="control-label pr-0 pl-1  col-12 d-flex  white-space-nowrap goal-border" style="font-weight:600;">Goal @(index + 1)</label>
+                                        <div class="col-12 pl-1 pr-1 goal-border">
+                                            <InputTextArea disabled="@isCurrentYeatGoaldisable" readonly="true" class="form-control form-control-sm" style="height:100px;" @bind-Value="appraisalDetail.Goal" maxlength="500" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 display-flex ">
+                                        <div class="col-sm-6 pr-0 pl-1 display-flex" style="justify-content:end; border: 1px solid;">
+                                            <label class="control-label col-form-label col-sm-3 pl-0" style="display: flex !important;justify-content: flex-start !important;">Employee Rating</label>
+                                            <div class="col-sm-8 pl-0 pr-2">
+                                                <div class="rate  pl-0 pr-0" style="@(isEmployeedisable == true ? "pointer-events: none;opacity: 0.8;" : "")">
+                                                    <input type="radio" id="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar5" )" name="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar5Demo")" class="form-control form-control-sm" checked="@(appraisalDetail.EmpResponse == Convert.ToInt32("5"))" @onchange="@(() => LoadPreYearEmpResponse("5", appraisalDetail.AppraisalGoalID, appraisalDetail))" />
+                                                    <label for="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar5" )" title="5 stars">5 stars</label>
+                                                    <input type="radio" id="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar4" )" name="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar4demo")" class="form-control form-control-sm " checked="@(appraisalDetail.EmpResponse == Convert.ToInt32("4"))" @onchange="@(() => LoadPreYearEmpResponse("4", appraisalDetail.AppraisalGoalID, appraisalDetail))" />
+                                                    <label for="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar4" )" title="4 stars">4 stars</label>
+                                                    <input type="radio" id="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar3" )" name="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar3demo" )" class="form-control form-control-sm " checked="@(appraisalDetail.EmpResponse == Convert.ToInt32("3"))" @onchange="@(() => LoadPreYearEmpResponse("3", appraisalDetail.AppraisalGoalID, appraisalDetail))" />
+                                                    <label for="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar3" )" title="3 stars">3 stars</label>
+                                                    <input type="radio" id="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar2" )" name="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar2demo" )" class="form-control form-control-sm " checked="@(appraisalDetail.EmpResponse == Convert.ToInt32("2"))" @onchange="@(() => LoadPreYearEmpResponse("2", appraisalDetail.AppraisalGoalID, appraisalDetail))" />
+                                                    <label for="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar2" )" title="2 stars">2 stars</label>
+                                                    <input type="radio" id="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar1" )" name="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar1demo" )" class="form-control form-control-sm " checked="@(appraisalDetail.EmpResponse == Convert.ToInt32("1"))" @onchange="@(() => LoadPreYearEmpResponse("1", appraisalDetail.AppraisalGoalID, appraisalDetail))" />
+                                                    <label for="@(appraisalDetail.AppraisalGoalID + "EmpPreYearstar1" )" title="1 star">1 star</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 pr-0 pl-1 display-flex" style="justify-content:end; border: 1px solid;">
+                                            <label class="control-label col-form-label col-sm-3 pl-0" style="display: flex !important;justify-content: flex-start !important;">Manager Rating</label>
+                                            <div class="col-sm-8 pl-0 pr-2">
+                                                <div class="rate pl-0 pr-0" style="@(isManagerdisable == true ? "pointer-events: none;opacity: 0.8;" : "")">
+                                                    <input type="radio" id="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar5" )" name="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar5")" class="form-control form-control-sm" checked="@(appraisalDetail.MgrResponse == Convert.ToInt32("5"))" @onchange="@(() => LoadPreYearMgrResponse("5", appraisalDetail.AppraisalGoalID, appraisalDetail))" />
+                                                    <label for="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar5" )" title="5 stars">5 stars</label>
+                                                    <input type="radio" id="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar4" )" name="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar4demo")" class="form-control form-control-sm " checked="@(appraisalDetail.MgrResponse == Convert.ToInt32("4"))" @onchange="@(() => LoadPreYearMgrResponse("4", appraisalDetail.AppraisalGoalID, appraisalDetail))" />
+                                                    <label for="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar4" )" title="4 stars">4 stars</label>
+                                                    <input type="radio" id="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar3" )" name="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar3demo" )" class="form-control form-control-sm " checked="@(appraisalDetail.MgrResponse == Convert.ToInt32("3"))" @onchange="@(() => LoadPreYearMgrResponse("3", appraisalDetail.AppraisalGoalID, appraisalDetail))" />
+                                                    <label for="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar3" )" title="3 stars">3 stars</label>
+                                                    <input type="radio" id="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar2" )" name="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar2demo" )" class="form-control form-control-sm " checked="@(appraisalDetail.MgrResponse == Convert.ToInt32("2"))" @onchange="@(() => LoadPreYearMgrResponse("2", appraisalDetail.AppraisalGoalID, appraisalDetail))" />
+                                                    <label for="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar2" )" title="2 stars">2 stars</label>
+                                                    <input type="radio" id="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar1" )" name="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar1demo" )" class="form-control form-control-sm " checked="@(appraisalDetail.MgrResponse == Convert.ToInt32("1"))" @onchange="@(() => LoadPreYearMgrResponse("1", appraisalDetail.AppraisalGoalID, appraisalDetail))" />
+                                                    <label for="@(appraisalDetail.AppraisalGoalID + "MgrPreYearstar1" )" title="1 star">1 star</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-12 display-flex ">
+                                        <div class="col-sm-6 pr-1 pl-1" style="border: 1px solid;">
+                                            <label class="control-label pr-0 pl-0 col-1 d-flex j white-space-nowrap">Employee Comment</label>
+                                            <div class="col-12 pl-0 pr-0 pb-1">
+                                                <InputTextArea class="form-control form-control-sm" disabled="@isEmployeedisable" @bind-Value="appraisalDetail.EmpComment" style="height:50px;" maxlength="200" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 pr-1 pl-1" style="border: 1px solid;">
+                                            <label class="control-label pr-0 pl-0 col-1 d-flex  white-space-nowrap">Manager Comment</label>
+                                            <div class="col-12 pl-0 pr-0 pb-1">
+                                                <InputTextArea class="form-control form-control-sm" disabled="@isManagerdisable" @bind-Value="appraisalDetail.MgrComment" style="height:50px;" maxlength="200" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+
+                @if (AppraisalDetailPannel2List != null && AppraisalDetailPannel2List.Count > 0)
+                {
+
+                    <div class="myDiv">
+                        <span>Current Year Goals</span>
+                    </div>
+                    <div style="border: 1px solid #dee2e6; margin-bottom: 10px;">
+                        @*@if(AppraisalDetailPannel2List !=null &&  AppraisalDetailPannel2List.Count < 6)
+                {
+                }*@
+
+                        @foreach (var (index, appraisalDetail) in AppraisalDetailPannel2List.Select((appraisalDetail, i) => (i, appraisalDetail)))
+                        {
+                            <div class="form-group row align-items-baseline mt-1">
+                                <div class="col-sm-12 ">
+                                    <label class="control-label pr-0 pl-1  col-12 d-flex  white-space-nowrap goal-border" style="font-weight:600;">Goal @(index + 1)</label>
+                                    <div class="col-12 pl-1 pr-1 close-button-text goal-border" style="border-bottom: 1px solid;">
+                                        <InputTextArea disabled="@isCurrentYeatGoaldisable" class="form-control form-control-sm " style="height:100px;" @bind-Value="appraisalDetail.Goal" maxlength="500" />
+                                        @if (index > 2)
+                                        {
+                                            <button class="close-button" style="@(isCurrentYeatGoaldisable == true ? "pointer-events: none;opacity: 0.8;" : "")" @onclick="@(() => removeGoal(index, appraisalDetail))">
+                                                <i class="fas fa-window-close"></i>
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (appraisal != null && appraisal.StatusValue != null && appraisal.StatusValue != "")
+                        {
+                            @if (appraisal.StatusValue.ToUpper() == AppraisalStatus.PENDINGREVIEW || appraisal.StatusValue.ToUpper() == AppraisalStatus.ASSIGNED)
+                            {
+                                <div class="pr-3 pb-1" style="text-align: right;">
+                                    <button type="Add" class="btn btn-primary btn-height" @onclick="AddGoals"><i class="oi oi-plus pr-1"></i>Add Goals</button>
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+                @if (isManagerdisable == false || isCommentsDisabled == false || isManagerFeedBackForEmployee == false)
+                {
+                    @if (appraisal != null && appraisal.StatusValue != null && appraisal.StatusValue != "")
+                    {
+                        @if (appraisal.ReviewerID != null && (appraisal.StatusValue.ToUpper() == AppraisalStatus.PENDINGREVIEW || appraisal.StatusValue.ToUpper() == AppraisalStatus.PENDINGFINALREVIEW || appraisal.StatusValue.ToUpper() == AppraisalStatus.COMPLETE))
+                        {
+                            <div class="form-group row align-items-baseline mt-1">
+
+                                <div class="col-sm-12 ">
+                                    <label class="control-label pr-0 pl-1 col-12 d-flex  white-space-nowrap" style="font-weight:600;">Manager FeedBack</label>
+                                    <div class="col-12 pl-1 pr-1 ">
+                                        <InputTextArea class="form-control form-control-sm" rows="2" disabled="@isManagerdisable" style="height:200px;" @bind-Value="appraisal.MgrFeedback" maxlength="1000" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+
+
+                @if (isCommentsDisabled == false)
+                {
+                    @if (appraisal != null && appraisal.StatusValue != null && appraisal.StatusValue != "")
+                    {
+                        @if (appraisal.FinalReviewerID != null && appraisal.StatusValue.ToUpper() == AppraisalStatus.PENDINGFINALREVIEW)
+                        {
+                            <div class="form-group row align-items-baseline mt-1">
+                                <div class="col-sm-12 ">
+                                    <label class="control-label pr-0 pl-1  col-12 d-flex  white-space-nowrap" style="font-weight:600;">Final Comments</label>
+                                    <div class="col-12 pl-1 pr-1 ">
+                                        <InputTextArea class="form-control form-control-sm" rows="2" style="height:100px;" @bind-Value="appraisal.Comment" maxlength="500" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                @if (appraisal != null && appraisal.StatusValue != null && appraisal.StatusValue != "")
+                {
+                    @if (appraisal.StatusValue.ToUpper() == AppraisalStatus.COMPLETE)
+                    {
+                        <div class="form-group row align-items-baseline mt-1">
+                            <div class="col-sm-12 ">
+                                <label class="control-label pr-0  pl-1 col-12 d-flex white-space-nowrap" style="font-weight:600;">Manager FeedBack</label>
+                                <div class="col-12 pl-1 pr-1 ">
+                                    <InputTextArea class="form-control form-control-sm" rows="2" disabled="@isManagerdisable" style="height:200px;" @bind-Value="appraisal.MgrFeedback" maxlength="1000" />
+                                </div>
+                            </div>
+                        </div>
+                        if (user != null && appraisal != null &&  user.EmployeeID != null && appraisal.EmployeeID != null && user.EmployeeID != appraisal.EmployeeID)
+                        {
+                            <div class="form-group row align-items-baseline mt-1">
+                                <div class="col-sm-12 ">
+                                    <label class="control-label pr-0  pl-1 col-12 d-flex white-space-nowrap" style="font-weight:600;">Final Comments</label>
+                                    <div class="col-12 pl-1 pr-1 ">
+                                        <InputTextArea class="form-control form-control-sm" disabled="true" rows="2" style="height:100px;" @bind-Value="appraisal.Comment" maxlength="500" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    }
+                }
+
+
+            </div>
+            <div class="col-12 row align-center pl-0 remove-margin" style="margin-bottom:20px;">
+                <div class="col-9 align-center remove-padding">
+                    <span class="error-message-color">@ErrorMessage</span>
+                </div>
+                <div class="col-3 form-group d-flex justify-content-end remove-padding">
+                    @if ((user != null && appraisal != null && appraisal.StatusValue != null))
+                    {
+                        @if ((appraisal.StatusValue.ToUpper() == AppraisalStatus.ASSIGNED) || (appraisal.StatusValue.ToUpper() == AppraisalStatus.PENDINGREVIEW && appraisal.ReviewerID == user.EmployeeID) || (appraisal.StatusValue.ToUpper() == AppraisalStatus.PENDINGFINALREVIEW && appraisal.FinalReviewerID == user.EmployeeID))
+                        {
+                            <button type="submit" class="btn btn-primary btn-width-height" @onclick="SaveAppraisal" disabled="@(appraisal.StatusValue.ToUpper() == AppraisalStatus.COMPLETE || isSaveButtonDisabled)">Save</button>
+                            <button type="submit" class="btn btn-primary btn-width-height ml-1" @onclick="SubmitAppraisal" disabled="@(appraisal.StatusValue.ToUpper() == AppraisalStatus.COMPLETE || isSubmitButtonDisabled)">Submit</button>
+                        }
+                    }
+                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+</div>
+@*</div>*@
+@*</div>
+        </div>
+    </div>*@
+@*}*@

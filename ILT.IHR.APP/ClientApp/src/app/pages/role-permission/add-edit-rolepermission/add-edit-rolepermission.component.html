@@ -1,0 +1,55 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="500" #addEditRolePermissionModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="RolePermissionForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-3">
+                    <div class="p-col-12 p-text-center remove-padding" *ngIf="ErrorMessage !== null || ErrorMessage !== ''" [ngStyle]="{'display': ErrorMessage !== '' ? 'block' : 'none' }">
+                        <span class="error-message-color">{{ErrorMessage}} &nbsp;</span>
+                    </div>
+                    <div class="p-field p-formgrid p-md-12 display-flex-block p-p-0">
+                        <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="username2">Role </label>
+                        <div class="p-md-9 p-pl-0 col-form-label" style="justify-content: flex-start !important;" id="username2" type="username" aria-describedby="username2-help">
+                            {{roleName}}
+                        </div>
+                    </div>
+                    <div class="p-field p-formgrid p-md-12 display-flex-block p-p-0">
+                        <label for="firstname6" class="control-label p-md-2 col-form-label mobile-col-form-label">Module </label>
+                        <p-dropdown class="p-md-10 p-pl-0 p-pr-0"
+                                    [options]="moduleList"
+                                    [ngClass]="{ 'is-invalid-dropdown': submitted && addEditRolePermissionFormControls.ModuleID.errors }"
+                                    appendTo="body"
+                                    formControlName="ModuleID"
+                                    placeholder="Select Modules"
+                                    optionValue="moduleID"
+                                    optionLabel="moduleName"></p-dropdown>
+                    </div>
+                    <div class="p-field p-formgrid p-md-12 display-flex-block p-p-0">
+                        <div class="p-md-2"></div>
+                        <span class="pi pi-eye p-pr-2 pl-0 p-d-flex p-jc-center p-ai-center p-text-bold" aria-hidden="true"></span>
+                        <div class="p-md-2 p-pl-0 p-mr-2 remove-left-padding">
+                            <p-checkbox formControlName="View" binary="true" inputId="binary"></p-checkbox>
+                        </div>
+                        <span class="pi pi-plus  p-d-flex p-jc-center p-ai-center p-pr-2 pl-0 p-text-bold" aria-hidden="true"></span>
+                        <div class="p-md-2 p-pl-0 p-mr-2 remove-left-padding">
+                            <p-checkbox formControlName="Add" binary="true" inputId="binary"></p-checkbox>
+                        </div>
+                        <span class="pi pi-pencil  p-d-flex p-jc-center p-ai-center p-pr-2 pl-0 p-text-bold" aria-hidden="true"></span>
+                        <div class="p-md-2 p-pl-0 p-mr-2 remove-left-padding">
+                            <p-checkbox formControlName="Update" binary="true" inputId="binary"></p-checkbox>
+                        </div>
+                        <span class="pi pi-trash p-d-flex p-jc-center p-ai-center p-pr-2 pl-0 p-text-bold" aria-hidden="true"></span>
+                        <div class="p-md-1 p-pl-0  p-mr-2 remove-left-padding">
+                            <p-checkbox formControlName="Delete" binary="true" inputId="binary"></p-checkbox>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>
+

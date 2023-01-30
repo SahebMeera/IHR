@@ -1,0 +1,40 @@
+﻿@page "/dashboard"
+@inherits DashboardBase;
+@inject NavigationManager NavigationManager
+
+@if (DashboardRolePermission != null && DashboardRolePermission.View == false)
+{
+    NavigationManager.NavigateTo("");
+}
+<div style="text-align:center; margin-top:3.5rem;">
+    <h1 style="font-size:3rem;">Hello, @(UserName)!</h1>
+    <span style="font-size: 20px;">Welcome to InfoHR.</span>
+</div>
+<div class="container align-items-center my-auto web-transform">
+    <div class="row  align-self-center  mb-4 dashboard-row-top" style="display:flex;@(lstDashboardRequest != null && lstDashboardRequest.Count == 5 ? "justify-content:left;" : "justify-content:center;")">
+        @if (lstDashboardRequest != null)
+        {
+            @foreach (var dashboardRequest in lstDashboardRequest)
+            {
+                @if (dashboardRequest != null && dashboardRequest.dashboardViewPermission == true)
+                {
+                    <div class=" dashboard-height dashboard-column-bottom @(lstDashboardRequest.Count == 4 ? "col-sm-6 max-width-set" : "col-sm-4")" style="margin-bottom:20px; ">
+                        <div class="card summary dashboard-card-height" style="background-color: @dashboardRequest.dashboardCardColor">
+                            <div class="card-body d-flex justify-content-between" style="padding-bottom: 0.5rem !important; cursor: pointer;" @onclick="@((x) => redirectToPages(@dashboardRequest.dashboardHeading))">
+                                <div style="display: grid;">
+                                    <span class="title dashboard-font-size-weight">@dashboardRequest.dashboardHeading </span>
+                                    <span class="detail sub-heading">@dashboardRequest.dashboardSubHeading</span>
+                                </div>
+                                <div class="display-flex">
+                                    <div class="d-flex ai-center dashboard-number">
+                                        <span class="count visitors dashboard-font-size-weight">@dashboardRequest.dashboardListLength</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>

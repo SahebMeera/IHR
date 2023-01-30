@@ -1,0 +1,173 @@
+﻿@inherits AddEditUserBase
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">User</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <EditForm Model="@user" OnValidSubmit="SaveUser">
+                                <DataAnnotationsValidator />
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-4 col-form-label">Employee</label>
+                                    <div class="col-8 pl-0">
+                                        <CustomInputSelect class="form-control form-control-sm autofocus" disabled="@disabledvalue" @bind-Value="user.EmployeeID" @oninput="GetEmployeeDetails">
+                                            <option value="">select</option>
+                                            @if (Employees != null)
+                                                {
+
+                                                @foreach (var employee in Employees)
+                                                    {
+                                                    @if (employee.TermDate == null || DateTime.Now <= employee.TermDate)
+                                                        {
+                                                        <option value="@employee.EmployeeID">@employee.EmployeeName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                        <option value="@employee.EmployeeID">@employee.EmployeeName *</option>
+                                                        }
+                                                    /**/
+
+                                                    }
+                                                /**/
+                                                }
+                                            /**/
+                                        </CustomInputSelect>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-4 col-form-label">First Name</label>
+                                    <div class="col-8 pl-0">
+                                        <InputText class="form-control form-control-sm" disabled="@disabledvalue" @bind-Value="user.FirstName" maxlength="50" />
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-4 col-form-label">Last Name</label>
+                                    <div class="col-8 pl-0">
+                                        <InputText class="form-control form-control-sm" disabled="@disabledvalue" @bind-Value="user.LastName" maxlength="50" />
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-4 col-form-label">Email Address</label>
+                                    <div class="col-8 pl-0">
+                                        <InputText class="form-control form-control-sm" disabled="@disabledvalue" @bind-Value="user.Email" maxlength="50" />
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-4 col-form-label">Role</label>
+                                    <div class="col-8 pl-0">
+                                        <div class="mulit-select-dropdown">
+                                            <button type="button" class="form-control form-control-sm mulit-select-dropbtn">@getSelectedRoles()</button>
+                                            <div class="mulit-select-dropdown-content">
+                                                @foreach (var item in Items)
+                                                {
+                                                    <div class="row col-12 align-items-center">
+                                                        <label for="@item.RoleID" class="@(empnonempdisabledvalue == true ? "disabled" : "") mb-0">
+                                                            @if (item.IsSelected)
+                                                            {
+                                                                <input type="checkbox" id="@item.RoleID" checked="checked" @onchange="@((e) => CheckboxChanged(e, item.RoleID))" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type="checkbox" id="@item.RoleID" @onchange="@((e) => CheckboxChanged(e, item.RoleID))" />
+                                                            }
+                                                            @item.RoleName
+                                                        </label>
+                                                        @if (item.IsSelected)
+                                                        {
+                                                            <span class="@(empnonempdisabledvalue == true ? "disabled" : "")">
+                                                                @if (item.IsDefault)
+                                                                {
+                                                                    <i class="fas fa-check" @onclick="@((e) => setDefaultRole("Remove", item))"></i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <i class="fas fa-check" style="opacity:0.5; cursor: pointer" @onclick="@((e) => setDefaultRole("Add", item))"></i>
+                                                                }
+                                                            </span>
+                                                        }
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-4 col-form-label">Company</label>
+                                    <div class="col-8 pl-0">
+                                        <CustomInputSelect class="form-control form-control-sm" disabled="@empnonempdisabledvalue" @bind-Value="user.CompanyID" @oninput="OnChangeCompany">
+                                            <option value=0>select</option>
+                                            @if (Companies != null)
+                                                {
+
+                                                @foreach (var Company in Companies)
+                                                    {
+                                                    <option value="@Company.CompanyID">@Company.Name</option>
+
+                                                    }
+                                                }
+                                        </CustomInputSelect>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="control-label col-4 col-form-label">Office365 OAuth</label>
+                                    <div class="col-8 pl-0">
+                                        <InputCheckbox class="form-control form-control-checkbox" type="checkbox" disabled="@empnonempdisabledvalue" @bind-Value="user.IsOAuth" @oninput="onAuthCheck" />
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-4 col-form-label">New Password</label>
+                                    <div class="col-8 pl-0" disabled="isSaveButShowHide">
+                                        <InputText class="form-control form-control-sm" disabled="@(user.IsOAuth == true)" type="password" @bind-Value="user.NewPassword" maxlength="50" />
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-4 col-form-label">Confirm Password</label>
+                                    <div class="col-8 pl-0" disabled="isSaveButShowHide">
+                                        <InputText class="form-control form-control-sm" disabled="@(user.IsOAuth == true)" type="password" @bind-Value="user.ConfirmPassword" />
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="control-label col-4 col-form-label">Active</label>
+                                    <div class="col-8 pl-0">
+                                        <InputCheckbox class="form-control form-control-checkbox" type="checkbox" @bind-Value="user.IsActive" />
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex justify-content-end">
+                                    @if (isRoleUpdated)
+                                    {
+                                        <button type="submit" class="btn btn-primary btn-width-height" disabled="@isSaveButtonDisabled">Save</button>
+                                    }
+                                    else
+                                    {
+                                        @if (!isSaveButShowHide)
+                                        {
+                                            @*<button type="submit" class="btn btn-primary" disabled="@(!context.Validate() || !context.IsModified())">Save</button>*@
+                                            <button type="submit" class="btn btn-primary btn-width-height" disabled="@isSaveButtonDisabled">Save</button>
+                                        }
+                                    }
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                </div>
+
+                                <div class="col-12 align-center remove-padding">
+                                    <span class="error-message-color">@LoginMessage &nbsp;</span>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

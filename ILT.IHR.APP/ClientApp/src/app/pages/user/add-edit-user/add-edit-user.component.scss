@@ -1,0 +1,78 @@
+:host::ng-deep .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+    color: #495057 !important;
+    background: transparent !important;
+}
+.disabled {
+    cursor: default !important;
+    background-color: #e9ecef;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/*multiselect dropdown*/
+.mulit-select-dropbtn {
+    background-color: #ffff;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mulit-select-dropdown {
+    position: relative;
+}
+
+
+.mulit-select-dropdown-content {
+    display: none;
+    position: fixed;
+    background-color: #f9f9f9;
+    min-width: 240px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.mulit-select-dropdown-content label {
+    color: black;
+    padding: 3px 4px;
+    text-decoration: none;
+    display: block;
+    padding-left: 7px;
+    color: #495057;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mulit-select-dropdown-content label:hover {
+    background-color: #f1f1f1
+}
+
+/*:host::ng-deep .company-dropdown .p-dropdown .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover {
+    display: none;
+}*/
+.ourDropdown {
+    display: none;
+}
+
+.ourDropdown.open {
+    display: inherit;
+}
+
+.mulit-select-dropdown:hover .mulit-select-dropdown-content {
+   display: block;
+}
+
+.dropdown:hover .mulit-select-dropbtn {
+    background-color: #ffff;
+}
+.show {
+    display: block;
+}
+.multi-select-items-center {
+    display: flex;
+    align-items: center;
+}
+:host::ng-deep .remove-background-color .p-checkbox .p-checkbox-box.p-highlight {
+    background: #2196F3 !important;
+}

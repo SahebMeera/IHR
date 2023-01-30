@@ -1,0 +1,96 @@
+﻿@inherits AddEditRolePermissionBase
+
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">Role Permission</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <EditForm Model="@rolepermission" OnValidSubmit="SaveRolePermission">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="col-12 align-center remove-padding" style="@(ErrorMessage == null || ErrorMessage == "" ? "display: none;" : "display: block;")">
+                                    <span class="error-message-color">@ErrorMessage &nbsp;</span>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-2  col-form-label">Role</label>
+                                    <div class="col-10 pl-0">
+                                        <label class="control-label">@rolepermission.RoleName</label>
+                                    </div>
+
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-2 col-form-label">Module</label>
+                                    <div class="col-10 pl-0">
+                                        <select class="form-control autofocus" @bind="rolepermission.ModuleID" @oninput="onChangeModule">
+                                            <option value="0">select</option>
+                                            @if (Modules != null)
+                                            {
+
+                                                @foreach (var Module in Modules)
+                                                {
+                                                    <option value="@Module.ModuleID">@Module.ModuleName</option>
+
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <div class="col-2"></div>
+                                    <span class="oi oi-eye pr-2 pl-0" aria-hidden="true"></span>
+                                    <div class="col-1 mr-2 remove-left-padding">
+                                        <InputCheckbox class="form-control form-control-checkbox" type="checkbox" @bind-Value="rolepermission.View" />
+                                        @*<input class="form-control form-control-sm" @bind="rolepermission.View" />
+                <ValidationMessage For="@(() => rolepermission.View)" />*@
+                                    </div>
+
+                                    <span class="oi oi-plus col-1" aria-hidden="true"></span>
+                                    <div class="col-1 mr-2 remove-left-padding">
+                                        <InputCheckbox class="form-control form-control-checkbox" type="checkbox" @bind-Value="rolepermission.Add" />
+                                        @*<input class="form-control form-control-sm" @bind="rolepermission.Add" />
+                <ValidationMessage For="@(() => rolepermission.Add)" />*@
+                                    </div>
+
+
+                                    <span class="oi oi-pencil col-1" aria-hidden="true"></span>
+                                    <div class="col-1 mr-2 remove-left-padding">
+                                        <InputCheckbox class="form-control form-control-checkbox" type="checkbox" @bind-Value="rolepermission.Update" />
+                                        @*<input class="form-control form-control-sm" @bind="rolepermission.Update" />
+                <ValidationMessage For="@(() => rolepermission.Update)" />*@
+                                    </div>
+
+
+                                    <span class="oi oi-trash col-1" aria-hidden="true"></span>
+                                    <div class="col-1 mr-2 remove-left-padding">
+                                        <InputCheckbox class="form-control form-control-checkbox" type="checkbox" @bind-Value="rolepermission.Delete" />
+                                        @*<input class="form-control form-control-sm" @bind="rolepermission.Delete" />
+                <ValidationMessage For="@(() => rolepermission.Delete)" />*@
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+
+
+                                <div class="form-group d-flex justify-content-end">
+                                    @*<button type="submit" class="btn btn-primary" disabled="@(!context.Validate() || !context.IsModified())">Save</button>*@
+                                    <button type="submit" class="btn btn-primary btn-width-height" disable="@isSaveButtonDisabled">Save</button>
+                                    <button class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

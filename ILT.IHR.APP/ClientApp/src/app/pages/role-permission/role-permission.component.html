@@ -1,0 +1,105 @@
+<div class="p-grid hidden-web">
+    <div class="p-col-12 p-pt-0 p-pb-0">
+        <h3 style="margin-bottom:1px;">Role Permission</h3>
+    </div>
+    <div class="p-col-12">
+        <app-ihr-table #dt [data]="RolePermissionsList" [isPagination]="isPagination"
+                       [DropDownLabel]="'Role :'"
+                       [DropDown]="lstRoles"
+                       [DefaultID]="DefaultDwnDn1ID"
+                       (onDropDownChange)="onChangeRole($event)"
+                       [sortingField]="'moduleName'"
+                       [sortingFieldOrder]="1"
+                       [loading]="loading"
+                       [globalFilterFields]="globalFilterFields"
+                       [showCurrentPageReport]="showCurrentPageReport" [cols]="cols" [selectedColumns]="selectedColumns"
+                       [rowActions]="rowActions" [headerActions]="headerActions" [tableState]="patientLanding">
+        </app-ihr-table>
+    </div>
+</div>
+<div class="p-grid  hidden-web hidden-mobile" *ngIf="true">
+    <div class="p-col-12 p-pt-0 p-pb-0">
+        <h3 style="margin-bottom:1px;">Role Permission</h3>
+    </div>
+    <div class="p-col-12 ">
+        <div class="p-grid p-mr-0 p-pb-1 display-flex mobile-display">
+            <div class="p-col-12 p-pr-1 mobile-padding-remove mobile-pad-left-add">
+                <div class="p-d-grid p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Global Search..." autocomplete="off" [(ngModel)]="searchText" />
+                </div>
+            </div>
+            <div class="p-col-12 p-lg-4 p-pb-0 p-pr-3">
+                <div class="p-grid grid-dropdown" *ngIf="lstRoles != null && lstRoles.length > 0">
+                    <label class="p-col-5 p-pb-0 p-pl-0 col-form-label mobile-transform-translate drpdwn" style="padding-right: 7px; padding-top: 0px !important; font-weight: 600;">Status :</label>
+                    <div class="p-col-7 p-pl-0 p-pt-0 p-pr-0 p-pb-0 mobile-first-dropdown-padding text-left" *ngIf="lstRoles != null && lstRoles.length > 0">
+                        <p-dropdown [options]="lstRoles"
+                                    appendTo="body"
+                                    [(ngModel)]="DefaultDwnDn1ID"
+                                    (onChange)="onChangeRoleMobile($event)"
+                                    placeholder="Select"
+                                    optionValue="ID"
+                                    optionLabel="Value"></p-dropdown>
+                    </div>
+                </div>
+                <div class="p-grid grid-dropdown" style="padding-top:14px; justify-content: end;" *ngIf="(RoleId !== 0 && RoleId !== undefined && RoleId !== null)">
+                    <div class="p-md-12  p-p-0 p-text-right">
+                        <button pButton pRipple type="button" label="ADD" class=" btn-width-height p-button-raised btn-width-height btn btn-block btn-sm btn-info" style="margin: 0px !important;" (click)="addRole()">
+                            <i style="padding-right:6px;" class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-col-12  p-pt-2" id="myItems" *ngIf="RolePermissionsList != null && RolePermissionsList.length > 0">
+        <div class="p-col-12  p-pl-0 p-pr-0" *ngFor="let roleRequest of RolePermissionsList | FilterPipe: searchText : searchableList">
+            <div class="p-card mobile-card-view p-mb-2" (click)="editRole(roleRequest)">
+                <div class="p-card-body" style="padding-bottom:0.5rem !important;">
+
+                    <div class="p-grid">
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Role :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{roleRequest.roleName}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2  p-pt-0 p-pb-0 mobile-card-view-label">Module :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{roleRequest.moduleName}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">View :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{roleRequest.view}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Add :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{roleRequest.add}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Update :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{roleRequest.update}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Delete :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{roleRequest.delete}}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-add-edit-rolepermission #AddEditRolePermisssion [roleID]="RoleId" (loadRolePermissionyDetails)="LoadRolePermissionList($event)"></app-add-edit-rolepermission>
+<p-toast></p-toast>

@@ -1,0 +1,94 @@
+﻿@page "/emailapproval"
+@inject NavigationManager NavManager
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@inject HttpClient Http
+@using Microsoft.AspNetCore.WebUtilities
+@using Microsoft.Extensions.Primitives;
+
+<div class="main" style="overflow:hidden;">
+    <div class="top-row px-3">
+        <div class="col-3 pl-0" style="margin-left: -12px;">
+            <img class="navbar-brand" src="@("images/"+ClientID+".jpg")" width="150" height="57" />
+        </div>
+        <div class="col-6 login-user-display">
+            <img src="images/InfoHRAppLogo.png" width="175px;" height="55px">
+        </div>
+    </div>
+
+    <div class="content pl-3 pr-3 pt-0">
+        <div class="row">
+            <div align="center" class="col-12">
+                &nbsp;
+            </div>
+            <div class="col-12 form-group align-center" style="height:200px;">
+                @if (DisplayMessage == null || DisplayMessage == "")
+                {
+                    <div class="spinnerEmail"></div>
+                }
+                else
+                {
+                    @DisplayMessage
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    string DisplayMessage;
+    string ClientID;
+    string LinkID;
+    string Value;
+    private bool showSpinner;
+
+    protected override async Task OnInitializedAsync()
+    {
+        showSpinner = true;
+        string baseUri = Configuration["ApiUrl"];
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        StringValues initClientID;
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("ClientID", out initClientID))
+        {
+            ClientID = initClientID;
+        }
+        StringValues initLinkID;
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("LinkID", out initLinkID))
+        {
+            LinkID = initLinkID;
+        }
+        StringValues initValue;
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("Value", out initValue))
+        {
+            Value = initValue;
+        }
+
+        string emailuri = baseUri + "EmailApproval/emailapproval?ClientID=" + ClientID + "&LinkID=" + LinkID + "&Value=" + Value;
+
+        HttpRequestMessage httpRequestMessage = new HttpRequestMessage();
+        httpRequestMessage.Method = new HttpMethod("GET");
+        httpRequestMessage.RequestUri = new Uri(emailuri);
+        var response = await Http.SendAsync(httpRequestMessage);
+
+        var responseStatusCode = response.StatusCode;
+        var responseBody = await response.Content.ReadAsStringAsync();
+        if (responseBody.ToUpper() == "SUCCESS" && Value.ToUpper() == "APPROVE")
+        {
+            DisplayMessage = "Timesheet Approved Successfully";
+        }
+        else if (responseBody.ToUpper() == "SUCCESS" && Value.ToUpper() == "REJECT")
+        {
+            DisplayMessage = "Timesheet Rejected Successfully";
+        }
+        else
+        {
+            DisplayMessage = responseBody;
+        }
+        showSpinner = false;
+
+
+        // return base.OnInitializedAsync();
+    }
+}

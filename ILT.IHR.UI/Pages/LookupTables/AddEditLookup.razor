@@ -1,0 +1,71 @@
+﻿@*@page "/lookup/add"
+    @page "/lookup/edit/{empID}"*@
+@inherits AddEditLookupBase
+
+
+
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">@Title Lookup</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <EditForm Model="@lookup" OnValidSubmit="SaveLookup">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-form-label col-4">Lookup Type</label>
+                                    <div class="col-8 pl-0">
+                                        <label class="control-label">@lookup.Type</label>
+                                    </div>
+
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-4 col-form-label">* Lookup Value</label>
+                                    <div class="col-8 pl-0">
+                                        <InputText class="form-control form-control-sm autofocus" @bind-Value="lookup.Value" maxlength="20" />
+                                        @*<ValidationMessage For="@(() => lookup.Value)" />*@
+                                    </div>
+
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-4 col-form-label">* Lookup Description</label>
+                                    <div class="col-8 pl-0">
+                                        <InputText class="form-control form-control-sm" @bind-Value="lookup.ValueDesc" maxlength="50" />
+                                        @*<ValidationMessage For="@(() => lookup.ValueDesc)" />*@
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group row align-items-center">
+                                    <label class="control-label col-4 col-form-label">Active</label>
+                                    <div class="col-8 pl-0 ">
+                                        <InputCheckbox class="form-control form-control-checkbox" type="checkbox" @bind-Value="lookup.IsActive" />
+                                    </div>
+                                    @*<ValidationMessage For="@(() => lookup.IsActive)" />*@
+                                </div>
+                                @*<div class="form-group">
+                                    <ValidationSummary />
+                                </div>*@
+                                <div class="form-group d-flex justify-content-end">
+                                    @*<button type="submit" class="btn btn-primary" disabled="@(!context.Validate() || !context.IsModified())">Save</button>*@
+                                    <button type="submit" class="btn btn-primary btn-width-height"  disable="@isSaveButtonDisabled">Save</button>
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,832 @@
+﻿@inherits HelpBase
+@if (ShowDialog)
+{
+    @*<div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">*@
+    <div class="modal fade come-from-modal right show d-block" tabindex="-1" role="dialog">
+        @*<div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 900px;">*@
+        <div class="modal-dialog" role="document" style="max-width: 600px;">
+            <div class="modal-content">
+                <div class="modal-header col-12" style="position: fixed; z-index:1;">
+                    <span class="float-left pl-2">Help Documentation</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        <div class="row" style="padding-top: 2rem;">
+                            @if (isShowEmployees)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-12  pr-0">
+                                            <span class="content-header"> View/Add EmployeeDetails: </span>
+                                            <div class="row">
+                                                <div class="col-sm-12 help pl-0 pr-0">
+                                                    <ol>
+                                                        <li>Click <strong>Employee</strong> on left side menu.</li>
+                                                        <img id="myImg" src="Help/Employee/EmployeeLeftMenu1.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/EmployeeLeftMenu1.png", "Employee Help Info"))">
+                                                        <li>Click on <strong>Add</strong> to Request for Employee. </li>
+                                                        <img id="myImg" src="Help/Employee/EmployeeAdd.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/EmployeeAdd.png", "Employee Help Info"))">
+                                                        <li>Switch to Employee tab. </li>
+                                                        <img id="myImg" src="Help/Employee/SwtichToEmployeeTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/SwtichToEmployeeTab.png", "Employee Help Info"))">
+
+                                                        <li>Fill the required information and Save.</li>
+                                                        <img id="myImg" src="Help/Employee/EmployeeSave.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/EmployeeSave.png", "Employee Help Info"))">
+                                                    </ol>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12  pr-0">
+                                            <span class="content-header">  View/Add Employee EmergencyContactDetails: </span>
+                                            <div class="row">
+                                                <div class="col-sm-12 help pl-0 pr-0">
+                                                    <ol>
+                                                        <li>Click on <strong>Employee Edit</strong>.</li>
+                                                        <img id="myImg" src="Help/Employee/Contact/EmployeeEditView.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Contact/EmployeeEditView.png", "Employee Contact Info"))">
+                                                        <li>Switch to Emergency Contact tab. </li>
+                                                        <img id="myImg" src="Help/Employee/Contact/SwtichContactTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Contact/SwtichContactTab.png", "Employee Contact Info"))">
+                                                        <li>Click on <strong>Add</strong> to Request for Emergency Contact. </li>
+                                                        <img id="myImg" src="Help/Employee/Contact/AddContact.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Contact/AddContact.png", "Employee Contact Info"))">
+                                                        <li>Fill the required information and Save.</li>
+                                                        <img id="myImg" src="Help/Employee/Contact/SaveContact.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Contact/SaveContact.png", "Employee Contact Info"))">
+                                                    </ol>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12  pr-0">
+                                            <span class="content-header"> View/Add Employee DirectDepositsDetails: </span>
+                                            <div class="row">
+                                                <div class="col-sm-12 help pl-0 pr-0">
+                                                    <ol>
+                                                        <li>Click on <strong>Employee Edit</strong>.</li>
+                                                        <img id="myImg" src="Help/Employee/Contact/EmployeeEditView.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Contact/EmployeeEditView.png", "Employee Direct Deposits Info"))">
+                                                        <li>Switch to Direct Deposits tab. </li>
+                                                        <img id="myImg" src="Help/Employee/DirectDeposits/SwtichDirectDepositsTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/DirectDeposits/SwtichDirectDepositsTab.png", "Employee Direct Deposits Info"))">
+                                                        <li>Click on <strong>Add</strong> to Request for Direct Deposits. </li>
+                                                        <img id="myImg" src="Help/Employee/DirectDeposits/AddDirect.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/DirectDeposits/AddDirect.png", "Employee Direct Deposits Info"))">
+                                                        <li>Fill the required information and Save.</li>
+                                                        <img id="myImg" src="Help/Employee/DirectDeposits/SaveDirectDeposits.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/DirectDeposits/SaveDirectDeposits.png", "Employee Direct Deposits Info"))">
+                                                    </ol>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12  pr-0">
+                                            <span class="content-header"> View/Add Employee DepartmentDetails: </span>
+                                            <div class="row">
+                                                <div class="col-sm-12 help pl-0 pr-0">
+                                                    <ol>
+                                                        <li>Click on <strong>Employee Edit</strong>.</li>
+                                                        <img id="myImg" src="Help/Employee/Contact/EmployeeEditView.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Contact/EmployeeEditView.png", "Employee Department Info"))">
+                                                        <li>Switch to Department tab. </li>
+                                                        <img id="myImg" src="Help/Employee/Department/SwtichDepartmentTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Department/SwtichDepartmentTab.png", "Employee Department Info"))">
+                                                        <li>Click on <strong>Add</strong> to Request for Department. </li>
+                                                        <img id="myImg" src="Help/Employee/Department/AddDepartment.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Department/AddDepartment.png", "Employee Department Info"))">
+                                                        <li>Fill the required information and Save.</li>
+                                                        <img id="myImg" src="Help/Employee/Department/SaveDepartment.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Department/SaveDepartment.png", "Employee Department Info"))">
+                                                    </ol>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12  pr-0">
+                                            <span class="content-header"> View/Add Employee AssignmentDetails: </span>
+                                            <div class="row">
+                                                <div class="col-sm-12 help pl-0 pr-0">
+                                                    <ol>
+                                                        <li>Click on <strong>Employee Edit</strong>.</li>
+                                                        <img id="myImg" src="Help/Employee/Contact/EmployeeEditView.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Contact/EmployeeEditView.png", "Employee Assignments Info"))">
+                                                        <li>Switch to Assignments tab. </li>
+                                                        <img id="myImg" src="Help/Employee/Assignments/SwtichAssignmentTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Assignments/SwtichAssignmentTab.png", "Employee Assignments Info"))">
+                                                        <li>Click on <strong>Add</strong> to Request for Assignments. </li>
+                                                        <img id="myImg" src="Help/Employee/Assignments/AddAssignment.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Assignments/AddAssignment.png", "Employee Assignments Info"))">
+                                                        <li>Fill the required information and Save.</li>
+                                                        <img id="myImg" src="Help/Employee/Assignments/SaveAssignment.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Assignments/SaveAssignment.png", "Employee Assignments Info"))">
+                                                    </ol>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12  pr-0">
+                                            <span class="content-header"> View/Add Employee W4 Info: </span>
+                                            <div class="row">
+                                                <div class="col-sm-12 help pl-0 pr-0">
+                                                    <ol>
+                                                        <li>Click on <strong>Employee Edit</strong>.</li>
+                                                        <img id="myImg" src="Help/Employee/Contact/EmployeeEditView.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Contact/EmployeeEditView.png", "Employee W4 Info"))">
+                                                        <li>Switch to W4 Info tab. </li>
+                                                        <img id="myImg" src="Help/Employee/W4Info/SwtichW4InfoTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/W4Info/SwtichW4InfoTab.png", "Employee W4 Info"))">
+                                                        <li>Click on <strong>Add</strong> to Request for W4 Info. </li>
+                                                        <img id="myImg" src="Help/Employee/W4Info/AddW4Info.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/W4Info/AddW4Info.png", "Employee W4 Info"))">
+                                                        <li>Fill the required information and Save.</li>
+                                                        <img id="myImg" src="Help/Employee/W4Info/SaveW4Info.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/W4Info/SaveW4Info.png", "Employee W4 Info"))">
+                                                    </ol>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12  pr-0">
+                                            <span class="content-header"> View/Add Employee I9 Info: </span>
+                                            <div class="row">
+                                                <div class="col-sm-12 help pl-0 pr-0">
+                                                    <ol>
+                                                        <li>Click on <strong>Employee Edit</strong>.</li>
+                                                        <img id="myImg" src="Help/Employee/Contact/EmployeeEditView.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Contact/EmployeeEditView.png", "Employee I9 Info"))">
+                                                        <li>Switch to I9 Info tab. </li>
+                                                        <img id="myImg" src="Help/Employee/I9Info/SwtichW9InfoTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/I9Info/SwtichW9InfoTab.png", "Employee I9 Info"))">
+                                                        <li>Click on <strong>Add</strong> to Request for I9 Info. </li>
+                                                        <img id="myImg" src="Help/Employee/I9Info/AddW9Info.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/I9Info/AddW9Info.png", "Employee I9 Info"))">
+                                                        <li>Fill the required information and Save.</li>
+                                                        <img id="myImg" src="Help/Employee/I9Info/SaveW9Info.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/I9Info/SaveW9Info.png", "Employee I9 Info"))">
+                                                    </ol>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12  pr-0">
+                                            <span class="content-header"> View/Add Employee Salary: </span>
+                                            <div class="row">
+                                                <div class="col-sm-12 help pl-0 pr-0">
+                                                    <ol>
+                                                        <li>Click on <strong>Employee Edit</strong>.</li>
+                                                        <img id="myImg" src="Help/Employee/Contact/EmployeeEditView.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Contact/EmployeeEditView.png", "Employee Salary Info"))">
+                                                        <li>Switch to Salary  tab. </li>
+                                                        <img id="myImg" src="Help/Employee/Salary/SwtichToSalaryTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Salary/SwtichToSalaryTab.png", "Employee Salary Info"))">
+                                                        <li>Click on <strong>Add</strong> to Request for Salary. </li>
+                                                        <img id="myImg" src="Help/Employee/Salary/AddSalary.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Salary/AddSalary.png", "Employee Salary Info"))">
+                                                        <li>Fill the required information and Save.</li>
+                                                        <img id="myImg" src="Help/Employee/Salary/SaveSalary.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Employee/Salary/SaveSalary.png", "Employee Salary Info"))">
+                                                    </ol>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+
+
+                                </div>
+                            }
+                            @if (isShowWFH)
+                            {
+
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header"> View/Add WorkFromHome Request: </span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click <strong>WFH Request</strong> on left side menu.</li>
+                                                    <img id="myImg" src="Help/WFHRequest/SelectWFHRequest.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/WFHRequest/SelectWFHRequest.png", "WFH Request  Help Info"))">
+                                                    <li>Switch to WFH tab. </li>
+                                                    <img id="myImg" src="Help/WFHRequest/SwtichWFHTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/WFHRequest/SwtichWFHTab.png", "WFH Request  Help Info"))">
+                                                    <li>Click on <strong>Add</strong> to Request for Work from Home. </li>
+                                                    <img id="myImg" src="Help/WFHRequest/AddWFHRequest.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/WFHRequest/AddWFHRequest.png", "WFH Request  Help Info"))">
+                                                    <li>Fill the required information (Title, Date range) and submit. </li>
+                                                    <img id="myImg" src="Help/WFHRequest/SaveWFHRequest.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/WFHRequest/SaveWFHRequest.png", "WFH Request  Help Info"))">
+                                                    <li>You will receive Confirmation email once it is Approved/Denied. </li>
+                                                </ol>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header"> WorkFromHome View/Add Approve/Deny  :</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>WFH Request</strong>  left side menu.</li>
+                                                    <img id="myImg" src="Help/WFHRequest/SelectWFHRequest.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/WFHRequest/SelectWFHRequest.png", "WFH Request  Help Info"))">
+                                                    <li>Switch to Approve/Deny WFH tab. </li>
+                                                    <img id="myImg" src="Help/WFHRequest/SwtichApproveTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/WFHRequest/SwtichApproveTab.png", "WFH Request  Help Info"))">
+                                                    <li>Click on view Icon in the table. </li>
+                                                    <img id="myImg" src="Help/WFHRequest/ApproveView.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/WFHRequest/ApproveView.png", "WFH Request  Help Info"))">
+                                                    <li>Enter comments if essential.  </li>
+                                                    <li>Click on Approve/Deny.</li>
+                                                    <img id="myImg" src="Help/WFHRequest/ApproveAndCancel.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/WFHRequest/ApproveAndClose.png", "WFH Request  Help Info"))">
+                                                </ol>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                            @if (isShowLeaveRequest)
+                            {
+
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header"> View/Add LeaveRequestDetails: </span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click <strong>Leave Request</strong> on left side menu.</li>
+                                                    <img id="myImg" src="Help/LeaveRequest/LeftSideLeaveRequest.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/LeaveRequest/LeftSideLeaveRequest.png", "LeaveRequest Help Info"))">
+                                                    <li>Switch to Leave tab. </li>
+                                                    <img id="myImg" src="Help/LeaveRequest/SwtichLeaveTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/LeaveRequest/SwtichLeaveTab.png", "LeaveRequest Help Info"))">
+                                                    <li>Click on <strong>Add</strong> to Leave Request. </li>
+                                                    <img id="myImg" src="Help/LeaveRequest/AddLeaveRequest.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/LeaveRequest/AddLeaveRequest.png", "LeaveRequest Help Info"))">
+                                                    <li>Fill the required information  and submit. </li>
+                                                    <img id="myImg" src="Help/LeaveRequest/SaveLeaveRequest.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/LeaveRequest/SaveLeaveRequest.png", "LeaveRequest Help Info"))">
+                                                    <li>You will receive Confirmation email once it is Approved/Denied. </li>
+                                                </ol>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header"> LeaveRequest View/Add Approve/Deny  :</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>Leave Request</strong>  left side menu.</li>
+                                                    <img id="myImg" src="Help/LeaveRequest/LeftSideLeaveRequest.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/LeaveRequest/LeftSideLeaveRequest.png", "LeaveRequest Help Info"))">
+                                                    <li>Switch to Approve/Deny Leave tab. </li>
+                                                    <img id="myImg" src="Help/LeaveRequest/SwtichApproveDenyTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/LeaveRequest/SwtichApproveDenyTab.png", "LeaveRequest Help Info"))">
+                                                    <li>Click on view Icon in the table. </li>
+                                                    <img id="myImg" src="Help/LeaveRequest/ApproveView.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/LeaveRequest/ApproveView.png", "LeaveRequest Help Info"))">
+                                                    <li>Enter comments if essential.  </li>
+                                                    <li>Click on Approve/Deny.</li>
+                                                    <img id="myImg" src="Help/LeaveRequest/ApproveOrDenyCancelLeave.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/LeaveRequest/ApproveOrDenyCloseLeave.png", "LeaveRequest Help Info"))">
+                                                </ol>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+
+
+                            @if (isShowTimeSheet)
+                            {
+
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header"> View/Add TimeSheetDetails: </span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click <strong>Timesheet</strong> on left side menu.</li>
+                                                    <img id="myImg" src="Help/Timesheet/LeftSideMenuTimesheet.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Timesheet/LeftSideMenuTimesheet.png", "Timesheet Help Info"))">
+                                                    <li>Switch to Timesheet tab. </li>
+                                                    <img id="myImg" src="Help/Timesheet/SwtichToTimeSheetTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Timesheet/SwtichToTimeSheetTab.png", "Timesheet Help Info"))">
+                                                    <li>Click on <strong>Add</strong> to Timesheet. </li>
+                                                    <img id="myImg" src="Help/Timesheet/AddTimesheet.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Timesheet/AddTimesheet.png", "Timesheet Help Info"))">
+                                                    <li>Select <strong>Client</strong>. </li>
+                                                    <img id="myImg" src="Help/Timesheet/SelectClient.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Timesheet/SelectClient.png", "Timesheet Help Info"))">
+                                                    <li>Select <strong> Week Ending</strong>. </li>
+                                                    <img id="myImg" src="Help/Timesheet/SelectWeekending.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Timesheet/SelectWeekending.png", "Timesheet Help Info"))">
+                                                    <li>Fill the required information  and submit. </li>
+                                                    <img id="myImg" src="Help/Timesheet/SaveTimeSheet.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Timesheet/SaveTimeSheet.png", "Timesheet Help Info"))">
+                                                    <li>You will receive Confirmation email once it is Approved/Denied. </li>
+                                                </ol>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header"> Timesheet View/Add Approve/Deny:</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>Timesheet</strong>  left side menu.</li>
+                                                    <img id="myImg" src="Help/Timesheet/LeftSideMenuTimesheet.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Timesheet/LeftSideMenuTimesheet.png", "Timesheet Help Info"))">
+                                                    <li>Switch to Approve/Deny Leave tab. </li>
+                                                    <img id="myImg" src="Help/Timesheet/SwtichToApproveTab.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Timesheet/SwtichToApproveTab.png", "Timesheet Help Info"))">
+                                                    <li>Click on view Icon in the table. </li>
+                                                    <img id="myImg" src="Help/Timesheet/ApproveDenyView.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Timesheet/ApproveDenyView.png", "Timesheet Help Info"))">
+                                                    <li>Enter comments if essential.  </li>
+                                                    <li>Click on Approve/Deny.</li>
+                                                    <img id="myImg" src="Help/Timesheet/SaveApproveDeny.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Timesheet/SaveApproveDeny.png", "Timesheet Help Info"))">
+                                                </ol>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+
+                            @if (isShowHolidays)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header"> View/Add HolidayDetails:</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>Holidays</strong>  left side menu.</li>
+                                                    <img id="myImg" src="Help/Holidays/LeftSideMenu.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Holidays/LeftSideMenu.png", "View/Add Holidays"))">
+                                                    <li>Click on <strong>Add Button</strong> to Holidays </li>
+                                                    <img id="myImg" src="Help/Holidays/AddHolidays.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Holidays/AddHolidays.png", "View/Add Holidays"))">
+                                                    <li>Fill the required information and Click Save button. </li>
+                                                    <img id="myImg" src="Help/Holidays/SaveHolidays.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Holidays/SaveHolidays.png", "View/Add Holidays"))">
+
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (isShowCompany)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header"> View/Add CompanyDetails:</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>Company</strong>  left side menu.</li>
+                                                    <img id="myImg" src="Help/Company/LeftSideCompany.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Company/LeftSideCompany.png", "View/Add CompanyDetails"))">
+                                                    <li>Click on <strong>Add Button</strong> to Company </li>
+                                                    <img id="myImg" src="Help/Company/AddCompany.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Company/AddCompany.png", "View/Add CompanyDetails"))">
+                                                    <li>Fill the required information and Click Save button. </li>
+                                                    <img id="myImg" src="Help/Company/SaveCompany.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Company/SaveCompany.png", "View/Add CompanyDetails"))">
+                                                    <li>Click on <strong>Add Button</strong> to EndClient </li>
+                                                    <img id="myImg" src="Help/Company/AddEndClient.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Company/AddEndClient.png", "View/Add CompanyDetails"))">
+                                                    <li>Fill the required information and Click Save button. </li>
+                                                    <img id="myImg" src="Help/Company/SaveEndClient.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Company/SaveEndClient.png", "View/Add CompanyDetails"))">
+
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (isShowLookup)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header">View/Add LookupDetails:</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>Lookup</strong> left side menu.</li>
+                                                    <img id="myImg" src="Help/Lookup/LeftSideMenuLookup.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Lookup/LeftSideMenuLookup.png", "View/Add Lookup"))">
+                                                    <li>Select Lookup Type. </li>
+                                                    <img id="myImg" src="Help/Lookup/SelectLookupType.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Lookup/SelectLookupType.png", "View/Add Lookup"))">
+                                                    <li>Click on <strong>Add Button</strong> to Lookup. </li>
+                                                    <img id="myImg" src="Help/Lookup/AddLookup.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Lookup/AddLookup.png", "View/Add Lookup"))">
+                                                    <li>Fill the required information and Click Save button.</li>
+                                                    <img id="myImg" src="Help/Lookup/SaveLookup.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Lookup/SaveLookup.png", "View/Add Lookup"))">
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (isShowRolepermission)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header">You can follow below steps for Role Permission:</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>Role Permission</strong> left side menu.</li>
+                                                    <li>Select Role  and Click on <strong>Add Button</strong> to Role. </li>
+                                                    <li>Fill the required information (selct modole & checkbox click).</li>
+                                                    <li>Click Save button. </li>
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (isShowUser)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header">View/Add UserDetails:</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>User</strong>  left side menu.</li>
+                                                    <img id="myImg" src="Help/User/LeftSideUser.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/User/LeftSideUser.png", "View/Add UserDetails"))">
+                                                    <li>Click on <strong>Add </strong> to User</li>
+                                                    <img id="myImg" src="Help/User/AddUser.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/User/AddUser.png", "View/Add UserDetails"))">
+                                                    <li>Fill the required information and click  Save button.  </li>
+                                                    <img id="myImg" src="Help/User/SaveUser.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/User/SaveUser.png", "View/Add UserDetails"))">
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (isShowManageLeave)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header">View/Add ManageLeaveDetails:</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>ManageLeave</strong>  left side menu.</li>
+                                                    <img id="myImg" src="Help/ManageLeave/LeftSideManageleave.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ManageLeave/LeftSideManageleave.png", "View/Add ManageLeaveDetails"))">
+                                                    <li>Select Year. </li>
+                                                    <img id="myImg" src="Help/ManageLeave/SelectYear.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ManageLeave/SelectYear.png", "View/Add ManageLeaveDetails"))">
+                                                    <li>Select Country. </li>
+                                                    <img id="myImg" src="Help/ManageLeave/SelectCountry.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ManageLeave/SelectCountry.png", "View/Add ManageLeaveDetails"))">
+                                                    <li>Click on <strong>Accrue Leave </strong> to ManageLeave </li>
+                                                    <img id="myImg" src="Help/ManageLeave/AddAccrueLeave.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ManageLeave/AddAccrueLeave.png", "View/Add ManageLeaveDetails"))">
+                                                    <li>Fill the required information and click  Accure button.  </li>
+                                                    <img id="myImg" src="Help/ManageLeave/AccrueAdded.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ManageLeave/AccrueAdded.png", "View/Add ManageLeaveDetails"))">
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (isShowManageTimesheet)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header">View/Add ManageTimesheet Details:</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>ManageTimesheet</strong>  left side menu.</li>
+                                                    <img id="myImg" src="Help/ManageTimesheet/LeftSideManageTimeSheet.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ManageTimesheet/LeftSideManageTimeSheet.png", "View/Add ManageTimesheet Details"))">
+                                                    <li>Click on <strong>View</strong> to ManageTimesheet </li>
+                                                    <img id="myImg" src="Help/ManageTimesheet/ViewManageTimesheet.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ManageTimesheet/ViewManageTimesheet.png", "View/Add ManageTimesheet Details"))">
+                                                    <li>Fill the required information and click  Close button.  </li>
+                                                    <img id="myImg" src="Help/ManageTimesheet/CloseTimesheet.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ManageTimesheet/CloseTimesheet.png", "View/Add ManageLeaveDetails"))">
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (isShowExpenses)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header">View/Add ExpensesDetails:</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>Expenses</strong>  left side menu.</li>
+                                                    <img id="myImg" src="Help/Expenses/LeftSideExpenses.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Expenses/LeftSideExpenses.png", "View/Add ExpensesDetails"))">
+                                                    <li>Click on <strong>Add </strong> to Expense</li>
+                                                    <img id="myImg" src="Help/Expenses/AddExpenses.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Expenses/AddExpenses.png", "View/Add ExpensesDetails"))">
+                                                    <li>Fill the required information (ExpenseType,Amount) and click save button.  </li>
+                                                    <img id="myImg" src="Help/Expenses/SaveExpenses.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Expenses/AddExpenses.png", "View/Add ExpensesDetails"))">
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (isShowIHRProcess)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header">View/Add ProcessDataDetails:</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>Process Data</strong>  left side menu.</li>
+                                                    <img id="myImg" src="Help/ProcessData/LeftSideProcessData.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ProcessData/LeftSideProcessData.png", "View/Add ProcessDataDetails"))">
+                                                    <li>By Default All Process Data will Display  with Status In-Process or Pending</li>
+                                                    <img id="myImg" src="Help/ProcessData/DisplayProcessDataList.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ProcessData/DisplayProcessDataList.png", "View/Add ProcessDataDetails"))">
+                                                    <li>For <strong>Adding Process</strong> , select particular Process <strong>(OnBoarding, Termination etc..)</strong> .</li>
+                                                    <img id="myImg" src="Help/ProcessData/AddForProcess.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ProcessData/AddForProcess.png", "View/Add ProcessDataDetails"))">
+                                                    <li>By Click onthe <strong>Edit Icon</strong> (First button in Table)</li>
+                                                    <img id="myImg" src="Help/ProcessData/EditForProcess.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ProcessData/EditForProcess.png", "View/Add ProcessDataDetails"))">
+                                                    <li>Modify the selected record and clicked save button </li>
+                                                    <img id="myImg" src="Help/ProcessData/UpdateForProcess.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ProcessData/UpdateForProcess.png", "View/Add ProcessDataDetails"))">
+                                                    <li>By Click on the <strong>Process Icon </strong> (Second button in the Table) </li>
+                                                    <img id="myImg" src="Help/ProcessData/ProcessForProcess.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ProcessData/ProcessForProcess.png", "View/Add ProcessDataDetails"))">
+                                                    <li>
+                                                        All data will display in disable mode and
+                                                        Once clicked on process button record status changed to In-Process and configrable in ticket will be generated(Check in the Ticket Module)
+                                                    </li>
+                                                    <img id="myImg" src="Help/ProcessData/UpdateProcessForProcess.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ProcessData/UpdateProcessForProcess.png", "View/Add ProcessDataDetails"))">
+                                                    <li>By Click on the <strong>Task Icon </strong>(Third button in the table).</li>
+                                                    <img id="myImg" src="Help/ProcessData/TaskIconForProcess.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ProcessData/TaskIconForProcess.png", "View/Add ProcessDataDetails"))">
+                                                    <li>User can check the ticket details and the ticketstatus.By Resolved all the assgin Ticket, Status changed to Processed.</li>
+                                                    <img id="myImg" src="Help/ProcessData/TicketDetailsDisplay.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/ProcessData/TicketDetailsDisplay.png", "View/Add ProcessDataDetails"))">
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (isShowAsset)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header">View/Add AssetDetails:</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>Asset</strong>  left side menu.</li>
+                                                    <img id="myImg" src="Help/Asset/LeftSideAsset.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Asset/LeftSideAsset.png", "View/Add AssetDetails"))">
+                                                    <li>Click on <strong>Add </strong> to Asset</li>
+                                                    <img id="myImg" src="Help/Asset/AddAsset.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Asset/AddAsset.png", "View/Add AssetDetails"))">
+                                                    <li>Fill the required information  and click save button.  </li>
+                                                    <img id="myImg" src="Help/Asset/SaveAsset.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Asset/SaveAsset.png", "View/Add AssetDetails"))">
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (isShowTicket)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header">View/Add TicketDetails:</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>Ticket</strong>  left side menu.</li>
+                                                    <img id="myImg" src="Help/Ticket/LeftSideTicket.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Ticket/LeftSideTicket.png", "View/Add TicketDetails"))">
+                                                    <li>Click on <strong>Add </strong> to Ticket</li>
+                                                    <img id="myImg" src="Help/Ticket/AddTicket.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Ticket/AddTicket.png", "View/Add TicketDetails"))">
+                                                    <li>Fill the required information  and click save button.  </li>
+                                                    <img id="myImg" src="Help/Ticket/SaveTicket.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Ticket/SaveTicket.png", "View/Add TicketDetails"))">
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                            @if (isShowAppraisal)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12 pl-0 pr-0">
+                                        <span class="content-header">View/Add AppraisalDetails:</span>
+                                        <div class="row">
+                                            <div class="col-sm-12 help pl-0 pr-0">
+                                                <ol>
+                                                    <li>Click on <strong>Appraisal</strong>  left side menu.</li>
+                                                    <img id="myImg" src="Help/Appraisal/LeftSideAppraisal.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/LeftSideAppraisal.png", "View/Add Appraisal"))">
+
+                                                    <li>When Appraisal Status is <strong>Assigned</strong> and Clicked on edit icon, will display appraisal form to be filled by the employee.</li>
+                                                    <img id="myImg" src="Help/Appraisal/StatusAssignedEdit.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/StatusAssignedEdit.png", "View/Add Appraisal"))">
+                                                    <li>Employee Need to select <strong>Employee Rating</strong> from 1 to 5 for all the objectives</li>
+                                                    <img id="myImg" src="Help/Appraisal/AssignedEmployeeRatingObjectives.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/AssignedEmployeeRatingObjectives.png", "View/Add Appraisal"))">
+                                                    <li> Employee Need to select <strong>Employee Rating</strong> from 1 to 5  and Enter the <strong>Employee Comments</strong> for each Goal from pervious appraisal.</li>
+                                                    <img id="myImg" src="Help/Appraisal/AssignedEmployeeRatingComments.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/AssignedEmployeeRatingComments.png", "View/Add Appraisal"))">
+                                                    <li>Employee Need to Enter <strong>Current Year Goals</strong>.Additional Goals can be added by clicking the add button.Minium of three and max of six goals.</li>
+                                                    <img id="myImg" src="Help/Appraisal/AssignedCuurentYearGoal.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/AssignedCuurentYearGoal.png", "View/Add Appraisal"))">
+                                                    <li>After Click the Save button data will be saved Successfully, but not submitted for review.</li>
+                                                    <img id="myImg" src="Help/Appraisal/AssignedSave.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/AssignedSave.png", "View/Add Appraisal"))">
+                                                    <li>On Click of Submit Button, Appraisal Status Changes to <strong>PendingReview</strong> and will be submitted to the <strong>Manager/Reviewer.</strong></li>
+                                                    <img id="myImg" src="Help/Appraisal/AssignedSubmit.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/AssignedSubmit.png", "View/Add Appraisal"))">
+
+                                                    <li>When Appraisal Status is <strong>PendingReview</strong> and Clicked on <strong>edit</strong> icon, will display appraisal form to be filled by the manager.</li>
+                                                    <img id="myImg" src="Help/Appraisal/PendingReviewEdit.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/PendingReviewEdit.png", "View/Add Appraisal"))">
+
+                                                    <li>Manager Need to select <strong>Manager Rating</strong> from 1 to 5 for all the objectives.</li>
+                                                    <img id="myImg" src="Help/Appraisal/PendingReviewManagerRating.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/PendingReviewManagerRating.png", "View/Add Appraisal"))">
+                                                    <li>Manager Need to select <strong>Manager Rating</strong> from 1 to 5  and Enter the <strong>Manager Comments</strong> for each Goal from pervious appraisal.</li>
+                                                    <img id="myImg" src="Help/Appraisal/PendingReviewManagerRatingCommentGoals.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/PendingReviewManagerRatingCommentGoals.png", "View/Add Appraisal"))">
+                                                    <li>Manager Need to Enter <strong>Current Year Goal</strong>.Additional Goals can be added by clicking the add button.Minium of three and max of six goals.</li>
+                                                    <img id="myImg" src="Help/Appraisal/PendingReviewCurrentYearGoals.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/PendingReviewCurrentYearGoals.png", "View/Add Appraisal"))">
+                                                    <li>Manager Need to provide <strong>Manager FeedBack</strong>.</li>
+
+                                                    <img id="myImg" src="Help/Appraisal/PendingReviewManagerFeedBack.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/PendingReviewManagerFeedBack.png", "View/Add Appraisal"))">
+                                                    <li>After Click the Save button data will be saved Successfully, but not submitted for <strong>Final Reviewer</strong>.</li>
+                                                    <img id="myImg" src="Help/Appraisal/PendingReviewSave.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/PendingReviewSave.png", "View/Add Appraisal"))">
+                                                    <li>On Click of Submit Button, Appraisal Status Changes to <strong>Pending Final Review</strong> and will be submitted to the <strong>Final Reviewer.</strong></li>
+                                                    <img id="myImg" src="Help/Appraisal/PendingReviewSubmit.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/PendingReviewSubmit.png", "View/Add Appraisal"))">
+
+                                                    <li>When Appraisal Status is <strong>Pending Final Review</strong> and Clicked on <strong>edit</strong> icon, will display appraisal form to be filled by the Final Reviewer.</li>
+
+                                                    <img id="myImg" src="Help/Appraisal/PendingFinalReviewEdit.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/PendingFinalReviewEdit.png", "View/Add Appraisal"))">
+                                                    <li>FinalReviewer Will view all the ratings and comments given by the Employee/Manager and provide the Final Comment.</li>
+                                                    <img id="myImg" src="Help/Appraisal/PendingFinalReviewComment.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/PendingFinalReviewComment.png", "View/Add Appraisal"))">
+                                                    <li>After Click the Save button data will be saved Successfully,but not submitted for <strong>Complete</strong>.</li>
+                                                    <img id="myImg" src="Help/Appraisal/SavePendingFinalReview.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/SavePendingFinalReview.png", "View/Add Appraisal"))">
+                                                    <li>After Click the Submit Button, Appraisal Status Change to Complete</li>
+                                                    <img id="myImg" src="Help/Appraisal/SubmitPendingFinalReview.png" alt="Snow" style="width:100%;max-width:500px" @onclick="@((e) => openImageModalPopUp(e, "Help/Appraisal/SubmitPendingFinalReview.png", "View/Add Appraisal"))">
+
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (isShowAllHelpDocumentation)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" @onclick="AllHelpDocumentationShow">Show All Modules Help Documentation</a>
+                                            </div>
+                                            <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                                <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+
+                        </div>
+                        @if (!isShowAllHelpDocumentation)
+                        {
+                            <div class="row">
+                                <div class="col-sm-6">
+                                </div>
+                                <div class="col-sm-6 form-group d-flex justify-content-end pt-2">
+                                    <button type="button" class="btn btn-danger ml-1" style="line-height: 1;" @onclick="Close">Close</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+        </div>
+    </div>
+}
+@if (showImageModal)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1300px;">
+            <div class="modal-content" style="width: auto;">
+                <div class="modal-header">
+                    <span class="float-left pl-2">@HelpHeaderText</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@CloseImageModal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <img  id="img01" src='@ImgeUrlPath'>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

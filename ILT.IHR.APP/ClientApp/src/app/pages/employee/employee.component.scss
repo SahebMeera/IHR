@@ -1,0 +1,39 @@
+.hidden-web {
+    display: block;
+}
+
+.hidden-mobile {
+    display: none;
+}
+
+@media screen and (max-width: 960px) {
+    .hidden-web {
+        display: none !important;
+    }
+
+    .hidden-mobile {
+        display: block !important;
+    }
+    .mobile-display {
+        display: inherit !important;
+    }
+    :host::ng-deep .grid-dropdown .p-dropdown {
+        width: 15rem;
+        /*padding-right: 15px;*/
+    }
+    :host ::ng-deep .grid-dropdown .p-multiselect {
+        width: 14em;
+        /*padding-right: 15px;*/
+    }
+    .djac {
+        display: flex !important;
+        justify-content: center !important;
+        align-content: center !important;
+    }
+
+}
+.display-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

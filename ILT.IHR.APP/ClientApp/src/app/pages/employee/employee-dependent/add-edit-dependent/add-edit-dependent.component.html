@@ -1,0 +1,70 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="800" #addEditDependentModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="DependentForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">* First Name </label>
+                                <input type="text" formControlName="FirstName" pInputText [ngClass]="{ 'is-invalid': submitted && addEditDependentControls.FirstName.errors }" />
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2">* Last Name </label>
+                                <input type="text" formControlName="LastName" pInputText [ngClass]="{ 'is-invalid': submitted && addEditDependentControls.LastName.errors }" />
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname3">Middle Name </label>
+                                <input type="text" formControlName="MiddleName" pInputText  />
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">* Birth Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="BirthDate"
+                                            [showIcon]="true"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8">* Relation</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="RelationList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditDependentControls.RelationID.errors }"
+                                                appendTo="body"
+                                                formControlName="RelationID"
+                                                placeholder="Select Relation"
+                                                (onChange)="commonUtils.setDropdownvalue(RelationList,'listValueID', $event, DependentForm,'Relation', 'valueDesc', false)"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname9">* VisaType </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="VisaTypeList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditDependentControls.VisaTypeID.errors }"
+                                                appendTo="body"
+                                                formControlName="VisaTypeID"
+                                                placeholder="Select VisaType"
+                                                (onChange)="commonUtils.setDropdownvalue(VisaTypeList,'listValueID', $event, DependentForm,'VisaType', 'valueDesc', false)"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>
+

@@ -1,0 +1,71 @@
+.hidden-web {
+    display: block;
+}
+
+.hidden-mobile {
+    display: none;
+}
+
+.display-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 960px) {
+    .hidden-web {
+        display: none !important;
+    }
+
+    .hidden-mobile {
+        display: block !important;
+    }
+
+    .mobile-display {
+        display: inherit !important;
+    }
+
+    :host::ng-deep .grid-dropdown .p-dropdown {
+        width: 15rem;
+        /*padding-right: 15px;*/
+    }
+
+    :host ::ng-deep .grid-dropdown .p-multiselect {
+        width: 14em;
+        /*padding-right: 15px;*/
+    }
+
+    .djac {
+        display: flex !important;
+        justify-content: center !important;
+        align-content: center !important;
+    }
+}
+
+.table {
+    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    font-size: 14px;
+
+    th {
+        padding: .35em .5em;
+        background-color: #007ad9;
+        color: #ffffff;
+        white-space: nowrap;
+    }
+
+    .ui-table-tbody {
+        font-weight: 500;
+    }
+
+    .ui-table-tbody > tr:nth-child(even) {
+        background-color: #E9F3C2;
+    }
+
+    .ui-table-tbody > tr > td:first-child {
+        background-color: #f4f4f4;
+    }
+}
+
+th {
+    font-weight: 700 !important;
+}

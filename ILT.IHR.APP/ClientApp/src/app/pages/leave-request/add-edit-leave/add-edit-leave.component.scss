@@ -1,0 +1,14 @@
+:host ::ng-deep .is-invalid-dropdown .p-dropdown {
+    outline: 1px solid #E91E63 !important;
+}
+
+:host ::ng-deep .is-invalid-dropdown .p-autocomplete {
+    outline: 1px solid #E91E63;
+}
+
+.disabled {
+    cursor: default !important;
+    background-color: #e9ecef;
+    opacity: 0.6;
+    pointer-events: none;
+}

@@ -1,0 +1,235 @@
+.login-body {
+    background-image: url('../../../assets/layout/images/pages/Login_Background.jpg') !important;
+    background-color: #f7f7fb;
+    background-attachment: fixed;
+    /* background-size: cover;*/
+    background-repeat: no-repeat;
+    padding: 28px;
+    display: flex;
+}
+#login-wrapper{
+    width: 450px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-wrapper #login-container {
+    padding: 0px !important;
+    height: 454px;
+    margin-top: auto;
+    margin-top: 80px;
+    margin-bottom: auto;
+    width: 450px;
+}
+.justify-content-center {
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
+}
+.section-header{
+    margin-top: 35px;
+    font-size: 27px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.17;
+}
+.error-message-color {
+    color: red;
+}
+
+.wraper {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative;
+    width: 100%;
+    position: relative;
+}
+.signInBlock {
+    padding: 30px;
+    position: relative;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+}
+.signUp-form-block{
+    border-radius: 6px;
+    padding: 0;
+    min-height: 405px;
+    max-width: 900px;
+    width: 100%;
+    margin: 0px auto;
+    background: #3f82db;
+    box-shadow: 0 0 6px rgb(0 0 0 / 10%);
+    display: flex;
+}
+.signUp-left-block {
+    padding: 40px;
+    text-align: center;
+    color: #fff;
+    min-height: 400px;
+    border-radius: 6px 0 0 6px;
+}
+.signUp-right-block {
+    background: #fff;
+    padding: 30px;
+    border-radius: 0 6px 6px 0;
+}
+.signUpTitle-1 {
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    line-height: 26px;
+}
+.sText {
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 50px;
+    line-height: 20px;
+    max-width: 235px;
+}
+.sText ul {
+    margin: 0;
+    padding: 0;
+}
+.sText ul li {
+   // background: url(/landing_img/login/signTick.svg) no-repeat left 3px;
+    padding-left: 20px;
+    margin: 6px 0;
+    text-align: left;
+    display: block;
+    font-size: 14px;
+}
+ul li:before {
+    content: '✓';
+    padding-right: 5px;
+  }
+.alreadySign {
+    font-size: 14px;
+    margin-bottom: 50px;
+}
+.alreadySign a:hover {
+    background: #fff;
+    color: #0052cc;
+}
+.alreadySign a {
+    width: 160px;
+    border: solid 1px #fff;
+    border-radius: 3px;
+    text-align: center;
+    margin: 0 auto;
+    text-transform: uppercase;
+    font-family: 'proxima_nova_semibold'!important;
+    font-size: 14px;
+    padding: 8px;
+    color: #fff;
+    margin-top: 15px;
+}
+.copyW {
+    text-align: center;
+    color: #80b7ff;
+    font-size: 12px;
+}
+
+// righthand side part css
+.signIn-logo {
+    padding: 0px 0px 35px;
+    /* padding: 40px 0px 20px; */
+    margin: 0 auto;
+    max-width: 900px;
+    text-align: center;
+}
+.signIn-logo img {
+    width: 175px;
+}
+
+.signFields {
+    max-width: 304px;
+    width: 100%;
+    min-height: 240px;
+    margin: 0 auto;
+    margin-bottom: 28px;
+}
+.all_panels {
+    overflow: hidden;
+}
+.signUpTitle-2 {
+    font-family: 'proxima_nova_bold';
+    color: #091e44;
+    font-size: 22px;
+    line-height: 34px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.invalid-feedback {
+    color: #E91E63;
+    display: block;
+}
+:host ::ng-deep .p-button.p-button-link:enabled:hover .p-button-label {
+    text-decoration: none !important;
+}
+.cancelButton .p-button:enabled:hover{
+    background: white !important;
+    color: black !important;
+    border-color: #1c1e20 !important;
+}
+
+@media screen and (max-width: 769px) {
+    .mobile-display-block {
+        display: block !important;
+    }
+    .mobile-display-contents {
+        display: contents !important;
+    }
+    .mobile-padding-bottom {
+        padding-bottom:1rem;
+    }
+    .mobile-padding-top {
+        padding-top: 2rem;
+    }
+    .mobile-table-cell {
+        display: table-cell;
+    }
+    .mobile-display-grid {
+        display: grid !important;
+    }
+    .login-body {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    #login-wrapper #login-container {
+        width: auto !important;
+        height: auto !important;
+    }
+}
+
+.loader {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1500ms linear infinite;
+    border: dotted;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

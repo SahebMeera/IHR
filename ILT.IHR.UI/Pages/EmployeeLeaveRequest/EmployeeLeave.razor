@@ -1,0 +1,245 @@
+﻿@inherits EmployeeLeaveBase
+@using BlazorTable
+@using IHR.DTO
+@page "/leaverequests"
+@inject NavigationManager NavigationManager
+
+@if (LeaveRolePermission != null && LeaveRolePermission.View == false)
+{
+    NavigationManager.NavigateTo("");
+}
+<h3 style="margin-bottom:1px;">Leave Request</h3>
+<TabControl @ref="LeaveTabControl">
+    <TabPage Text="Leave">
+        <div class="row reduce-margin-top hidden-web">
+            <div class="col-12 pl-1 pr-1">
+                @if (LeaveBalanceList != null)
+                {
+                <Table TableItem="LeaveBalance" Items="LeaveBalanceList" ColumnReorder="true" ShowSearchBar="true"
+                       SelectionType="SelectionType.Single" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize">
+                    <Column TableItem="LeaveBalance" Title="Year" Field="@(x => x.LeaveYear)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="true" Align="Align.Right" />
+                    <Column TableItem="LeaveBalance" Title="Leave Type" Field="@(x => x.LeaveType)" Sortable="true" Filterable="false" />
+                    <Column TableItem="LeaveBalance" Title="Total" Field="@(x => x.VacationTotal)" Sortable="true" Filterable="false" Align="Align.Right" />
+                    <Column TableItem="LeaveBalance" Title="Used" Field="@(x => x.VacationUsed)" Sortable="true" Filterable="false" Align="Align.Right" />
+                    <Column TableItem="LeaveBalance" Title="Unpaid" Field="@(x => x.UnpaidLeave)" Sortable="true" Filterable="false" Align="Align.Right" />
+                    <Column TableItem="LeaveBalance" Title="Balance" Field="@(x => x.VacationBalance)" Sortable="true" Filterable="false" Align="Align.Right" />
+                    <Column TableItem="LeaveBalance" Title="Encashed" Field="@(x => x.EncashedLeave)" Sortable="true" Filterable="false" Align="Align.Right" />
+                    <EmptyDataTemplate>
+                        <div class="text-center">
+                            No rows found!
+                        </div>
+                    </EmptyDataTemplate>
+                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                </Table>
+                }
+                else
+                {
+                    <span></span>
+                }
+            </div>
+        </div>
+        <div class="row mt-2 hidden-web hidden-mobile">
+            @if (LeaveBalanceList != null && LeaveBalanceList.Count > 0)
+            {
+                <div class="col-12 pt-2" >
+                    @foreach (var leaveBalance in LeaveBalanceList)
+                    {
+                        <div class="col-sm-6  pl-0 pr-0">
+                            <div class="card mobile-card-view  mb-1">
+                                <div class="card-body" style="padding-bottom:0.5rem !important;">
+                                    <div class="row">
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Year :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @leaveBalance.LeaveYear
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">LeaveType :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @leaveBalance.LeaveType
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Total :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @leaveBalance.VacationTotal
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Used :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @leaveBalance.VacationUsed
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Unpaid :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @leaveBalance.UnpaidLeave
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Balance :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @leaveBalance.VacationBalance
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div class="col-12" style="padding-top:10rem;"></div>
+            }
+        </div>
+
+        <div class="row mt-3 hidden-web">
+            <div class="col-12 pl-1 pr-1">
+                @if (lstLeaveRequest != null)
+                {
+                <Table TableItem="Leave" Items="lstLeaveRequest" TableRowActionClass="@(x=>x.Status.ToLower() != "Pending".ToLower() ? "disable" : "")" ColumnReorder="true" ShowSearchBar="true" DropDown="lstStatus" DropDownLabel="Status:" onDropDownChange="onSatusChange" DefaultID="DefaultStatusID" PageSize="DefaultPageSize"
+                       SelectionType="SelectionType.Single" RowClickAction="RowClick" RowActions="RowActions" HeaderActions="HeaderAction">
+                    <Column TableItem="Leave" Title="Start Date" Field="@(x => x.StartDate)" Sortable="true" Align="Align.Right" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="true">
+                        <Template>
+                            @(context.StartDate.ToShortDateString())
+                        </Template>
+                    </Column>
+                    <Column TableItem="Leave" Title="End Date" Field="@(x => x.EndDate)" Align="Align.Right" Sortable="true" Filterable="false">
+                        <Template>
+                            @(context.EndDate.ToShortDateString())
+                        </Template>
+                    </Column>
+                    <Column TableItem="Leave" Title="Duration" Field="@(x => x.Duration)" Sortable="true" Filterable="false" />
+                    <Column TableItem="Leave" Title="Leave Type" Field="@(x => x.LeaveType)" Sortable="true" Filterable="false" />
+                    <Column TableItem="Leave" Title="Title" Field="@(x => x.Title)" Sortable="true" Filterable="false" />
+                    <Column TableItem="Leave" Title="Approver" Field="@(x => x.Approver)" Sortable="true" Filterable="false" />
+                    <Column TableItem="Leave" Title="Status" Field="@(x => x.Status)" Sortable="true" Filterable="false" />
+                    <EmptyDataTemplate>
+                        <div class="text-center">
+                            No rows found!
+                        </div>
+                    </EmptyDataTemplate>
+                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                </Table>
+                }
+                else
+                {
+                    <span></span>
+                }
+            </div>
+        </div>
+        <div class="row mt-2 hidden-web hidden-mobile">
+            <div class="col-12 ">
+                <div class="row mr-0  display-flex mobile-display">
+                    <div class="col-12 col-sm-3 pr-1 mobile-padding-remove mobile-pad-left-add">
+                        <input type="text" id="myFilter" class="form-control form-control-sm float-left" placeholder="Global Search..." @onkeyup="SearchFuntion" />
+                    </div>
+                    <div class="col-12 col-sm-3 pl-0  mobile-pad-right-add" style="display: flow-root; justify-content: center; align-items: center;">
+                        @if (lstStatus != null)
+                        {
+                            <div class="row align-items-center mobile-pad-top-add">
+                                <label class="col-5 col-form-label mobile-transform-translate">Status:</label>
+                                <div class="col-7 pl-0 pr-0 mobile-first-dropdown-padding">
+                                    <select class="form-control form-control-sm" @bind="DefaultStatusID" @oninput=OnDrpDwnChange>
+                                        @if (lstStatus != null)
+                                        {
+                                            @foreach (var item in lstStatus)
+                                            {
+                                                <option value="@item.ID">@item.Value</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-12 col-sm-6 header-actions mobile-pad-top-add pt-0">
+                        <div class="col-12 col-sm-12 display-end pl-0 pr-0 ">
+                           <div class="col-12 col-sm-8 display-dropdown2 pr-0 ">
+                            </div>
+                            <div class="col-sm-4 header-buttons  pr-0 pt-2">
+                            @if (HeaderAction != null)
+                            {
+                                @foreach (var HeaderAction in HeaderAction)
+                                {
+                                    @if (HeaderAction.IsShow)
+                                    {
+                                        <button type="button" class="btn remove-margin-moblie @(HeaderAction.ButtonClass == null ? " btn-primary" : @HeaderAction.ButtonClass) action-btn-lineheight float-right ml-2
+                                                        @(HeaderAction.IsDisabled ? "disabled" : "" )" @onclick="HeaderAction.ActionMethod">
+                                            <i class="@HeaderAction.IconClass" style="padding-right: 7px;" aria-hidden="true"></i>@HeaderAction.ActionText
+                                        </button>
+                                    }
+                                }
+                            }
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (lstLeaveRequest != null && lstLeaveRequest.Count > 0)
+            {
+                <div class="col-12 pt-2" id="myItems">
+                    @foreach (var leaveRequest in lstLeaveRequest)
+                    {
+                        <div class="col-sm-6  pl-0 pr-0">
+                            <div class="card mobile-card-view mb-2" @onclick="(() => EditMobile(leaveRequest))">
+                                <div class="card-body" style="padding-bottom:0.5rem !important;">
+                                    <div class="row">
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Start Date :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @FormatDate(leaveRequest.StartDate)
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">End Date :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @FormatDate(leaveRequest.EndDate)
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Leave Type :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @leaveRequest.LeaveType
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Approver :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @leaveRequest.Approver
+                                            </div>
+                                        </div>
+                                        <div class="col-12 pl-0" style="display: flex;">
+                                            <label class="control-label col-5 pr-2 mobile-card-view-label">Status :</label>
+                                            <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                                @leaveRequest.Status
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div class="col-12" style="padding-top:10rem;"></div>
+            }
+        </div>
+    </TabPage>
+    <TabPage Text="Approve/Deny Leave">
+        <EmployeeLeaveApproval UpdateLeaveList="RefreshList" ></EmployeeLeaveApproval>
+    </TabPage>
+</TabControl>
+
+<AddEditLeave @ref="AddEditLeaveModal" UpdateLeaveList="LoadLeaveRequest"></AddEditLeave>

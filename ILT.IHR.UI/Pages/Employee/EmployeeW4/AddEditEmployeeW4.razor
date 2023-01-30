@@ -1,0 +1,164 @@
+﻿
+
+@inherits AddEditEmployeeW4Base;
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 900px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">@Title W4</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12  mobile-pad-right-add" style="padding-left:2rem;">
+                            <EditForm Model="@EmployeeW4" OnValidSubmit="checkSaveEmployeeW4">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="row no-gutters">
+                                    <div class="col-sm-12 pr-0 pl-0  mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">* W4Type</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <CustomInputSelect id="1" @bind-Value="EmployeeW4.W4TypeID" class="form-control form-control-sm autofocus" @oninput="onChangeW4Type">
+                                                        <option value="0">select</option>
+                                                        @if (W4TypeList != null)
+                                                            {
+                                                            @foreach (var W4Type in W4TypeList)
+                                                                {
+                                                                <option value="@W4Type.ListValueID">@W4Type.ValueDesc</option>
+                                                                }
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding-right">
+                                                <label class="control-label col-sm-4 col-form-label">SSN</label>
+                                                <div class="col-sm-8 pl-0 remove-padding-right">
+                                                    <InputMask class="form-control form-control-sm disabled"  @bind-Value="SSNNumber" 
+                                                            data-mask= "@(isViewPermissionForNPIRole == false? "000-00-0000" : "***-**-****" )" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">* Withholding Status</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <CustomInputSelect id="paymentType" @bind-Value="EmployeeW4.WithHoldingStatusID" class="form-control form-control-sm"  @oninput="onChangeWithHoldingStatus">
+                                                        <option value="0">select</option>
+                                                        @if (withHoldingStausList != null)
+                                                            {
+                                                            @foreach (var withHoldingStaus in withHoldingStausList)
+                                                                {
+                                                                <option value="@withHoldingStaus.ListValueID">@withHoldingStaus.ValueDesc</option>
+                                                                }
+                                                            /**/
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding-right">
+                                                @if (w4TypePre)
+                                                {
+                                                    <label class="control-label col-sm-4 col-form-label">Allowances</label>
+                                                    <div class="col-sm-8 pl-0  remove-padding-right">
+                                                        <InputNumber class="InputNumber form-control form-control-sm" style=" @(isAllowance == true ? "outline: 1px solid red;" : "" )" @bind-Value="EmployeeW4.Allowances" />
+                                                    </div>
+                                                }
+                                                @if (isMultipleJob)
+                                                {
+                                                    <label class="control-label col-sm-4 col-form-label">Multiple Jobs</label>
+                                                    <div class="col-sm-8 pl-0  remove-padding-right">
+                                                        <InputCheckbox class="form-control form-control-checkbox" type="checkbox" @bind-Value="EmployeeW4.IsMultipleJobsOrSpouseWorks" />
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                    @if (w4TypeCurrent)
+                                    {
+                                        <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                            <div class="form-group row align-items-baseline">
+                                                <div class="col-sm-6 pr-0 display-flex">
+                                                    <label class="control-label col-sm-4 col-form-label">Qualifying Children</label>
+                                                    <div class="col-sm-8 pl-0 pr-0">
+                                                        <InputNumber type="number" class="InputNumber form-control form-control-sm"
+                                                                     @bind-Value="EmployeeW4.QualifyingChildren" style=" @(isQualifyingChildren == true ? "outline: 1px solid red;" : "" )" maxlength="2" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 display-flex remove-padding-right">
+                                                    <label class="control-label col-sm-4 col-form-label">Other Dependents</label>
+                                                    <div class="col-sm-8 pl-0 remove-padding-right">
+                                                        <InputNumber class="InputNumber form-control form-control-sm" @bind-Value="EmployeeW4.OtherDependents" style=" @(isOtherDependents == true ? "outline: 1px solid red;" : "" )" maxlength="2" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                            <div class="form-group row align-items-baseline">
+                                                <div class="col-sm-6 pr-0 display-flex">
+                                                    <label class="control-label col-sm-4 col-form-label">Other Income</label>
+                                                    <div class="col-sm-8 pl-0 pr-0">
+                                                        <InputMask class="form-control form-control-sm" @bind-Value="EmployeeW4.OtherIncome" style=" @(isOtherIncome == true ? "outline: 1px solid red;" : "" )" data-mask="[0000000000000000].00" />
+                                                        @*<InputNumber step=".01" class="InputNumber form-control form-control-sm" @bind-Value="EmployeeW4.OtherIncome" style=" @(isOtherIncome == true ? "outline: 1px solid red;" : "" )"  />*@
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 display-flex remove-padding-right">
+                                                    <label class="control-label col-sm-4 col-form-label">Deductions</label>
+                                                    <div class="col-sm-8 pl-0 remove-padding-right">
+                                                        <InputMask class="form-control form-control-sm" @bind-Value="EmployeeW4.Deductions" style=" @(isDeductions == true ? "outline: 1px solid red;" : "" )" data-mask="[0000000000000000].00" />
+                                                        @*<InputNumber step=".01" Decimal="2" class="InputNumber form-control form-control-sm" @bind-Value="EmployeeW4.Deductions" style=" @(isDeductions == true ? "outline: 1px solid red;" : "" )" />*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                    }
+
+                                    <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">StartDate</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="EmployeeW4.StartDate" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding-right">
+                                                <label class="control-label col-sm-4 col-form-label">EndDate</label>
+                                                <div class="col-sm-8 pl-0 remove-padding-right">
+                                                    <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="EmployeeW4.EndDate" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="form-group pr-3 pt-2 d-flex justify-content-end remove-padding-right">
+                                    @if (isShow)
+                                    {
+                                        @*<button type="submit" class="btn btn-primary" disabled="@(!context.Validate() || !context.IsModified())">Save</button>*@
+                                        <button type="submit" class="btn btn-primary btn-width-height" disabled="@isSaveButtonDisabled">Save</button>
+                                    }
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

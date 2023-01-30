@@ -1,0 +1,207 @@
+﻿@inherits AddEditTicketBase
+
+@if (ShowDialog)
+{
+<div class="modal fade show d-block overflow-y-auto-mobile" id="exampleModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 850px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="float-left pl-2">@Title Ticket</span>
+                <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <EditForm Model="@Ticket" OnValidSubmit="SaveTicket">
+                            <DataAnnotationsValidator />
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="row no-gutters">
+                                <div class="col-sm-12 pr-0 pl-0">
+                                    <div class="form-group row align-items-baseline">
+                                        <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 control-label pr-0 d-flex justify-content-end">Requested By</label>
+                                            <div class="col-sm-8">
+                                                <CustomInputSelect id="weekend" disabled="@disabledvalue" @bind-Value="Ticket.RequestedByID" class="form-control form-control-sm autofocus">
+                                                    @if (lstEmployees != null)
+                                                        {
+
+                                                        @foreach (var employee in lstEmployees)
+                                                            {
+                                                            <option value="@employee.EmployeeID">@employee.EmployeeName</option>
+                                                            }
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        }
+                                                    /**/
+                                                </CustomInputSelect>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 display-flex remove-padding">
+                                            <label class="control-label col-4 pr-0 col-form-label remove-padding-right">Requested Date</label>
+                                            <div class="col-sm-8 ">
+                                                <InputDate class="form-control form-control-sm" disabled="true" max="9999-12-31" @bind-Value="Ticket.CreatedDate" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-12 pr-0 pl-0">
+                                    <div class="form-group row align-items-baseline">
+                                        <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            <label class="control-label col-4 pr-0 col-form-label remove-padding-right">Ticket Type</label>
+                                            <div class="col-sm-8 ">
+                                                <CustomInputSelect id="companyType" disabled="@isTicketTypeDescription" @bind-Value="Ticket.TicketTypeID" class="form-control form-control-sm ">
+                                                    <option value='0'>select</option>
+                                                    @if (TicketTypeList != null)
+                                                        {
+                                                        @foreach (var AssetType in TicketTypeList)
+                                                            {
+                                                            <option value="@AssetType.ListValueID">@AssetType.ValueDesc</option>
+                                                            }
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        }
+                                                    /**/
+                                                </CustomInputSelect>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 display-flex remove-padding">
+                                            <label class="control-label col-4 pr-0 col-form-label remove-padding-right">Assigned To</label>
+                                            <div class="col-sm-8 ">
+                                                <CustomInputSelect id="weekend" disabled="@isAssignedDisable" @bind-Value="Ticket.AssignedToID" class="form-control form-control-sm " @oninput="onAssignedChange">
+                                                    @if (Ticket.AssignedToID == null)
+                                                        {
+                                                        <option value="0">select</option>
+                                                        }
+                                                    /**/
+                                                    @if (lstAssignedList != null)
+                                                        {
+
+                                                        @foreach (var employee in lstAssignedList)
+                                                            {
+                                                            @if (employee.TermDate == null || DateTime.Now <= employee.TermDate)
+                                                                {
+                                                                <option value="@employee.EmployeeID">@employee.EmployeeName</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                <option value="@employee.EmployeeID"> @employee.EmployeeName * </option>
+                                                                }
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        }
+                                                    /**/
+                                                </CustomInputSelect>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 pr-3 pl-3">
+                                    <div class="form-group row align-items-baseline">
+                                        <div class="col-sm-12 d-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 col-sm-2 control-label col-form-label">Title</label>
+                                            <div class="col-sm-8 col-sm-10 pr-0 pl-sm-1 pl-2 ticket-transform-translate">
+                                                <InputText class="form-control form-control-sm" disabled="@isTicketTypeDescription" rows="1" @bind-Value="Ticket.Title" maxlength="100" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 pr-3 pl-3">
+                                    <div class="form-group row align-items-baseline">
+                                        <div class="col-sm-12 d-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 col-sm-2 control-label col-form-label">Description</label>
+                                            <div class="col-sm-8 col-sm-10 pr-0 pl-sm-1 pl-2 ticket-transform-translate">
+                                                <InputTextArea class="form-control form-control-sm" disabled="@isTicketTypeDescription" rows="5" @bind-Value="Ticket.Description" maxlength="500" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 pr-0 pl-0">
+                                    <div class="form-group row align-items-baseline">
+                                        <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 control-label pr-0 d-flex justify-content-end">Status</label>
+                                            <div class="col-sm-8">
+                                                <CustomInputSelect id="weekend" disabled="true" @bind-Value="Ticket.StatusID" class="form-control form-control-sm">
+                                                    <option value='0'>select</option>
+                                                    @if (TicketStatusList != null)
+                                                        {
+                                                        @foreach (var vacation in TicketStatusList)
+                                                            {
+                                                            <option value="@vacation.ListValueID">@vacation.ValueDesc</option>
+                                                            }
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        }
+                                                    /**/
+                                                </CustomInputSelect>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            <label class="control-label col-4 pr-0 col-form-label remove-padding-right">Resolved Date</label>
+                                            <div class="col-sm-8 ">
+                                                <InputDate class="form-control form-control-sm" disabled="true" max="9999-12-31" @bind-Value="Ticket.ResolvedDate" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 pr-3 pl-3">
+                                    <div class="form-group row align-items-baseline">
+                                        <div class="col-sm-12 d-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 col-sm-2 control-label col-form-label">Resolution</label>
+                                            <div class="col-8 col-sm-10 pr-0 pl-sm-1 pl-2">
+                                                <InputTextArea class="form-control form-control-sm" disabled="@isCommentDisable" rows="5" style="@(isCommentExist == true ? "outline: 1px solid red;" : "" )" @bind-Value="Ticket.Comment" maxlength="500" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group d-flex justify-content-end">
+                                @if (Ticket.AssignedToID != null && Ticket.AssignedToID == EmployeeID && Ticket.Status != null && Ticket.Status.ToUpper() == TicketStatusConstants.ASSIGNED)
+                                {
+                                    <button type="button" class="btn btn-primary btn-width-height" @onclick="resolve" disabled="@(Ticket.Status.ToUpper() == TicketStatusConstants.RESOLVED || isResolveButtonDisabled)">Resolve</button>
+                                }
+                                @if (isSaveVisable == false)
+                                {
+                                    @*<button type="submit" class="btn btn-primary ml-1" disabled="@(!context.Validate() || !context.IsModified())">Save</button>*@
+                                    <button type="submit" class="btn btn-primary btn-width-height ml-1" disabled="@isSaveButtonDisabled">Save</button>
+                                }
+                                <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}

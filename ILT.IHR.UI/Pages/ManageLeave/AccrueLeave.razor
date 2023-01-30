@@ -1,0 +1,86 @@
+﻿@inherits AccrueLeaveBase
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 900px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">Accrue Leave</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 pl-0 pr-0">
+                            <EditForm Model="@LeaveAccrual" OnValidSubmit="saveLeaveAccrual">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="row no-gutters">
+                                    <div class="col-sm-12 pr-0 pl-0">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label for="country" class="control-label col-form-label col-sm-4">* Country</label>
+                                                <div class="col-sm-8 pl-0 pr-2">
+                                                    <CustomInputSelect class="form-control form-control-sm autofocus" id="country" @bind-Value="LeaveAccrual.Country" @oninput="onCountryChange" maxlength="50">
+                                                        <option value="">select</option>
+                                                        @if (CountryList != null)
+                                                            {
+                                                            @foreach (var country in CountryList)
+                                                                {
+                                                                <option value="@country.CountryDesc">@country.CountryDesc</option>
+                                                                }
+                                                            }
+
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex">
+                                                <label for="month" class="control-label col-form-label col-sm-4">* Month</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <CustomInputSelect class="form-control form-control-sm" id="month" @bind-Value="MonthID" @oninput="onMonthChange">
+                                                        <option value=0>select</option>
+                                                        @if (lstMonth != null)
+                                                            {
+                                                            @foreach (var month in lstMonth)
+                                                                {
+                                                                <option value="@month.ID">@month.Value</option>
+                                                                }
+                                                            }
+
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label for="country" class="control-label col-form-label col-sm-4">* Accrue Value</label>
+                                                <div class="col-sm-8 pl-0 pr-2">
+                                                    <InputNumber style="@(isAccruvalValue ? "border: 1px solid red": "")" class="form-control form-control-sm" @bind-Value="LeaveAccrual.AccruedValue" @onblur="onAccrualValueChange" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group pr-3 pt-2 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary btn-width-height" disabled="@(isDisableAccrual || isSaveButtonDisabled || isMonthSelected)">Accrue</button>
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <Confirm @ref="confirmBase" ConfirmationChanged="ConfirmLeaveAccrual_Click" ConfirmationTitle="Confirm LeaveAccrual" buttonType="Ok"
+             ConfirmationMessage=@($"Are you sure you want to accrue " + LeaveAccrual.AccruedValue + " leave for the month of " + accrualMonth +"?")>
+    </Confirm>
+}

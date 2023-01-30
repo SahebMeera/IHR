@@ -1,0 +1,111 @@
+﻿@inherits AddEditLWPBase
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+    @*<div class="modal fade come-from-modal right show d-block" tabindex="-1" role="dialog">*@
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 900px;">
+        @*<div class="modal-dialog" role="document" style="max-width: 500px;">*@
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">Add Unpaid Leave</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 pl-0 pr-0">
+                            <EditForm Model="@Leave" OnValidSubmit="SaveLWP">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="row no-gutters">
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">Employee Name</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    @*<InputText class="form-control form-control-sm" disabled="true" @bind-Value="Leave.EmployeeName" />*@
+
+                                                    <CustomInputSelect id="weekend" disabled="true"  @bind-Value="Leave.EmployeeID" class="form-control form-control-sm">
+                                                        <option value="">select</option>
+                                                        @if (lstEmployees != null)
+                                                            {
+
+                                                            @foreach (var employee in lstEmployees)
+                                                                {
+                                                                <option value="@employee.EmployeeID">@employee.EmployeeName</option>
+                                                                }
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">* Leave Type</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <CustomInputSelect id="weekend"  @bind-Value="Leave.LeaveTypeID" class="form-control form-control-sm autofocus">
+                                                        <option value='0'>select</option>
+                                                        @if (VacationTypeList != null)
+                                                            {
+
+                                                            @foreach (var vacation in VacationTypeList)
+                                                                {
+                                                                <option value="@vacation.ListValueID">@vacation.ValueDesc</option>
+                                                                }
+                                                            /**/
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">Start Date</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <InputDate class="form-control form-control-sm"  @bind-Value="Leave.StartDate" @oninput="@startDateChange" @bind-Value:culture="nl-BE" @bind-Value:format="MM/dd/yyyy" min="@startDate" max="@endDate" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">End Date</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <InputDate class="form-control form-control-sm"  @bind-Value="Leave.EndDate" @oninput="@endDateChange" @bind-Value:culture="nl-BE" @bind-Value:format="MM/dd/yyyy" min="@startDate" max="@endDate" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">Includes Half Day</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <InputCheckbox class="form-control form-control-checkbox" type="checkbox" @oninput="@onCheckChange" @bind-Value="Leave.IncludesHalfDay" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">Duration</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <InputNumber class="form-control form-control-sm" disabled="true" @bind-Value="Leave.Duration" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group pr-3 pt-2 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary btn-width-height" disabled="@isSaveButtonDisabled">Save</button>
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,310 @@
+﻿@page "/employees"
+@using BlazorTable
+@using ILT.IHR.DTO;
+@using ILT.IHR.UI.Pages.Employee.EmployeeNotificationModal; 
+
+@inherits EmployeesBase;
+<h3 style="margin-bottom:1px;">Employee</h3>
+
+<div class="row reduce-margin-top hidden-web">
+    <div class="col-12">
+
+        @if (lstEmployees != null)
+        {
+            @if (this.dataProvider.table == null)
+            {
+                <Table TableItem="Employee" Items="lstEmployees" ColumnReorder="true" @ref="table" ShowSearchBar="true" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+                       SelectionType="SelectionType.Single" RowClickAction="RowClick" RowActions="RowActions" HeaderActions="HeaderAction"
+                       DropDown="lstCountry" DropDownLabel="Country:" onDropDownChange="OnCountryChange" DefaultID="DefaultTypeID" DropDown2Label="Employee Type:" onMultiSelectDropDown="lstEmployeeType" onMultiDropDownChange="onChangeEmployeeTypeList" DropDown2DefaultID="DropDown2DefaultID"
+                       DropDown3Label="Status:" DropDown3="lstStatus" onDropDown3Change="OnStatusChange" DropDown3DefaultID="DefaultStatusID">
+                    <Column TableItem="Employee" Title="EmpCode" Field="@(x => x.EmployeeCode)" Sortable="true" Filterable="false" Width="5%">
+                        <Template>
+                            @if (context.HasChange == true)
+                            {
+                                <span style='color:red'>@context.EmployeeCode</span>
+                            }
+                            else
+                            {
+                                <span>@context.EmployeeCode</span>
+
+                            }
+                        </Template>
+                    </Column>
+                    <Column TableItem="Employee" Title="Employee Name" Field="@(x => x.EmployeeName)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="false">
+                        <Template>
+                            @if (context.HasChange == true)
+                            {
+                                <span style='color:red'>@context.EmployeeName</span>
+                            }
+                            else
+                            {
+                                <span>@context.EmployeeName</span>
+
+                            }
+                        </Template>
+                    </Column>
+                    <Column TableItem="Employee" Title="Title" Field="@(x => x.Title)" Sortable="true" Filterable="false">
+                        <Template>
+                            @if (context.HasChange == true)
+                            {
+                                <span style='color:red'>@context.Title</span>
+                            }
+                            else
+                            {
+                                <span>@context.Title</span>
+
+                            }
+                        </Template>
+                    </Column>
+                    <Column TableItem="Employee" Title="Hire Date" Field="@(x => x.HireDate)" Sortable="true" Filterable="false" Width="8%">
+                        <Template>
+                            @if (context.HasChange == true)
+                            {
+                                <span style='color:red'>@FormatDate(context.HireDate)</span>
+                            }
+                            else
+                            {
+                                <span>@FormatDate(context.HireDate)</span>
+                            }
+                        </Template>
+                    </Column>
+                    <Column TableItem="Employee" Title="Department" Field="@(x => x.Department)" Sortable="true" Filterable="false">
+                        <Template>
+                            @if (context.HasChange == true)
+                            {
+                                <span style='color:red'>@context.Department</span>
+                            }
+                            else
+                            {
+                                <span>@context.Department</span>
+
+                            }
+                        </Template>
+                    </Column>
+                    <Column TableItem="Employee" Title="Work Auth" Field="@(x => x.WorkAuthorization)" Sortable="true" Filterable="false" Width="5%">
+                        <Template>
+                            @if (context.HasChange == true)
+                            {
+                                <span style='color:red'>@context.WorkAuthorization</span>
+                            }
+                            else
+                            {
+                                <span>@context.WorkAuthorization</span>
+
+                            }
+                        </Template>
+                    </Column>
+                    <Column TableItem="Employee" Title="Email" Field="@(x => x.Email)" Sortable="true" Filterable="false">
+                        <Template>
+                            <a href="mailto:@context.Email">@context.Email</a>
+                        </Template>
+                        <Template>
+                            @if (context.HasChange == true)
+                            {
+                                <a href="mailto:@context.Email" style='color:red'>@context.Email</a>
+                            }
+                            else
+                            {
+                                <a href="mailto:@context.Email">@context.Email</a>
+                            }
+                        </Template>
+                    </Column>
+                    <Column TableItem="Employee" Title="Phone" Field="@(x => x.Phone)" Sortable="true" Filterable="false">
+                        <Template>
+                            @if (context.HasChange == true)
+                            {
+                                <span style='color:red'>@context.Phone</span>
+                            }
+                            else
+                            {
+                                <span>@context.Phone</span>
+
+                            }
+                        </Template>
+                    </Column>
+                    @*<Column TableItem="Employee" Title="WorkAuthorization" Field="@(x => x.WorkAuthorization)" Sortable="true" Filterable="false" Width="10%">
+                        </Column>*@
+                    <EmptyDataTemplate>
+                        <div class="text-center">
+                            No rows found!
+                        </div>
+                    </EmptyDataTemplate>
+                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                </Table>
+            }
+            else
+            {
+    <Table TableItem="Employee" Items="lstEmployees" ColumnReorder="true" @ref="table1" ShowSearchBar="true" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+           SelectionType="SelectionType.Single" RowClickAction="RowClick" RowActions="RowActions" HeaderActions="HeaderAction"
+           DropDown="lstCountry" DropDownLabel="Country:" onDropDownChange="OnCountryChange" DefaultID="DefaultTypeID" DropDown2Label="Employee Type:" onMultiSelectDropDown="lstEmployeeType" onMultiDropDownChange="onChangeEmployeeTypeList" DropDown2DefaultID="DropDown2DefaultID"
+        DropDown3Label="Status:" DropDown3="lstStatus" onDropDown3Change="OnStatusChange" DropDown3DefaultID="DefaultStatusID">
+        <EmptyDataTemplate>
+            <div class="text-center">
+                No rows found!
+            </div>
+        </EmptyDataTemplate>
+        <Pager ShowPageNumber="true" ShowTotalCount="true" />
+    </Table>
+
+            }
+        }
+        else
+        {
+            @*<NoResultMessage></NoResultMessage>*@
+            <span></span>
+        }
+    </div>
+    
+</div>
+<div class="row mt-2 hidden-web hidden-mobile">
+    <div class="col-12 ">
+        <div class="row mr-0 pb-1 display-flex mobile-display">
+            <div class="col-12 col-sm-3 pr-1 mobile-padding-remove mobile-pad-left-add">
+                <input type="text" id="myFilter" class="form-control form-control-sm float-left" placeholder="Global Search..." @onkeyup="SearchFuntion" />
+            </div>
+            <div class="col-12 col-sm-3 pl-0  mobile-pad-right-add" style="display: flow-root; justify-content: center; align-items: center;">
+                @if (lstCountry != null)
+                {
+                    <div class="row align-items-center mobile-pad-top-add">
+                        <label class="col-5 col-form-label mobile-transform-translate mobile-card-view-label">Country:</label>
+
+                        <div class="col-7 pl-0 pr-0 mobile-first-dropdown-padding">
+                            <select class="form-control form-control-sm" @bind="DefaultTypeID" @oninput=OnDrpDwnChange>
+                                @if (lstCountry != null)
+                                {
+                                    @foreach (var item in lstCountry)
+                                    {
+                                        <option value="@item.ID">@item.Value</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-12 col-sm-6 header-actions mobile-pad-top-add">
+                <div class="col-12 col-sm-12 display-end pl-0 pr-0 ">
+                    @if (lstEmployeeType != null)
+                    {
+                        <div class="col-12 col-sm-5 display-dropdown2 pr-0 ">
+                            <label class="col-12 col-sm-2 col-form-label mobile-card-view-label">Employee Type:</label>
+
+                            <div class="col-7 col-sm-6 pl-0 mobile-padding-remove">
+                                <div class="mulit-select-dropdown">
+
+                                    <button type="button" class="form-control form-control-sm mulit-select-dropbtn">@getSelectedRoles()</button>
+                                    <div class="mulit-select-dropdown-content" style="min-width:200px; position: absolute;">
+                                        @foreach (var item in lstEmployeeType)
+                                        {
+                                            <div class="row col-12 align-items-center">
+                                                <label for="@item.ID" class="mb-0" style="font-weight: 400; color: #495057; line-height: 15px;">
+                                                    @if (item.IsSelected)
+                                                    {
+                                                        <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" checked="checked" @onchange="@((e) => OnMultiDropDownChange(e, item.ID))" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" @onchange="@((e) => OnMultiDropDownChange(e, item.ID))" />
+                                                    }
+                                                    @item.Value
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (lstStatus != null)
+                    {
+                        <div class="col-12 col-sm-4 display-dropdown2 pr-0 pt-2">
+                            <label class="col-12 col-sm-2 col-form-label mobile-card-view-label">Status:</label>
+
+                            <div class="col-7 col-sm-6 pl-0 mobile-padding-remove pr-0">
+                                <select class="form-control form-control-sm" @bind="DefaultStatusID" @oninput=OnDrpDwn3Change>
+                                    @if (lstStatus != null)
+                                    {
+                                        @foreach (var item in lstStatus)
+                                        {
+                                            <option value="@item.ID">@item.Value</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-sm-3 header-buttons  pr-0 pt-2">
+                        @if (HeaderAction != null)
+                        {
+                            @foreach (var HeaderAction in HeaderAction)
+                            {
+                                @if (HeaderAction.IsShow)
+                                {
+                                    <button type="button" class="btn remove-margin-moblie @(HeaderAction.ButtonClass == null ? " btn-primary" : @HeaderAction.ButtonClass) action-btn-lineheight float-right ml-2
+                                                    @(HeaderAction.IsDisabled ? "disabled" : "" )" @onclick="HeaderAction.ActionMethod">
+                                        <i class="@HeaderAction.IconClass" style="padding-right: 7px;" aria-hidden="true"></i>@HeaderAction.ActionText
+                                    </button>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (lstEmployees != null && lstEmployees.Count > 0)
+    {
+        <div class="col-12 pt-2" id="myItems">
+            @foreach (var lstEmployee in lstEmployees)
+            {
+                <div class="col-sm-6  pl-0 pr-0">
+                    <div class="card mobile-card-view mb-2" @onclick="(() => EditMobile(lstEmployee))">
+                        <div class="card-body" style="padding-bottom:0.5rem !important;">
+                            <div class="row">
+                                <div class="col-12 pl-0 " style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Employee Name :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @lstEmployee.EmployeeName
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Employee Code :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @lstEmployee.EmployeeCode
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0 " style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Title :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @lstEmployee.Title
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Email :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @lstEmployee.Email
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0 " style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Phone :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @lstEmployee.Phone
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+      <div class="col-12" style="padding-top:10rem;"></div>
+      }
+       </div>
+
+        <EmployeeNoification @ref="EmployeeNoification" EmployeeUpdated="LoadEmployees"></EmployeeNoification>

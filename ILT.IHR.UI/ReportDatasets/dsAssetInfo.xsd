@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsAssetInfo" targetNamespace="http://tempuri.org/dsAssetInfo.xsd" xmlns:mstns="http://tempuri.org/dsAssetInfo.xsd" xmlns="http://tempuri.org/dsAssetInfo.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsAssetInfo" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsAssetInfo" msprop:Generator_UserDSName="dsAssetInfo">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsAssetInfo" msprop:Generator_TableClassName="dsAssetInfoDataTable" msprop:Generator_TableVarName="tabledsAssetInfo" msprop:Generator_RowChangedName="dsAssetInfoRowChanged" msprop:Generator_TablePropName="_dsAssetInfo" msprop:Generator_RowDeletingName="dsAssetInfoRowDeleting" msprop:Generator_RowChangingName="dsAssetInfoRowChanging" msprop:Generator_RowEvHandlerName="dsAssetInfoRowChangeEventHandler" msprop:Generator_RowDeletedName="dsAssetInfoRowDeleted" msprop:Generator_RowClassName="dsAssetInfoRow" msprop:Generator_UserTableName="dsAssetInfo" msprop:Generator_RowEvArgName="dsAssetInfoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Tag" msprop:Generator_ColumnVarNameInTable="columnTag" msprop:Generator_ColumnPropNameInRow="Tag" msprop:Generator_ColumnPropNameInTable="TagColumn" msprop:Generator_UserColumnName="Tag" type="xs:string" minOccurs="0" />
+              <xs:element name="AssetType" msprop:Generator_ColumnVarNameInTable="columnAssetType" msprop:Generator_ColumnPropNameInRow="AssetType" msprop:Generator_ColumnPropNameInTable="AssetTypeColumn" msprop:Generator_UserColumnName="AssetType" type="xs:string" minOccurs="0" />
+              <xs:element name="Make" msprop:Generator_ColumnVarNameInTable="columnMake" msprop:Generator_ColumnPropNameInRow="Make" msprop:Generator_ColumnPropNameInTable="MakeColumn" msprop:Generator_UserColumnName="Make" type="xs:string" minOccurs="0" />
+              <xs:element name="Model" msprop:Generator_ColumnVarNameInTable="columnModel" msprop:Generator_ColumnPropNameInRow="Model" msprop:Generator_ColumnPropNameInTable="ModelColumn" msprop:Generator_UserColumnName="Model" type="xs:string" minOccurs="0" />
+              <xs:element name="PurchaseDate" msprop:Generator_ColumnVarNameInTable="columnPurchaseDate" msprop:Generator_ColumnPropNameInRow="PurchaseDate" msprop:Generator_ColumnPropNameInTable="PurchaseDateColumn" msprop:Generator_UserColumnName="PurchaseDate" type="xs:string" minOccurs="0" />
+              <xs:element name="WarantyExpDate" msprop:Generator_ColumnVarNameInTable="columnWarantyExpDate" msprop:Generator_ColumnPropNameInRow="WarantyExpDate" msprop:Generator_ColumnPropNameInTable="WarantyExpDateColumn" msprop:Generator_UserColumnName="WarantyExpDate" type="xs:string" minOccurs="0" />
+              <xs:element name="AssignedTo" msprop:Generator_ColumnVarNameInTable="columnAssignedTo" msprop:Generator_ColumnPropNameInRow="AssignedTo" msprop:Generator_ColumnPropNameInTable="AssignedToColumn" msprop:Generator_UserColumnName="AssignedTo" type="xs:string" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

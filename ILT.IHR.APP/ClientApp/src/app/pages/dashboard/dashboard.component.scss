@@ -1,0 +1,104 @@
+
+
+.Notification-Menu {
+    overflow-y: scroll;
+    max-height: 600px;
+}
+
+.dashboard-height {
+    // height: 63px;
+}
+
+.dashboard-number {
+    width: 70px;
+    min-height: 100%;
+    background: white;
+    color: black;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-font-size-weight {
+    font-weight: bold;
+
+    font-size: 26px;
+}
+
+.sub-heading {
+    display: flex;
+    // justify-content: center;
+    align-items: end;
+   // padding-bottom: 5px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.dashboard-card-height {
+    color: white;
+    height: 95px;
+    width: 90%;
+}
+
+.display-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.web-transform {
+    // position: absolute;
+    top: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.max-width-set {
+    max-width: 410px !important;
+}
+
+.height-card-inner {
+    display: grid;
+    height:80px;
+    padding-left:5px !important;
+}
+
+@media screen and (max-width: 769px) {
+    .height-card-inner {
+        display: grid;
+    }
+    .dashboard-card-height {
+        width: 100%;
+    }
+    .dashboard-main {
+        transform: translate(0%, 0px) !important;
+        justify-content: center !important;
+        display: block !important;
+    }
+    .web-transform {
+        // position: absolute;
+        top: 50%;
+        display: block;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    .dashboard-container {
+        margin-top: 0px !important;
+    }
+    .dashboard-number {
+        width:64px !important;
+    }
+}
+.dashboard-main {
+    display: flex;
+     transform: translate(3%, 27px);
+   // justify-content: center !important;
+}
+.dashboard-container {
+    text-align: center;
+    margin-top: 3.5rem;
+}

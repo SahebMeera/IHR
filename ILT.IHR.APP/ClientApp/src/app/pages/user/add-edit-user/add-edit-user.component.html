@@ -1,0 +1,129 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="550" #addEditUserModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="UserForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname1">Employee </label>
+                                <div class="p-md-9 p-p-0">
+                                    <p-dropdown [options]="EmployeeList"
+                                                appendTo="body"
+                                                formControlName="EmployeeID"
+                                                (onChange)="GetEmployeeDetails($event)"
+                                                placeholder="Select Employee"
+                                                optionValue="employeeID"
+                                                [disabled]="disabledvalue"
+                                                optionLabel="employeeName">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname8">First Name</label>
+                                <div class="p-md-9 p-p-0">
+                                    <input type="text" id="disabled-input1" formControlName="FirstName"  pInputText [ngClass]="{ 'is-invalid': submitted && addEditUserControls.FirstName.errors , 'disabled': disabledvalue === true}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname8">Last Name</label>
+                                <div class="p-md-9 p-p-0">
+                                    <input type="text" id="disabled-input2" formControlName="LastName" pInputText   [ngClass]="{ 'is-invalid': submitted && addEditUserControls.LastName.errors,  'disabled': disabledvalue === true }" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname8">Email Address</label>
+                                <div class="p-md-9 p-p-0">
+                                    <input type="text" id="disabled-input3" formControlName="Email" pInputText  [ngClass]="{ 'is-invalid': submitted && addEditUserControls.Email.errors,  'disabled': disabledvalue === true}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname3">Role</label>
+                                <div class="p-md-9 p-p-0">
+                                    <div class="mulit-select-dropdown">
+                                        <button type="button" #toggleButton class="form-control form-control-sm mulit-select-dropbtn" (click)="onShowDropdown()" style="padding-right: 25px; justify-content: flex-start; align-items: center; position: relative; color: #6c757d; ">
+                                            {{getSelectedRoles()}}
+                                            <div style="position: absolute; right: 10px; top: 9px;"><i class="pi pi-chevron-down"></i></div>
+                                        </button>
+                                        <div #roleDropdown class="mulit-select-dropdown-content show" *ngIf="isMenuOpen" (outsideClick)="isMenuOpen = false" outsideClick>
+                                            <div *ngFor="let item of Items" class="row col-12 multi-select-items-center">
+                                                <label for="item.RoleID" class="mb-0" [ngClass]="{'disabled': empnonempdisabledvalue}">
+                                                    <input type="checkbox" id="item.RoleID" [checked]="item.IsSelected" (change)="checkboxChanged($event, item.RoleID)" />
+                                                    {{item.RoleName}}
+                                                </label>
+                                                <span class="p-pl-lg-1" *ngIf="item.IsSelected" [ngClass]="{'disabled': empnonempdisabledvalue}">
+                                                    <i *ngIf="item.IsDefault" class="fas fa-check" (click)="setDefaultRole('Remove', item)"></i>
+                                                    <i *ngIf="!item.IsDefault" class="fas fa-check" (click)="setDefaultRole('Add', item)" style="opacity:0.5; cursor: pointer"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname1">Company </label>
+                                <div class="p-md-9 p-p-0">
+                                    <p-dropdown [options]="CompanyList"
+                                                appendTo="body"
+                                                [disabled]="empnonempdisabledvalue"
+                                                formControlName="CompanyID"
+                                                placeholder="Select Company"
+                                                optionValue="companyID"
+                                                optionLabel="name"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 p-d-flex p-pt-0">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="binary">Office365 OAuth</label>
+                                <div class="p-md-9 p-p-0  remove-padding-right" style="display:flex;">
+                                    <p-checkbox  formControlName="IsOAuth" binary="true" inputId="binary1" [ngClass]="empnonempdisabledvalue ? 'remove-background-color' : ''" [disabled]="empnonempdisabledvalue" (onChange)="onAuthCheck($event)"></p-checkbox>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname8">New Password</label>
+                                <div class="p-md-9 p-p-0">
+                                    <input type="password" id="disabled-input5" formControlName="NewPassword" pInputText [ngClass]="{ 'disabled': UserForm.value.IsOAuth === true}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname0">Confirm Password</label>
+                                <div class="p-md-9 p-p-0">
+                                    <input type="password" id="disabled-input6" formControlName="ConfirmPassword" pInputText [ngClass]="{ 'disabled': UserForm.value.IsOAuth === true}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 p-d-flex p-pt-0">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="binary">Acitve</label>
+                                <div class="p-md-9 p-p-0  remove-padding-right" style="display:flex;">
+                                    <p-checkbox  formControlName="IsActive" binary="true" inputId="binary2"  [ngClass]="sameUserIsActive ? 'remove-background-color' : ''"  [disabled]="sameUserIsActive" ></p-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>

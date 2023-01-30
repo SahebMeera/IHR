@@ -1,0 +1,399 @@
+<div class="p-grid">
+    <div class="p-col-12 p-pt-1 p-pb-0 add-edit-employee">
+        <div class="p-col-12 row p-p-0">
+
+            <p-card class="hidden-web hidden-mobile">
+                <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+                    <label class="control-label employee-details-header p-pt-0 p-pb-0 p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Emp Code :</label>
+                    <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                        {{Employee?.employeeCode}}
+                    </div>
+                </div>
+                <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+                    <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Employee Name :</label>
+                    <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                        {{Employee?.firstName + ' ' + Employee?.lastName}}
+                    </div>
+                </div>
+                <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+                    <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Title :</label>
+                    <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                        {{Employee?.title}}
+                    </div>
+                </div>
+                <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+                    <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Department :</label>
+                    <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                        {{Employee?.department}}
+                    </div>
+                </div>
+                <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+                    <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Manager Name :</label>
+                    <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                        {{appraisalDetails?.manager}}
+                    </div>
+                </div>
+                <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+                    <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Review Year :</label>
+                    <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                        {{appraisalDetails?.reviewYear}}
+                    </div>
+                </div>
+                <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+                    <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Assigned Date :</label>
+                    <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                        {{appraisalDetails?.assignedDate != null ? appraisalDetails?.assignedDate : "--"}}
+                    </div>
+                </div>
+                <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+                    <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Reviewer :</label>
+                    <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                        {{appraisalDetails?.reviewer}}
+                    </div>
+                </div>
+                <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+                    <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Review Date :</label>
+                    <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                        {{appraisalDetails?.reviewDate != null ?  appraisalDetails?.assignedDate : "--"}}
+                    </div>
+                </div>
+                <div class="p-col-12 p-pt-1 p-pb-0" style="display: flex;">
+                    <label class="control-label employee-details-header p-pt-0 p-pb-0  p-pr-0 p-col-5 p-justify-end " style="font-weight: 600; display: flex;">Status :</label>
+                    <div class="p-col-7 p-pl-2 p-pt-0 p-pb-0 ">
+                        {{appraisalDetails?.status}}
+                    </div>
+                </div>
+            </p-card>
+
+
+
+
+            <p-card class="hidden-web">
+                <div class="p-grid p-md-12  p-p-0">
+                    <div class="p-md-4 p-pl-0">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label employee-details-header p-pr-0 p-md-4 display-flex-block p-justify-end" style="font-weight:600">Emp Code:</label>
+                            <div class="p-md-8 p-pl-2">
+                                {{Employee?.employeeCode}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-md-4 p-pl-0">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label p-pr-0 employee-details-header  p-md-4  display-flex-block p-justify-end nowrap-white-space" style="font-weight:600">Employee Name:</label>
+                            <div class="p-md-8 col-control">
+                                {{Employee?.firstName + ' ' + Employee?.lastName}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-md-4 p-pl-2">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label p-pr-0  employee-details-header p-md-4 display-flex-block p-justify-end" style="font-weight:600">Title:</label>
+                            <div class="p-md-8 col-control">
+                                {{Employee?.title}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-grid p-md-12  p-p-0">
+                    <div class="p-md-4 p-p-0">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label p-pr-0  employee-details-header p-md-4 display-flex-block p-justify-end" style="font-weight:600">Department:</label>
+                            <div class="p-md-8 p-pl-2 p-pb-0 ">
+                                {{Employee?.department}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-md-4 p-p-0">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label p-pr-0 employee-details-header p-md-4  display-flex-block p-justify-end nowrap-white-space" style="font-weight:600">Manager Name:</label>
+                            <div class="p-md-8 col-control p-pb-0 ">
+                                {{appraisalDetails?.manager}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-md-4 p-p-0 p-pl-4 ">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label p-pr-0 employee-details-header p-md-4 display-flex-block p-justify-end" style="font-weight:600">Review Year:</label>
+                            <div class="p-md-8 col-control p-pb-0">
+                                {{appraisalDetails?.reviewYear}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-grid p-md-12 p-pl-0 p-pr-0 p-pb-0 p-pt-1">
+                    <div class="p-md-4 p-p-0">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label p-pr-0 p-pb-0 employee-details-header p-md-4 display-flex-block p-justify-end" style="font-weight:600">Assigned Date:</label>
+                            <div class="p-md-8 p-pl-2 p-pb-0 ">
+                                {{appraisalDetails?.assignedDate != null ? appraisalDetails?.assignedDate : "--"}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-md-4 p-p-0">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label p-pr-0 p-pb-0  employee-details-header p-md-4  display-flex-block p-justify-end nowrap-white-space" style="font-weight:600">Reviewer / Review Date:</label>
+                            <div class="p-md-8 col-control p-pb-0 ">
+                                {{appraisalDetails?.reviewer}}  {{appraisalDetails?.reviewDate != null ? ' / ' + appraisalDetails?.assignedDate : "--"}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-md-4 p-p-0 p-pl-4 ">
+                        <div class="p-grid p-md-12 p-p-0">
+                            <label class="control-label p-pr-0 p-pb-0  employee-details-header p-md-4 display-flex-block p-justify-end" style="font-weight:600">Status:</label>
+                            <div class="p-md-8 col-control p-pb-0">
+                                {{appraisalDetails?.status}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p-card>
+        </div>
+    </div>
+
+    <div class="p-col-12 p-pt-0 p-pb-0 p-mt-2 add-edit-employee">
+        <form [formGroup]="appraisalForm">
+            <div class="p-grid pathx-frm">
+                <div class="p-col-12 p-pt-3">
+                    <div class="p-col-12 p-p-0 p-text-center remove-padding appraisalTableHeading" >
+                        <span class="error-message-color">Objectives</span>
+                    </div>
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-col-12 remove-padding pathx-table ">
+                                <p-table #dt styleClass="ui-table-pathx" [value]="AppraisalDetailPannel1List">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>Objective</th>
+                                            <th>Employee Rating</th>
+                                            <th>Manager Rating</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-customer>
+                                        <tr>
+                                            <td style="padding:0px !important; padding-right: 4px !important; padding-left:4px !important; padding-top:2px !important; padding-bottom:2px !important;">
+                                                {{customer?.quality}}
+                                            </td>
+                                            <td style="padding: 0px !important; padding-right: 4px !important; padding-left: 4px !important; padding-top:2px !important; padding-bottom:2px !important;">
+                                                <p-rating [(ngModel)]="customer.empResponse" [cancel]="false" [ngModelOptions]="{standalone: true}" [disabled]="isEmployeedisable"></p-rating>
+
+                                                <!--<input class="p-md-10 p-pl-0" id="username2" type="username" aria-describedby="username2-help" [ngClass]="entrydisabledvalue === true ? 'disabled' : ''" class="p-invalid" pInputText [(ngModel)]="customer.Activity" [ngModelOptions]="{standalone: true}" (blur)="LoadActivity(customer.Activity, moment(customer.WorkDate).format('MM/DD/YYYY'))" />-->
+                                            </td>
+                                            <td style="padding: 0px !important; padding-right: 4px!important; padding-left: 4px !important; padding-top:2px !important; padding-bottom:2px !important;">
+                                                <p-rating [(ngModel)]="customer.mgrResponse" [cancel]="false" [ngModelOptions]="{standalone: true}" [disabled]="isManagerdisable"></p-rating>
+                                                <!--<p-inputNumber inputId="integeronly" class="sheetnumber" [(ngModel)]="customer.Hours" mode="decimal" [disabled]="entrydisabledvalue" [min]="0" [useGrouping]="false" [ngModelOptions]="{standalone: true}" (onBlur)="TotalHours(customer.Hours, moment(customer.WorkDate).format('MM/DD/YYYY'))"></p-inputNumber>-->
+                                            </td>
+
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+
+                                <div class="p-col-12  p-pb-0 p-pl-0 p-pr-0 remove-padding pathx-table" *ngIf="AppraisalDetailPannel3List != null && AppraisalDetailPannel3List != undefined">
+                                    <div class="p-col-12 p-p-0 p-text-center remove-padding appraisalTableHeading">
+                                        <span class="error-message-color">Goals</span>
+                                    </div>
+                                    <div class="myDiv" *ngIf="AppraisalDetailPannel3List != null && AppraisalDetailPannel3List.length > 0">
+                                        <span>Previous Year Goals</span>
+                                    </div>
+                                    <div style="border: 1px solid #dee2e6; margin-bottom: 10px;" *ngIf="AppraisalDetailPannel3List != null && AppraisalDetailPannel3List.length > 0">
+                                        <div *ngFor="let appraisalDetail of AppraisalDetailPannel3List; let i=index ">
+                                            <div class="form-group p-row align-items-baseline p-mt-2 p-mb-3">
+                                                <div class="p-col-12 p-p-0" style="transform: translate(0px, 6px);">
+                                                    <label class="control-label p-pr-0 p-pt-0 p-pb-0 p-pl-1 p-col-12 goal-border d-flex  white-space-nowrap" style="font-weight: 600; display: block;">Goal {{i + 1}}</label>
+                                                    <div class="p-col-12 p-p-0 goal-border">
+                                                        <textarea id="float-input" rows="4" cols="40"  class="disabled"  [ngModelOptions]="{standalone: true}" [(ngModel)]="appraisalDetail.goal" pInputTextarea></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="p-col-12 p-p-0 display-flex " >
+                                                    <div class="p-col-6 p-p-0 display-flex display-block-mobile" style="justify-content:end; border: 1px solid;">
+                                                        <label class="control-label col-form-label mobile-col-form-label p-col-3 p-pl-0" style="display: flex !important;justify-content: flex-start !important;">Employee Rating</label>
+                                                        <div class="p-col-8 p-pl-0 p-pr-2">
+                                                            <div class="rate  p-pl-0 p-pr-0">
+                                                                <p-rating [(ngModel)]="appraisalDetail.empResponse" [cancel]="false" [ngModelOptions]="{standalone: true}" [disabled]="isEmployeedisable"></p-rating>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-col-6 p-p-0 display-flex display-block-mobile" style="justify-content:end; border: 1px solid;">
+                                                        <label class="control-label col-form-label mobile-col-form-label p-col-3 p-pl-0" style="display: flex !important;justify-content: flex-start !important;">Manager Rating</label>
+                                                        <div class="p-col-8 p-pl-0 p-pr-2">
+                                                            <div class="rate p-pl-0 p-pr-0">
+                                                                <p-rating [(ngModel)]="appraisalDetail.mgrResponse" [cancel]="false" [ngModelOptions]="{standalone: true}" [disabled]="isManagerdisable"></p-rating>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="p-col-12 p-p-0 display-flex " >
+                                                    <div class="p-col-6 p-p-1" style="border: 1px solid;">
+                                                        <label class="control-label p-p-0 p-col-1 display-flex-block j white-space-nowrap">Employee Comment</label>
+                                                        <div class="p-col-12 p-p-0">
+                                                            <textarea id="float-input" rows="2" cols="40" [ngClass]="{ 'disabled': isEmployeedisable === true  }" [ngModelOptions]="{standalone: true}" [(ngModel)]="appraisalDetail.empComment" pInputTextarea></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-col-6 p-p-1" style="border: 1px solid;">
+                                                        <label class="control-label p-p-0 p-col-1 display-flex-block  white-space-nowrap">Manager Comment</label>
+                                                        <div class="p-col-12 p-p-0">
+                                                            <textarea id="float-input" rows="2" cols="40" [ngClass]="{ 'disabled': isManagerdisable === true  }" [ngModelOptions]="{standalone: true}" [(ngModel)]="appraisalDetail.mgrComment" pInputTextarea></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                               <div class="p-col-12 p-pt-0 p-pl-0 p-pr-0 remove-padding pathx-table" *ngIf="AppraisalDetailPannel2List != null && AppraisalDetailPannel2List != undefined">
+                               <!-- <div class="p-col-12 p-pt-0 p-pl-0 p-pr-0 remove-padding pathx-table" *ngIf="false">-->
+                                    <div class="myDiv" *ngIf="AppraisalDetailPannel2List != null && AppraisalDetailPannel2List.length > 0">
+                                        <span>Current Year Goals</span>
+                                    </div>
+                                    <div style="border: 1px solid #dee2e6; margin-bottom: 10px;">
+                                        <div *ngFor="let appraisalDetail of AppraisalDetailPannel2List; let i=index ">
+                                            <div class="form-group p-row align-items-baseline p-mt-2 p-mb-3">
+                                                <div class="p-col-12 p-p-0" style="transform: translate(0px, 6px);">
+                                                    <label class="control-label p-pr-0 p-pt-0 p-pb-0 p-pl-1 p-col-12 goal-border d-flex  white-space-nowrap" style="font-weight: 600; display: block; transform: translate(0px, 6px);">Goal {{i + 1}}</label>
+                                                    <div class="p-col-12 p-p-0 " style="border-bottom: 1px solid;">
+                                                        <textarea style="transform: translate(0px, 6px);" class="goal-border" id="float-input" rows="4" cols="40" [ngClass]="{ 'disabled': isCurrentYeatGoaldisable === true  }" [ngModelOptions]="{standalone: true}" [(ngModel)]="appraisalDetail.goal" pInputTextarea></textarea>
+                                                        <button *ngIf="i > 2" pButton pRipple type="button" label="" style="margin-bottom: 0px !important;"
+                                                                class="close-button btn footer-action btn-primary not-rounded btn-width-height p-mb-2"
+                                                                [ngClass]="{ 'disabled': isCurrentYeatGoaldisable === true  }"
+                                                                [disabled]="isCurrentYeatGoaldisable"
+                                                                (click)="removeGoal(i, appraisalDetail)">
+                                                            <i class="fas fa-window-close" style=" transform: translate(-5px, 0px);"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="hidden-web" *ngIf="appraisal !== null && appraisal !== undefined && appraisal.statusValue != null && appraisal.statusValue !== undefined">
+                                            <div class="p-col-12 display-flex " *ngIf="appraisal !== null && appraisal !== undefined && appraisal.statusValue != null && appraisal.statusValue !== undefined && appraisal.statusValue != '' && appraisal.statusValue.toUpperCase() == appraisalStatus.PENDINGREVIEW || appraisal.statusValue.toUpperCase() == appraisalStatus.ASSIGNED">
+                                                <div class="p-col-11"></div>
+                                                <div class="p-col-1 p-p-0" *ngIf="appraisal.statusValue.toUpperCase() == appraisalStatus.PENDINGREVIEW || appraisal.statusValue.toUpperCase() == appraisalStatus.ASSIGNED">
+                                                    <button pButton pRipple type="button" label="Add Goals" style="margin-bottom: 0px !important;"
+                                                            class="btn btn-block btn-sm btn-info"
+                                                            (click)="AddGoals()">
+                                                        <i class="fas fa-plus" style="padding-right:5px;"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hidden-web hidden-mobile" *ngIf="appraisal !== null && appraisal !== undefined && appraisal.statusValue != null && appraisal.statusValue !== undefined">
+                                            <div class="p-col-12 display-flex " *ngIf="appraisal !== null && appraisal !== undefined && appraisal.statusValue != null && appraisal.statusValue !== undefined && appraisal.statusValue != '' && appraisal.statusValue.toUpperCase() == appraisalStatus.PENDINGREVIEW || appraisal.statusValue.toUpperCase() == appraisalStatus.ASSIGNED">
+                                                <div class="p-col-8"></div>
+                                                <div class="p-col-4 p-p-0" *ngIf="appraisal.statusValue.toUpperCase() == appraisalStatus.PENDINGREVIEW || appraisal.statusValue.toUpperCase() == appraisalStatus.ASSIGNED">
+                                                    <button pButton pRipple type="button" label="Add Goals" style="margin-bottom: 0px !important;"
+                                                            class="btn btn-block btn-sm btn-info"
+                                                            (click)="AddGoals()">
+                                                        <i class="fas fa-plus" style="padding-right:5px;"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!--<div *ngIf="false">-->
+                                <div *ngIf="isManagerdisable == false || isCommentsDisabled == false || isManagerFeedBackForEmployee == false">
+                                    <div *ngIf="appraisal != null && appraisal.statusValue != null && appraisal.statusValue != ''">
+                                        <div *ngIf="appraisal.reviewerID !== null && (appraisal.statusValue.toUpperCase() == appraisalStatus.PENDINGREVIEW || appraisal.statusValue.toUpperCase() == appraisalStatus.PENDINGFINALREVIEW || appraisal.statusValue.toUpperCase() == appraisalStatus.COMPLETE)">
+                                            <div class="form-group row align-items-baseline p-mt-1">
+                                                <div class="p-col-12 p-p-0">
+                                                    <label class="control-label p-p-0 p-col-12 display-flex-block  white-space-nowrap" style="font-weight:600;">Manager FeedBack</label>
+                                                    <div class="p-col-12 p-p-0 ">
+                                                        <textarea id="float-input" rows="7" cols="40" [ngClass]="{ 'disabled': isManagerdisable === true  }" [ngModelOptions]="{standalone: true}" [(ngModel)]="appraisal.mgrFeedback" pInputTextarea></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="isCommentsDisabled == false">
+                                    <div *ngIf="appraisal != null && appraisal.statusValue != null && appraisal.statusValue != ''">
+                                        <div *ngIf="appraisal.finalReviewerID !== null && appraisal.statusValue.toUpperCase() == appraisalStatus.PENDINGFINALREVIEW">
+                                            <div class="form-group row align-items-baseline p-mt-1">
+                                                <div class="p-col-12 p-p-0">
+                                                    <label class="control-label p-p-0 p-col-12 display-flex-block white-space-nowrap" style="font-weight:600;">Final Comments</label>
+                                                    <div class="p-col-12 p-p-0 ">
+                                                        <textarea id="float-input" rows="7" cols="40" [ngModelOptions]="{standalone: true}" [(ngModel)]="appraisal.comment" pInputTextarea></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               <div *ngIf="appraisal != null && appraisal.statusValue != null && appraisal.statusValue != ''">
+                                <!--<div *ngIf="false">-->
+                                    <div *ngIf="appraisal.statusValue.toUpperCase() == appraisalStatus.COMPLETE">
+                                        <div class="form-group row align-items-baseline p-mt-1">
+                                            <div class="p-col-12 p-p-0">
+                                                <label class="control-label p-p-0  p-col-12 display-flex-block  white-space-nowrap" style="font-weight:600;">Manager FeedBack</label>
+                                                <div class="p-col-12 p-p-0 ">
+                                                    <textarea id="float-input" rows="7" cols="40" [disabled]="isManagerdisable" [ngClass]="{ 'disabled': isManagerdisable === true  }" [ngModelOptions]="{standalone: true}" [(ngModel)]="appraisal.mgrFeedback" pInputTextarea></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="user != null && appraisal != null &&  user.employeeID != null && appraisal.employeeID != null && user.employeeID != appraisal.employeeID && appraisal.statusValue.toUpperCase() == appraisalStatus.COMPLETE">
+                                        <div class="form-group row align-items-baseline p-mt-1">
+                                            <div class="p-col-12 p-p-0">
+                                                <label class="control-label p-p-0 p-col-12 display-flex-block  white-space-nowrap" style="font-weight:600;">Final Comments</label>
+                                                <div class="p-col-12 p-p-0 ">
+
+                                                    <textarea id="float-input" rows="7" cols="40" [disabled]="true" class="disabled" [ngModelOptions]="{standalone: true}" [(ngModel)]="appraisal.comment" pInputTextarea></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-9 display-flex-block p-pt-0 ">
+                            </div>
+                            <div class="p-md-3 display-flex-block p-pt-3 " style="display: flex !important; justify-content: right;" *ngIf="appraisal !== undefined && appraisal.statusValue !== undefined" >
+                                <button *ngIf="user != null && appraisal != null && appraisal !== undefined && appraisal.statusValue != null && appraisal.statusValue !== undefined  && (appraisal.statusValue.toUpperCase() == appraisalStatus.ASSIGNED) || (appraisal.statusValue.toUpperCase() == appraisalStatus.PENDINGREVIEW && appraisal.reviewerID == user.employeeID) || (appraisal.statusValue.toUpperCase() == appraisalStatus.PENDINGFINALREVIEW && appraisal.finalReviewerID == user.employeeID)"
+                                        pButton pRipple type="button" label="Save" style="margin-bottom: 0px !important; width:auto !important"
+                                        class="btn footer-action btn-primary not-rounded btn-width-height p-button-raised p-mr-2 p-mb-2"
+                                        [disabled]="appraisal.statusValue.toUpperCase() == appraisalStatus.COMPLETE || isSaveButtonDisabled"
+                                        (click)="SaveAppraisal()">
+                                </button>
+                                <button *ngIf="user != null && appraisal != null && appraisal !== undefined && appraisal.statusValue != null && appraisal.statusValue != undefined && (appraisal.statusValue.toUpperCase() == appraisalStatus.ASSIGNED) || (appraisal.statusValue.toUpperCase() == appraisalStatus.PENDINGREVIEW && appraisal.reviewerID == user.employeeID) || (appraisal.statusValue.toUpperCase() == appraisalStatus.PENDINGFINALREVIEW && appraisal.finalReviewerID == user.employeeID)"
+                                        pButton pRipple type="button" label="Submit" style="margin-bottom: 0px !important; width: auto !important"
+                                        class="btn footer-action btn-primary not-rounded btn-width-height p-button-raised p-mr-2 p-mb-2"
+                                        [disabled]="appraisal.statusValue.toUpperCase() == appraisalStatus.COMPLETE || isSubmitButtonDisabled"
+                                        (click)="SubmitAppraisal()">
+                                </button>
+                                <button pButton pRipple type="button" label="Cancel" style="margin-bottom: 0px !important; width: auto !important"
+                                        class="btn footer-action btn-primary not-rounded btn-width-height p-button-raised p-button-danger p-mb-2"
+                                        (click)="cancel()">
+                                </button>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </form>
+
+    </div>
+</div>
+<p-toast></p-toast>

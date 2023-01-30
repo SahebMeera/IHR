@@ -1,0 +1,133 @@
+﻿@inherits TimeSheetApprovalBase
+@using BlazorTable
+@using IHR.DTO
+
+<div class="row mt-3 hidden-web">
+    <div class="col-12 pl-1 pr-1">
+        @if (lstTimeSheetRequest != null)
+        {
+            <Table TableItem="TimeSheet" Items="lstTimeSheetRequest" ColumnReorder="true" ShowSearchBar="true" SelectionType="SelectionType.Single"
+                   DropDown="lstStatus" DropDownLabel="Status:" onDropDownChange="onStatusChange" DefaultID="DefaultStatusId"
+                   RowActions="RowActions" RowClickAction="RowClick" HeaderActions="HeaderAction" PageSize="DefaultPageSize">
+                <Column TableItem="TimeSheet" Title="Emp Name" Field="@(x => x.EmployeeName)" Sortable="true" Filterable="false">
+                </Column>
+                <Column TableItem="TimeSheet" Title="Week Ending" Field="@(x => x.WeekEnding)" Sortable="true" Filterable="false" DefaultSortColumn="true">
+                    <Template>
+                        @FormatDate(context.WeekEnding)
+                    </Template>
+                </Column>
+                <Column TableItem="TimeSheet" Title="Total Hours" Field="@(x => x.TotalHours)" Sortable="true" Filterable="false">
+                </Column>
+                <Column TableItem="TimeSheet" Title="Status" Field="@(x => x.Status)" Sortable="true" Filterable="false">
+                </Column>
+                <Column TableItem="TimeSheet" Title="Submitted By" Field="@(x => x.SubmittedBy)" Sortable="true" Filterable="false">
+                </Column>
+                <Column TableItem="TimeSheet" Title="Submitted Date" Field="@(x => x.SubmittedDate)" Sortable="true" Filterable="false">
+                    <Template>
+                        @(context.SubmittedDate != null ? context.SubmittedDate.ToString("MM/dd/yyyy") : "")
+                    </Template>
+                </Column>
+                <Column TableItem="TimeSheet" Title="Approved By Email" Field="@(x => x.ApprovedByEmail)" Sortable="true" Filterable="false">
+                </Column>
+                <Column TableItem="TimeSheet" Title="Approved Date" Field="@(x => x.ApprovedDate)" Sortable="true" Filterable="false">
+                    <Template>
+                        @FormatDate(context.ApprovedDate)
+                    </Template>
+                </Column>
+                <EmptyDataTemplate>
+                    <div class="text-center">
+                        No rows found!
+                    </div>
+                </EmptyDataTemplate>
+                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+            </Table>
+        }
+        else
+        {
+            <span></span>
+        }
+    </div>
+</div>
+<div class="row mt-2 hidden-web hidden-mobile">
+    <div class="col-12 ">
+        <div class="row mr-0  display-flex mobile-display">
+            <div class="col-12 col-sm-3 pr-1 mobile-padding-remove mobile-pad-left-add">
+                <input type="text" id="myFilter" class="form-control form-control-sm float-left" placeholder="Global Search..." @onkeyup="SearchFuntion" />
+            </div>
+            <div class="col-12 col-sm-3 pl-0  mobile-pad-right-add" style="display: flow-root; justify-content: center; align-items: center;">
+                @if (lstStatus != null)
+                {
+                    <div class="row align-items-center mobile-pad-top-add">
+                        <label class="col-5 col-form-label mobile-transform-translate">Status:</label>
+                        <div class="col-7 pl-0 pr-0 mobile-first-dropdown-padding">
+                            <select class="form-control form-control-sm" @bind="DefaultStatusId" @oninput=OnDrpDwnChange>
+                                @if (lstStatus != null)
+                                {
+                                    @foreach (var item in lstStatus)
+                                    {
+                                        <option value="@item.ID">@item.Value</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                }
+            </div>
+           
+        </div>
+    </div>
+    @if (lstTimeSheetRequest != null && lstTimeSheetRequest.Count > 0)
+    {
+        <div class="col-12 pt-2" id="myItems">
+            @foreach (var timeSheetRequest in lstTimeSheetRequest)
+            {
+                <div class="col-sm-6 pb-2 pl-0 pr-0">
+                    <div class="card mobile-card-view" @onclick="(() => EditMobile(timeSheetRequest))">
+                        <div class="card-body" style="padding-bottom:0.5rem !important;">
+                            <div class="row">
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Emp Name :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @timeSheetRequest.EmployeeName
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Week Ending :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @timeSheetRequest.WeekEnding
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Total Hours :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @timeSheetRequest.TotalHours
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Status :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @timeSheetRequest.Status
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Submitted Date :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @FormatDate(timeSheetRequest.SubmittedDate)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <div class="col-12" style="padding-top:10rem;"></div>
+    }
+</div>
+
+<ApproveDenyTimeSheet @ref="ApproveDenyTimeSheetModal" TimeSheetUpdated="LoadTimeSheetRequest"></ApproveDenyTimeSheet>

@@ -1,0 +1,38 @@
+﻿@inherits WFHApprovalBase
+@using BlazorTable
+@using IHR.DTO
+<div class="row mt-3">
+    <div class="col-12 pl-1 pr-1">
+        @if (lstWFHRequest != null)
+        {
+        <Table TableItem="WFH" Items="lstWFHRequest" ColumnReorder="true" ShowSearchBar="true" DropDown="lstStatus" DropDownLabel="Status:" onDropDownChange="onStatusChange" DefaultID="DefaultStatusId" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize" 
+               SelectionType="SelectionType.Single" RowClickAction="RowClick" RowActions="RowActions" HeaderActions="HeaderAction">
+            <Column TableItem="WFH" Title="Employee" Field="@(x => x.EmployeeName)" Sortable="true" Filterable="false" />
+            <Column TableItem="WFH" Title="Start Date" Field="@(x => x.StartDate)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="true">
+                <Template>
+                    @(context.StartDate.ToShortDateString())
+                </Template>
+            </Column>
+            <Column TableItem="WFH" Title="End Date" Field="@(x => x.EndDate)" Sortable="true" Filterable="false">
+                <Template>
+                    @(context.StartDate.ToShortDateString())
+                </Template>
+            </Column>
+            <Column TableItem="WFH" Title="Title" Field="@(x => x.Title)" Sortable="true" Filterable="false" />
+            <Column TableItem="WFH" Title="Status" Field="@(x => x.Status)" Sortable="true" Filterable="false" />
+            <EmptyDataTemplate>
+                <div class="text-center">
+                    No rows found!
+                </div>
+            </EmptyDataTemplate>
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </Table>
+        }
+        else
+        {
+            <span></span>
+        }
+    </div>
+</div>
+
+<ApproveDenyWFH @ref="ApproveDenyWFHModal" UpdateWFHList="RefreshList"></ApproveDenyWFH>

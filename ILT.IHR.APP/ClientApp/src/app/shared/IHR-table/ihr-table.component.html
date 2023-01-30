@@ -1,0 +1,381 @@
+<div class="p-grid p-fluid">
+    <!-- rowEditable table start here  -->
+    <div class="p-col-12 pathx-table" *ngIf="isTableCheckbox">
+        <p-table #dt styleClass="ui-table-pathx"
+                 [columns]="_selectedColumns"
+                 (sortFunction)="sortColumn($event)"
+                 [customSort]="true"
+                 [loading]="loading"
+                 [(selection)]="selectedRows"
+                 [value]="data"
+                 [sortField]="sortingField"
+                 [sortOrder]="sortingFieldOrder"
+                 (onRowSelect)="onRowSelect($event)"
+                 [(rows)]="defaultPageSize"
+                 [reorderableColumns]="true"
+                 [autoLayout]="true"
+                 (onPage)="paginate($event)"
+                 [(first)]="first"
+                 [showCurrentPageReport]="showCurrentPageReport"
+                 [rowsPerPageOptions]="pagesSizes"
+                 stateStorage="local"
+                 resetPageOnSort="true"
+                 [stateKey]="tableState"
+                 [paginator]="isPagination"
+                 selectionMode="single"
+                 [dataKey]="dataKey"
+                 [rowHover]="true"
+                 [filterDelay]="0"
+                 [globalFilterFields]="globalFilterFields"
+                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                 rowExpandMode="single">
+            <ng-template pTemplate="caption">
+                <div class="p-grid p-fluid">
+                    <div class="table-header p-col-12 p-lg-3" style="padding-top: 7px; padding-left: 7px;" *ngIf="!isSearchRequired">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search..." />
+                            <!--<input pInputText type="text" [(ngModel)]="searchText" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search..." />-->
+
+                        </span>
+                    </div>
+                    <div class="p-col-12 p-lg-9 p-pb-0 header-action-panel" *ngIf="!hasChange">
+                        <div class="p-grid p-fluid">
+                            <div class="p-col-12 p-lg-4 p-pb-0 p-pr-0">
+                                <div class="p-d-flex p-flex-column p-flex-md-row align-items-center mobile-pad-top-add" *ngIf="DropDown != null && DropDown.length > 0">
+                                    <label class="p-col-5 p-pb-0 p-pl-0 col-form-label mobile-transform-translate drpdwn" style="padding-right: 7px; padding-top: 0px !important; font-weight: 600;">{{DropDownLabel}}</label>
+                                    <div class="p-col-7 p-pl-0 p-pt-0 p-pr-0 p-pb-0 mobile-first-dropdown-padding text-left" *ngIf="DropDown != null && DropDown.length > 0">
+                                        <p-dropdown [options]="DropDown"
+                                                    appendTo="body"
+                                                    [(ngModel)]="DefaultID"
+                                                    (onChange)="OnDrpDwnChange($event)"
+                                                    placeholder="Select"
+                                                    optionValue="ID"
+                                                    optionLabel="Value"></p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="p-d-flex p-flex-column p-flex-md-row align-items-center mobile-pad-top-add" *ngIf="onMultiSelectDropDown1 !=null && onMultiSelectDropDown1.length > 0">
+                                    <label class="p-col-5 p-pb-0 p-pl-0 col-form-label mobile-transform-translate" style="padding-right: 7px; padding-top: 0px !important; font-weight: 600;">{{DropDownLabel}}</label>
+                                    <div class="p-col-7 p-pl-0 p-pt-0 p-pr-0 p-pb-0 mobile-first-dropdown-padding text-left" *ngIf="onMultiSelectDropDown1 != null">
+                                        <p-multiSelect [options]="onMultiSelectDropDown1"
+                                                       defaultLabel="Select"
+                                                       [(ngModel)]="onMultiSelectedDropDown1"
+                                                       (onChange)="OnMultiDropDown1Change($event)"
+                                                       optionValue="ID"
+                                                       optionLabel="Value"></p-multiSelect>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-lg-8 p-pb-0 p-pl-0" style="display: flex;">
+                                <div class="p-d-flex p-flex-column p-flex-md-row align-items-center mobile-pad-top-add" *ngIf="DropDown2 != null && DropDown2.length > 0" style="width:20rem;">
+                                    <label class="p-col-5 p-pb-0 p-pl-0 col-form-label mobile-transform-translate" style="padding-right: 7px; padding-top: 0px !important; font-weight: 600;">{{DropDown2Label}}</label>
+                                    <div class="p-col-7 p-pl-0 p-pt-0 p-pr-0 p-pb-0 mobile-first-dropdown-padding text-left" *ngIf="DropDown2 != null">
+                                        <p-dropdown [options]="DropDown2"
+                                                    appendTo="body"
+                                                    [(ngModel)]="DropDown2DefaultID"
+                                                    (onChange)="OnDrpDwn2Change($event)"
+                                                    placeholder="Select"
+                                                    optionValue="ID"
+                                                    optionLabel="Value"></p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="p-d-flex p-flex-column p-flex-md-row align-items-center mobile-pad-top-add" *ngIf="onMultiSelectDropDown !=null && onMultiSelectDropDown.length > 0" style="width:22rem;">
+                                    <label class="p-col-5 p-pb-0 p-pl-0 col-form-label mobile-transform-translate" style="padding-right: 7px; padding-top: 0px !important; font-weight: 600;">{{DropDown2Label}}</label>
+                                    <div class="p-col-7 p-pl-0 p-pt-0 p-pr-0 p-pb-0 mobile-first-dropdown-padding text-left" *ngIf="onMultiSelectDropDown != null">
+                                        <p-multiSelect [options]="onMultiSelectDropDown"
+                                                       defaultLabel="Select"
+                                                       [(ngModel)]="onMultiSelectedDropDown"
+                                                       (onChange)="OnMultiDropDownChange($event)"
+                                                       optionValue="ID"
+                                                       optionLabel="Value"></p-multiSelect>
+                                    </div>
+                                </div>
+                                <div class="p-d-flex p-flex-column p-flex-md-row align-items-center mobile-pad-top-add" *ngIf="DropDown3 != null && DropDown3.length > 0" style="width:15.5rem;">
+                                    <label class="p-col-5 p-pb-0 p-pl-0 col-form-label mobile-transform-translate drpdwn" style="padding-right: 7px; padding-top: 0px !important; font-weight: 600;">{{DropDown3Label}}</label>
+                                    <div class="p-col-7 p-pl-0 p-pt-0 p-pr-0 p-pb-0 mobile-first-dropdown-padding text-left" *ngIf="DropDown3 != null">
+                                        <p-dropdown [options]="DropDown3"
+                                                    appendTo="body"
+                                                    [(ngModel)]="DropDown3DefaultID"
+                                                    (onChange)="OnDrpDwn3Change($event)"
+                                                    placeholder="Select"
+                                                    optionValue="ID"
+                                                    optionLabel="Value"></p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="p-d-flex p-flex-column p-flex-md-row" style="position: absolute; right: 9px;">
+                                    <span *ngFor="let action of headerActions" style="float: right; padding-left: 5px;">
+                                        <div [hidden]="action.isHidden"  >
+                                            <button pButton pRipple type="button" [label]="action.actionText" class="header-action-button"
+                                                    [disabled]="action.isDisabled"
+                                                    [ngStyle]="{'display': action.isDisabled && action.isDisabled != null && action.isDisabled != undefined && action.isDisabled ? 'none': 'block' }"
+                                                    *ngIf="action.isToggle === null || action.isToggle === undefined || action.isToggle === false"
+                                                    [ngClass]="action.styleClass" title={{getRowActionToolTip(action.toolTip)}}
+                                                    (click)="action.actionMethod(selectedRows)">
+                                                <i style="padding-right:6px;" [ngClass]="action.iconClass"></i>
+                                            </button>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th style="width: 3em" *ngIf="isRowExpand || isRowExpandContact || isExpandRowRate">
+                    </th>
+                    <th *ngFor="let col of _selectedColumns" [pSortableColumn]="col.field" pReorderableColumn>
+
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                    <th style="width: 5rem" *ngIf="!hasChange"></th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns" *ngIf="isTableCheckbox">
+                <tr [pSelectableRow]="rowData">
+                    <td *ngIf="isRowExpand || isRowExpandContact || isExpandRowRate" style="text-align:center">
+                        <a href="#" [pRowToggler]="rowData" (click)="isOpen(rowData)">
+                            <i style="font-size: 19px; color: black; font-weight: 600;" [ngClass]="expanded ? 'pi pi-minus' : 'pi pi-plus'"></i>
+                        </a>
+                    </td>
+                    <td *ngFor="let col of _selectedColumns" pEditableColumn>
+                        <span class="text-underline" *ngIf="col.hasChange !== null && col.hasChange !== undefined && col.hasChange === true" style="color: #0366d6;" (click)="ticketList(rowData)">
+                            {{rowData[col.field]}}
+                        </span>
+                        <span *ngIf="col.isEditable === true">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="number" (change)="numberChange(rowData)" min="0"
+                                           [(ngModel)]="rowData[col.field]">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData[col.field]}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </span>
+                        <span *ngIf="col.isEditable === undefined || col.isEditable === null || col.isEditable == false">
+                            <span *ngIf="(col.isBoolColumn === undefined || col.isBoolColumn === null || col.isBoolColumn === false) && (col.isIcon === undefined || col.isIcon === null || col.isIcon === false) &&(col.isBoolColumnEditable === undefined || col.isBoolColumnEditable === null || col.isBoolColumnEditable === false) && hasChanged === true">
+                                <span [ngStyle]="{'color': rowData !== undefined && rowData.hasChange !== null && rowData.hasChange === true ? 'red': '#333'  }">{{rowData[col.field]}}</span>
+                            </span>
+                            <span *ngIf="(col.isBoolColumn === undefined || col.isBoolColumn === null || col.isBoolColumn === false) && (col.isIcon === undefined || col.isIcon === null || col.isIcon === false) &&(col.isBoolColumnEditable === undefined || col.isBoolColumnEditable === null || col.isBoolColumnEditable === false) && (col.hasChange === undefined || col.hasChange === null || col.hasChange === false) && hasChanged === false">
+                                {{ rowData[col.field]}}
+                                <!-- <span [ngStyle]="{'color': rowData !== undefined && rowData.hasChange !== null && rowData.hasChange === true ? 'red': '#333'  }">{{rowData[col.field]}}</span>-->
+                            </span>
+                        </span>
+                    </td>
+                    <td style="text-align:center" *ngIf="!disabledRow" [ngClass]="hasChange === true ? 'display-none' : ''">
+                        <span *ngFor="let rowAction of rowActions" pReorderableRowHandle>
+                            <button type="button" pButton pRipple
+                                    class="btn action-button btn-primary not-rounded"
+                                    [ngClass]="[rowAction.styleClass === undefined || rowAction.styleClass === null ? 'row-action-button' : rowAction.styleClass]"
+                                    (click)="rowAction.actionMethod(rowData)"
+                                    title={{getRowActionToolTip(rowAction.toolTip)}} tooltipPosition="left">
+                                <i [ngClass]="rowAction.iconClass"></i>
+                            </button>
+                        </span>
+                    </td>
+                    <td style="text-align:center" *ngIf="disabledRow" [ngClass]="hasChange === true ? 'display-none' : ''">
+                        <span *ngFor="let rowAction of rowActions" pReorderableRowHandle>
+                            <button type="button" pButton pRipple
+                                    class="btn action-button btn-primary not-rounded"
+                                    [ngClass]="[rowAction.styleClass === undefined || rowAction.styleClass === null ? 'row-action-button' : rowAction.styleClass , rowData['status'].toLowerCase() !== 'Pending'.toLowerCase() === true ? 'disabled' : '']"
+                                    (click)="rowAction.actionMethod(rowData)"
+                                    title={{getRowActionToolTip(rowAction.toolTip)}} tooltipPosition="left">
+                                <i [ngClass]="rowAction.iconClass"></i>
+                            </button>
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns" *ngIf="isRowExpand">
+                <tr>
+                    <td></td>
+                    <td [attr.colspan]="7">
+                        <div class="ui-g ui-fluid" style="font-size: 16px; background-color: rgb(0 53 255 / 27%);">
+                            <div class="ui-g-12 ui-md-12">
+                                <div class="ui-g" style="padding-left: 20px;">
+                                    <div class="ui-g-12" style="padding: 10px;">
+                                        <div class="p-grid w4-field">
+                                            <div class="p-md-4 p-d-flex p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label" for="firstname1">Qualifying Children</label>
+                                                <div class="p-md-6 p-p-0">
+                                                    <input type="text" [(ngModel)]="rowData.qualifyingChildren" pInputText />
+                                                </div>
+                                            </div>
+                                            <div class="p-md-4 p-d-flex p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label" for="firstname2">Other Dependents</label>
+                                                <div class="p-md-6 p-p-0">
+                                                    <input type="text" [(ngModel)]="rowData.otherDependents" pInputText />
+                                                </div>
+                                            </div>
+                                            <div class="p-md-4 p-d-flex p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label" for="firstname2">Multiple Jobs </label>
+                                                <div class="p-md-6 p-p-0" style="display:flex;">
+                                                    <p-checkbox [(ngModel)]="rowData.isMultipleJobsOrSpouseWorks" binary="true" inputId="binary"></p-checkbox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-grid  w4-field">
+                                            <div class="p-md-4 p-d-flex p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label" for="firstname1">Other Income</label>
+                                                <div class="p-md-6 p-p-0">
+                                                    <input type="text" [(ngModel)]="rowData.otherIncome" pInputText />
+                                                </div>
+                                            </div>
+                                            <div class="p-md-4 p-d-flex p-pt-0 ">
+                                                <label class="control-label p-md-4 col-form-label" for="firstname2">Deductions </label>
+                                                <div class="p-md-6 p-p-0">
+                                                    <input type="text" [(ngModel)]="rowData.deductions" pInputText />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns" *ngIf="isRowExpandContact">
+                <tr>
+                    <td></td>
+                    <td [attr.colspan]="5">
+                        <div class="ui-g ui-fluid" style="font-size:16px;">
+                            <div class="ui-g-12 ui-md-3" style="text-align:center">
+                                <!-- <img [attr.alt]="rowData.brand">-->
+                            </div>
+                            <div class="ui-g-12 ui-md-9 p-p-0">
+                                <div class="ui-g">
+                                    <div class="ui-g-12 p-p-0">
+                                        {{rowData?.address1 != "" ? rowData.address1 + "," : ""}}{{rowData?.address2}}
+                                    </div>
+                                    <div class="ui-g-12 p-p-0">
+                                        {{rowData?.city != "" ? rowData?.city + "," : ""}}{{rowData?.state}}{{rowData?.zipCode}}
+                                    </div>
+                                    <div class="ui-g-12 p-p-0">
+                                        {{rowData?.country}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="rowexpansion" let-rowData let-columns="_selectedChildColumns" *ngIf="isExpandRowRate">
+                <tr>
+                    <td></td>
+                    <td [attr.colspan]="7">
+                        <p-table #sdt styleClass="ui-table-pathx"
+                                 [columns]="_selectedChildColumns"
+                                 (sortFunction)="sortColumn($event)"
+                                 [customSort]="true"
+                                 [loading]="loading"
+                                 [(selection)]="selectedRows"
+                                 [value]="assignmenRates"
+                                 [rows]="defaultPageSize"
+                                 [reorderableColumns]="true"
+                                 [autoLayout]="true"
+                                 [first]="first"
+                                 [showCurrentPageReport]="showChildCurrentPageReport"
+                                 [rowsPerPageOptions]="pagesSizes"
+                                 stateStorage="local"
+                                 [stateKey]="tableState"
+                                 [paginator]="isPagination"
+                                 [dataKey]="'assignmentRateID'"
+                                 [globalFilterFields]="['startDate','startDate','billingRate','paymentRate']"
+                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+                            <ng-template pTemplate="caption">
+                                <div class="p-grid p-fluid" style="margin-bottom: 11px;">
+                                    <div class="p-col-12 p-lg-2 p-pb-0  ui-table-globalfilter-container">
+                                        <input pInputText type="text" class="global-filter" [(ngModel)]="searchChildText"
+                                               (input)="sdt.filterGlobal($event.target.value, 'contains')"
+                                               placeholder="Filter here" />
+                                    </div>
+                                    <div class="p-col-12 p-lg-10 p-pb-0 header-action-panel" *ngIf="headerChildActions.length > 0">
+                                        <div class="p-grid p-fluid">
+                                            <div class="p-col-12 p-lg-4 p-pb-0 p-pr-0">
+                                                <div class="p-d-flex p-flex-column p-flex-md-row" style="position: absolute; right: 9px;">
+                                                    <span *ngFor="let action of headerChildActions" style="float: right; padding-left: 5px;">
+                                                        <div [hidden]="action.isHidden">
+                                                            <button pButton pRipple type="button" [label]="action.actionText" class="header-action-button"
+                                                                    [disabled]="action.isDisabled"
+                                                                    *ngIf="action.isToggle === null || action.isToggle === undefined || action.isToggle === false"
+                                                                    [ngClass]="action.styleClass"
+                                                                    title={{getRowActionToolTip(action.toolTip)}}
+                                                                    (click)="action.actionMethod(rowData)">
+                                                                <i [ngClass]="action.iconClass" style="padding-right: 6px;"></i>
+
+                                                                <!-- {{action.actionText}} -->
+                                                            </button>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let col of _selectedChildColumns" [pSortableColumn]="col.field" pReorderableColumn>
+                                        {{col.header}}
+                                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 5rem"></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-assignment let-columns="_selectedChildColumns">
+                                <tr [pSelectableRow]="assignment">
+                                    <td *ngFor="let col of _selectedChildColumns" pEditableColumn>
+                                        <span *ngIf="col.isEditable === true">
+                                            <p-cellEditor>
+                                                <ng-template pTemplate="output">
+                                                    {{assignment[col.field]}}
+                                                </ng-template>
+                                            </p-cellEditor>
+                                        </span>
+                                        <span *ngIf="col.isEditable === undefined || col.isEditable === null || col.isEditable == false">
+                                            <span *ngIf="(col.isBoolColumn === undefined || col.isBoolColumn === null || col.isBoolColumn === false) && (col.isIcon === undefined || col.isIcon === null || col.isIcon === false) &&(col.isBoolColumnEditable === undefined || col.isBoolColumnEditable === null || col.isBoolColumnEditable === false)">
+                                                {{assignment[col.field]}}
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <span *ngFor="let rowAction of rowChildActions" pReorderableRowHandle>
+                                            <button type="button" pButton pRipple
+                                                    class="btn action-button btn-primary not-rounded"
+                                                    [ngClass]="[rowAction.styleClass === undefined || rowAction.styleClass === null ? 'row-action-button' : rowAction.styleClass]"
+                                                    (click)="rowAction.actionMethod(assignment)"
+                                                    title={{getRowActionToolTip(rowAction.toolTip)}} tooltipPosition="left">
+                                                <i [ngClass]="rowAction.iconClass"></i>
+                                            </button>
+                                        </span>
+                                        <!--[disabled]="action.isDisabled"-->
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <!--<tr>
+                <td colspan="">There are no data.</td>
+            </tr>-->
+            </ng-template>
+        </p-table>
+
+        <!-- <ngx-spinner [fullScreen]="false" type="ball-spin-clockwise" bdColor="rgba(51, 51, 51, 0.8)" size="default" >
+        <p style="color: white">Please Wait. </p>
+    </ngx-spinner> -->
+    </div>
+</div>
+<ngx-spinner type="ball-spin-clockwise" bdColor="rgba(51, 51, 51, 0.8)" size="default">
+    <p style="color: white">Please Wait... </p>
+</ngx-spinner>

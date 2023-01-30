@@ -1,0 +1,300 @@
+﻿@inherits AddEditEmployeeSalaryBase
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block overflow-y-auto-mobile" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1100px; margin-top: 0.3rem;">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 0.3rem 0rem;">
+                    <span class="float-left pl-2">@Title Salary</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body pb-0 pt-2">
+                    <EditForm Model="@salary" OnValidSubmit="SalaryValidation">
+                        <DataAnnotationsValidator />
+                        <div class="row" style="padding-right: 6px;">
+                            <div class="col-12 pl-0 pr-0">
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="row no-gutters">
+                                    <div class="col-12 align-center remove-padding" style="@(ErrorMessage == null || ErrorMessage == "" ? "display: none;" : "display: block;")">
+                                        <span class="error-message-color">@ErrorMessage &nbsp;</span>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-4 pr-0 pl-0 display-flex">
+                                                <label class="control-label col-sm-6 col-form-label">* Start Date</label>
+                                                <div class="col-sm-6 pl-0 pr-0">
+                                                    <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="salary.StartDate" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 display-flex remove-padding-right">
+                                                <label class="control-label col-sm-6 col-form-label">End Date</label>
+                                                <div class="col-sm-6 pl-1 pl-0 pr-0 ">
+                                                    <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="salary.EndDate" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 display-flex remove-padding-right padding-left-set">
+                                                <label class="control-label col-sm-6 col-form-label">* Basic Pay</label>
+                                                <div class="col-sm-6 pl-0 pr-0">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="@salary.BasicPay" data-mask="[00000000].00" @onchange="@((e) => { salary.BasicPay=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-4 pr-0 pl-0 display-flex">
+                                                <label class="control-label col-sm-6 col-form-label">* HRA</label>
+                                                <div class="col-sm-6 pl-0 pr-0">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="salary.HRA" data-mask="[00000000].00" @onchange="@((e) => { salary.HRA=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 display-flex  remove-padding-right">
+                                                <label class="control-label col-sm-6 col-form-label">* LTA</label>
+                                                <div class="col-sm-6 pl-1 pl-0 pr-0">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="salary.LTA" data-mask="[00000000].00" @onchange="@((e) => { salary.LTA=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 display-flex  remove-padding-right padding-left-set">
+                                                <label class="control-label col-sm-6 col-form-label">* Special Allowance</label>
+                                                <div class="col-sm-6 pl-0 pr-0 ">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="salary.SpecialAllowance" data-mask="[00000000].00" @onchange="@((e) => { salary.SpecialAllowance=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-4 pr-0 pl-0 display-flex">
+                                                <label class="control-label col-sm-6 col-form-label">* Education Allowance</label>
+                                                <div class="col-sm-6 pl-0 pr-0">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="salary.EducationAllowance" data-mask="[00000000].00" @onchange="@((e) => { salary.EducationAllowance=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 display-flex remove-padding-right">
+                                                <label class="control-label col-sm-6 col-form-label">* Conveyance</label>
+                                                <div class="col-sm-6 pl-1 pl-0 pr-0 ">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="salary.Conveyance" data-mask="[00000000].00" @onchange="@((e) => { salary.Conveyance=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 display-flex remove-padding-right padding-left-set">
+                                                <label class="control-label col-sm-6 col-form-label">* Meal Allowance</label>
+                                                <div class="col-sm-6 pl-0 pr-0 ">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="salary.MealAllowance" data-mask="[00000000].00" @onchange="@((e) => { salary.MealAllowance=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-4 pr-0 pl-0 display-flex">
+                                                <label class="control-label col-sm-6 col-form-label">* Telephone Allowance</label>
+                                                <div class="col-sm-6 pl-0 pr-0">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="salary.TelephoneAllowance" data-mask="[00000000].00" @onchange="@((e) => { salary.TelephoneAllowance=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 display-flex remove-padding-right ">
+                                                <label class="control-label col-sm-6 col-form-label">* Medical Allowance</label>
+                                                <div class="col-sm-6 pl-1 pl-0 pr-0 ">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="salary.MedicalAllowance" data-mask="[00000000].00" @onchange="@((e) => { salary.MedicalAllowance=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 display-flex remove-padding-right padding-left-set">
+                                                <label class="control-label col-sm-6 col-form-label">* Medical Insurance</label>
+                                                <div class="col-sm-6 pl-0 pr-0 ">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="salary.MedicalInsurance" data-mask="[00000000].00" @onchange="@((e) => { salary.MedicalInsurance=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-4 pr-0 pl-0 display-flex">
+                                                <label class="control-label col-sm-6 col-form-label">* Bonus</label>
+                                                <div class="col-sm-6 pl-0 pr-0">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="salary.Bonus" data-mask="[00000000].00" @onchange="@((e) => { salary.Bonus=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 display-flex remove-padding-right ">
+                                                <label class="control-label col-sm-6 col-form-label">*  Variable Pay</label>
+                                                <div class="col-sm-6 pl-1 pl-0 pr-0 ">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="salary.VariablePay" data-mask="[00000000].00" @onchange="@((e) => { salary.VariablePay=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 display-flex remove-padding-right padding-left-set">
+                                                <label class="control-label col-sm-6 col-form-label">* Provident Fund</label>
+                                                <div class="col-sm-6 pl-0 pr-0 ">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="salary.ProvidentFund" data-mask="[00000000].00" @onchange="@((e) => { salary.ProvidentFund=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-4 pr-0 pl-0 display-flex">
+                                                <label class="control-label col-sm-6 col-form-label">* Gratuity</label>
+                                                <div class="col-sm-6 pl-0 pr-0">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="salary.Gratuity" data-mask="[00000000].00" @onchange="@((e) => { salary.Gratuity=(string)e.Value;})" @onblur="setValueCTCPMPA" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 display-flex remove-padding-right">
+                                                <label class="control-label col-sm-6 col-form-label">CTC Per Month</label>
+                                                <div class="col-sm-6 pl-1 pl-0 pr-0 ">
+                                                    @* <InputMask class="form-control form-control-sm" @bind-Value="salary.Gratuity" data-mask="[00000000].00" />*@
+                                                    <InputText @bind-Value="@TotalCTCPM" disabled="true" style="        outline: none !important;
+" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 display-flex remove-padding-right padding-left-set">
+                                                <label class="control-label col-sm-6 col-form-label">CTC Per Annum</label>
+                                                <div class="col-sm-6 pl-0 pr-0 ">
+                                                    <InputMask class="form-control form-control-sm" disabled="true" style="outline: none !important;" @bind-Value="salary.CostToCompany" data-mask="[00000000].00" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-12 pl-4 remove-padding-right" style="max-height: 360px; overflow-y: auto;">
+
+                                    <table class="salary-table table-bordered">
+                                        <thead>
+                                            <tr style="background-color: #1979c5;color: white;">
+                                                <th class="salaryTableComponent" scope="col" style="text-align:left;">Component</th>
+                                                <th scope="col" style="text-align:center;">Per Month</th>
+                                                <th scope="col" style="text-align:center;">Per Annum</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="salaryTableComponent">Basic</td>
+                                                <td class="salaryTablePMPA">@OnSalaryBasicPay()</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeBasicPay()</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="salaryTableComponent">HRA</td>
+                                                <td class="salaryTablePMPA">@OnSalaryHRA()</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeHRA()</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="salaryTableComponent">LTA</td>
+                                                <td class="salaryTablePMPA">@OnSalaryLTA()</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeLTA()</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="salaryTableComponent" scope="row">Education Allowance</td>
+                                                <td class="salaryTablePMPA">@OnSalaryEducationAllowance()</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeEducationAllowance()</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="salaryTableComponent">Special Allowance</td>
+                                                <td class="salaryTablePMPA">@OnSalarySpecialAllowance()</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeSpecialAllowance()</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="salaryTableComponent">Bonus</td>
+                                                <td class="salaryTablePMPA">@OnSalaryBonus()</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeBonus()</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="salaryTableComponent">Meal Allowance</td>
+                                                <td class="salaryTablePMPA">@OnSalaryMealAllowance()</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeMealAllowance()</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="salaryTableComponent">Telephone Allowance</td>
+                                                <td class="salaryTablePMPA">@OnSalaryTelephoneAllowance()</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeTelephoneAllowance()</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="salaryTableComponent">Conveyance</td>
+                                                <td class="salaryTablePMPA">@OnSalaryConveyance()</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeConveyance()</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="salaryTableComponent">Medical Allowance</td>
+                                                <td class="salaryTablePMPA">@OnSalaryMedicalAllowance()</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeMedicalAllowance()</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="salaryTableComponent">Medical Insurance</td>
+                                                <td class="salaryTablePMPA">-</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeMedicalInsurance()</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="salaryTableComponent">Variable Pay</td>
+                                                <td class="salaryTablePMPA">-</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeVariablePay()</td>
+                                            </tr>
+                                            <tr style="background-color: #cec7c7; font-weight:600;">
+                                                <td class="salaryTableComponent">Total Employee Gross Wage</td>
+                                                <td class="salaryTablePMPA">@GetEmployeeTotalGrossWagePM()</td>
+                                                <td class="salaryTablePMPA">@GetEmployeeTotalGrossWagePA()</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table class="salary-table table-bordered">
+                                        <thead>
+                                            <tr style="background-color: #1979c5;color: white;">
+                                                <th class="salaryTableComponent" scope="col" style="text-align:left; padding-left:5px;">Employer Contribution</th>
+                                                <th scope="col" style="text-align:center;">Per Month</th>
+                                                <th scope="col" style="text-align:center;">Per Annum</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="salaryTableComponent">Provident Fund</td>
+                                                <td class="salaryTablePMPA">@OnSalaryProvidentFund()</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeProvidentFund()</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="salaryTableComponent">Gratuity</td>
+                                                <td class="salaryTablePMPA">@OnSalaryGratuity()</td>
+                                                <td class="salaryTablePMPA">@OnSalaryChangeGratuity()</td>
+                                            </tr>
+                                            <tr style="background-color: #cec7c7; font-weight:600;">
+                                                <td class="salaryTableComponent">Total Cost To Company</td>
+                                                <td class="salaryTablePMPA">@GetTotalCostToCompanyPM()</td>
+                                                <td class="salaryTablePMPA">@GettotalCostToCompanyPA()</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                <div class="form-group row ">
+                                    <div class="col-sm-4 pr-5 pl-1 display-flex remove-padding-right">
+                                        <label class="control-label col-sm-6 col-form-label">Cost To Company</label>
+                                        <div class="col-sm-6 pl-0 pr-0">
+                                            <InputMask class="form-control form-control-sm" disabled="true" style="outline: none !important;" @bind-Value="salary.CostToCompany" data-mask="[00000000].00" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 display-flex remove-padding-right" style="justify-content:flex-end;">
+                                        <div class="form-group pr-3 pt-3 d-flex justify-content-end mb-0 remove-padding-right">
+                                            @if (isShow)
+                                            {
+                                                @*<button type="submit" class="btn btn-primary" disabled="@(!context.Validate() || !context.IsModified())">Save</button>*@
+                                                <button type="submit" class="btn btn-primary btn-width-height" disabled="@isSaveButtonDisabled">Save</button>
+                                            }
+                                            <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+

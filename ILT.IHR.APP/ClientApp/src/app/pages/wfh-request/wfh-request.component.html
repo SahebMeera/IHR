@@ -1,0 +1,113 @@
+<div class="p-grid">
+    <div class="p-col-12 p-pt-0 p-pb-0">
+        <h3 style="margin-bottom:1px;">WFH Request</h3>
+    </div>
+    <div class="p-col-12 p-p-0 p-mt-2">
+        <p-tabView class="p-pl-0 p-pr-0"  (onChange)="tab($event)"  [activeIndex]="index">
+            <p-tabPanel header="WFH" class="p-p-0">
+                <div class="p-col-12 hidden-web">
+                    <app-ihr-table #dt [data]="lstOfWFH" [isPagination]="isPagination"
+                                   [DropDownLabel]="'Status :'"
+                                   [DropDown]="lstStatus"
+                                   [DefaultID]="DefaultDwnDn1ID"
+                                   (onDropDownChange)="onStatusChange($event)"
+                                   [sortingField]="'startDate'"
+                                   [sortingFieldOrder]="-1"
+                                   [loading]="loading"
+                                   [disabledRow]="true"
+                                   [globalFilterFields]="globalFilterFields"
+                                   [showCurrentPageReport]="showCurrentPageReport" [cols]="cols" [selectedColumns]="selectedColumns"
+                                   [rowActions]="rowActions" [headerActions]="headerActions" [tableState]="patientLanding">
+                    </app-ihr-table>
+                </div>
+                <div class="p-grid  hidden-web hidden-mobile" *ngIf="true">
+                    <div class="p-col-12 ">
+                        <div class="p-grid p-mr-0 p-pb-1 display-flex mobile-display">
+                            <div class="p-col-12 p-pr-1 mobile-padding-remove mobile-pad-left-add">
+                                <div class="p-d-grid p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" placeholder="Global Search..." autocomplete="off" [(ngModel)]="searchText" />
+                                    <!--<input pInputText type="text" [(ngModel)]="searchText" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search..." />-->
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-lg-4 p-pb-0 p-pr-3">
+                                <div class="p-grid grid-dropdown" *ngIf="lstStatus != null && lstStatus.length > 0">
+                                    <label class="p-col-5 p-pb-0 p-pl-0 col-form-label mobile-transform-translate drpdwn" style="padding-right: 7px; padding-top: 0px !important; font-weight: 600;">Status :</label>
+                                    <div class="p-col-7 p-pl-0 p-pt-0 p-pr-0 p-pb-0 mobile-first-dropdown-padding text-left" *ngIf="lstStatus != null && lstStatus.length > 0">
+                                        <p-dropdown [options]="lstStatus"
+                                                    appendTo="body"
+                                                    [(ngModel)]="DefaultDwnDn1ID"
+                                                    (onChange)="onChangeStatus($event)"
+                                                    placeholder="Select"
+                                                    optionValue="ID"
+                                                    optionLabel="Value"></p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="p-grid grid-dropdown" style="padding-top:14px; justify-content: end;">
+                                    <div class="p-md-12  p-p-0 p-text-right">
+                                        <button pButton pRipple type="button" label="ADD" class=" btn-width-height p-button-raised btn-width-height btn btn-block btn-sm btn-info" style="margin: 0px !important;" (click)="Add()">
+                                            <i style="padding-right:6px;" class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-12  p-pt-2" id="myItems" *ngIf="lstOfWFH != null && lstOfWFH.length > 0">
+                        <div class="p-col-12  p-pl-0 p-pr-0" *ngFor="let wfh of lstOfWFH | FilterPipe: searchText : searchableList">
+                            <!--<div class="p-card mobile-card-view p-mb-2" (click)="Edit(wfh)">-->
+                            <div class="p-card mobile-card-view p-mb-2" >
+                                <div class="p-card-body" style="padding-bottom:0.5rem !important;">
+
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-pl-0 p-pt-0" style="display: flex; justify-content: end;">
+                                            <p-menu #popupMenu [popup]="true" [model]="items"></p-menu>
+                                            <button pButton type="button" (click)="toggleMenu(popupMenu, $event, wfh)" style="position: absolute; background: white; padding-top: 11px;" icon="pi pi-ellipsis-v" class="p-button-rounded p-button-plain p-button-text"></button>
+                                        </div>
+                                        <div class="p-col-12 p-p-0 display-flex">
+                                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Start Date :</label>
+                                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                                {{wfh.startDate | date: 'MM/dd/yyyy'}}
+                                            </div>
+                                        </div>
+                                        <div class="p-col-12 p-p-0 display-flex">
+                                            <label class="control-label p-col-5 p-pr-2  p-pt-0 p-pb-0 mobile-card-view-label">End Date :</label>
+                                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                                {{wfh.endDate | date : 'MM/dd/yyyy'}}
+                                            </div>
+                                        </div>
+                                        <div class="p-col-12 p-p-0 display-flex">
+                                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Title :</label>
+                                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                                {{wfh.title}}
+                                            </div>
+                                        </div>
+                                        <div class="p-col-12 p-p-0 display-flex">
+                                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Approver :</label>
+                                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                                {{wfh.approver}}
+                                            </div>
+                                        </div>
+                                        <div class="p-col-12 p-p-0 display-flex">
+                                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Status :</label>
+                                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                                {{wfh.status}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Approve/Deny WFH" class="p-p-0">
+                <app-wfhapproval #WFHApproval></app-wfhapproval>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+</div>
+<app-add-edit-wfh #AddEditWFHModal (UpdateWFHList)="LoadWFHRequest()"></app-add-edit-wfh>

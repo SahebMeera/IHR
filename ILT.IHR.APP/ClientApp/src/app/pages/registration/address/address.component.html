@@ -1,0 +1,47 @@
+<div class="stepsdemo-content p-pt-2">
+    <div class="card">
+        <div class="p-fluid">
+            <form [formGroup]="registrationForm">
+                    <div class="p-col-12">
+                    <div class="p-fluid p-formgrid p-grid mobile-display-block">
+                        <div class="p-md-6">
+                            <input id="Company" type="text" pInputText formControlName="Company" placeholder="Company" maxlength="50" [ngClass]="{ 'is-invalid': submitted && registrationFormControls.Company.errors }">
+                        </div>
+                        <div class="p-md-6">
+                            <input id="WebSite" type="text" pInputText formControlName="WebSite" placeholder="Web Site" maxlength="100" [ngClass]="{ 'is-invalid': submitted && registrationFormControls.WebSite.errors }">
+                        </div>
+                        <div class="p-md-6">
+                            <input id="City" type="text" pInputText formControlName="City" placeholder="City" maxlength="50" [ngClass]="{ 'is-invalid': submitted && registrationFormControls.City.errors }">
+                        </div>
+                        <div class="p-md-6">
+                            <p-dropdown [options]="stateList" [ngClass]="{ 'is-invalid-dropdown': submitted && registrationFormControls.City.errors }"
+                                        appendTo="body"
+                                        formControlName="StateID"
+                                        placeholder="Select State"
+                                        optionValue="stateID"
+                                        optionLabel="stateName"></p-dropdown>
+                        </div>
+                        <div class="p-md-6">
+                            <p-dropdown [options]="countryList" [ngClass]="{ 'is-invalid-dropdown': submitted && registrationFormControls.CountryID.errors }"
+                                        appendTo="body"
+                                        formControlName="CountryID"
+                                        placeholder="Select Country"
+                                        optionValue="countryID"
+                                        optionLabel="countryName"></p-dropdown>
+                        </div>
+                        <div class="p-md-6">
+                            <p-inputNumber formControlName="ZipCode" mode="decimal" [maxlength]="5" inputId="withoutgrouping"  placeholder="Zip Code" [useGrouping]="false" [ngClass]="{ 'is-invalid': submitted && registrationFormControls.ZipCode.errors }">
+                            </p-inputNumber>
+                       </div>
+                    </div>
+                    <div class="p-col-12" style="padding-right: 0px; display: flex; justify-content: end;">
+                        <div style="display: flex;">
+                        <p-button label="Back" styleClass="p-button-link" (onClick)="prevPage()"></p-button>
+                        <button pButton pRipple type="button" label="Finish" class="p-button-raised p-mr-2 p-mb-2" (click)="Submit()"></button>
+                    </div>
+                    </div>
+                </div>
+                </form>
+            </div>             
+    </div>
+</div>

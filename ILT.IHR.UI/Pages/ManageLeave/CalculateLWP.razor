@@ -1,0 +1,119 @@
+﻿@inherits CalculateLWPBase
+@using BlazorTable
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 900px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">Pending LWP</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 pl-0 pr-0">
+                            <EditForm Model="@report" OnValidSubmit="calculateLWP">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="row no-gutters">
+                                    <div class="col-sm-12 pr-0 pl-0">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-4 pr-0 display-flex">
+                                                <label class="control-label col-form-label col-sm-4">* Start Date</label>
+                                                <div class="col-sm-8 pl-0 pr-2">
+                                                    @*<InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="startDate" />*@
+                                                    <input type="date" class="form-control form-control-sm" style=" @(isStartDateRequired == true ? "outline: 1px solid red;" : "" )" @bind="startDate" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 display-flex">
+                                                <label class="control-label col-form-label col-sm-4">* End Date</label>
+                                                <div class="col-sm-8 pl-0 pr-2">
+                                                    @*<InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="endDate" />*@
+                                                    <input type="date" class="form-control form-control-sm" style=" @(isEndDateRequired == true ? "outline: 1px solid red;" : "" )" @bind="endDate" />
+                                                </div>
+                                               
+                                            </div>
+                                            <div class="col-sm-4 pr-0 display-flex">
+                                                <label for="country" class="control-label col-form-label col-sm-2">* Country</label>
+                                                <div class="col-sm-8 pl-0 pr-2">
+                                                    <CustomInputSelect class="form-control form-control-sm autofocus" id="country" @bind-Value="selectedCountry" @oninput="onCountryChange" maxlength="50">
+                                                        <option value="">select</option>
+                                                        @if (CountryList != null)
+                                                            {
+                                                            @foreach (var country in CountryList)
+                                                                {
+                                                                <option value="@country.CountryDesc">@country.CountryDesc</option>
+                                                                }
+                                                            }
+
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                           </div>
+                                        </div>
+                                    <div class="col-sm-12 pr-0 pl-0">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                
+                                            </div>
+                                            <div class="col-sm-6 display-flex">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group pr-3 pt-2 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary btn-width-height" disabled="@(isDisableLWP || isSaveButtonDisabled)">Search</button>
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                </div>
+                            </EditForm>
+                            <div class="col-12">
+                                @if (showLWPGrid)
+                                {
+                                <Table TableItem="DTO.LeaveBalance" Items="lstFinalLeaveBalance" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+                                       SelectionType="SelectionType.Single">
+                                    <Column TableItem="DTO.LeaveBalance" Title="Employee Code" Field="@(x => x.EmployeeCode)" Filterable="false">
+                                    </Column>
+                                    <Column TableItem="DTO.LeaveBalance" Title="Employee Name" Field="@(x => x.EmployeeName)" Filterable="false">
+                                    </Column>
+                                    <Column TableItem="DTO.LeaveBalance" Title="Start Date" Field="@(x => x.StartDate)" Filterable="false">
+                                        <Template>
+                                            @(context.StartDate != null ? FormatDate(context.StartDate) : "")
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="DTO.LeaveBalance" Title="End Date" Field="@(x => x.EndDate)" Filterable="false">
+                                        <Template>
+                                            @(context.EndDate != null ? FormatDate(context.EndDate) : "")
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="DTO.LeaveBalance" Title="LWP Days" Field="@(x => x.LeaveInRange)" Filterable="false">
+                                    </Column>
+                                    <Column TableItem="DTO.LeaveBalance" Title="Total Cumulative" Field="@(x => x.VacationBalance)" Filterable="false">
+                                    </Column>
+
+                                    <EmptyDataTemplate>
+                                        <div class="text-center">
+                                            No rows found!
+                                        </div>
+                                    </EmptyDataTemplate>
+                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                </Table>
+                                    <div class="form-group pr-3 pt-2 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary btn-width-height" disabled="@isDisableProcessbtn" style="width: auto;" @onclick="ConfirmProcess">Process Unpaid Leaves</button>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <Confirm @ref="confirmBase" ConfirmationChanged="UpdatePendingLWP" ConfirmationTitle="Confirm Process Unpaid Leaves" buttonType="Ok"
+             ConfirmationMessage=@($"Are you sure you want to process unpaid leaves?")>
+    </Confirm>
+}

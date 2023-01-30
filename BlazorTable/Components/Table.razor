@@ -1,0 +1,363 @@
+﻿@namespace BlazorTable
+@typeparam TableItem
+
+
+
+@if (Columns.Any())
+{
+    var columnCount = Columns.Count + (_detailTemplate != null ? 1 : 0);
+
+    <div class="table-responsive">
+        <table aria-readonly="@(IsEditMode ? "false" : "true")" role="grid" class="@TableClass" @attributes="UnknownParameters">
+            @if (ShowSearchBar)
+            {
+                <thead role="search">
+                    <tr>
+                        <th colspan="@(RowActions != null ? columnCount+1: columnCount)">
+                            <div class="row mr-0 display-flex mobile-display">
+                                <div class="col-12 col-sm-3 pr-1 mobile-padding-remove">
+                                    <input type="text" class="form-control form-control-sm float-left" value="@GlobalSearch" @onchange="@(x => { PageNumber = 0; GlobalSearch = x.Value.ToString(); Update();})" placeholder="Global Search..." />
+                                </div>
+                                <div class="col-12 col-sm-3 pl-0  mobile-pad-right-add" style="display: flow-root; justify-content: center; align-items: center;">
+                                    @if (DropDown != null)
+                                    {
+                                        <div class="row align-items-center mobile-pad-top-add">
+                                            <label class="col-5 col-form-label mobile-transform-translate">@DropDownLabel</label>
+
+                                            <div class="col-7 pl-0 pr-0 mobile-first-dropdown-padding">
+                                                <select class="form-control form-control-sm" @bind="DefaultID" @oninput=OnDrpDwnChange>
+                                                    @if (DropDown != null)
+                                                    {
+                                                        @foreach (var item in DropDown)
+                                                        {
+                                                            <option value="@item.ID">@item.Value</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (onMultiSelectDropDown1 != null)
+                                    {
+                                <div class="row align-items-center mobile-pad-top-add">
+                                    <label class="col-5 col-form-label mobile-transform-translate">@DropDownLabel</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-first-dropdown-padding">
+                                        <div class="mulit-select-dropdown">
+                                            <button type="button" class="form-control form-control-sm mulit-select-dropbtn">@getSelectedRoles1()</button>
+                                            <div class="mulit-select-dropdown-content" style="min-width:220px;">
+                                                @foreach (var item in onMultiSelectDropDown1)
+                                                {
+                                                    <div class="row col-12 align-items-center" style="margin:0px !important; padding-left: 0px;">
+                                                        <label for="@item.ID" class="mb-0" style="font-weight: 400; color: #495057; line-height: 15px;">
+                                                            @if (item.IsSelected)
+                                                            {
+                                                                <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" checked="checked" @onchange="@((e) => OnMultiDropDown1Change(e, item.ID))" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" @onchange="@((e) => OnMultiDropDown1Change(e, item.ID))" />
+                                                            }
+                                                            @item.Value
+                                                        </label>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    }
+                                </div>
+                                <div class="col-12 col-sm-6 header-actions mobile-pad-top-add">
+                                    <div class="col-12 col-sm-12 display-end pl-0 pr-0 ">
+                                        @if (DropDown2 != null)
+                                        {
+                                            <div class="col-12 col-sm-7 display-dropdown2 pr-0" style="justify-content: flex-start;">
+                                                <label class="col-12 col-sm-2 col-form-label">@DropDown2Label</label>
+
+                                                <div class="col-7 col-sm-6 pl-0 mobile-padding-remove pr-0">
+                                                    <select class="form-control form-control-sm" @bind="DropDown2DefaultID" @oninput=OnDrpDwn2Change>
+                                                        @if (DropDown2 != null)
+                                                        {
+                                                            @foreach (var item in DropDown2)
+                                                            {
+                                                                <option value="@item.ID">@item.Value</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (onMultiSelectDropDown != null)
+                                        {
+                                            <div class="col-12 col-sm-5 display-dropdown2 pr-0 pl-0">
+                                                <label class="col-12 col-sm-2 col-form-label">@DropDown2Label</label>
+
+                                                <div class="col-7 col-sm-6 pl-0 mobile-padding-remove pr-0">
+                                                    <div class="mulit-select-dropdown">
+
+                                                        <button type="button" class="form-control form-control-sm mulit-select-dropbtn">@getSelectedRoles()</button>
+                                                        <div class="mulit-select-dropdown-content" style="min-width:200px;">
+                                                            @foreach (var item in onMultiSelectDropDown)
+                                                            {
+                                                                <div class="row col-12 align-items-center">
+                                                                    <label for="@item.ID" class="mb-0" style="font-weight: 400; color: #495057; line-height: 15px;">
+                                                                        @if (item.IsSelected)
+                                                                        {
+                                                                            <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" checked="checked" @onchange="@((e) => OnMultiDropDownChange(e, item.ID))" />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" @onchange="@((e) => OnMultiDropDownChange(e, item.ID))" />
+                                                                        }
+                                                                        @item.Value
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (DropDown3 != null)
+                                        {
+                                            <div class="col-12 col-sm-4 display-dropdown2 pr-0 pl-0">
+                                                <label class="col-12 col-sm-2 col-form-label">@DropDown3Label</label>
+
+                                                <div class="col-7 col-sm-6 pl-0 mobile-padding-remove pr-0">
+                                                    <select class="form-control form-control-sm" @bind="DropDown3DefaultID" @oninput=OnDrpDwn3Change>
+                                                        @if (DropDown3 != null)
+                                                        {
+                                                            @foreach (var item in DropDown3)
+                                                            {
+                                                                <option value="@item.ID">@item.Value</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+
+                                        <div class="@(HeaderActions != null && HeaderActions.ToList().Count > 1 ? "col-5":"col-3") header-buttons mobile-head-action-btn mobile-head-action-btn">
+                                            @if (HeaderActions != null)
+                                            {
+                                                @foreach (var HeaderAction in HeaderActions)
+                                                {
+                                                    @if (HeaderAction.IsShow)
+                                                    {
+                                                        <button type="button" class="btn remove-margin-moblie @(HeaderAction.ButtonClass == null ? " btn-primary" : @HeaderAction.ButtonClass) action-btn-lineheight float-right ml-2
+                                                    @(HeaderAction.IsDisabled ? "disabled" : "" )" @onclick="HeaderAction.ActionMethod">
+                                                            <i class="@HeaderAction.IconClass" style="padding-right: 7px;" aria-hidden="true"></i>@HeaderAction.ActionText
+                                                        </button>
+                                                    }
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                            </div>
+                                        </div>
+</th>
+                    </tr>
+                </thead>
+            }
+
+            <thead class="@TableHeadClass">
+                <tr style="cursor: pointer;">
+                    @if (_detailTemplate != null)
+                    {
+                        <th style="width: 5%"></th>
+                    }
+
+                    @foreach (IColumn<TableItem> column in Columns)
+                    {
+                        <th scope="col" style="white-space:nowrap; @(!string.IsNullOrEmpty(column.Width) ? $"width:{column.Width};" : "") user-select: none"
+                            @ondrop="@(() => HandleDrop(column))"
+                            @ondragstart="@(() => HandleDragStart(column))"
+                            ondragover="event.preventDefault();"
+                            draggable="@(ColumnReorder.ToString())"
+                            @key="column"
+                            aria-sort="@column.AriaSort"
+                            class="@(column.Class)">
+
+                            <div @onclick="@(() => column.SortBy())">
+                                <span>@column.Title</span>
+
+                                @if (column.SortColumn)
+                                {
+                                    if (column.SortDescending)
+                                    {<span aria-hidden="true"><img src="_content/BlazorTable/images/sort-desc.png" /></span> }
+                                    else
+                                    { <span aria-hidden="true"><img src="_content/BlazorTable/images/sort-asc.png" /></span>}
+                                }
+
+                                @if (column.Filterable)
+                                {
+                                    <div class="float-right" @onclick="@((x) => column.ToggleFilter())" @onclick:stopPropagation>
+                                        <a href="javascript:;" @ref="column.FilterRef" aria-expanded="@(column.FilterOpen ? "true" : "false")" style="text-decoration: none" aria-label="@(column.Filter == null ? "unfiltered" : "filtered")">
+                                            <span aria-hidden="true" style="@(column.Filter == null ? "opacity: 0.2;" : string.Empty)">
+                                                <img src="_content/BlazorTable/images/filter.png" />
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <CascadingValue Value="column" Name="Column">
+                                        <Popover Reference="@column.FilterRef" IsOpen="@column.FilterOpen" Placement="Placement.Bottom" DismissOnNextClick="false">
+                                            <h3 class="popover-header">Filter</h3>
+                                            <div class="popover-body">
+                                                <FilterManager TableItem="TableItem">
+                                                    <StringFilter TableItem="TableItem" />
+                                                    <BooleanFilter TableItem="TableItem" />
+                                                    <NumberFilter TableItem="TableItem" />
+                                                    <DateFilter TableItem="TableItem" />
+                                                    <EnumFilter TableItem="TableItem" />
+                                                    @if (column.CustomIFilters != null)
+                                                    {
+                                                        @column.CustomIFilters(column)}
+                                                </FilterManager>
+                                            </div>
+                                        </Popover>
+                                    </CascadingValue>}
+                            </div>
+                        </th>
+                    }
+                    @if (RowActions != null)
+                    {
+                        @if (IsChangeLog == false)
+                        {
+                            <th style="width: 5rem"></th>
+                        }
+                        else
+                        {
+                            <th style="width: 8rem"></th>
+                        }
+                    }
+                </tr>
+            </thead>
+            <tbody class="@TableBodyClass">
+                @if (FilteredItems != null)
+                {
+                    if (FilteredItems.Any())
+                    {
+                        int i = 0;
+
+                        foreach (TableItem item in FilteredItems)
+                        {
+                <tr @key="item" aria-selected="@(SelectedItems.Contains(item) ? "true" : null)" class="@RowClass(item) @(SelectedItems.Contains(item) ? "table-active" : "")" @onclick="(() => OnRowClickHandler(item))">
+
+                    @{ int locali = i;
+                        bool isOpen = detailsViewOpen.ContainsKey(locali) && detailsViewOpen[locali]; }
+                    @if (_detailTemplate != null)
+                    {
+                        <td>
+                            <a href="javascript:;" style="text-decoration: none" @onclick="@(() => { detailsViewOpen.Clear(); detailsViewOpen[locali] = !isOpen; StateHasChanged(); })" title="Details View" aria-expanded="@(isOpen ? "true" : "false")">
+                                @if (isOpen)
+                                {<span aria-hidden="true"><img src="_content/BlazorTable/images/minus.png" /></span>}
+                                else
+                                {<span aria-hidden="true"><img src="_content/BlazorTable/images/plus.png" /></span>}
+                            </a>
+                        </td>
+}
+
+
+
+
+                    @foreach (IColumn<TableItem> column in Columns)
+                    {
+                        <td @key="column"
+                            style="@(column.NoWhiteSpace == true ? $"white-space: none;" : $"white-space: nowrap") @(column.Align > 0 ? $"text-align: {column.Align};" : "")"
+                            class="@(column.Class)">
+
+                            @if (IsEditMode && column.EditTemplate != null)
+                                @column.EditTemplate(item) else if (column.Template == null)
+                                    @column.Render(item) else
+                                        @column.Template(item)
+                        </td>
+}
+                    @if (RowActions != null)
+                    {
+                        <td class="text-center" style="white-space: nowrap"
+                             >
+                            @foreach (var rowAction in RowActions)
+                            {
+                            <span class="@RowActionClass(item) table-action-icon">
+                               
+                                @if (rowAction.IsShow)
+                                {
+                                    <button type="button" class="btn @rowAction.ButtonClass @(rowAction.IsDisabled ? "disabled" : "")" style="line-height: 0; padding: 0.375rem 0.5rem;"
+                                            @onclick="(() => OnRowActionClicked(item, rowAction))">
+                                        <i class="@rowAction.IconClass" aria-hidden="true"></i>
+                                    </button>
+                                }
+                            </span>
+                            }
+                        </td>
+                    }
+                </tr>
+
+                            if (_detailTemplate != null && isOpen)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td colspan="@(Columns.Count)">
+                                        @_detailTemplate(item)
+                                    </td>
+                                </tr>
+                            }
+
+                            { i = locali + 1; }
+                        }
+                    }
+                    else if (_emptyDataTemplate != null)
+                    {
+                        <tr>
+                            <td colspan="@(RowActions != null ? columnCount+1: columnCount)">
+                                @_emptyDataTemplate
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="@columnCount">
+                            @if (_loadingDataTemplate != null)
+                            {
+                                @_loadingDataTemplate
+                            }
+                            else
+                            {
+                                <div class="text-center">
+                                    Loading...
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+            @if (ShowFooter)
+            {
+                <tfoot class="@TableFooterClass">
+                    <tr>
+                        @if (_detailTemplate != null)
+                        {
+                            <td style="width: 1%"></td>
+                        }
+                        @foreach (IColumn<TableItem> column in Columns)
+                        {
+                            <td @key="column" style="@(column.Align > 0 ? $"text-align: {column.Align};" : "")" class="@(column.ColumnFooterClass)">
+                                @if (!string.IsNullOrEmpty(column.SetFooterValue)){
+                                    @column.SetFooterValue
+                                } else if(FilteredItems != null && FilteredItems.Any()) {
+                                    @column.GetFooterValue()
+                                }
+                            </td>
+                        }
+                    </tr>
+                </tfoot>
+            }
+        </table>
+    </div>
+}
+
+<CascadingValue Value="(ITable<TableItem>)this" Name="Table">
+    @ChildContent
+</CascadingValue>

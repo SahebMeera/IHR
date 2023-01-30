@@ -1,0 +1,107 @@
+﻿@inherits CompanyListBase
+@using BlazorTable;
+@using ILT.IHR.DTO;
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@page "/company"
+@inject NavigationManager NavigationManager
+
+@if (CompanyRolePermission != null && CompanyRolePermission.View == false)
+{
+    NavigationManager.NavigateTo("");
+}
+@if (IsChangeLog == false)
+{
+    <h3 style="margin-bottom:1px;">Company</h3>
+}
+else
+{
+    <h3 style="margin-bottom:1px;">Change Logs</h3>
+}
+<div class="row reduce-margin-top">
+    <div class="col-12">
+        @if (IsChangeLog == false)
+        {
+            @if (CompanyList != null && EndClientList == null)
+            {
+                <Table TableItem="Company" Items="CompanyList" ColumnReorder="true" ShowSearchBar="true" SelectionType="SelectionType.Single"
+                       DropDown="lstTypes" DropDownLabel="Type:" onDropDownChange="onChangeType" DefaultID="TypeId"
+                       RowActions="RowActions" RowClickAction="RowClick" HeaderActions="HeaderAction" IsChangeLog="true" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize">
+                    <Column TableItem="Company" Title="Company Name" Field="@(x => x.Name)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="false" />
+                    <Column TableItem="Company" Title="Type" Field="@(x => x.CompanyType)" Sortable="true" Filterable="false" />
+                    <Column TableItem="Company" Title="Invoicing" Field="@(x => x.InvoicingPeriod)" Sortable="true" Width="3%" Filterable="false">
+                    </Column>
+                    <Column TableItem="Company" Title="Payment Term" Field="@(x => x.PaymentTerm)" Sortable="true" Width="3%" Filterable="false">
+                    </Column>
+                    <Column TableItem="Company" Title="City" Field="@(x => x.City)" Sortable="true" Filterable="false">
+                    </Column>
+                    <Column TableItem="Company" Title="State" Field="@(x => x.State)" Sortable="true" Filterable="false">
+                    </Column>
+                    <Column TableItem="Company" Title="Contact Name" Field="@(x => x.ContactName)" Sortable="true" Filterable="false">
+                    </Column>
+                    <Column TableItem="Company" Title="Phone" Field="@(x => x.ContactPhone)" Sortable="true" Filterable="false">
+                    </Column>
+                    <Column TableItem="Company" Title="Email" Field="@(x => x.ContactEmail)" Sortable="true" Filterable="false">
+                    </Column>
+                    <EmptyDataTemplate>
+                        <div class="text-center">
+                            No rows found!
+                        </div>
+                    </EmptyDataTemplate>
+                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                </Table>
+            }
+            else
+            {
+                @*<NoResultMessage></NoResultMessage>*@
+                <span></span>
+            }
+
+            @if (EndClientList != null && CompanyList == null)
+            {
+                <Table TableItem="EndClient" Items="EndClientList" ColumnReorder="true" ShowSearchBar="true" SelectionType="SelectionType.Single"
+                       DropDown="lstTypes" DropDownLabel="Type:" onDropDownChange="onChangeType" DefaultID="TypeId"
+                       RowActions="RowActions" RowClickAction="RowClickEndClient" HeaderActions="HeaderAction" IsChangeLog="true" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize">
+                    <Column TableItem="EndClient" Title="Company Name" Field="@(x => x.Name)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="false" />
+                    <Column TableItem="EndClient" Title="City" Field="@(x => x.City)" Sortable="true" Filterable="false">
+                    </Column>
+                    <Column TableItem="EndClient" Title="State" Field="@(x => x.State)" Sortable="true" Filterable="false">
+                    </Column>
+                    <Column TableItem="EndClient" Title="Country" Field="@(x => x.Country)" Sortable="true" Filterable="false">
+                    </Column>
+                    <EmptyDataTemplate>
+                        <div class="text-center">
+                            No rows found!
+                        </div>
+                    </EmptyDataTemplate>
+                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                </Table>
+            }
+            else
+            {
+                @*<NoResultMessage></NoResultMessage>*@
+                <span></span>
+            }
+        }
+        else
+        {
+            <Table TableItem="ChangeLog" Items="ChangeList" ShowSearchBar="true" HeaderActions="ChangeHeaderActions">
+                <Column TableItem="ChangeLog" Title="FieldName" Field="@(x => x.FieldName)" Sortable="true" Filterable="false" />
+                <Column TableItem="ChangeLog" Title="OldValue" Field="@(x => x.OldValue)" Sortable="true" Filterable="false" />
+                <Column TableItem="ChangeLog" Title="NewValue" Field="@(x => x.NewValue)" Sortable="true" Filterable="false">
+                </Column>
+                <Pager ShowPageNumber="false" ShowTotalCount="false" />
+            </Table>
+        }
+    </div>
+</div>
+
+<AddEditCompany @ref="AddEditCompanyModal" ListValueUpdated="LoadList"></AddEditCompany>
+<AddEditEndClient @ref="AddEditEndClientModal" ListValueUpdated="LoadEndClientList"></AddEditEndClient>
+
+
+
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete")>
+</Confirm>
+

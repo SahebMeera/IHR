@@ -1,0 +1,203 @@
+<div class="p-grid hidden-web">
+    <div class="p-col-12 p-pl-1 p-pr-1 pathx-table">
+        <!--<app-ihr-table #dt [data]="lstContactsList"
+                   [isPagination]="isPagination"
+                   [sortingField]="'contactType'"
+                   [sortingFieldOrder]="1"
+                   [loading]="loading"
+                   [showCurrentPageReport]="showCurrentPageReport"
+                   [cols]="cols"
+                   [selectedColumns]="selectedColumns"
+                   [rowActions]="rowActions"
+                   [headerActions]="headerActions"
+                   [dataKey]="'contactID'"
+                   [globalFilterFields]="globalFilterFields"
+                   [isRowExpandContact]="true"
+                   [tableState]="patientLanding">
+    </app-ihr-table>-->
+
+
+        <p-table #dt styleClass="ui-table-pathx"
+                 dataKey="contactID"
+                 [value]="lstContactsList"
+                 rowExpandMode="single"
+                 [rowHover]="true"
+                 [filterDelay]="0"
+                 [sortField]="'contactType'"
+                 [(rows)]="defaultPageSize"
+                 [sortOrder]="1"
+                 [paginator]="true"
+                 showCurrentPageReport="true"
+                 [rowsPerPageOptions]="[10, 15, 25, 50]"
+                 [globalFilterFields]="['contactType', 'firstName', 'lastName', 'phone','email']"
+                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+
+            <ng-template pTemplate="caption">
+                <div class="p-grid p-fluid">
+                    <div class="table-header p-col-12 p-lg-3" style="padding-top: 7px; padding-left: 7px;" *ngIf="!isSearchRequired">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search..." />
+                            <!--<input pInputText type="text" [(ngModel)]="searchText" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search..." />-->
+
+                        </span>
+                    </div>
+                    <div class="p-col-12 p-lg-9 p-pb-0 header-action-panel">
+                        <div class="p-grid p-fluid">
+                            <div class="p-col-12 p-lg-8 p-pb-0 p-pl-0" style="display: flex;">
+                                <div class="p-d-flex p-flex-column p-flex-md-row" style="position: absolute; right: 9px;">
+                                    <span *ngFor="let action of headerActions" style="float: right; padding-left: 5px;">
+                                        <div [hidden]="action.isHidden">
+                                            <button pButton pRipple type="button" [label]="action.actionText" class="header-action-button"
+                                                    [disabled]="action.isDisabled"
+                                                    [ngStyle]="{'display': action.isDisabled && action.isDisabled != null && action.isDisabled != undefined && action.isDisabled ? 'none': 'block' }"
+                                                    *ngIf="action.isToggle === null || action.isToggle === undefined || action.isToggle === false"
+                                                    [ngClass]="action.styleClass"
+                                                    (click)="action.actionMethod(selectedRows)">
+                                                <i style="padding-right:6px;" [ngClass]="action.iconClass"></i>
+                                            </button>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th style="width: 3em">
+                    </th>
+                    <th *ngFor="let col of selectedColumns" [pSortableColumn]="col.field" pReorderableColumn>
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                    <th style="width: 5rem"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-expanded="expanded">
+                <tr>
+                    <td style="text-align: center;">
+                        <a href="#" [pRowToggler]="rowData" (click)="isOpen(rowData)">
+                            <i style="font-size: 19px; color: black; font-weight: 600;" [ngClass]="expanded ? 'pi pi-minus' : 'pi pi-plus'"></i>
+                        </a>
+                    </td>
+                    <td>{{rowData.contactType}}</td>
+                    <td>{{rowData.firstName}}</td>
+                    <td>{{rowData.lastName}}</td>
+                    <td>{{rowData.phone}}</td>
+                    <td>{{rowData.email}}</td>
+                    <td style="text-align:center">
+                        <span *ngFor="let rowAction of rowActions" pReorderableRowHandle>
+                            <button type="button" pButton pRipple
+                                    class="btn action-button btn-primary not-rounded"
+                                    [ngClass]="[rowAction.styleClass === undefined || rowAction.styleClass === null ? 'row-action-button' : rowAction.styleClass]"
+                                    (click)="rowAction.actionMethod(rowData)">
+                                <i [ngClass]="rowAction.iconClass"></i>
+                            </button>
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="rowexpansion" let-rowData [ngIf]="isRowExpand">
+                <tr>
+                    <td></td>
+                    <td [attr.colspan]="5">
+                        <div class="ui-g ui-fluid" style="font-size:16px;">
+                            <div class="ui-g-12 ui-md-3" style="text-align:center">
+                                <!-- <img [attr.alt]="rowData.brand">-->
+                            </div>
+                            <div class="ui-g-12 ui-md-9 p-p-0">
+                                <div class="ui-g">
+                                    <div class="ui-g-12 p-p-0">
+                                        {{rowData?.address1 != "" ? rowData.address1 + "," : ""}}{{rowData?.address2}}
+                                    </div>
+                                    <div class="ui-g-12 p-p-0">
+                                        {{rowData?.city != "" ? rowData?.city + "," : ""}}{{rowData?.state}}{{rowData?.zipCode}}
+                                    </div>
+                                    <div class="ui-g-12 p-p-0">
+                                        {{rowData?.country}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+
+    </div>
+</div>
+
+<div class="p-grid  hidden-web hidden-mobile" *ngIf="true">
+    <div class="p-col-12">
+        <div class="p-grid p-mr-0 p-pb-1 display-flex mobile-display">
+            <div class="p-col-12 p-pr-1 mobile-padding-remove mobile-pad-left-add">
+                <div class="p-d-grid p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Global Search..." autocomplete="off" [(ngModel)]="searchText" />
+                    <!--<input pInputText type="text" [(ngModel)]="searchText" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search..." />-->
+
+                </div>
+            </div>
+            <div class="p-col-12 p-lg-4 p-pb-0 p-pr-3">
+                <div class="p-grid grid-dropdown" style="padding-top:14px; justify-content: end;">
+                    <div class="p-md-12  p-p-0 p-text-right">
+                        <button pButton pRipple type="button" label="ADD" class=" btn-width-height p-button-raised btn-width-height btn btn-block btn-sm btn-info" style="margin: 0px !important;" (click)="add()">
+                            <i style="padding-right:6px;" class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-col-12  p-pt-2" id="myItems" *ngIf="lstContactsList != null && lstContactsList.length > 0">
+        <div class="p-col-12  p-pl-0 p-pr-0" *ngFor="let employeeContact of lstContactsList | FilterPipe: searchText : searchableList">
+            <div class="p-card mobile-card-view p-mb-2" (click)="editContact(employeeContact)">
+                <div class="p-card-body" style="padding-bottom: 0.5rem !important; background-color: white !important; color: #495057 !important; ">
+                    <div class="p-grid" style="padding-top:7px;">
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Contact Type :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{employeeContact.contactType}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex" >
+                            <label class="control-label p-col-5 p-pr-2  p-pt-0 p-pb-0 mobile-card-view-label">First Name :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{employeeContact.firstName}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Last Name :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{employeeContact.lastName}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Phone :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{employeeContact.phone}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Email :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{employeeContact.email}}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+   
+</div>
+
+<app-add-edit-contact #addEditContactModal [EmployeeName]="Name" (ListValueUpdated)="LoadList()"></app-add-edit-contact>
+<p-toast></p-toast>

@@ -1,0 +1,91 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="800" #addEditLeaveModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="LeaveForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">Employee Name </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="lstEmployees" [disabled]="true" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditWFHFormControls.EmployeeID.errors }"
+                                                appendTo="body"
+                                                formControlName="EmployeeID"
+                                                placeholder="Select Employee"
+                                                optionValue="employeeID"
+                                                optionLabel="employeeName"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2"> Leave Type </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="VacationTypeList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditWFHFormControls.LeaveTypeID.errors }"
+                                                appendTo="body"
+                                                formControlName="LeaveTypeID"
+                                                placeholder="Select Status"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname3">Start Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="StartDate" [ngClass]="{ 'is-invalid': submitted && addEditWFHFormControls.StartDate.errors }"
+                                            [showIcon]="true"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            (onSelect)="startDateChange($event)"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">End Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="EndDate" [ngClass]="{ 'is-invalid': submitted && addEditWFHFormControls.EndDate.errors }"
+                                            [showIcon]="true"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            (onSelect)="endDateChange($event)"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="binary">Includes Half Day</label>
+                                <div class="p-md-8 p-p-0  remove-padding-right" style="display:flex;">
+                                    <p-checkbox  formControlName="IncludesHalfDay" binary="true" inputId="binary" (onChange)="onCheckChange($event)"></p-checkbox>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="integeronly">Duration</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-inputNumber formControlName="Duration"
+                                                   inputId="firstname3"
+                                                   [useGrouping]="false"
+                                                   [disabled]="true"
+                                                   mode="decimal"
+                                                   [minFractionDigits]="1"
+                                                   [maxFractionDigits]="1"
+                                                   [maxlength]="5">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>
+

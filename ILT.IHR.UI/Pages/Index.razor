@@ -1,0 +1,29 @@
+﻿@page "/"
+@using ILT.IHR.UI.Data
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+    @*<div>
+        <h1>Hello, @(UserName)!</h1>
+        Welcome to InfoHR.
+    </div>*@
+    <ILT.IHR.UI.Pages.Dashboard.Dashboard></ILT.IHR.UI.Pages.Dashboard.Dashboard>
+    <AuthorizeView>
+        <Authorized>
+            @* <p>Welcome, @context.User.Identity.Name</p> *@
+        </Authorized>
+        <NotAuthorized>
+            <p>You are signed out!!!</p>
+        </NotAuthorized>
+    </AuthorizeView>
+
+    @code{
+        protected DTO.User user { get; set; }
+        protected string UserName { get; set; }
+        protected override async Task OnParametersSetAsync()
+        {
+            user = await sessionStorage.GetItemAsync<ILT.IHR.DTO.User>("User");
+            if (user != null)
+            {
+                UserName = user.FirstName + " " + user.LastName;
+            }
+        }
+    }

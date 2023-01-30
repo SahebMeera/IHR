@@ -1,0 +1,31 @@
+<div class="stepsdemo-content p-pt-2" style="box-shadow: 3px 10px 15px -5px rgb(0 0 0 / 40%);">
+    <div class="card">
+            <div class="p-fluid">
+                <form [formGroup]="loginForm">
+                        <div class="p-col-12">
+                        <div class="p-fluid p-formgrid p-grid">
+                            <div class="p-field p-md-6">
+                                <label for="firstname6">Email</label>
+                                <input id="firstname6" type="text" pInputText formControlName="email" placeholder="Email">
+                                 <div *ngIf="caseFormControls.email.touched && caseFormControls.email.errors" class="invalid-feedback">
+                                    Email is invalid
+                              </div>
+                                <!-- <p *ngIf="registrationForm.get('email').hasError('email') && !registrationForm.controls['email'].valid && registrationForm.get('email').touched" class="p-error">Email is invalid.</p> -->
+
+                            </div>
+                            <div class="p-field p-md-6">
+                                <label for="lastname6">Password</label>
+                                <input type="password"  formControlName="password" pInputText placeholder="password"/>
+                                <div *ngIf="caseFormControls.password.touched && caseFormControls.password.errors" class="invalid-feedback">
+                                    password is required
+                              </div>
+                            </div>
+                        </div>
+                        <div class="nextbutton" style="padding-right: 0px; display: flex; justify-content: end;">
+                            <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+</div>

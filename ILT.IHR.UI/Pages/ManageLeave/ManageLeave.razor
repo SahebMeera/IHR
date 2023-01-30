@@ -1,0 +1,51 @@
+﻿@inherits ManageLeaveBase
+@using BlazorTable
+@using IHR.DTO
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@page "/manageLeave"
+@inject NavigationManager NavigationManager
+
+@if (LeaveRolePermission != null && LeaveRolePermission.View == false)
+{
+    NavigationManager.NavigateTo("");
+}
+<h3 style="margin-bottom:1px;">Manage Leave</h3>
+<div class="row reduce-margin-top"> 
+    <div class="col-12  ">
+        @if (lstManageLeave != null)
+        {
+            <Table TableItem="LeaveBalance" Items="lstManageLeave" RowClickAction="RowClick" RowActions="RowActions" ColumnReorder="true" ShowSearchBar="true" HeaderActions="HeaderAction"
+                   SelectionType="SelectionType.Single" DropDown="lstYear" DropDownLabel="Year:" onDropDownChange="onYearChange" DefaultID="yearId" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+                   DropDown2Label="Country:" DropDown2="lstCountry" onDropDown2Change="OnCountryChange" DropDown2DefaultID="DefaultTypeID">
+                <Column TableItem="LeaveBalance" Title="Employee Name" Field="@(x => x.EmployeeName)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="false" />
+                <Column TableItem="LeaveBalance" Title="Year" Field="@(x => x.LeaveYear)" Sortable="true" Filterable="false" Align="Align.Right" />
+                <Column TableItem="LeaveBalance" Title="Leave Type" Field="@(x => x.LeaveType)" Sortable="true" Filterable="false" Align="Align.Right" />
+                <Column TableItem="LeaveBalance" Title="Total" Field="@(x => x.VacationTotal)" Sortable="true" Filterable="false" Align="Align.Right" />
+                <Column TableItem="LeaveBalance" Title="Used" Field="@(x => x.VacationUsed)" Sortable="true" Filterable="false" Align="Align.Right" />
+                <Column TableItem="LeaveBalance" Title="Unpaid" Field="@(x => x.UnpaidLeave)" Sortable="true" Filterable="false" Align="Align.Right" />
+                <Column TableItem="LeaveBalance" Title="Balance" Field="@(x => x.VacationBalance)" Sortable="true" Filterable="false" Align="Align.Right" />
+                <Column TableItem="LeaveBalance" Title="Encashed" Field="@(x => x.EncashedLeave)" Sortable="true" Filterable="false" Align="Align.Right" />
+                <EmptyDataTemplate>
+                    <div class="text-center">
+                        No rows found!
+                    </div>
+                </EmptyDataTemplate>
+                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+            </Table>
+        }
+        else
+        {
+            <span></span>
+        }
+    </div>
+</div>
+
+<AddEditManageLeave @ref="AddEditManageLeaveModal" UpdateLeaveList="LoadLeaveBalance"></AddEditManageLeave>
+<CalculateLWP @ref="CalculateLWPModal" UpdateLeaveList="LoadLeaveBalance"></CalculateLWP>
+<AddEditLWP @ref="AddEditLWPModal" UpdateLeaveList="LoadLeaveBalance"></AddEditLWP>
+
+<AccrueLeave @ref="AccrueLeaveModal" UpdateLeaveList="LoadLeaveBalance"></AccrueLeave>
+@*<Confirm @ref="confirmBase" ConfirmationChanged="ConfirmLeaveAccrual_Click" ConfirmationTitle="Confirm LeaveAccrual" buttonType="Ok"
+             ConfirmationMessage=@($"Are you sure you want to accrue " + accureCount + " leave for the month of " + accrualMonth +"?")>
+    </Confirm>*@

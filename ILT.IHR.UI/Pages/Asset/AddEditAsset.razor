@@ -1,0 +1,219 @@
+﻿@inherits AddEditAssetBase
+
+@if (ShowDialog)
+{
+<div class="modal fade show d-block overflow-y-auto-mobile" id="exampleModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 850px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="float-left pl-2">@Title Asset</span>
+                <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <EditForm Model="@Asset" OnValidSubmit="checkTagExist">
+                            <DataAnnotationsValidator />
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="col-12 align-center remove-padding mb-1" style="@(ErrorMessage != "" && ErrorMessage != null ? "display: block;" : "display: none;" )" >
+                                <span class="error-message-color">@ErrorMessage &nbsp;</span>
+                            </div>
+                            <div class="row no-gutters">
+                                <div class="col-sm-12 pr-0 pl-0">
+                                    <div class="form-group row align-items-baseline remove-margin-bottom">
+                                        <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 control-label pr-0 d-flex justify-content-end">* AssetType</label>
+                                            <div class="col-8">
+                                                <CustomInputSelect id="companyType" disabled="@disabledvalue" @bind-Value="Asset.AssetTypeID" class="form-control form-control-sm autofocus">
+                                                    <option value='0'>select</option>
+                                                    @if (AssetTypeList != null)
+                                                        {
+                                                        @foreach (var AssetType in AssetTypeList)
+                                                            {
+                                                            <option value="@AssetType.ListValueID">@AssetType.ValueDesc</option>
+                                                            }
+                                                        /**/
+                                                        }
+                                                    /**/
+                                                </CustomInputSelect>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            <label for="companyType" class="col-4 control-label pr-0 d-flex justify-content-end">Tag</label>
+                                            <div class="col-8">
+                                                <InputText class="form-control form-control-sm" disabled="@disabledvalue" rows="1" @bind-Value="Asset.Tag" maxlength="20" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="col-sm-12 pr-0 pl-0">
+                                    <div class="form-group row align-items-baseline remove-margin-bottom">
+                                        <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 control-label pr-0 d-flex justify-content-end">Purchase Date</label>
+                                            <div class="col-8">
+                                                <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="Asset.PurchaseDate" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 control-label pr-0 d-flex justify-content-end">WarantyExpDate</label>
+                                            <div class="col-8">
+                                                <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="Asset.WarantyExpDate" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 pr-3 pl-3">
+                                    <div class="form-group row align-items-baseline remove-margin-bottom">
+                                        <div class="col-12 d-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 col-sm-2 control-label col-form-label">Make</label>
+                                            <div class="col-8 col-sm-10 pr-0 pl-sm-1 pl-2">
+                                                <InputText class="form-control form-control-sm" @bind-Value="Asset.Make" maxlength="100" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 pr-3 pl-3">
+                                    <div class="form-group row align-items-baseline remove-margin-bottom">
+                                        <div class="col-12 d-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 col-sm-2 control-label col-form-label">Model</label>
+                                            <div class="col-8 col-sm-10 pr-0 pl-sm-1 pl-2">
+                                                <InputText class="form-control form-control-sm" @bind-Value="Asset.Model" maxlength="100" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 pr-3 pl-3">
+                                    <div class="form-group row align-items-baseline remove-margin-bottom">
+                                        <div class="col-12 d-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 col-sm-2 control-label col-form-label">Configuration</label>
+                                            <div class="col-8 col-sm-10 pr-0 pl-sm-1 pl-2">
+                                                <InputTextArea class="form-control form-control-sm" rows="3" @bind-Value="Asset.Configuration" maxlength="200" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 pr-0 pl-0">
+                                    <div class="form-group row align-items-baseline remove-margin-bottom">
+                                        <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 control-label pr-0 d-flex justify-content-end">OS</label>
+                                            <div class="col-8">
+                                                <InputText class="form-control form-control-sm" rows="1" @bind-Value="Asset.OS" maxlength="20" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 pr-0 pl-0">
+                                    <div class="form-group row align-items-baseline remove-margin-bottom">
+                                        <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 control-label pr-0 d-flex justify-content-end">WiFiMAC</label>
+                                            <div class="col-8">
+                                                <InputText class="form-control form-control-sm" rows="1" @bind-Value="Asset.WiFiMAC" maxlength="20" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            <label for="companyType" class="col-4 control-label pr-0 d-flex justify-content-end">LANMAC</label>
+                                            <div class="col-8">
+                                                <InputText class="form-control form-control-sm" rows="1" @bind-Value="Asset.LANMAC" maxlength="20" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 pr-0 pl-0">
+                                    <div class="form-group row align-items-baseline remove-margin-bottom">
+                                        <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                            <label class="control-label col-4 pr-0 col-form-label">AssignedTo</label>
+                                            <div class="col-8 ">
+                                                @if (isAssignedTemp)
+                                                {
+                                                    <InputText class="form-control form-control-sm" rows="1" @bind-Value="Asset.AssignedTo" maxlength="20" @onfocusout="onAssignedTempChange" style="@(isAssignedTempRequired == true ? "outline: 1px solid red;" : "" )"/>
+                                                }
+                                                else
+                                                {
+                                            <CustomInputSelect id="weekend" @bind-Value="Asset.AssignedToID" class="form-control form-control-sm " @oninput="onAssignedChange" style="@(isAssignedRequired == true ? "outline: 1px solid red;" : "" )">
+                                                <option value="0">select</option>
+                                                @if (Employees != null)
+                                                        {
+
+                                                    @foreach (var employee in Employees)
+                                                            {
+                                                        @if (employee.TermDate == null || DateTime.Now <= employee.TermDate)
+                                                                {
+                                                            <option value="@employee.EmployeeID">@employee.EmployeeName</option>
+                                                                }
+                                                                else
+                                                                {
+                                                            <option value="@employee.EmployeeID">@employee.EmployeeName *</option>
+                                                                }
+
+                                                            }
+                                                    /**/
+                                                    /**/
+                                                    /**/
+                                                    /**/
+                                                        }
+                                                /**/
+                                            </CustomInputSelect>
+                                                }
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 display-flex remove-padding">
+                                            <label class="control-label col-4 pr-0 col-form-label">Status</label>
+                                            <div class="col-8 ">
+                                                <CustomInputSelect id="weekend" @bind-Value="Asset.StatusID" class="form-control form-control-sm" @oninput="onStatusChange">
+                                                    <option value='0'>select</option>
+                                                    @if (AssetStatusList != null)
+                                                        {
+
+                                                        @foreach (var vacation in AssetStatusList)
+                                                            {
+                                                            <option value="@vacation.ListValueID">@vacation.ValueDesc</option>
+                                                            }
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                        }
+                                                    /**/
+                                                </CustomInputSelect>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 pr-3 pl-3">
+                                    <div class="form-group row align-items-baseline remove-margin-bottom">
+                                        <div class="col-12 d-flex remove-padding margin-bottom-mobile">
+                                            <label class="col-4 col-sm-2 control-label col-form-label">Comment</label>
+                                            <div class="col-8 col-sm-10 pr-0 pl-sm-1 pl-2">
+                                                <InputText class="form-control form-control-sm" @bind-Value="Asset.Comment" maxlength="100" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group d-flex justify-content-end">
+                                @*<button type="submit" class="btn btn-primary" disabled="@(!context.Validate() || !context.IsModified() || isAssignedRequired)">Save</button>*@
+                                <button type="submit" class="btn btn-primary btn-width-height" disabled="@(isAssignedRequired || isSaveButtonDisabled || isAssignedTempRequired)">Save</button>
+                                <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}

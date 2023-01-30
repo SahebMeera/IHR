@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsAssetchangeSetsInfo" targetNamespace="http://tempuri.org/dsAssetchangeSetsInfo.xsd" xmlns:mstns="http://tempuri.org/dsAssetchangeSetsInfo.xsd" xmlns="http://tempuri.org/dsAssetchangeSetsInfo.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsAssetchangeSetsInfo" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsAssetchangeSetsInfo" msprop:Generator_UserDSName="dsAssetchangeSetsInfo">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsAssetchangeSetsInfo" msprop:Generator_TableClassName="dsAssetchangeSetsInfoDataTable" msprop:Generator_TableVarName="tabledsAssetchangeSetsInfo" msprop:Generator_RowChangedName="dsAssetchangeSetsInfoRowChanged" msprop:Generator_TablePropName="_dsAssetchangeSetsInfo" msprop:Generator_RowDeletingName="dsAssetchangeSetsInfoRowDeleting" msprop:Generator_RowChangingName="dsAssetchangeSetsInfoRowChanging" msprop:Generator_RowEvHandlerName="dsAssetchangeSetsInfoRowChangeEventHandler" msprop:Generator_RowDeletedName="dsAssetchangeSetsInfoRowDeleted" msprop:Generator_RowClassName="dsAssetchangeSetsInfoRow" msprop:Generator_UserTableName="dsAssetchangeSetsInfo" msprop:Generator_RowEvArgName="dsAssetchangeSetsInfoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AssetType" msprop:Generator_ColumnVarNameInTable="columnAssetType" msprop:Generator_ColumnPropNameInRow="AssetType" msprop:Generator_ColumnPropNameInTable="AssetTypeColumn" msprop:Generator_UserColumnName="AssetType" type="xs:string" minOccurs="0" />
+              <xs:element name="AssignedTo" msprop:Generator_ColumnVarNameInTable="columnAssignedTo" msprop:Generator_ColumnPropNameInRow="AssignedTo" msprop:Generator_ColumnPropNameInTable="AssignedToColumn" msprop:Generator_UserColumnName="AssignedTo" type="xs:string" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" type="xs:string" minOccurs="0" />
+              <xs:element name="ModifiedBy" msprop:Generator_ColumnVarNameInTable="columnModifiedBy" msprop:Generator_ColumnPropNameInRow="ModifiedBy" msprop:Generator_ColumnPropNameInTable="ModifiedByColumn" msprop:Generator_UserColumnName="ModifiedBy" type="xs:string" minOccurs="0" />
+              <xs:element name="ModifiedDate" msprop:Generator_ColumnVarNameInTable="columnModifiedDate" msprop:Generator_ColumnPropNameInRow="ModifiedDate" msprop:Generator_ColumnPropNameInTable="ModifiedDateColumn" msprop:Generator_UserColumnName="ModifiedDate" type="xs:string" minOccurs="0" />
+              <xs:element name="Tag" msprop:Generator_ColumnVarNameInTable="columnTag" msprop:Generator_ColumnPropNameInRow="Tag" msprop:Generator_ColumnPropNameInTable="TagColumn" msprop:Generator_UserColumnName="Tag" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

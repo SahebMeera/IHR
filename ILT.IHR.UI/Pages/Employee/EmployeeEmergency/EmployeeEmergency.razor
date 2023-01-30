@@ -1,0 +1,140 @@
+﻿@using BlazorTable
+@using ILT.IHR.DTO;
+
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+
+@inherits EmployeeEmergencyBase;
+
+<div class="row reduce-margin-top hidden-web">
+    <div class="col-12 pl-1 pr-1">
+        @if (EmployeeContactList != null)
+        {
+        <Table TableItem="Contact" Items="EmployeeContactList" ColumnReorder="true" ShowSearchBar="true" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+               SelectionType="SelectionType.Single" RowClickAction="RowClick" RowActions="RowActions" HeaderActions="HeaderAction">
+            <Column TableItem="Contact" Title="Contact Type" Field="@(x => x.ContactType)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="false">
+            </Column>
+            <Column TableItem="Contact" Title="First Name" Field="@(x => x.FirstName)" Sortable="true" Filterable="false">
+
+            </Column>
+            <Column TableItem="Contact" Title="Last Name" Field="@(x => x.LastName)" Sortable="true" Filterable="false">
+
+            </Column>
+            <Column TableItem="Contact" Title="Phone" Field="@(x => x.Phone)" Sortable="true" Filterable="false">
+
+            </Column>
+            <Column TableItem="Contact" Title="Email" Field="@(x => x.Email)" Sortable="true" Filterable="false">
+            </Column>
+            <DetailTemplate TableItem="Contact">
+                @(context.Address1 != "" ? context.Address1 + "," : "")  @context.Address2
+                <br />
+                @(context.City != "" ? context.City + "," : "")  @context.State @context.ZipCode
+                <br />
+                @context.Country
+                <br />
+            </DetailTemplate>
+
+            <EmptyDataTemplate>
+                <div class="text-center">
+                    No rows found!
+                </div>
+            </EmptyDataTemplate>
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </Table>
+        }
+        else
+        {
+            @*<NoResultMessage></NoResultMessage>*@
+            <span></span>
+        }
+    </div>
+</div>
+<div class="row mt-1 hidden-web hidden-mobile">
+    <div class="col-12 ">
+        <div class="row mr-0 pb-2 display-flex mobile-display">
+            <div class="col-12 col-sm-3 pr-1 mobile-padding-remove mobile-pad-left-add">
+                <input type="text" id="myFilter" class="form-control form-control-sm float-left" placeholder="Global Search..." @onkeyup="SearchFuntion" />
+            </div>
+            <div class="col-12 col-sm-6 header-actions mobile-pad-top-add">
+                <div class="col-12 col-sm-12 display-end pl-0 pr-0 ">
+                    <div class="col-12 col-sm-8 display-dropdown2 pr-0 ">
+                     </div>
+                    <div class="col-sm-4 header-buttons  pr-0">
+                        @if (HeaderAction != null)
+                        {
+                            @foreach (var HeaderAction in HeaderAction)
+                            {
+                                @if (HeaderAction.IsShow)
+                                {
+                                    <button type="button" class="btn remove-margin-moblie @(HeaderAction.ButtonClass == null ? " btn-primary" : @HeaderAction.ButtonClass) action-btn-lineheight float-right ml-2
+                                                    @(HeaderAction.IsDisabled ? "disabled" : "" )" @onclick="HeaderAction.ActionMethod">
+                                        <i class="@HeaderAction.IconClass" style="padding-right: 7px;" aria-hidden="true"></i>@HeaderAction.ActionText
+                                    </button>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (EmployeeContactList != null && EmployeeContactList.Count > 0)
+    {
+        <div class="col-12 pt-2" id="myItems">
+            @foreach (var employeeContact in EmployeeContactList)
+            {
+                <div class="col-sm-6 pl-0 pr-0">
+                    <div class="card mobile-card-view mb-2" @onclick="(() => EditMobile(employeeContact))">
+                        <div class="card-body" style="padding-bottom:0.5rem !important;">
+                            <div class="row">
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Contact Type :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @employeeContact.ContactType
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">First Name :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @employeeContact.FirstName
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Last Name :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @employeeContact.LastName
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Phone :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @employeeContact.Phone
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Email :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @employeeContact.Email
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <div class="col-12" style="padding-top:10rem;"></div>
+    }
+</div>
+<AddEditEmergencyContact @ref="AddEditEmergencyContactModal" ListValueUpdated="LoadEmployeeContacts" EmployeeName="@Name"></AddEditEmergencyContact>
+
+
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete")>
+</Confirm>
+

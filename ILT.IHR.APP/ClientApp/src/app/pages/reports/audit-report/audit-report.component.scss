@@ -1,0 +1,32 @@
+.hidden-web {
+    display: block;
+}
+
+.hidden-mobile {
+    display: none;
+}
+@media screen and (max-width: 960px) {
+    .hidden-web {
+        display: none !important;
+    }
+
+    .white-space {
+        white-space: nowrap !important;
+    }
+
+    .hidden-mobile {
+        display: block !important;
+    }
+
+    .mobile-display {
+        display: inherit !important;
+    }
+
+    :host ::ng-deep .pathx-table .p-datatable .p-datatable-thead > tr > th {
+        border: 1px solid white !important;
+    }
+
+    :host ::ng-deep .pathx-table .p-datatable .p-datatable-thead > tr {
+        background-color: #dee2e6 !important;
+    }
+}

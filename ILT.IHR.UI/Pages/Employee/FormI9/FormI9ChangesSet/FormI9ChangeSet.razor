@@ -1,0 +1,120 @@
+﻿@using BlazorTable
+@using ILT.IHR.DTO;
+@inherits FormI9ChangeSetBase
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="min-width: 1200px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">FormI9 Changes</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding-top: 0.25rem;">
+                    @*<div class="row">
+                        <div class="col-12" style="padding-bottom:0.25rem;">
+                            <button type="button" class="btn  btn-primary float-right" @onclick="@Acknowledge">
+                                Acknowledge
+                            </button>
+                        </div>
+                    </div>*@
+                    <div class="row">
+                        <div class="col-12">
+                            @if (formI9ChangeSet != null)
+                            {
+                            <Table TableItem="DTO.FormI9ChangeSet" Items="formI9ChangeSet"
+                                   SelectionType="SelectionType.Single">
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="First Name" Field="@(x => x.FirstName)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="Middle Name" Field="@(x => x.MiddleName)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="Last Name" Field="@(x => x.LastName)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="Address1" Field="@(x => x.Address1)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="Address2" Field="@(x => x.Address2)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="City" Field="@(x => x.City)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="State" Field="@(x => x.State)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="Country" Field="@(x => x.Country)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="Zip Code" Field="@(x => x.ZipCode)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="Birth Date" Field="@(x => x.BirthDate)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="SSN" Field="@(x => x.SSN)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="Phone" Field="@(x => x.Phone)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="Email" Field="@(x => x.Email)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="A Number" Field="@(x => x.ANumber)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="USCIS Number" Field="@(x => x.USCISNumber)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="I94 Number" Field="@(x => x.I94Number)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="I94 Expiry Date" Field="@(x => x.I94ExpiryDate)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="Hire Date" Field="@(x => x.HireDate)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListA Document Title" Field="@(x => x.ListADocumentTitle)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListA Issuing Authority" Field="@(x => x.ListAIssuingAuthority)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListA Document Number" Field="@(x => x.ListADocumentNumber)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListA Start Date" Field="@(x => x.ListAStartDate)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListA Expiration Date" Field="@(x => x.ListAExpirationDate)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListB Document Title" Field="@(x => x.ListBDocumentTitle)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListB Issuing Authority" Field="@(x => x.ListBIssuingAuthority)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListB Document Number" Field="@(x => x.ListBDocumentNumber)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListB Start Date" Field="@(x => x.ListBStartDate)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListB Expiration Date" Field="@(x => x.ListBExpirationDate)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListC Document Title" Field="@(x => x.ListCDocumentTitle)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListC Issuing Authority" Field="@(x => x.ListCIssuingAuthority)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListC Document Number" Field="@(x => x.ListCDocumentNumber)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListC Start Date" Field="@(x => x.ListCStartDate)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="ListC Expiration Date" Field="@(x => x.ListCExpirationDate)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="Modified By" Field="@(x => x.ModifiedBy)" Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.FormI9ChangeSet" Title="Modified Date" Field="@(x => x.ModifiedDate)" Filterable="false">
+                                </Column>
+
+                                <EmptyDataTemplate>
+                                    <div class="text-center">
+                                        No rows found!
+                                    </div>
+                                </EmptyDataTemplate>
+                                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                            </Table>
+                            }
+                            else
+                            {
+                                @*<NoResultMessage></NoResultMessage>*@
+                                <span></span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,164 @@
+﻿@inherits AddEditManageTimeSheetBase
+@using BlazorTable;
+@using ILT.IHR.DTO;
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">Time Sheet</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <EditForm Model="@timesheet" OnValidSubmit="ValidTimeSheet">
+                                <DataAnnotationsValidator />
+                                <div class="form-group row align-items-baseline">
+                                    <div class="col-sm-6 display-flex remove-padding">
+                                        <label class="control-label pr-0  col-4 d-flex justify-content-end">Employee</label>
+                                        <div class="col-8">
+                                            <select class="form-control form-control-sm" disabled="true" @bind="timesheet.EmployeeID">
+                                                <option value="">select</option>
+                                                @if (Employees != null)
+                                                {
+
+                                                    @foreach (var Employee in Employees)
+                                                    {
+                                                        <option value="@Employee.EmployeeID">@Employee.EmployeeName</option>
+
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 display-flex remove-padding">
+                                        <label class="control-label pr-0  col-4 d-flex justify-content-end">Client</label>
+                                        <div class="col-8">
+                                            <CustomInputSelect id="clientid" @bind-Value="timesheet.ClientID" disabled="true" class="form-control form-control-sm">
+                                                <option value="">select</option>
+                                                @if (EmployeeAssignments != null)
+                                                    {
+
+                                                    @foreach (var Client in EmployeeAssignments)
+                                                        {
+                                                        <option value="@Client.ClientID">@Client.Client</option>
+                                                        }
+                                                    /**/
+                                                    }
+                                            </CustomInputSelect>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <div class="col-sm-6 display-flex remove-padding">
+                                        @if (isMonthly == true)
+                                        {
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">Month Ending</label>
+                                        }
+                                        else
+                                        {
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">Week Ending</label>
+                                        }
+                                        <div class="col-8">
+                                            <InputDate class="form-control form-control-sm" disabled="true" @bind-Value="timesheet.WeekEnding" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 display-flex remove-padding">
+                                        <label class="control-label pr-0  col-4 d-flex justify-content-end">Timesheet Type</label>
+                                        <div class="col-8">
+                                            <InputText class="form-control form-control-sm" readonly="true" @bind-Value="timesheet.TimeSheetType" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <div class="col-sm-6 display-flex remove-padding">
+                                        <label class="control-label pr-0  col-4 d-flex justify-content-end">Approver Email</label>
+                                        <div class="col-8">
+                                            <InputText class="form-control form-control-sm" readonly="true" @bind-Value="timesheet.TSApproverEmail" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 display-flex remove-padding">
+                                        <label class="control-label pr-0  col-4 d-flex justify-content-end">Status</label>
+                                        <div class="col-8">
+                                            <InputText class="form-control form-control-sm" readonly="true" @bind-Value="timesheet.Status" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <div class="col-sm-6 display-flex remove-padding margin-bottom-mobile">
+                                        @if (timesheet.FileName != null && timesheet.FileName != "")
+                                        {
+                                            <label class="control-label pr-0  col-4 d-flex justify-content-end">Attachment</label>
+                                            <div class="col-8">
+                                                <a  @onclick="GetBlobContentPath" target="_blank" style="font-size: 12px;color: #0366d6; cursor: pointer;">
+                                                    <span class="fa fa-paperclip"></span>
+                                                    @timesheet.FileName
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="col-sm-6 display-flex remove-padding">
+                                        <label class="control-label pr-0  col-4 d-flex justify-content-end">Total Hours</label>
+                                        <div class="col-8">
+                                            <InputText class="form-control form-control-sm align-right" readonly="true" @bind-Value="@totalhours" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 remove-padding" style="height:312px;overflow-y: auto;">
+                                    <Table TableItem="TimeEntry" Items="TimeEntryList" ColumnReorder="true" ShowSearchBar="false" SelectionType="SelectionType.Single" RowActions="RowActions" RowClickAction="RowClick" PageSize="50">
+                                        <Column TableItem="TimeEntry" Title="Work Date" Field="@(x => x.WorkDate)" Sortable="false" Filterable="false" Width="5%">
+                                            <Template Context="context1">
+                                                <span>@(context1.WorkDate.ToString("MM/dd/yyyy"))</span>&nbsp;
+                                                <span>@(context1.WorkDate.ToString("ddd"))</span>
+                                            </Template>
+                                        </Column>
+                                        <Column TableItem="TimeEntry" Title="Project" Field="@(x => x.Project)" Sortable="false" Filterable="false" Width="25%">
+                                            <Template Context="context1">
+                                                <input type="text" @bind-value="@context1.Project" disabled="@entrydisabledvalue" class="form-control form-control-sm" />
+                                            </Template>
+                                        </Column>
+                                        <Column TableItem="TimeEntry" Title="Activity" Field="@(x => x.Activity)" Sortable="false" Filterable="false" Width="50%">
+                                            <Template Context="context1">
+                                                <input type="text" @bind-value="@context1.Activity" disabled="@entrydisabledvalue" class="form-control form-control-sm" />
+                                            </Template>
+                                        </Column>
+                                        <Column TableItem="TimeEntry" Title="Hours" Field="@(x => x.Hours)" Sortable="false" Filterable="false" Width="10%">
+                                            <Template Context="context1">
+                                                <input type="text" @bind-value="@context1.Hours" disabled="@entrydisabledvalue" class="form-control form-control-sm align-right" />
+                                            </Template>
+                                        </Column>
+                                    </Table>
+                                </div>
+                                <div class="col-12 pt-2 row align-center remove-padding remove-margin">
+                                    <div class="col-sm-12 align-center remove-padding">
+                                        <span class="error-message-color">@ErrorMessage</span>
+                                    </div>
+                                    <div class="col-sm-12 form-group d-flex justify-content-end remove-padding">
+                                        @if (!resubmitbuttonsdisabledvalue)
+                                        {
+                                            <button type="submit" class="btn btn-primary btn-height" @onclick="ReSubmitTimeSheet" disabled="@isSaveButtonDisabled">Resubmit</button>
+                                        }
+                                        <button type="submit" class="btn btn-primary btn-height ml-1" disabled="@(buttonsdisabledvalue || isSaveButtonDisabled)" @onclick="CloseTimeSheet">Payment Received</button>
+                                        <button type="submit" class="btn btn-primary btn-height ml-1" disabled="@(buttonsdisabledvalue || isSaveButtonDisabled)" @onclick="VoidTimeSheet">Void Timesheet</button>
+                                        <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                    </div>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <Confirm @ref="SubmitConfirmation" ConfirmationChanged="ConfirmSubmit_Click"
+             ConfirmationTitle="Confirmation"
+             buttonType="Ok"
+             ConfirmationMessage=@ConfirmationMessage>
+    </Confirm>
+}

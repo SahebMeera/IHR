@@ -1,0 +1,58 @@
+<div class="login-body">
+    <div id="login-wrapper">
+        <!-- <img src="assets/layout/images/login-logo.png" alt="omega-layout" /> -->
+        <div id="login-container">
+            <div class="justify-content-center section-header" style="display: flex; pointer-events:none;">
+                <img src="../../../assets/layout/images/pages/InfoHRAppLogo.png" width="290px" height="60px">
+            </div>
+            <form [formGroup]="loginForm">
+                <div class="p-grid p-fluid" style="padding:35px; justify-content: center; padding-bottom:10px !important;">
+                    <div class="p-col-12 p-pt-0 p-pb-0">
+                        <div class="p-fluid">
+                            <div class="p-field p-text-left">
+                                <label class="p-text-bold" for="ClientID">CLIENT ID</label>
+                                <input id="ClientID" type="text" pInputText formControlName="ClientID" placeholder="Client ID">
+                                <div *ngIf="loginFormControls.ClientID.touched && loginFormControls.ClientID.errors" class="invalid-feedback">
+                                    Please enter Client ID
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-pt-0 p-pb-0">
+                        <div class="p-fluid ">
+                            <div class="p-field p-text-left">
+                                <label class="p-text-bold" for="firstname1">EMAIL ADDRESS</label>
+                                <input id="Email" type="text" pInputText formControlName="Email" placeholder="Email">
+                                <div *ngIf="loginFormControls.Email.touched && loginFormControls.Email.errors" class="invalid-feedback">
+                                    Please enter Email Address
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-pt-0 p-pb-0">
+                        <div class="p-fluid">
+                            <div class="p-field p-text-left">
+                                <label class="p-text-bold" for="firstname1">PASSWORD</label>
+                                <input type="password" formControlName="Password" pInputText placeholder="Password" />
+                                <div *ngIf="loginFormControls.Password.touched && loginFormControls.Password.errors" class="invalid-feedback">
+                                    Please enter Password
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-fluid">
+                        <div class="p-col-12 p-text-center" style=" margin: auto;" [ngStyle]="{'width': isLoading ? '130px': '100px' }">
+                            <button pButton pRipple type="button" label="Sign In" style="background-color: #1979c5;" class="p-button-raised p-mr-2 p-mb-2" (click)="ValidateUser()">
+                                <div *ngIf="isLoading" class="loader"></div>
+                                <!-- <i *ngIf="isLoading" class="fa fa-spinner fa-spin" style="font-size:18px"></i>-->
+                            </button>
+                        </div>
+                        <div class="p-col-12 p-pt-0 p-text-center invalid-feedback" *ngIf="LoginErrorMessage != '' && LoginErrorMessage != null" [ngStyle]="{'margin-bottom': LoginErrorMessage != '' && LoginErrorMessage != null ? '0.5rem': '0rem' }">
+                            <span class="error-message-color">{{LoginErrorMessage}}</span>
+                        </div>
+                    </div>
+                    </div>
+</form>
+        </div>
+    </div>
+</div>

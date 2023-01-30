@@ -1,0 +1,184 @@
+﻿@page "/ticket"
+@using BlazorTable;
+@using ILT.IHR.DTO;
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+@inherits TicketsBase;
+@inject NavigationManager NavigationManager
+
+@if (TicketRolePermission != null && TicketRolePermission.View == false)
+{
+    NavigationManager.NavigateTo("");
+}
+<h3 style="margin-bottom:1px;">Ticket</h3>
+<div class="row reduce-margin-top hidden-web">
+    <div class="col-12">
+        @if (lstTicketsList != null)
+        {
+        <Table TableItem="ILT.IHR.DTO.Ticket" Items="lstTicketsList" ColumnReorder="true" ShowSearchBar="true" SelectionType="SelectionType.Single" RowActions="RowActions" RowClickAction="RowClick" HeaderActions="HeaderAction"
+               PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+               DropDownLabel="Assigned To:" onMultiSelectDropDown1="lstTicketAssignedTo" onMultiDropDown1Change="onChangeAssignedToList"
+               DropDown2Label="Status:" onMultiSelectDropDown="lstTicketStatus" onMultiDropDownChange="onChangeEmployeeTypeList" DropDown2DefaultID="DropDown2DefaultID">
+
+            <Column TableItem="DTO.Ticket" Title="Ticket ID" Field="@(x => x.TicketID)" Sortable="true" Filterable="false" DefaultSortColumn="true">
+            </Column>
+            <Column TableItem="ILT.IHR.DTO.Ticket" Title="Created" Field="@(x => x.CreatedDate)" Sortable="true" Filterable="false">
+                <Template>
+                    @(context.CreatedDate != null ? FormatDate(context.CreatedDate) : "")
+                </Template>
+            </Column>
+            <Column TableItem="DTO.Ticket" Title="Ticket Type" Field="@(x => x.TicketType)" Sortable="true" Filterable="false">
+            </Column>
+            <Column TableItem="DTO.Ticket" Title="Title" Field="@(x => x.Title)" Sortable="true" Filterable="false">
+            </Column>
+            <Column TableItem="DTO.Ticket" Title="RequestedBy" Field="@(x => x.RequestedBy)" Sortable="true" Filterable="false">
+            </Column>
+            <Column TableItem="DTO.Ticket" Title="AssignedTo" Field="@(x => x.AssignedTo)" Sortable="true" Filterable="false"></Column>
+            <Column TableItem="ILT.IHR.DTO.Ticket" Title="Status" Field="@(x => x.Status)" Sortable="true" Filterable="false">
+            </Column>
+
+            <Column TableItem="ILT.IHR.DTO.Ticket" Title="Resolved" Field="@(x => x.ResolvedDate)" Sortable="true" Filterable="false">
+                <Template>
+                    @(context.ResolvedDate != null ? FormatDate(context.ResolvedDate) : "")
+                </Template>
+            </Column>
+
+            @*<Column TableItem="ILT.IHR.DTO.Ticket" Title="Resolution" Field="@(x => x.Comment)" Sortable="true" Filterable="false" NoWhiteSpace="true">
+        </Column>*@
+            <EmptyDataTemplate>
+                <div class="text-center">
+                    No rows found!
+                </div>
+            </EmptyDataTemplate>
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </Table>
+        }
+        else
+        {
+            @*<NoResultMessage></NoResultMessage>*@
+            <span></span>
+        }
+    </div>
+</div>
+
+<div class="row mt-2 hidden-web hidden-mobile">
+    <div class="col-12 ">
+        <div class="row mr-0 pb-1 display-flex mobile-display">
+            <div class="col-12 col-sm-3 pr-1 mobile-padding-remove mobile-pad-left-add">
+                <input type="text" id="myFilter" class="form-control form-control-sm float-left" placeholder="Global Search..." @onkeyup="SearchFuntion" />
+            </div>
+            <div class="col-12 col-sm-3 pl-0  mobile-pad-right-add" style="display: flow-root; justify-content: center; align-items: center;">
+               
+            </div>
+            <div class="col-12 col-sm-6 header-actions mobile-pad-top-add">
+                <div class="col-12 col-sm-12 display-end pl-0 pr-0 ">
+                    @if (lstTicketStatus != null)
+                    {
+                        <div class="col-12 col-sm-8 display-dropdown2 pr-0 ">
+                            <label class="col-12 col-sm-2 col-form-label mobile-card-view-label">Employee Type:</label>
+
+                            <div class="col-7 col-sm-6 pl-0 mobile-padding-remove">
+                                <div class="mulit-select-dropdown">
+
+                                    <button type="button" class="form-control form-control-sm mulit-select-dropbtn">@getSelectedRoles()</button>
+                                    <div class="mulit-select-dropdown-content" style="min-width:200px; position: absolute;">
+                                        @foreach (var item in lstTicketStatus)
+                                        {
+                                            <div class="row col-12 align-items-center">
+                                                <label for="@item.ID" class="mb-0" style="font-weight: 400; color: #495057; line-height: 15px;">
+                                                    @if (item.IsSelected)
+                                                    {
+                                                        <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" checked="checked" @onchange="@((e) => OnMultiDropDownChange(e, item.ID))" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" @onchange="@((e) => OnMultiDropDownChange(e, item.ID))" />
+                                                    }
+                                                    @item.Value
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-sm-4 header-buttons  pr-0 pt-2">
+                        @if (HeaderAction != null)
+                        {
+                            @foreach (var HeaderAction in HeaderAction)
+                            {
+                                @if (HeaderAction.IsShow)
+                                {
+                                    <button type="button" class="btn remove-margin-moblie @(HeaderAction.ButtonClass == null ? " btn-primary" : @HeaderAction.ButtonClass) action-btn-lineheight float-right ml-2
+                                                    @(HeaderAction.IsDisabled ? "disabled" : "" )" @onclick="HeaderAction.ActionMethod">
+                                        <i class="@HeaderAction.IconClass" style="padding-right: 7px;" aria-hidden="true"></i>@HeaderAction.ActionText
+                                    </button>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (lstTicketsList != null && lstTicketsList.Count > 0)
+    {
+        <div class="col-12 pt-2" id="myItems">
+            @foreach (var ticket in lstTicketsList)
+            {
+                <div class="col-sm-6 pl-0 pr-0">
+                    <div class="card mobile-card-view mb-2" @onclick="(() => EditMobile(ticket))">
+                        <div class="card-body" style="padding-bottom:0.5rem !important;">
+                            <div class="row">
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Ticket ID :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @ticket.TicketID
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Ticket Type :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @ticket.TicketType
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">RequestedBy :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @ticket.RequestedBy
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">AssignedTo :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @ticket.AssignedTo
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Status :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @ticket.Status
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <div class="col-12" style="padding-top:10rem;"></div>
+    }
+</div>
+
+<AddEditTicket @ref="AddEditTicketModal" TicketUpdated="LoadList"></AddEditTicket>
+
+
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete")>
+</Confirm>

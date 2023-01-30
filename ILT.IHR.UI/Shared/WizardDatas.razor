@@ -1,0 +1,50 @@
+﻿@page "/processdatas"
+@using BlazorTable;
+@using ILT.IHR.DTO;
+@inherits WizardDatasBase;
+
+<h3>Process Data</h3>
+<div class="row mt-2">
+    <div class="col-12">
+        @if (lstWizardDataList != null)
+        {
+        <Table TableItem="ProcessData" Items="lstWizardDataList" ColumnReorder="true" @ref="Table" ShowSearchBar="true" SelectionType="SelectionType.Single"
+               DropDown="lstProcesses" DropDownLabel="Process:" onDropDownChange="onProcessChange" DefaultID="DefaultTypeID"
+               DropDown2Label="Status:" onMultiSelectDropDown="lstMultiStatus" onMultiDropDownChange="onChangeWizardStatusList" DropDown2DefaultID="DropDown2DefaultID"
+               RowActions="RowActions" RowClickAction="RowClick" HeaderActions="HeaderAction" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize">
+            @*<Column TableItem="WizardData" Title="Wizard Data" Field="@(x => x.WizardDataID)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="false" Width="95%">
+        </Column>*@
+            <Column TableItem="ProcessData" Title="Process" Field="@(x => x.Process)" Sortable="true" Filterable="false" Width="15%">
+            </Column>
+            <Column TableItem="ProcessData" Title="Process Data" Field="@(x => x.DataColumns)" Sortable="true" Filterable="false" Width="70%">
+            </Column>
+            <Column TableItem="ProcessData" Title="Status" Field="@(x => x.Status)" Sortable="true" Filterable="false" Width="40%">
+            </Column>
+            <Column TableItem="ProcessData" Title="Created Date" Field="@(x => x.CreatedDate)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="false" Width="40%">
+                <Template>
+                    @(context.CreatedDate != null ? FormatDate(context.CreatedDate) : "")
+                </Template>
+            </Column>
+            <Column TableItem="ProcessData" Title="Processed Date" Field="@(x => x.ProcessedDate)" Sortable="true" Filterable="false" Width="40%">
+                <Template>
+                    @(context.ProcessedDate != null ? FormatDate(context.ProcessedDate) : "")
+                </Template>
+            </Column>
+            <EmptyDataTemplate>
+                <div class="text-center">
+                    No rows found!
+                </div>
+            </EmptyDataTemplate>
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </Table>
+        }
+        else
+        {
+            @*<NoResultMessage></NoResultMessage>*@
+            <span></span>
+        }
+    </div>
+</div>
+
+<WizardFlow @ref="WizardFlowBaseModal" WizardDataUpdated="LoadList"></WizardFlow>
+<WizardFlowData @ref="WizardFlowDataModal" WizardDataUpdated="LoadList" WizardName="@wizardName"></WizardFlowData>

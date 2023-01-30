@@ -1,0 +1,117 @@
+<div class="p-grid hidden-web">
+    <div class="p-col-12 p-pt-0 p-pb-0">
+        <h3 style="margin-bottom:1px;">Ticket</h3>
+    </div>
+    <div class="p-col-12">
+        <app-ihr-table #dt [data]="lstTicketsList" [isPagination]="isPagination"
+                       [sortingField]="'ticketID'"
+                       [sortingFieldOrder]="1"
+                       [loading]="loading"
+                       [onMultiSelectDropDown1]="lstTicketAssignedTo"
+                       [DropDownLabel]="'Assigned To :'"
+                       [onMultiSelectedDropDown1]="selectedEmpTypeList"
+                       (onMultiSelectDropDown1Change)="OnAssignedToChange($event)"
+                       [DropDown2Label]="'Status :'"
+                       [onMultiSelectDropDown]="lstTicketStatus"
+                       [onMultiSelectedDropDown]="selectedStatusList"
+                       [globalFilterFields]="globalFilterFields"
+                       (onMultiSelectDropDownChange)="onStatusChange($event)"
+                       [showCurrentPageReport]="showCurrentPageReport" [cols]="cols" [selectedColumns]="selectedColumns"
+                       [rowActions]="rowActions" [headerActions]="headerActions" [tableState]="patientLanding">
+        </app-ihr-table>
+    </div>
+</div>
+
+<div class="p-grid  hidden-web hidden-mobile" *ngIf="true">
+    <div class="p-col-12 p-pt-0 p-pb-0">
+        <h3 style="margin-bottom:1px;">Ticket</h3>
+    </div>
+    <div class="p-col-12 ">
+        <div class="p-grid p-mr-0 p-pb-1 display-flex mobile-display">
+            <div class="p-col-12 p-pr-1 mobile-padding-remove mobile-pad-left-add">
+                <div class="p-d-grid p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Global Search..." autocomplete="off" [(ngModel)]="searchText" />
+                    <!--<input pInputText type="text" [(ngModel)]="searchText" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search..." />-->
+                </div>
+            </div>
+            <div class="p-col-12 p-lg-4 p-pb-0 p-pr-3">
+                <div class="p-grid grid-dropdown" *ngIf="lstTicketAssignedTo != null && lstTicketAssignedTo.length > 0">
+                    <label class="p-col-5 p-pb-0 p-pl-0 col-form-label mobile-transform-translate drpdwn" style="padding-right: 7px; padding-top: 0px !important; font-weight: 600;">Assigned To :</label>
+                    <div class="p-col-7 p-pl-0 p-pt-0 p-pr-0 p-pb-0 mobile-first-dropdown-padding text-left" *ngIf="lstTicketAssignedTo != null && lstTicketAssignedTo.length > 0">
+                        <p-multiSelect [options]="lstTicketAssignedTo"
+                                       defaultLabel="Select"
+                                       [(ngModel)]="selectedEmpTypeList"
+                                       (onChange)="OnChangeAssignedTo($event)"
+                                       optionValue="ID"
+                                       optionLabel="Value"></p-multiSelect>
+                    </div>
+                </div>
+                <div class="p-grid grid-dropdown p-pt-4" *ngIf="lstTicketStatus != null && lstTicketStatus.length > 0">
+                    <label class="p-col-5 p-pb-0 p-pl-0 col-form-label mobile-transform-translate drpdwn" style="padding-right: 7px; padding-top: 0px !important; font-weight: 600;">Asset Type :</label>
+                    <div class="p-col-7 p-pl-0 p-pt-0 p-pr-0 p-pb-0 mobile-first-dropdown-padding text-left" *ngIf="lstTicketStatus != null && lstTicketStatus.length > 0">
+                        <p-multiSelect [options]="lstTicketStatus"
+                                       defaultLabel="Select"
+                                       [(ngModel)]="selectedStatusList"
+                                       (onChange)="OnChangeStatus($event)"
+                                       optionValue="ID"
+                                       optionLabel="Value"></p-multiSelect>
+                    </div>
+                </div>
+                <div class="p-grid grid-dropdown" style="padding-top:14px; justify-content: end;">
+                    <div class="p-md-12  p-p-0 p-text-right" >
+                        <button pButton pRipple type="button" label="ADD" class=" btn-width-height p-button-raised btn-width-height btn btn-block btn-sm btn-info" style="margin: 0px !important;" (click)="add()">
+                            <i style="padding-right:6px;" class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-col-12  p-pt-2" id="myItems" *ngIf="lstTicketsList != null && lstTicketsList.length > 0">
+        <div class="p-col-12  p-pl-0 p-pr-0" *ngFor="let ticket of lstTicketsList | FilterPipe: searchText : searchableList">
+            <div class="p-card mobile-card-view p-mb-2" (click)="edit(ticket)">
+                <div class="p-card-body" style="padding-bottom:0.5rem !important;">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Ticket ID :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{ticket.ticketID.toString()}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2  p-pt-0 p-pb-0 mobile-card-view-label">Ticket Type :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{ticket.ticketType}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">RequestedBy :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{ticket.requestedBy}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Assigned To :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{ticket.assignedTo}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Status :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{ticket.status}}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<app-add-edit-ticket #AddEditTicketModal (TicketUpdated)="LoadList()"></app-add-edit-ticket>
+<p-toast></p-toast>

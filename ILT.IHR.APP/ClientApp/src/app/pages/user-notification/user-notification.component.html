@@ -1,0 +1,55 @@
+<p-dialog styleClass="p-fluid" [closable]="true" [(visible)]="visibleAnimate" [position]="right" [modal]="true" [style]="{width: '420px'}" [baseZIndex]="10000">
+    <p-header>
+        <div class="modal-header-text" style="">
+            <span class="float-left p-pl-0">Notifications</span>
+        </div>
+    </p-header>
+
+    <div class="modal-body">
+        <div class="p-grid" style="padding-top: 1rem;">
+            <div class="p-col-12">
+                <div class="p-grid" *ngIf="userNotifications !== null && userNotifications.length > 0">
+                    <div class="p-col-12  p-p-pr-0"  *ngIf="timesheetNotifications !== null && timesheetNotifications.length > 0 && timesheetNotifications !== undefined">
+                        <div class="p-grid">
+                            <div class="p-col-12" *ngFor="let notification of timesheetNotifications " style="padding-bottom: 6px;padding-top: 5px;border-bottom: 1px solid;">
+                                <a class="notification" (click)="NavigateToNotifiedRecord(notification)">{{notification.module}} pending approval: {{notification.employeeName}}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-col-12  p-p-pr-0" style="padding-bottom: 6px;padding-top: 5px;border-bottom: 1px solid;" *ngIf="leaveNotifications !== null && leaveNotifications.length > 0 && leaveNotifications !== undefined">
+                        <div class="p-grid">
+                            <div class="p-col-12" *ngFor="let notification of leaveNotifications ">
+                                <a class="notification" (click)="NavigateToNotifiedRecord(notification)">{{notification.module}} pending approval: {{notification.employeeName}}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-col-12  p-p-pr-0" style="padding-bottom: 6px;padding-top: 5px;border-bottom: 1px solid;" *ngIf="ticketNotifications !== null && ticketNotifications.length > 0 && ticketNotifications !== undefined">
+                        <div class="p-grid">
+                            <div class="p-col-12" *ngFor="let notification of ticketNotifications ">
+                                <a class="notification" (click)="NavigateToNotifiedRecord(notification)">{{notification.module}} pending resolution: {{notification.employeeName}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-12  p-p-pr-0" *ngIf="employeeNotifications !== null && employeeNotifications.length > 0 && employeeNotifications !== undefined">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-gird p-d-flex" *ngFor="let notification of employeeNotifications " style="padding-bottom: 6px;padding-top: 5px;border-bottom: 1px solid;">
+                                <div class="p-col-11 p-p-0">
+                                    <a class="notification" (click)="NavigateToNotifiedRecord(notification)">{{notification.module}} changes: {{notification.employeeName}}</a>
+                                </div>
+                                <div class="p-col-1 p-p-0">
+                                    <button style="background: none; border: none; padding:0px; text-decoration: underline;color: #0056b3; cursor:pointer;" (click)="DismissNotification(notification)">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>

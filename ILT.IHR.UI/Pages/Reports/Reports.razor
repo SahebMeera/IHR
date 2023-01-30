@@ -1,0 +1,300 @@
+﻿@page "/reports"
+@inherits ReportsBase;
+@inject NavigationManager NavigationManager
+
+@if (ReportRolePermission != null && ReportRolePermission.View == false)
+{
+    NavigationManager.NavigateTo("");
+}
+<h3 style="margin-bottom:1px;">Reports</h3>
+<div class="row reduce-margin-top">
+    <div class="col-sm-3">
+        <div class="card mb-2">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 mb-1">
+                        <div class="row align-items-center mobile-pad-top-add">
+                            <label class="col-5 col-form-label" style="font-weight:600">Report:</label>
+                            <div class="col-7 pl-0">
+                                <select class="form-control form-control-sm" style=" @(isReportTypeRequired == true ? "outline: 1px solid red;" : "" )" @bind="reportType" @oninput="onReportChange">
+                                    @if (reportTypes != null)
+                                    {
+                                        @foreach (var item in reportTypes)
+                                        {
+                                            <option value="@item.Value">@item.ValueDesc</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    @if (isShowEmployeeDetail == false && !isDateHidden)
+                    {
+                        <div class="col-12 mb-1">
+                            <div class="row align-items-center mobile-pad-top-add">
+                                <label class="col-5 col-form-label" style="font-weight:600">Start Date:</label>
+                                <div class="col-7 pl-0">
+                                    <input type="date" class="form-control form-control-sm" style=" @(isStartDateRequired == true ? "outline: 1px solid red;" : "" )" @bind="StartDate" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-1">
+                            <div class="row align-items-center mobile-pad-top-add">
+                                <label class="col-5 col-form-label" style="font-weight:600">End Date:</label>
+                                <div class="col-7 pl-0">
+                                    <input type="date" class="form-control form-control-sm" style=" @(isStartDateRequired == true ? "outline: 1px solid red;" : "" )" @bind="EndDate" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (isShowEmployeeDetail == true)
+                    {
+                        <div class="col-12 mb-1">
+                            <div class="row align-items-center mobile-pad-top-add">
+                                <label class="col-5 col-form-label" style="font-weight:600">Country:</label>
+                                <div class="col-7 pl-0">
+                                    <select class="form-control form-control-sm" @bind="DefaultCountryID" @oninput=OnCountryChange>
+                                        @if (lstCountry != null)
+                                        {
+                                            @foreach (var item in lstCountry)
+                                            {
+                                                <option value="@item.ID">@item.Value</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-1 display-dropdown2">
+                            <label class="col-5 col-form-label mobile-card-view-label">Employee Type:</label>
+                            <div class="col-7  pl-0 mobile-padding-remove pr-0 pl-0">
+                                <div class="mulit-select-dropdown">
+                                    <button type="button" class="form-control form-control-sm mulit-select-dropbtn">@getSelectedRoles()</button>
+                                    <div class="mulit-select-dropdown-content" style="min-width:200px; position: absolute;">
+                                        @foreach (var item in lstEmployeeType)
+                                        {
+                                            <div class="row col-12 align-items-center">
+                                                <label for="@item.ID" class="mb-0" style="font-weight: 400; color: #495057; line-height: 15px;">
+                                                    @if (item.IsSelected)
+                                                    {
+                                                        <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" checked="checked" @onchange="@((e) => OnMultiDropDownChange(e, item.ID))" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" @onchange="@((e) => OnMultiDropDownChange(e, item.ID))" />
+                                                    }
+                                                    @item.Value
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-1">
+                            <div class="row align-items-center mobile-pad-top-add">
+                                <label class="col-5 col-form-label" style="font-weight:600">Status:</label>
+                                <div class="col-7 pl-0">
+                                    <select class="form-control form-control-sm" @bind="DefaultStatusID" @oninput=OnStatusChange>
+                                        @if (lstStatus != null)
+                                        {
+                                            @foreach (var item in lstStatus)
+                                            {
+                                                <option value="@item.ID">@item.Value</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                @if (!isCountryHidden && isShowEmployeeDetail == false)
+                {
+            <div class="row">
+                <div class="col-12 mb-1">
+                    <div class="row align-items-center mobile-pad-top-add">
+                        <label class="col-5 col-form-label" style="font-weight:600">Country:</label>
+                        <div class="col-7 pl-0">
+                            <select class="form-control form-control-sm" @bind="country">
+                                @if (reportTypes != null)
+                                {
+                                    @foreach (var item in CountryList)
+                                    {
+                                        <option value="@item.CountryDesc">@item.CountryDesc</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                @if (!String.IsNullOrEmpty(reportType) && (reportType.ToUpper() == "LEAVEDETAIL" || reportType.ToUpper() == "LEAVESUMMARY"))
+                {
+                <div class="col-12 mb-1">
+                    <div class="row align-items-center mobile-pad-top-add">
+                        <label class="col-5 col-form-label" style="font-weight:600">Status:</label>
+                         <div class="col-7 pl-0">
+                            <select class="form-control form-control-sm" @bind="DefaultLeaveStatusID" @oninput=OnLeaveStatusChange>
+                                @if (lstLeaveStatus != null)
+                                {
+                                    @foreach (var item in lstLeaveStatus)
+                                    {
+                                        <option value="@item.ID">@item.Value</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+                }
+                @if (isShowAssetReport == true)
+                {
+                    <div class="col-12 mb-1 display-dropdown2 pr-0 pl-0">
+                        <label class="col-5 col-form-label mobile-card-view-label">Status:</label>
+                        <div class="col-7  pl-0 mobile-padding-remove pr-0 pl-0">
+                            <div class="mulit-select-dropdown">
+                                <button type="button" class="form-control form-control-sm mulit-select-dropbtn">@getSelectedAssetStatus()</button>
+                                <div class="mulit-select-dropdown-content" style="min-width:200px; position: absolute;">
+                                    @foreach (var item in lstTicketStatus)
+                                    {
+                                        <div class="row col-12 align-items-center">
+                                            <label for="@item.ID" class="mb-0" style="font-weight: 400; color: #495057; line-height: 15px;">
+                                                @if (item.IsSelected)
+                                                {
+                                                    <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" checked="checked" @onchange="@((e) => OnMultiDropDownForAssetStatusChange(e, item.ID))" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" @onchange="@((e) => OnMultiDropDownForAssetStatusChange(e, item.ID))" />
+                                                }
+                                                @item.Value
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-1 display-dropdown2 pr-0 pl-0">
+                        <label class="col-5 col-form-label mobile-card-view-label">Asset Type:</label>
+                        <div class="col-7  pl-0 mobile-padding-remove pr-0 pl-0">
+                            <div class="mulit-select-dropdown">
+                                <button type="button" class="form-control form-control-sm mulit-select-dropbtn">@getSelectedAssetTypes()</button>
+                                <div class="mulit-select-dropdown-content" style="min-width:200px; position: absolute;">
+                                    @foreach (var item in lstAssetType)
+                                    {
+                                        <div class="row col-12 align-items-center">
+                                            <label for="@item.ID" class="mb-0" style="font-weight: 400; color: #495057; line-height: 15px;">
+                                                @if (item.IsSelected)
+                                                {
+                                                    <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" checked="checked" @onchange="@((e) => OnMultiDropDownAssetTypeChange(e, item.ID))" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" @onchange="@((e) => OnMultiDropDownAssetTypeChange(e, item.ID))" />
+                                                }
+                                                @item.Value
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (isShowAssetChangeSets == true)
+                {
+                    <div class="col-12 mb-1 display-dropdown2 pr-0 pl-0">
+                        <label class="col-5 col-form-label mobile-card-view-label">Status:</label>
+                        <div class="col-7  pl-0 mobile-padding-remove pr-0 pl-0">
+                            <div class="mulit-select-dropdown">
+                                <button type="button" class="form-control form-control-sm mulit-select-dropbtn">@getSelectedAssetChangeSetsStatus()</button>
+                                <div class="mulit-select-dropdown-content" style="min-width:200px; position: absolute;">
+                                    @foreach (var item in lstTicketChangeSetsStatus)
+                                    {
+                                        <div class="row col-12 align-items-center">
+                                            <label for="@item.ID" class="mb-0" style="font-weight: 400; color: #495057; line-height: 15px;">
+                                                @if (item.IsSelected)
+                                                {
+                                                    <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" checked="checked" @onchange="@((e) => OnMultiDropDownForAssetChangeSetsStatusChange(e, item.ID))" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" @onchange="@((e) => OnMultiDropDownForAssetChangeSetsStatusChange(e, item.ID))" />
+                                                }
+                                                @item.Value
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-1 display-dropdown2 pr-0 pl-0">
+                        <label class="col-5 col-form-label mobile-card-view-label">Asset Type:</label>
+                        <div class="col-7  pl-0 mobile-padding-remove pr-0 pl-0">
+                            <div class="mulit-select-dropdown">
+                                <button type="button" class="form-control form-control-sm mulit-select-dropbtn">@getSelectedAssetChangesTypes()</button>
+                                <div class="mulit-select-dropdown-content" style="min-width:200px; position: absolute;">
+                                    @foreach (var item in lstAssetChangeSetsType)
+                                    {
+                                        <div class="row col-12 align-items-center">
+                                            <label for="@item.ID" class="mb-0" style="font-weight: 400; color: #495057; line-height: 15px;">
+                                                @if (item.IsSelected)
+                                                {
+                                                    <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" checked="checked" @onchange="@((e) => OnMultiDropDownAssetChangeSetsTypeChange(e, item.ID))" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" style="width:15px; height: 15px; vertical-align: bottom;" id="@item.ID" @onchange="@((e) => OnMultiDropDownAssetChangeSetsTypeChange(e, item.ID))" />
+                                                }
+                                                @item.Value
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (isShowI9ExpiryForm == true)
+                {
+                    <div class="col-12 mb-1 display-dropdown2 pr-0 pl-0">
+                        <label class="col-5 col-form-label mobile-card-view-label">I9Expiry:</label>
+                        <div class="col-7  pl-0 mobile-padding-remove pr-0 pl-0">
+                            <select class="form-control form-control-sm" @bind="dayID">
+                                @if (I9FormDaysList != null)
+                                {
+                                    @foreach (var item in I9FormDaysList)
+                                    {
+                                        <option value="@item.Day">@item.text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                
+                }
+                <div class="col-12" style="display: flex; justify-content:flex-end; padding:0;">
+                    <button class="btn btn-primary btn-width-height right mr-2" @onclick="exportReport">
+                        Export
+                    </button>
+                    <button class="btn btn-primary btn-width-height right" @onclick="generateReport">Preview</button>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-sm-9 mobile-horizontal-overflow" style="@(isShowEmployeeDetail == true ? "padding-bottom: 2.5rem; padding-left:0px; overflow-x: scroll; overflow-y: auto; right:10px; height:calc(100vh - 50px - 50px);" : "padding-bottom: 2.5rem; padding-left:0px;")">
+        @((MarkupString)pdfContent)
+        @if (showSpinner)
+        {
+            <div class="spinnerEmail"></div>
+        }
+    </div>
+</div>

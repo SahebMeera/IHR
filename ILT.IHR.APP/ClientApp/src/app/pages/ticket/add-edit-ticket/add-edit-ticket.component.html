@@ -1,0 +1,121 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="800" #addEditTicketModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="TicketForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">Requested By </label>
+                                <!--(onChange)="onEmployeeChange($event)"-->
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="lstEmployees" [disabled]="disabledvalue" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditTicketControls.RequestedByID.errors }"
+                                                appendTo="body"
+                                                formControlName="RequestedByID"
+                                                placeholder="Select Employee"
+                                                optionValue="employeeID"
+                                                optionLabel="employeeName"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname3">Requested Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="CreatedDate"
+                                            [showIcon]="true"
+                                            [disabled]="true"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2"> Ticket Type </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="TicketTypeList" [disabled]="isTicketTypeDescription"  [ngClass]="{ 'is-invalid-dropdown': submitted && addEditTicketControls.TicketTypeID.errors }"
+                                                appendTo="body"
+                                                formControlName="TicketTypeID"
+                                                placeholder="Select Type"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">Assigned To</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="lstAssignedList" [disabled]="isAssignedDisable"
+                                                appendTo="body"
+                                                formControlName="AssignedToID"
+                                                placeholder="Select Assigned To"
+                                                (onChange)="onAssignedChange($event)"
+                                                optionValue="employeeID"
+                                                optionLabel="employeeName"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8"> Title</label>
+                                <div class="p-md-10 p-p-0">
+                                    <input type="text" id="disabled-input" formControlName="Title" pInputText [ngClass]="{ 'is-invalid': submitted && addEditTicketControls.Title.errors, 'disabled': isTicketTypeDescription === true }" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8" style=" display: flex !important; align-items: flex-start;">Description</label>
+                                <div class="p-md-10 p-p-0">
+                                    <textarea id="float-input" rows="3" cols="30" formControlName="Description" pInputTextarea [ngClass]="{ 'is-invalid': submitted && addEditTicketControls.Description.errors, 'disabled': isTicketTypeDescription === true  }"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">Status</label>
+                                <!--(onChange)="onEmployeeChange($event)"-->
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="TicketStatusList" [disabled]="true"
+                                                appendTo="body"
+                                                formControlName="StatusID"
+                                                placeholder="Select Type"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname3">Resolved Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="ResolvedDate"
+                                            [showIcon]="true"
+                                            [disabled]="true"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8" style=" display: flex !important; align-items: flex-start;">Resolution</label>
+                                <div class="p-md-10 p-p-0">
+                                    <textarea id="float-input" rows="4" cols="40" (ngModelChange)="onCommentChange($event)" [ngStyle]="{'outline':  isCommentExist === true ? '1px solid red': ''  }" [ngClass]="{ 'disabled': isCommentDisable === true  }" formControlName="Comment" pInputTextarea></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>
+

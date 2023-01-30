@@ -1,0 +1,74 @@
+import { ITimeEntryDisplay } from "./TimeEntry";
+
+export class ITimesheet {
+    TimeSheetID: number;
+    EmployeeID: number;
+    EmployeeName: string;
+    WeekEnding: Date;
+    ClientID: number;
+    ClientName: string;
+    ClientManager: string;
+    AssignmentID: number;
+    TotalHours: number;
+    FileName: string;
+    DocGuid: string;
+    TSApproverEmail: string;
+    ApprovedEmailTo: string;
+    StatusID: number;
+    StatusValue: string;
+    Status: string;
+    SubmittedByID?: number;
+    SubmittedBy?: string;
+    SubmittedDate?: Date;
+    ApprovedDate?: Date;
+    ApprovedByEmail: string;
+    ClosedByID?: number;
+    ClosedBy?: string;
+    ClosedDate?: Date;
+    TimeSheetTypeID: number;
+    TimeSheetType: string;
+    Comment?: string;
+    LinkID?: string;
+    CreatedBy: string;
+    CreatedDate: Date;
+    ModifiedBy: string;
+    ModifiedDate: Date;
+    TimeStamp: ['']
+}
+export class ITimesheetDisplay {
+    timeSheetID: number;
+    employeeID: number;
+    employeeName: string;
+    weekEnding: Date;
+    clientID: number;
+    clientName: string;
+    clientManager: string;
+    assignmentID: number;
+    totalHours: number;
+    fileName: string;
+    docGuid: string;
+    tsApproverEmail: string;
+    approvedEmailTo: string;
+    statusID: number;
+    statusValue: string;
+    status: string;
+    submittedByID?: number;
+    submittedBy?: string;
+    submittedDate?: Date;
+    approvedDate?: Date;
+    approvedByEmail: string;
+    closedByID?: number;
+    closedBy?: string;
+    closedDate?: Date;
+    emailApprovalID: number
+    validTime: Date;
+    timeSheetTypeID: number;
+    timeSheetType: string;
+    comment: string;
+    linkID: string;
+    createdBy: string;
+    createdDate: Date;
+    modifiedBy: string;
+    modifiedDate: Date;
+    timeEntries: ITimeEntryDisplay[]
+}

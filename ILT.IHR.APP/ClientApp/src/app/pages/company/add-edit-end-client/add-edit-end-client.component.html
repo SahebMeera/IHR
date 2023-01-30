@@ -1,0 +1,86 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="950" #addEditEndClientModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="EndClientForm">
+            <div class="p-grid display-flex-block">
+                <div class="p-col-12 p-p-0 p-mt-2 p-text-center remove-padding" *ngIf="ErrorMessage !== null || ErrorMessage !== ''" [ngStyle]="{'display': ErrorMessage !== '' ? 'block' : 'none' }">
+                    <span class="error-message-color" style="color: red;">{{ErrorMessage}} &nbsp;</span>
+                </div>
+                <div class="p-md-12 p-pl-0 p-pr-0 p-mt-3">
+                    <p-fieldset class="employee-part-1">
+                        <div class="p-col-12 p-p-0">
+                            <div class="p-fluid p-formgrid">
+                                <div class="p-grid p-pb-2 mobile-display-block">
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">* Company Name </label>
+                                        <input type="text" formControlName="Name" pInputText [ngClass]="{ 'is-invalid': submitted && addEditCompanyControls.Name.errors }" />
+                                    </div>
+
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1"> Tax </label>
+                                        <input type="text" formControlName="TaxID" pInputText />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-fieldset>
+
+                    <p-fieldset class="employee-part-2 " legend="Address">
+                        <div class="p-col-12 p-p-0">
+                            <div class="p-fluid p-formgrid">
+                                <div class="p-grid p-pb-2 mobile-display-block">
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4"> * Address 1 </label>
+                                        <input type="text" formControlName="Address1" pInputText [ngClass]="{ 'is-invalid': submitted && addEditCompanyControls.Address1.errors }" />
+                                    </div>
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname5">Address2 </label>
+                                        <input type="text" formControlName="Address2" pInputText />
+                                    </div>
+                                </div>
+                                <div class="p-grid p-pb-2 mobile-display-block">
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname6"> * City </label>
+                                        <input type="text" formControlName="City" pInputText [ngClass]="{ 'is-invalid': submitted && addEditCompanyControls.City.errors }" />
+                                    </div>
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname7"> * State</label>
+                                        <div class="p-md-8 p-p-0">
+                                            <p-dropdown [options]="StateList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditCompanyControls.State.errors }"
+                                                        appendTo="body"
+                                                        formControlName="State"
+                                                        placeholder="Select State"
+                                                        optionValue="stateDesc"
+                                                        optionLabel="stateDesc"></p-dropdown>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="p-grid p-pb-2 mobile-display-block">
+                                        <div class="p-md-6 display-flex-block p-pt-0 ">
+                                            <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8"> * Country </label>
+                                            <div class="p-md-8 p-p-0">
+                                                <p-dropdown [options]="CountryList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditCompanyControls.Country.errors }"
+                                                            appendTo="body"
+                                                            formControlName="Country"
+                                                            (onChange)="onChangeCountry($event)"
+                                                            placeholder="Select Country"
+                                                            optionValue="countryDesc"
+                                                            optionLabel="countryDesc"></p-dropdown>
+                                            </div>
+                                        </div>
+                                        <div class="p-md-6 display-flex-block p-pt-0 ">
+                                            <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname9">* ZipCode </label>
+                                            <input type="text" formControlName="ZipCode"  maxlength="10" pInputText [ngClass]="{ 'is-invalid': submitted && addEditCompanyControls.ZipCode.errors }" />
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </p-fieldset>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>

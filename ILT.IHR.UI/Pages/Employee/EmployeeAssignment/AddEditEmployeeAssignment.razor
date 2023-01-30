@@ -1,0 +1,503 @@
+﻿@inherits AddEditEmployeeAssignmentBase
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block overflow-y-auto-mobile" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1130px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">@Title Assignment</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="@assignment" OnValidSubmit="SaveAssignment" OnInvalidSubmit="onInvalidSubClient">
+                        <DataAnnotationsValidator />
+                        <div class="row" style="padding-right: 6px;">
+                            <div class="col-9 pl-0 pr-0 mobile-pad-right-add">
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="row no-gutters">
+                                    <div class="col-12 align-center remove-padding" style="@(ErrorMessage == null || ErrorMessage == "" ? "display: none;" : "display: block;")">
+                                        <span class="error-message-color">@ErrorMessage &nbsp;</span>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3 mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 pl-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">* Start Date</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="assignment.StartDate" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding-right">
+                                                <label class="control-label col-sm-4 col-form-label">End Date</label>
+                                                <div class="col-sm-8 pl-1 pl-0 pr-0">
+                                                    <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="assignment.EndDate"  @oninput="@onchangeAssignmentEndDate"/>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex padding-left-set">
+                                                <label class="control-label col-sm-4 col-form-label">* Client</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <CustomInputSelect id="paymentType" @bind-Value="assignment.ClientID" class="form-control form-control-sm" @oninput="onChangeClient">
+                                                        <option value="0">select</option>
+                                                        @if (ClientList != null)
+                                                            {
+
+
+                                                            @foreach (var Client in ClientList)
+
+                                                                {
+                                                                <option value="@Client.CompanyID">@Client.Name</option>
+                                                                }
+                                                            /**/
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-6 display-flex remove-padding-right padding-left-set">
+                                                <label class="control-label col-sm-4 col-form-label">* EndClient</label>
+                                                <div class="col-sm-8 pl-0 remove-padding-right">
+                                                    <CustomInputSelect id="paymentType" @bind-Value="assignment.EndClientID" class="form-control form-control-sm" @oninput="onChangeEndClient">
+                                                        <option value="0">select</option>>
+                                                        @if (endClientList != null)
+                                                            {
+                                                            @foreach (var endClient in endClientList)
+
+                                                                {
+                                                                <option value="@endClient.EndClientID">@endClient.Name</option>
+                                                                }
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex padding-left-set">
+                                                <label class="control-label col-sm-4 col-form-label">Title</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <InputText class="form-control form-control-sm" @bind-Value="assignment.Title" maxlength="50" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding-right padding-left-set">
+                                                <label class="control-label col-sm-4 col-form-label">Vendor</label>
+                                                <div class="col-sm-8 pl-0 remove-padding-right">
+                                                    <CustomInputSelect id="paymentType" @bind-Value="assignment.VendorID" class="form-control form-control-sm" @oninput="onChangeVendor">
+                                                        <option value="">select</option>>
+                                                        @if (VendorList != null)
+                                                            {
+                                                            @foreach (var Vendor in VendorList)
+
+                                                                {
+                                                                <option value="@Vendor.CompanyID">@Vendor.Name</option>
+                                                                }
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex padding-left-set">
+
+                                                <label class="control-label col-sm-4 col-form-label">Client Manager</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <InputText class="form-control form-control-sm" @bind-Value="assignment.ClientManager" maxlength="50" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding-right padding-left-set">
+                                                <label class="control-label col-sm-4 col-form-label">* Payment Type</label>
+                                                <div class="col-sm-8 pl-0 remove-padding-right">
+                                                    <CustomInputSelect id="paymentType" @bind-Value="assignment.PaymentTypeID" class="form-control form-control-sm" @oninput="onChangePayment">
+                                                        <option value="0">select</option>
+                                                        @if (PaymentTypeList != null)
+                                                            {
+
+                                                            @foreach (var paymentType in PaymentTypeList)
+                                                                {
+                                                                <option value="@paymentType.ListValueID">@paymentType.ValueDesc</option>
+                                                                }
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex padding-left-set">
+                                                <label class="control-label col-sm-4 col-form-label">Timesheet Type</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <CustomInputSelect id="weekend" @bind-Value="assignment.TimeSheetTypeID" class="form-control form-control-sm" @oninput="onChangeTimeSheetType">
+                                                        <option value="">select</option>
+                                                        @if (WeekEndingDayList != null)
+                                                            {
+
+                                                            @foreach (var weekEndingDay in WeekEndingDayList)
+                                                                {
+                                                                <option value="@weekEndingDay.ListValueID">@weekEndingDay.ValueDesc</option>
+                                                                }
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding-right padding-left-set">
+                                                <label class="control-label col-sm-4 col-form-label">TS Approver Email</label>
+                                                <div class="col-sm-8 pl-0 remove-padding-right">
+                                                    <InputText class="form-control form-control-sm" @bind-Value="assignment.TSApproverEmail" maxlength="50" />
+                                                    @*<CustomInputSelect id="paymentType" @bind-Value="assignment.TimesheetApproverID" class="form-control form-control-sm">
+                            <option value="">select</option>
+                            @if (timesheetApproverList != null)
+                                {
+
+                                @foreach (var timesheetApprover in timesheetApproverList)
+                                    {
+                                    <option value="@timesheetApprover.UserID">@(timesheetApprover.FirstName + " " + timesheetApprover.LastName)</option>
+                                    }
+                                /**/
+                                /**/
+                                /**/
+                                /**/
+                                /**/
+                                /**/
+                                /**/
+                                /**/
+                                }
+                            /**/
+                        </CustomInputSelect>*@
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3 mobile-pad-right-add padding-left-set">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-12 pr-0 pl-0 display-flex">
+                                                <label class="control-label col-sm-2 col-form-label">Approved EmailTo</label>
+                                                <div class="col-sm-10 pl-0 remove-padding-right">
+                                                    <InputText class="form-control form-control-sm" @bind-Value="assignment.ApprovedEmailTo" maxlength="100" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3 mobile-pad-right-add padding-left-set">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-12 pr-0 pl-0 display-flex">
+                                                <label class="control-label col-sm-2 col-form-label">Comments</label>
+                                                <div class="col-sm-10 pl-0 remove-padding-right">
+                                                    <InputText class="form-control form-control-sm" @bind-Value="assignment.Comments" maxlength="100" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 pr-3 pl-3 remove-padding-right remove-padding-left">
+                                        <div class="card card-border not-rounded clearfix mt-3">
+                                            <div class="card-body">
+                                                <h4 class="card-title mb-1">Address</h4>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-6 pr-0 pl-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* Address 1</label>
+                                                        <div class="col-sm-8 pl-0 pr-0 mobile-pad-right-add">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="assignment.Address1" maxlength="100" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 pr-0 display-flex remove-padding-left">
+                                                        <label class="control-label col-sm-4 col-form-label">Address 2</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="assignment.Address2" maxlength="100" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-6 pr-0 pl-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* City</label>
+                                                        <div class="col-sm-8 pl-0 pr-0  mobile-pad-right-add">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="assignment.City" maxlength="50" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 pr-0 display-flex remove-padding-left">
+                                                        <label class="control-label col-sm-4 col-form-label">* State</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <CustomInputSelect id="paymentType" @bind-Value="assignment.State" class="form-control form-control-sm" maxlength="50">
+                                                                <option value="0">select</option>
+                                                                @if (StateList != null)
+                                                                    {
+                                                                    @foreach (var State in StateList)
+                                                                        {
+                                                                        <option value="@State.StateDesc">@State.StateDesc</option>
+                                                                        }
+                                                                    /**/
+                                                                    /**/
+                                                                    /**/
+                                                                    }
+                                                                /**/
+                                                                /**/
+                                                            </CustomInputSelect>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-6 pr-0 pl-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">* Country</label>
+                                                        <div class="col-sm-8 pl-0 pr-0 mobile-pad-right-add">
+                                                            <CustomInputSelect id="paymentType" @bind-Value="assignment.Country" class="form-control form-control-sm" @oninput="onChangeCountry" maxlength="50">
+                                                                <option value="0">select</option>
+                                                                @if (CountryList != null)
+                                                                    {
+                                                                    @foreach (var country in CountryList)
+                                                                        {
+                                                                        <option value="@country.CountryDesc">@country.CountryDesc</option>
+                                                                        }
+                                                                    /**/
+                                                                    /**/
+                                                                    /**/
+                                                                    }
+                                                                /**/
+                                                                /**/
+
+                                                            </CustomInputSelect>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 pr-0 display-flex remove-padding-left">
+                                                        <label class="control-label col-sm-4 col-form-label">* ZipCode</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="assignment.ZipCode" maxlength="10" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 pr-0 pl-0 assignment-endclient justify-content-center">
+                                <div class="row no-gutters">
+                                    <div class="col-sm-12 pr-3 pl-3 pt-2">
+                                        <div class=" row align-items-baseline">
+                                            <div class="col-sm-12 client-label" >
+                                                <label class="control-label col-form-label" style="padding-bottom:0px;">Client</label>
+                                            </div>
+                                            <div class="col-sm-12 " style="padding-right:0.3rem; padding-left:0.2rem;">
+                                                <input type="text" class="form-control form-control-sm disabled" style="font-weight: 600;text-align: center; font-size:12px !important;" @bind="@selectedClient">
+                                            </div>
+                                            
+                                            </div>
+                                        </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="row align-items-baseline">
+
+                                            <div class="col-12 d-flex justify-content-center pl-4" style="top: 2px;">
+                                                <div class="arrow">
+                                                    <img src="/images/arrow.png"  class="add-subClient"/>
+                                                </div>
+                                                @if(isEndClient())
+                                                {
+                                                <div style="padding-bottom: 4px;padding-left: 3px;">
+                                                    <button type="button" class="btn btn-primary" style="line-height: 0; padding: 3px; background-color: #96ad96;border-radius: 50%;" @onclick="(()=>addSubClient(true, new SubClient()))">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                                }
+                                            </div>
+
+                                            @if (subClients != null)
+                                            {
+                                                @foreach (var item in subClients)
+                                                {
+                                                    <div class="col-12">
+                                                        <div class="row pr-1" style="justify-content: center;align-items: center;">
+                                                            @*<label class="col-4 pl-2 control-label col-form-label">SubClient</label>*@
+                                                            <div class="col-11 pr-0">
+                                                                <input type="text" style="text-align: center; @(item.isValidSubClient == true ? "outline: 1px solid red;" : "" )"  placeholder="SubClient" class="form-control form-control-sm placeholder-color" @bind="@item.Text">
+                                                            </div>
+                                                            <div class="col-1 pl-1">
+                                                                <button type="button" class="btn btn-danger" style="line-height: 0; padding: 2px; background-color: #e4939b;border-radius: 50%;" @onclick="(()=>removeSubClient(item))">
+                                                                    @*<i class="fas fa-times-circle"></i>*@
+                                                                    <i class="fas fa-times"></i>
+                                                                </button>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 d-flex justify-content-center  pl-4" style="top: 2px;">
+                                                        <div class="arrow">
+                                                            <img src="/images/arrow.png" class="add-subClient" />
+                                                        </div>
+                                                        <div style="padding-bottom: 4px;padding-left: 3px;">
+                                                            <button type="button" class="btn btn-primary" style="line-height: 0; padding: 2px; background-color: #96ad96;border-radius: 50%;" @onclick="(()=>addSubClient(false, item))">
+                                                                <i class="fas fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-12" style="padding-right:0.3rem; padding-left:0.2rem; ">
+                                                <input type="text" class="form-control form-control-sm disabled" style="font-weight: 600;text-align: center; font-size:12px !important;" @bind="@selectedEndClient">
+                                            </div>
+                                            <div class="col-sm-12 client-label">
+                                                <label class="control-label col-form-label" style="padding-top: 0px !important;">EndClient</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 remove-padding-right">
+                                <div class="form-group pr-3 pt-3 d-flex justify-content-end mb-0 remove-padding-right">
+                                    @if (isShow)
+                                    {
+                                        @*<button type="submit" class="btn btn-primary" disabled="@(!context.Validate() || !context.IsModified())">Save</button>*@
+                                        <button type="submit" class="btn btn-primary btn-width-height" disabled="@isSaveButtonDisabled">Save</button>
+                                    }
+
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ShowChildDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 800px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">@Title Assignment Rate</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 pl-0 pr-0">
+                            <EditForm Model="@assignmentRate" OnValidSubmit="AssignmentRateValidation">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="row no-gutters">
+                                    <div class="col-12 align-center remove-padding" style="@(ErrorMessage == null || ErrorMessage == "" ? "display: none;" : "display: block;")">
+                                        <span class="error-message-color">@ErrorMessage &nbsp;</span>
+                                    </div>
+                                    <div class="col-sm-12 pr-3 pl-3">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 pl-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">Start Date</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="assignmentRate.StartDate" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">End Date</label>
+                                                <div class="col-sm-8 pl-0">
+                                                    <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="assignmentRate.EndDate"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">Billing Rate</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="assignmentRate.BillingRate" data-mask="[00000000].00" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex">
+                                                <label for="companyType" class="control-label col-sm-4 col-form-label">Payment Rate</label>
+                                                <div class="col-sm-8 pl-0 ">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="assignmentRate.PaymentRate" data-mask="[00000000].00" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group">
+            <ValidationSummary />
+        </div>*@
+                                </div>
+                                <div class="form-group pr-3 pt-2 d-flex justify-content-end remove-padding-right">
+                                    @if (isShow)
+                                    {
+                                        @*<button type="submit" class="btn btn-primary" disabled="@(!context.Validate() || !context.IsModified())">Save</button>*@
+                                        <button type="submit" class="btn btn-primary btn-width-height" disabled="@isSaveButtonDisabledForRate">Save</button>
+                                    }
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+

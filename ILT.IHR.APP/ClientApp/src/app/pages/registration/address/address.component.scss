@@ -1,0 +1,9 @@
+.invalid-feedback {
+    color: #E91E63;
+    display: block;
+}
+:host ::ng-deep .is-invalid-dropdown {
+    .p-dropdown {
+        outline: 1px solid #E91E63;
+    }
+}

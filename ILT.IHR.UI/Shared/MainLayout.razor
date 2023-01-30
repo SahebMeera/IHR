@@ -1,0 +1,356 @@
+﻿@inherits LayoutComponentBase
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@inject NavigationManager NavigationManager
+
+@using IHR.DTO
+@inject NavigationManager navigationManager
+@using Blazored.Toast.Configuration
+@using ILT.IHR.UI.Pages.User
+@using ILT.IHR.UI.Pages.Help
+@using ILT.IHR.UI.Service;
+
+
+@if (intEmailApproval > -1)
+{
+    <ILT.IHR.UI.Pages.EmailApproval></ILT.IHR.UI.Pages.EmailApproval>
+}
+else
+{
+    <ContextMenu Id="logoutMenu">
+        <div class="row col-12">
+            <div class="col-4 username-circle">@UserNameShort</div>
+            <div class="col-8">
+                <div class="col-12 itemname">@UserName</div>
+                <div class="col-12 itememail">@user.Email</div>
+                <div class="col-12 itememail">@ClientName</div>
+                <Item CssClass="itemlinkcolor" OnClick="@Profile">My profile</Item>
+                <Item CssClass="itemlinkcolor" OnClick="@Logout">Sign out</Item>
+            </div>
+        </div>
+    </ContextMenu>
+    <ContextMenu Id="notificationMenu" CssClass="Notification-Menu">
+        @*<Item CssClass="itemlinkcolor" @onclick="@(e => NavigateToNotifiedRecord(notification))">@notification.Module pending approval: @notification.EmployeeName</Item>*@
+        <div class="row col-12">
+
+            @if (userNotifications != null)
+            {
+                @foreach (var notification in userNotifications.FindAll(x => x.Module == "Timesheet"))
+                {
+                    <div class="col-12" style="padding-bottom: 5px;padding-top: 5px;border-bottom: 1px solid;">
+                        <div class="row">
+                            <div class="col-12">
+
+                                <a href="javascript:void(0);" @onclick="@(e => NavigateToNotifiedRecord(notification))">@notification.Module pending approval: @notification.EmployeeName</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @foreach (var notification in userNotifications.FindAll(x => x.Module == "Leave"))
+                {
+                    <div class="col-12" style="padding-bottom: 5px;padding-top: 5px;border-bottom: 1px solid;">
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="javascript:void(0);" @onclick="@(e => NavigateToNotifiedRecord(notification))">@notification.Module pending approval: @notification.EmployeeName</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @foreach (var notification in userNotifications.FindAll(x => x.Module == "Ticket"))
+                {
+                    <div class="col-12" style="padding-bottom: 5px;padding-top: 5px;border-bottom: 1px solid;">
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="javascript:void(0);" @onclick="@(e => NavigateToNotifiedRecord(notification))">@notification.Module pending resolution: @notification.EmployeeName</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @foreach (var notification in userNotifications.FindAll(x => x.Module == "Employee"))
+                {
+                    <div class="col-12" style="padding-bottom: 5px;padding-top: 5px;border-bottom: 1px solid;">
+                        <div class="row">
+                            <div class="col-11">
+                                <a href="javascript:void(0);" @onclick="@(e => NavigateToNotifiedRecord(notification))">@notification.Module changes: @notification.EmployeeName </a>
+                            </div>
+                            <div class="col-1">
+                                <button style="background: none; border: none; padding:0px; text-decoration: underline;color: #0056b3;" @onclick="@(e => DismissNotification(notification))">
+                                    <i class="fas fa-times"></i>
+
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <div class=" row col-12">
+
+        </div>
+    </ContextMenu>
+    <AuthorizeView>
+        <Authorized>
+            <div class="sidebar margin-bottom-mobile" style="width: @sideBarWidth" @onmouseover="SideNavOnMouseOver" @onmouseout="SideNavOnMouseOut">
+                <NavMenu isShowNav="@showSideBar" />
+            </div>
+
+            <div class="main" style="overflow: hidden;">
+                <div class="top-row row px-4">
+                    <div class="col-3 pl-0 mobile-display-none">
+                        @if (!showSideBar)
+                        {
+
+                            <i class="fas fa-bars cusrsor" @onclick="openCloseMenu"></i>
+
+                        }
+                        else
+                        {
+
+                            <i class="fas fa-bars cusrsor" @onclick="openCloseMenu"></i>
+
+                        }
+                    </div>
+                    <div class="col-4 login-user-display ">
+                        @*<img src="images/AppLogo.png" width="175px;">*@
+                        <img src="images/InfoHRAppLogo.png" width="290px;" height="55px;">
+                    </div>
+                    <div class="col-md-6 col-lg-2">
+                        <div class="form-group row align-items-baseline mb-0 padding-right-add">
+                            <label class="control-label  pr-2 col-4 d-flex justify-content-end text-white mb-0">Role</label>
+                            <div class="col-8 col-control">
+                                <select class="form-control form-control-sm" style="height:calc(1em + .5rem + 2px);background-color: #1979c5;color: white;" id="roleID" @bind="roleID" @oninput="onRoleChange">
+                                    @if (userRoles != null)
+                                    {
+                                        @foreach (var userRole in userRoles)
+                                        {
+                                            <option value="@userRole.RoleID">@userRole.RoleName</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6  col-lg-3 user-image-display pr-0">
+                        <div class="row" style="display: flex;align-items: center; padding-right:12px;">
+                            <div class="col-3 pr-0" style="display:flex;">
+                                @*<ContextMenuTrigger MenuId="notificationMenu" MouseButtonTrigger="MouseButtonTrigger.Left" hidden="@(userNotifications == null || userNotifications.Count == 0)">*@
+                                <ContextMenuTrigger MenuId="notificationMenu" MouseButtonTrigger="MouseButtonTrigger.Left" 
+                                 hidden="@(userNotifications == null || userNotifications.Count == 0 || isNotificationEnabled == false)">
+                                    <span style="font-size: 32px; color: white; cursor: pointer;" class="fas fa-bell"></span>
+                                </ContextMenuTrigger>
+                                <div @onclick="Help" style="cursor:pointer; padding-left: 15px;">
+                                    <span style="font-size: 32px; color: white; cursor: pointer;" class="fas fa-question-circle"></span>
+                                </div>
+                            </div>
+                            <div class="col-7 remove-left-padding" style="padding-right:1px;">
+                                @*<div class="user-display">@context.User.Identity.Name</div>*@
+                                <div class="user-display white-space-nowrap">@UserName</div>
+                                <div class="user-display">@ClientName</div>
+                            </div>
+                            <div class="col-2 img-margin-left">
+                                <ContextMenuTrigger MenuId="logoutMenu" MouseButtonTrigger="MouseButtonTrigger.Both">
+                                    <img src="images/user-icon.png" class="rounded-circle menu-pointer" width="41">
+                                </ContextMenuTrigger>
+                                @*<a href="/login" class="logout" @onclick="(() => Logout())">
+                                        <img src="images/user-icon-1.png" class="rounded-circle" width="31">
+                                    </a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content  set-left-right pt-0">
+                    @Body
+                </div>
+
+            </div>
+
+            <BlazoredToasts Position="ToastPosition.TopRight"
+                            Timeout="2" />
+            <AddEditUser @ref="AddEditUserModal"></AddEditUser>
+            <Help @ref="HelpModal"></Help>
+        </Authorized>
+        <NotAuthorized>
+            <div class="main">
+                <ILT.IHR.UI.Pages.Login></ILT.IHR.UI.Pages.Login>
+            </div>
+        </NotAuthorized>
+
+    </AuthorizeView>
+}
+
+@code {
+    public string ClientName;
+    public string UserName;
+    public string UserNameShort;
+    public int roleID { get; set; }
+    public string roleName { get; set; }
+    public string roleShort { get; set; }
+    public List<DTO.UserRole> userRoles;
+    public bool isNotificationEnabled { get; set; } = true;
+    public List<DTO.UserNotification> userNotifications;
+    public List<DTO.Employee> employees;
+
+    int intEmailApproval;
+    ILT.IHR.DTO.User user;
+
+
+    [Inject]
+    public IUserNotificationService userNotificationService { get; set; } //Service
+
+    [Inject]
+    public IEmployeeService employeeService { get; set; } //Service
+
+    [Inject]
+    protected DataProvider dataProvider { get; set; }
+
+    // public ContextMenu notificationMenu { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
+
+        string uristring = uri.ToString();
+        intEmailApproval = uristring.IndexOf("emailapproval");
+
+        user = await sessionStorage.GetItemAsync<ILT.IHR.DTO.User>("User");
+        userRoles = await sessionStorage.GetItemAsync<List<DTO.UserRole>>(SessionConstants.USERROLES);
+        if (user != null)
+        {
+            UserName = user.FirstName + " " + user.LastName;
+            UserNameShort = user.FirstName.Substring(0, 1) + user.LastName.Substring(0, 1);
+        }
+        var ClientID = await sessionStorage.GetItemAsync<string>("ClientID");
+        ClientName = Configuration["AllowedClients:" + ClientID];
+        roleID = await sessionStorage.GetItemAsync<int>("RoleID");
+        roleName = await sessionStorage.GetItemAsync<string>("RoleName");
+        roleShort = await sessionStorage.GetItemAsync<string>("RoleShort");
+        isNotificationEnabled = Convert.ToBoolean(Configuration["NotificationEnabled"]);
+        if (user != null && isNotificationEnabled == true)
+        {
+            int UserID = Convert.ToInt32(user.RecordID);
+            var resp = await userNotificationService.GetUserNotifications(UserID);
+            if (resp != null && resp.Data != null)
+            {
+                userNotifications = resp.Data.ToList<UserNotification>();
+            }
+        }
+    }
+
+    public async Task DismissNotification(UserNotification notification)
+    {
+        if (user != null && userNotifications != null)
+        {
+            userNotifications.RemoveAll(x => x.NotificationID == notification.NotificationID);
+            await userNotificationService.UpdateUserNotifications(notification.NotificationID, notification);
+        }
+        else
+        {
+            await Task.CompletedTask;
+        }
+    }
+
+    public void NavigateToNotifiedRecord(UserNotification notification)
+    {
+        if (notification.Module == "Employee")
+        {
+            Employee empData = new Employee();
+            empData.EmployeeID = notification.RecordID;
+            // userNotificationService.UpdateUserNotifications(notification.NotificationID, notification);
+            dataProvider.storage = empData;
+            navigationManager.NavigateTo("employees");
+        }
+        if (notification.Module == "Leave")
+        {
+            Leave leave = new Leave();
+            leave.LeaveID = notification.RecordID;
+            dataProvider.storage = leave;
+            navigationManager.NavigateTo("leaverequests");
+        }
+        if (notification.Module == "Timesheet")
+        {
+            TimeSheet timesheet = new TimeSheet();
+            timesheet.TimeSheetID = notification.RecordID;
+            dataProvider.storage = timesheet;
+            navigationManager.NavigateTo("timesheet");
+        }
+
+    }
+
+    AddEditUserBase AddEditUserModal;
+    HelpBase HelpModal;
+
+
+    public void Help()
+    {
+        HelpModal.Show();
+    }
+
+    public void Logout()
+    {
+        ((ILT.IHR.UI.Data.CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsLoggedOut();
+        sessionStorage.RemoveItemAsync("User");
+    }
+
+    public void Profile()
+    {
+        //navigationManager.NavigateTo("timesheet");
+         AddEditUserModal.Show(user.UserID, "Myprofile");
+    }
+
+
+    public string sideBarWidth = "210px";
+    public bool showSideBar = true;
+    protected bool canCloseMenuOnMouseOut = false;
+    protected void openCloseMenu()
+    {
+        canCloseMenuOnMouseOut = false;
+        if (showSideBar)
+        {
+            sideBarWidth = "4rem";
+            showSideBar = false;
+        }
+        else
+        {
+            sideBarWidth = "210px";
+            showSideBar = true;
+        }
+    }
+    protected void SideNavOnMouseOver()
+    {
+        //if (!showSideBar)
+        //{
+        //    sideBarWidth = "210px";
+        //    canCloseMenuOnMouseOut = true;
+        //    showSideBar = true;
+        //}
+    }
+    protected void SideNavOnMouseOut()
+    {
+        if (canCloseMenuOnMouseOut)
+        {
+            sideBarWidth = "4rem";
+            showSideBar = false;
+        }
+    }
+    protected async Task onRoleChange(ChangeEventArgs e)
+    {
+        if (e.Value != null)
+        {
+            roleID = Convert.ToInt32(e.Value);
+            roleName = userRoles.Find(x => x.RoleID == roleID).RoleName;
+            roleShort = userRoles.Find(x => x.RoleID == roleID).RoleShort;
+            await sessionStorage.SetItemAsync("RoleID", roleID);
+            await sessionStorage.SetItemAsync("RoleName", roleName);
+            await sessionStorage.SetItemAsync("RoleShort", roleShort);
+            var userRolePerm = await sessionStorage.GetItemAsync<List<RolePermission>>(SessionConstants.USERROLEPERMISSIONS);
+            await sessionStorage.RemoveItemAsync(SessionConstants.ROLEPERMISSION);
+            var rolePerm = userRolePerm.Where(x => x.RoleID == roleID).ToList();
+            await sessionStorage.SetItemAsync(SessionConstants.ROLEPERMISSION, rolePerm);//should add role of that particular id
+            navigationManager.NavigateTo("/", forceLoad: true);
+        }
+    }
+}

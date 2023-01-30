@@ -1,0 +1,69 @@
+<div class="p-grid p-fluid" *ngIf="true">
+    <div class="p-col-12 pathx-table hidden-web" style="font-size: 13px !important; overflow: auto;">
+        <p-table [value]="lstFormI9List" styleClass="ui-table-pathx" *ngIf="i9ExpiryFormReport" sortField="employeeName" sortOrder="1">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Work Auth</th>
+                    <th>I94 Expiry</th>
+                    <th>List A Doc</th>
+                    <th>List A Expiry</th>
+                    <th>List B Doc</th>
+                    <th>List B Expiry</th>
+                    <th>List C Doc</th>
+                    <th>List C Expiry</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-auditLog>
+                <tr>
+                    <td class="p-text-right">{{auditLog.employeeName}}</td>
+                    <td>{{auditLog.workAuthorization}}</td>
+                    <td>{{auditLog.i94ExpiryDate}}</td>
+                    <td class="p-text-right">{{auditLog.listADocumentTitle}}</td>
+                    <td style="white-space: break-spaces;">{{auditLog.listAExpirationDate}}</td>
+                    <td>{{auditLog.listBDocumentTitle}}</td>
+                    <td>{{auditLog.listBExpirationDate}}</td>
+                    <td>{{auditLog.listCDocumentTitle}}</td>
+                    <td>{{auditLog.listCExpirationDate}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+
+    <div class="p-col-12 pathx-table hidden-web hidden-mobile" style="font-size: 13px !important; overflow: auto;">
+        <p-table [value]="lstFormI9List" styleClass="ui-table-pathx" *ngIf="i9ExpiryFormReport" sortField="employeeName" sortOrder="1"
+                 [scrollable]="true"
+                 scrollHeight="400px"
+                 scrollDirection="horizontal"
+                 [resizableColumns]="true"
+                 [autoLayout]="true">
+            <ng-template pTemplate="header" let-columns>
+                <tr class="white-space">
+                    <th style="min-width:200px">Employee Name</th>
+                    <th style="min-width:120px">Work Auth</th>
+                    <th style="min-width:100px">I94 Expiry</th>
+                    <th style="min-width:200px">List A Doc</th>
+                    <th style="min-width:100px">List A Expiry</th>
+                    <th style="min-width:200px">List B Doc</th>
+                    <th style="min-width:100px">List B Expiry</th>
+                    <th style="min-width:200px">List C Doc</th>
+                    <th style="min-width:100px">List C Expiry</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-auditLog>
+                <tr class="white-space">
+                    <td class="p-text-right" style="min-width:200px">{{auditLog.employeeName}}</td>
+                    <td style="min-width:120px">{{auditLog.workAuthorization}}</td>
+                    <td style="min-width:100px">{{auditLog.i94ExpiryDate}}</td>
+                    <td style="min-width:200px" class="p-text-right">{{auditLog.listADocumentTitle}}</td>
+                    <td style="white-space: break-spaces; min-width: 100px">{{auditLog.listAExpirationDate}}</td>
+                    <td style="min-width:200px">{{auditLog.listBDocumentTitle}}</td>
+                    <td style="min-width:100px">{{auditLog.listBExpirationDate}}</td>
+                    <td style="min-width:200px">{{auditLog.listCDocumentTitle}}</td>
+                    <td style="min-width:100px">{{auditLog.listCExpirationDate}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

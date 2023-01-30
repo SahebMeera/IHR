@@ -1,0 +1,105 @@
+<div class="p-grid hidden-web">
+    <div class="p-col-12 p-pt-0 p-pb-0">
+        <h3 style="margin-bottom:1px;">User</h3>
+    </div>
+    <div class="p-col-12">
+        <app-ihr-table #dt [data]="UsersList" [isPagination]="isPagination" 
+        [sortingField]="'firstName'"
+        [sortingFieldOrder]="1"
+        [loading]="loading"
+        [globalFilterFields]="globalFilterFields"
+        [showCurrentPageReport]="showCurrentPageReport" [cols]="cols" [selectedColumns]="selectedColumns"
+        [rowActions]="rowActions" [headerActions]="headerActions" [tableState]="patientLanding">
+      </app-ihr-table>
+    </div>
+</div>
+
+<div class="p-grid  hidden-web hidden-mobile" *ngIf="true">
+    <div class="p-col-12 p-pt-0 p-pb-0">
+        <h3 style="margin-bottom:1px;">User</h3>
+    </div>
+    <div class="p-col-12 ">
+        <div class="p-grid p-mr-0 p-pb-1 display-flex mobile-display">
+            <div class="p-col-12 p-pr-1 mobile-padding-remove mobile-pad-left-add">
+                <div class="p-d-grid p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Global Search..." autocomplete="off" [(ngModel)]="searchText" />
+                </div>
+            </div>
+            <div class="p-col-12 p-lg-4 p-pb-0 p-pr-3">
+          
+                <div class="p-grid grid-dropdown" style="padding-top:14px; justify-content: end;">
+                    <div class="p-md-12  p-p-0 p-text-right" style="margin-right:8px !important;">
+                        <button pButton pRipple type="button" label="ADD" class=" btn-width-height p-button-raised btn-width-height btn btn-block btn-sm btn-info" style="margin: 0px !important;" (click)="add()">
+                            <i style="padding-right:6px;" class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-col-12  p-pt-2" id="myItems" *ngIf="UsersList != null && UsersList.length > 0">
+        <div class="p-col-12  p-pl-0 p-pr-0" *ngFor="let user of UsersList | FilterPipe: searchText : searchableList">
+            <div class="p-card mobile-card-view p-mb-2" (click)="editUser(user)">
+                <div class="p-card-body" style="padding-bottom:0.5rem !important;">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Emp Code :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{user.employeeCode}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">First Name :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{user.firstName}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2  p-pt-0 p-pb-0 mobile-card-view-label">Last Name :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{user.lirstName}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex" style="display:contents !important;">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label" style=" padding-top: 3px !important;">Email :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value" style="word-wrap: break-word;">
+                                {{user.email}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex" style=" display: contents !important;">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label" style=" padding-top: 3px !important;">Role :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{user.roleName}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Company :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{user.companyName}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">OAuth :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{user.isOAuth}}
+                            </div>
+                        </div>
+                         <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Acitve :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{user.isActive}}
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<app-add-edit-user #AddEditUserModal   (ListValueUpdated)="LoadList()"></app-add-edit-user>
+

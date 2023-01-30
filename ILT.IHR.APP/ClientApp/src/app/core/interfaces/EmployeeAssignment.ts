@@ -1,0 +1,74 @@
+import { IAssignmentRateDisplay } from "./AssignmentRate";
+
+export class IEmployeeAssignment {
+    AssignmentID: number;
+    VendorID?: number;
+    Vendor?: string;
+    ClientID: number;
+    Client?: string;
+    EmployeeID: number;
+    EndClientID: number;
+    PaymentTypeID: number;
+    PaymentType?: string;
+    TimesheetTypeID: number;
+    TimesheetType?: string;
+    EmployeeName: string;
+    ClientManager: string;
+    Title: string;
+    Address1: string;
+    Address2: string;
+    City: string;
+    State: string;
+    Country: string;
+    ZipCode: string;
+    SubClient: string;
+    Comments: string;
+    TSApproverEmail: string;
+    ApprovedEmailTo: string;
+    StartDate: Date;
+    EndDate: Date;
+    CreatedBy: string;
+    CreatedDate: Date;
+    ModifiedBy: string;
+    ModifiedDate: Date;
+    TimeStamp: ['']
+}
+export class IEmployeeAssignmentDisplay {
+    assignmentID: number;
+    vendorID: number;
+    vendor: string;
+    clientID: number;
+    role: string;
+    clientManager: string;
+    employeeID: number;
+    endClientID: number;
+    paymentTypeID: number;
+    timesheetTypeID: number;
+    timeSheetTypeID: number;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    employeeName: string;
+    title: string;
+    address1: string;
+    address2: string;
+    city: string;
+    state: string;
+    country: string;
+    zipCode: string;
+    subClient: string;
+    client: string;
+    comments: string;
+    tsApproverEmail: string;
+    paymentType: string;
+    timeSheetType: string;
+    approvedEmailTo: string;
+    startDate: Date;
+    endDate: Date;
+    createdBy: string;
+    createdDate: Date;
+    modifiedBy: string;
+    modifiedDate: Date;
+    TimeStamp: ['']
+    assignmentRates: IAssignmentRateDisplay[];
+}

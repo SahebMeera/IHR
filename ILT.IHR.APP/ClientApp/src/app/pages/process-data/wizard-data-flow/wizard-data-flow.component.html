@@ -1,0 +1,262 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="1130" #WizardDataFlowModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <div class="p-grid p-pt-3" *ngIf="!isShowTickets && WizardSteps != undefined && WizardSteps != null">
+            <div class="p-col-12 p-p-0" *ngIf="WizardSteps != null && WizardSteps !== undefined && WizardSteps.length > 0">
+                <form [formGroup]="ProcessDataForm">
+                    <div class="p-col-12 p-p-0 p-text-center remove-padding" *ngIf="stepErrorMessage !== null || stepErrorMessage !== ''" [ngStyle]="{'display': stepErrorMessage !== '' ? 'block' : 'none' }">
+                        <span class="error-message-color" style="color: red;">{{stepErrorMessage}} &nbsp;</span>
+                    </div>
+                    <div class="p-col-12 p-p-0 " *ngFor="let step of WizardSteps; let i = index;">
+                        <p-fieldset class="employee-part-2" [legend]="step.name" [ngClass]="{ 'disabled': isControlDisable === true  }">
+                            <div class="p-grid p-col-12 p-p-0 display-flex-block mobile-padding-left-add" *ngIf="step.fields != null && step.fields !== undefined && step.fields.length > 0">
+                                <div class="p-grid pathx-frm " style="display: contents;">
+                                    <div class="p-pb-2 p-pl-0" *ngFor="let element of step.fields; let f = index;" [ngClass]="element !== undefined && element.fullWidth.toString().toUpperCase() !== 'TRUE' ? 'p-md-6' : 'p-md-12'" [ngStyle]="{'display': element.position.toUpperCase() !== step.name.toUpperCase() ? 'none' : 'block' }">
+                                        <div *ngIf="element !== undefined && element.position.toUpperCase() == step.name.toUpperCase()" [ngStyle]="{'display': element.position.toUpperCase() !== step.name.toUpperCase() ? 'none' : '' }">
+                                            <div class="p-grid p-pb-0 mobile-display-block" *ngIf="element !== undefined && element.fullWidth.toString().toUpperCase() !== 'TRUE'">
+                                                <div class="p-md-12  p-p-0 display-flex-block p-pt-0 " *ngIf="element !== undefined && element.elementType.toUpperCase() === 'TextInput'.toUpperCase()">
+                                                    <label class="control-label p-md-5 col-form-label mobile-col-form-label" for="firstname8" style="display: flex !important; align-items: flex-start;">{{element.label}}</label>
+                                                    <div class="p-md-7 p-p-0">
+                                                        <input type="text" [(ngModel)]="element.value" ngDefaultControl [ngModelOptions]="{standalone: true}" pInputText />
+                                                    </div>
+                                                </div>
+                                                <div class="p-md-12 p-p-0 p-pb-2 display-flex-block p-pt-0 " *ngIf="element.elementType.toUpperCase() === 'DateInput'.toUpperCase()">
+                                                    <label class="control-label p-md-5 col-form-label mobile-col-form-label" for="firstname8" style=" display: flex !important; align-items: flex-start;">{{element.label}}</label>
+                                                    <div class="p-md-7 p-p-0">
+                                                        <p-calendar class="p-md-7 p-p-0" ngDefaultControl [ngModel]="element.value"
+                                                                    [showIcon]="true"
+                                                                    dateFormat="mm/dd/yy"
+                                                                    inputId="firstname6"
+                                                                    [monthNavigator]="true"
+                                                                    [yearNavigator]="true"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    [yearRange]="commonUtils.getDateRange()"
+                                                                    appendTo="body"></p-calendar>
+                                                    </div>
+                                                </div>
+                                                <div class="p-md-12  p-p-0 display-flex-block p-pt-0 " *ngIf="element.elementType.toUpperCase() === 'EmailInput'.toUpperCase()">
+                                                    <label class="control-label p-md-5 col-form-label mobile-col-form-label" for="firstname8" style="display: flex !important; align-items: flex-start;">{{element.label}}</label>
+                                                    <div class="p-md-7 p-p-0">
+                                                        <input type="text" [(ngModel)]="element.value" ngDefaultControl [ngModelOptions]="{standalone: true}" pInputText />
+                                                    </div>
+                                                </div>
+                                                <div class="p-md-12  p-p-0 display-flex-block p-pt-0 " *ngIf="element.elementType.toUpperCase() === 'TextAreaInput'.toUpperCase()">
+                                                    <label class="control-label p-md-5 col-form-label mobile-col-form-label" for="firstname8" style="display: flex !important; align-items: flex-start;">{{element.label}}</label>
+                                                    <div class="p-md-7 p-p-0">
+                                                        <textarea id="float-input" rows="4" cols="40" [(ngModel)]="element.value" ngDefaultControl [ngModelOptions]="{standalone: true}" pInputTextarea></textarea>-->
+                                                    </div>
+                                                </div>
+                                                <div class="p-md-12 p-p-0 p-pb-2 display-flex-block p-pt-0 " *ngIf="element.elementType.toUpperCase() === 'NumberInput'.toUpperCase()">
+                                                    <label class="control-label p-md-5 col-form-label mobile-col-form-label" for="firstname54" style=" display: flex !important; align-items: flex-start;">{{element.label}}</label>
+                                                    <div class="p-md-7 p-p-0">
+                                                        <p-inputMask mask="9999999999" ngDefaultControl class="p-md-9 p-p-0" [(ngModel)]="element.value" [ngModelOptions]="{standalone: true}"></p-inputMask>
+                                                    </div>
+                                                </div>
+                                                <div class="p-md-12 p-p-0 p-pb-2 display-flex-block p-pt-0 " *ngIf="element.elementType.toUpperCase() === 'SelectInput'.toUpperCase()">
+                                                    <label class="control-label p-md-5 col-form-label mobile-col-form-label" for="firstname32" style=" display: flex !important; align-items: flex-start;">{{element.label}}</label>
+                                                    <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'EMPLOYEE'">
+                                                        <p-dropdown [options]="EmployeeList"
+                                                                    appendTo="body"
+                                                                    ngDefaultControl
+                                                                    [(ngModel)]="element.value"
+                                                                    placeholder="Select Employee"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    optionValue="employeeName"
+                                                                    optionLabel="employeeName"></p-dropdown>
+                                                    </div>
+                                                    <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'STATE'">
+                                                        <p-dropdown [options]="EmployeeList"
+                                                                    appendTo="body"
+                                                                    ngDefaultControl
+                                                                    [(ngModel)]="element.value"
+                                                                    placeholder="Select Employee"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    optionValue="employeeName"
+                                                                    optionLabel="employeeName"></p-dropdown>
+                                                    </div>
+                                                    <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'COUNTRY'">
+                                                        <p-dropdown [options]="CountryList"
+                                                                    appendTo="body"
+                                                                    ngDefaultControl
+                                                                    [(ngModel)]="element.value"
+                                                                    placeholder="Select Country"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    optionValue="countryDesc"
+                                                                    optionLabel="countryDesc"></p-dropdown>
+                                                    </div>
+                                                    <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'JOBTITLE'">
+                                                        <p-dropdown [options]="TitleList"
+                                                                    appendTo="body"
+                                                                    ngDefaultControl
+                                                                    [(ngModel)]="element.value"
+                                                                    placeholder="Select Titile"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    optionValue="value"
+                                                                    optionLabel="valueDesc"></p-dropdown>
+                                                    </div>
+                                                    <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'EMPLOYMENTTYPE'">
+                                                        <p-dropdown [options]="EmployMentList"
+                                                                    appendTo="body"
+                                                                    [(ngModel)]="element.value"
+                                                                    placeholder="Select Type"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    optionValue="listValueID"
+                                                                    optionLabel="valueDesc"></p-dropdown>
+                                                    </div>
+                                                    <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'INVOICINGPERIOD'">
+                                                        <p-dropdown [options]="InvoicingPeriodList"
+                                                                    appendTo="body"
+                                                                    ngDefaultControl
+                                                                    [(ngModel)]="element.value"
+                                                                    placeholder="Select Invoice"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    optionValue="listValueID"
+                                                                    optionLabel="valueDesc"></p-dropdown>
+                                                    </div>
+                                                    <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'PAYMENTTERM'">
+                                                        <p-dropdown [options]="InvoicingPeriodList"
+                                                                    appendTo="body"
+                                                                    [(ngModel)]="element.value"
+                                                                    placeholder="Select Payment Term"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    optionValue="listValueID"
+                                                                    optionLabel="valueDesc"></p-dropdown>
+                                                    </div>
+                                                    <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'GENDER'">
+                                                        <p-dropdown [options]="GenderList"
+                                                                    appendTo="body"
+                                                                    ngDefaultControl
+                                                                    [(ngModel)]="element.value"
+                                                                    placeholder="Select Gender"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    optionValue="listValueID"
+                                                                    optionLabel="valueDesc"></p-dropdown>
+                                                    </div>
+                                                    <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'WORKAUTHORIZATION'">
+                                                        <p-dropdown [options]="WorkAuthorizationList"
+                                                                    appendTo="body"
+                                                                    ngDefaultControl
+                                                                    [(ngModel)]="element.value"
+                                                                    placeholder="Select Work Auth"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    optionValue="listValueID"
+                                                                    optionLabel="valueDesc"></p-dropdown>
+                                                    </div>
+                                                    <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'MARITALSTATUS'">
+                                                        <p-dropdown [options]="MaritalStautsList"
+                                                                    appendTo="body"
+                                                                    ngDefaultControl
+                                                                    [(ngModel)]="element.value"
+                                                                    placeholder="Select Marital Status"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    optionValue="listValueID"
+                                                                    optionLabel="valueDesc"></p-dropdown>
+                                                    </div>
+                                                    <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'PAYMENTTYPE'">
+                                                        <p-dropdown [options]="PaymentTypeList"
+                                                                    appendTo="body"
+                                                                    ngDefaultControl
+                                                                    [(ngModel)]="element.value"
+                                                                    placeholder="Select Payment Type"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    optionValue="listValueID"
+                                                                    optionLabel="valueDesc"></p-dropdown>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-grid p-md-12 p-p-0 p-pb-0 mobile-display-block" *ngIf="element.fullWidth.toString().toUpperCase() === 'TRUE'">
+                                                <div class="p-md-12 p-p-0 display-flex-block p-pt-0 " *ngIf="element.fullWidth.toString().toUpperCase() === 'TRUE' && element.elementType.toUpperCase() === 'TextAreaInput'.toUpperCase()">
+                                                    <label class="control-label p-md-2 p-pt-0 p-pr-0 col-form-label mobile-col-form-label label-transform-translate" for="firstname8" style="display: flex !important; align-items: flex-start; ">{{element.label}}</label>
+                                                    <div class="p-md-10 p-pl-0 p-pr-0 transform-translate">
+                                                        <textarea id="float-input" rows="4" cols="40" [(ngModel)]="element.value" ngDefaultControl [ngModelOptions]="{standalone: true}" pInputTextarea></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </p-fieldset>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="p-grid  hidden-web" *ngIf="isShowTickets">
+            <div class="p-col-12 hidden-web">
+                <app-ihr-table #dt [data]="wizardDataTickets" [isPagination]="isPagination"
+                               [sortingField]="'ticketID'"
+                               [sortingFieldOrder]="1"
+                               [isSearchRequired]="true"
+                               [hasChange]="true"
+                               (isOpenTicketForm)="ProcessTicket($event)"
+                               [loading]="loading"
+                               [globalFilterFields]="globalFilterFields"
+                               [showCurrentPageReport]="showCurrentPageReport" [cols]="cols" [selectedColumns]="selectedColumns"
+                               [rowActions]="[]" [headerActions]="[]" [tableState]="patientLanding">
+                </app-ihr-table>
+            </div>
+        </div>
+
+        <div class="p-grid  p-pt-5 hidden-web hidden-mobile" *ngIf="isShowTickets">
+           
+            <div class="p-col-12  p-pt-2" id="myItems" *ngIf="wizardDataTickets != null && wizardDataTickets.length > 0">
+                <div class="p-col-12  p-pl-0 p-pr-0" *ngFor="let holidayRequest of wizardDataTickets">
+                    <div class="p-card mobile-card-view p-mb-2" >
+                        <div class="p-card-body" style="padding-bottom:0.5rem !important;">
+
+                            <div class="p-grid">
+                                <div class="p-col-12 p-p-0 display-flex">
+                                    <label class="control-label p-col-4 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Ticket ID :</label>
+                                    <div class="p-col-8 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value text-underline" style="color: #0366d6;" (click)="ProcessTicket(holidayRequest)">
+                                        {{holidayRequest.ticketID}}
+                                    </div>
+                                </div>
+                                <div class="p-col-12 p-p-0 display-flex" style=" display: contents; padding-top: 2px !important;">
+                                    <label class="control-label p-col-4 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Title :</label>
+                                    <div class="p-col-8 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                        {{holidayRequest.title}}
+                                    </div>
+                                </div>
+                                <div class="p-col-12 p-p-0 display-flex">
+                                    <label class="control-label p-col-4 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Assigned To :</label>
+                                    <div class="p-col-8 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                        {{holidayRequest.assignedToUser}}
+                                    </div>
+                                </div>
+                                <div class="p-col-12 p-p-0 display-flex">
+                                    <label class="control-label p-col-4 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Status :</label>
+                                    <div class="p-col-8 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                        {{holidayRequest.status}}
+                                    </div>
+                                </div>
+                                <div class="p-col-12 p-p-0 display-flex">
+                                    <label class="control-label p-col-4 p-pr-2  p-pt-0 p-pb-0 mobile-card-view-label">Created :</label>
+                                    <div class="p-col-8 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                        {{holidayRequest.createdDate | date : 'MM/dd/yyyy'}}
+                                    </div>
+                                </div>
+                                <div class="p-col-12 p-p-0 display-flex">
+                                    <label class="control-label p-col-4 p-pr-2  p-pt-0 p-pb-0 mobile-card-view-label">Resolved :</label>
+                                    <div class="p-col-8 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                        {{holidayRequest.resolvedDate | date : 'MM/dd/yyyy'}}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <app-add-edit-ticket #AddEditTicketModal (WizadTicketUpdatedList)="loadWizardTicketsAsync($event)"></app-add-edit-ticket>
+    </div>
+</app-ihr-modal-popup>
+

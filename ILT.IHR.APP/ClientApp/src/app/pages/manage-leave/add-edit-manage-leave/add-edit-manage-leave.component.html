@@ -1,0 +1,115 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="800" #AddEditLeaveBalanceModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="LeaveBalanceForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-col-12 p-p-0 p-text-center remove-padding" style="margin-bottom: 1rem;" *ngIf="ErrorMessage !== null || ErrorMessage !== ''" [ngStyle]="{'display': ErrorMessage !== '' ? 'block' : 'none' }">
+                        <span class="error-message-color" style="color: red;">{{ErrorMessage}} &nbsp;</span>
+                    </div>
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">Employee Name</label>
+                                <div class="p-md-8 p-p-0">
+                                    <input type="text" id="disabled-input" formControlName="EmployeeName" pInputText class="disabled" />
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">Leave Year</label>
+                                <div class="p-md-8 p-p-0">
+                                    <input type="text" id="disabled-input" formControlName="LeaveYear" pInputText class="disabled" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">Leave Type </label>
+                                <div class="p-md-8 p-p-0">
+                                    <input type="text" formControlName="LeaveType" class="disabled" pInputText />
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2"> Total </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-inputNumber formControlName="VacationTotal"
+                                                   inputId="firstname3"
+                                                   [useGrouping]="false"
+                                                   mode="decimal"
+                                                   (onBlur)="onTotalChange($event)"
+                                                   [minFractionDigits]="1"
+                                                   [maxFractionDigits]="1"
+                                                   [maxlength]="6">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1"> Used </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-inputNumber formControlName="VacationUsed"
+                                                   inputId="firstname3"
+                                                   [useGrouping]="false"
+                                                   [disabled]="true"
+                                                   mode="decimal"
+                                                   [minFractionDigits]="1"
+                                                   [maxFractionDigits]="1"
+                                                   [maxlength]="6">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2"> Unpaid Leave </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-inputNumber formControlName="UnpaidLeave"
+                                                   inputId="firstname3"
+                                                   [useGrouping]="false"
+                                                   mode="decimal"
+                                                    [disabled]="true"
+                                                   [minFractionDigits]="1"
+                                                   [maxFractionDigits]="1"
+                                                   [maxlength]="6">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1"> Balance </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-inputNumber formControlName="VacationBalance"
+                                                   inputId="firstname3"
+                                                   [useGrouping]="false"
+                                                   mode="decimal"
+                                                    [disabled]="true"
+                                                   [minFractionDigits]="1"
+                                                   [maxFractionDigits]="1"
+                                                   [maxlength]="6">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2"> Encash </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-inputNumber formControlName="EncashedLeave"
+                                                   inputId="firstname3"
+                                                   [useGrouping]="false"
+                                                   mode="decimal"
+                                                   [minFractionDigits]="1"
+                                                   [maxFractionDigits]="1"
+                                                   [maxlength]="6">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>

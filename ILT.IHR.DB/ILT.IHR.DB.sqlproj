@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>ILT.IHR.DB</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{6fd9c715-2bb9-4824-af9b-982444dbe451}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>ILT.IHR.DB</RootNamespace>
+    <AssemblyName>ILT.IHR.DB</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatTSqlWarningsAsErrors>False</TreatTSqlWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\User Defined Types\" />
+    <Folder Include="dbo\Functions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Assignment.sql" />
+    <Build Include="dbo\Tables\AssignmentAddress.sql" />
+    <Build Include="dbo\Tables\AssignmentRate.sql" />
+    <Build Include="dbo\Tables\Company.sql" />
+    <Build Include="dbo\Tables\Country.sql" />
+    <Build Include="dbo\Tables\Debug.sql" />
+    <Build Include="dbo\Tables\Department.sql" />
+    <Build Include="dbo\Tables\Dependent.sql" />
+    <Build Include="dbo\Tables\DirectDeposit.sql" />
+    <Build Include="dbo\Tables\Employee.sql" />
+    <Build Include="dbo\Tables\ListType.sql" />
+    <Build Include="dbo\Tables\ListValue.sql" />
+    <Build Include="dbo\Tables\Module.sql" />
+    <Build Include="dbo\Tables\Role.sql" />
+    <Build Include="dbo\Tables\RolePermission.sql" />
+    <Build Include="dbo\Tables\State.sql" />
+    <Build Include="dbo\Tables\TimeEntry.sql" />
+    <Build Include="dbo\Tables\TimeSheet.sql" />
+    <Build Include="dbo\Tables\User.sql" />
+    <Build Include="dbo\Stored Procedures\GenerateDTO.sql" />
+    <Build Include="dbo\Stored Procedures\GenerateGetSP.sql" />
+    <Build Include="dbo\Stored Procedures\GenerateInsUpdSP.sql" />
+    <Build Include="dbo\Stored Procedures\GenerateParam.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteEmployee.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteRolePermission.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetAssignmentRate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetCompany.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetCountry.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetDepartment.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetDependent.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetDirectDeposit.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetEmployee.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetListType.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetListValue.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetRole.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetRolePermission.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetState.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetUser.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdAssignmentRate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdCompany.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdCountry.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdDepartment.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdDependent.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdDirectDeposit.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdEmployee.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdListType.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdListValue.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdRole.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdRolePermission.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdState.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdUser.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdAssignment.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetAssignment.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetModule.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteListValue.sql" />
+    <Build Include="dbo\Tables\Contact.sql" />
+    <Build Include="dbo\Tables\NLog_Error.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdContact.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetContact.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteAssignmentRate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteAssignment.sql" />
+    <Build Include="dbo\Tables\LeaveBalance.sql" />
+    <Build Include="dbo\Tables\Leave.sql" />
+    <Build Include="dbo\Tables\Holiday.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetLeaveBalance.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetLeave.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetHoliday.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteHoliday.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdHoliday.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdTimeSheet.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdTimeEntry.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdLeave.sql" />
+    <Build Include="dbo\Stored Procedures\USP_GetTimeSheet.sql" />
+    <Build Include="dbo\Stored Procedures\USP_GetTimeEntry.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteTimeSheet.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteTimeEntry.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdLeaveBalance.sql" />
+    <Build Include="dbo\User Defined Types\TypeTimeEntry.sql" />
+    <Build Include="dbo\Tables\Notification.sql" />
+    <Build Include="dbo\Tables\LeaveAccrual.sql" />
+    <Build Include="dbo\Tables\EmployeeChangeSet.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetNotification.sql" />
+    <Build Include="dbo\User Defined Types\TypeEmployee.sql" />
+    <Build Include="dbo\Tables\RoleNotification.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetEmployeeChangeSets.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdNotification.sql" />
+    <Build Include="dbo\Functions\LeaveDays.sql" />
+    <Build Include="dbo\Tables\Document.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdDocument.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetDocument.sql" />
+    <Build Include="dbo\Tables\EmailApproval.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdLeaveAccrual.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdEmailApproval.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetLeaveAccrual.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetEmailApproval.sql" />
+    <Build Include="dbo\Stored Procedures\usp_EmailApprovalAction.sql" />
+    <Build Include="dbo\Tables\UserRole.sql" />
+    <Build Include="dbo\Tables\EndClient.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdUserRole.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdEndClient.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetUserRole.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetEndClient.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteUserRole.sql" />
+    <Build Include="dbo\User Defined Types\TypeUserRole.sql" />
+    <Build Include="dbo\Tables\EmployeeAddress.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetEmployeeAddress.sql" />
+    <Build Include="dbo\User Defined Types\TypeEmployeeAddress.sql" />
+    <Build Include="dbo\Tables\EmployeeW4.sql" />
+    <Build Include="dbo\Tables\Expense.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetEmployeeW4.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetExpense.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdEmployeeW4.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdExpense.sql" />
+    <Build Include="dbo\Tables\WFH.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetWFH.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdWFH.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetLeaveDays.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetLeavesCount.sql" />
+    <Build Include="dbo\Tables\AuditLog.sql" />
+    <Build Include="dbo\Stored Procedures\usp_WizardDataProcess.sql" />
+    <Build Include="dbo\Stored Procedures\usp_onBoarding.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsAuditLog.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetDuration.sql" />
+    <Build Include="dbo\Stored Procedures\GetLeavesCount.sql" />
+    <Build Include="dbo\Tables\Ticket.sql" />
+    <Build Include="dbo\Tables\Asset.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdTicket.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdAsset.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetTicket.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetAsset.sql" />
+    <Build Include="dbo\Tables\AssetChangeSet.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetAssetChangeSets.sql" />
+    <Build Include="dbo\Tables\ErrorLog.sql" />
+    <Build Include="dbo\Tables\Appraisal.sql" />
+    <Build Include="dbo\Tables\AppraisalDetail.sql" />
+    <Build Include="dbo\Tables\AppraisalQuality.sql" />
+    <Build Include="dbo\Tables\EmailJob.sql" />
+    <Build Include="dbo\User Defined Types\TypeAppraisalDetail.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetAppraisal.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetAppraisalDetail.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetPendingEmailJob.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdAppraisal.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdAppraisalDetail.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdEmailJob.sql" />
+    <Build Include="dbo\Tables\AppraisalGoal.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetAppraisalGoal.sql" />
+    <Build Include="dbo\User Defined Types\TypeAppraisalGoal.sql" />
+    <Build Include="dbo\Tables\Salary.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdSalary.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetSalary.sql" />
+    <Build Include="dbo\Functions\GenerateEmployeeCode.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetLeaveDetail.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetAuditLog.sql" />
+    <Build Include="dbo\Stored Procedures\usp_EmailSendAction.sql" />
+    <Build Include="dbo\Tables\I9Document.sql" />
+    <Build Include="dbo\Tables\FormI9ChangeSet.sql" />
+    <Build Include="dbo\Tables\FormI9.sql" />
+    <Build Include="dbo\Stored Procedures\usp_Termination.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdFormI9.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetI9Document.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetFormI9ChangeSets.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetFormI9.sql" />
+    <Build Include="dbo\Tables\ProcessWizard.sql" />
+    <Build Include="dbo\Tables\ProcessDataTicket.sql" />
+    <Build Include="dbo\Tables\ProcessData.sql" />
+    <Build Include="dbo\Tables\ProcessConfig.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdProcessData.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsertProcessTicket.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetProcessWizard.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetProcessDataTicket.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetProcessData.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetUserNotification.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdUserNotification.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetI9Expiry.sql" />
+    <Build Include="dbo\Tables\EmployeeSkill.sql" />
+    <Build Include="dbo\Stored Procedures\usp_InsUpdEmployeeSkill.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetEmployeeSkill.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetEmployeeInfo.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteEmployeeSkill.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SqlSchemaCompare-AzureDB-IHR.scmp" />
+    <None Include="SqlSchemaCompare-InternalDB.scmp" />
+    <None Include="SqlSchemaCompare-AzureDB-ITE.scmp" />
+    <None Include="SqlSchemaCompare-AzureDB-SWG.scmp" />
+  </ItemGroup>
+</Project>

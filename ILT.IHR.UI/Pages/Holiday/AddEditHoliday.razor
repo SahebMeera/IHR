@@ -1,0 +1,58 @@
+﻿@inherits AddEditHolidayBase
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">Holiday</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <EditForm Model="@holiday" OnValidSubmit="SaveHoliday">
+                                <DataAnnotationsValidator />
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-2 col-form-label ">Name</label>
+                                    <div class="col-10 pl-0">
+                                        <InputText @bind-Value="holiday.Name" class="form-control form-control-sm autofocus" maxlength="100" />
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-2 col-form-label">Date</label>
+                                    <div class="col-10 pl-0">
+                                        <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="holiday.StartDate"  />
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="control-label col-2 col-form-label">Country</label>
+                                    <div class="col-10 pl-0">
+                                        <CustomInputSelect id="paymentType" @bind-Value="holiday.Country" class="form-control form-control-sm" maxlength="50">
+                                            <option value="">select</option>
+                                            @if (CountryList != null)
+                                                {
+                                                @foreach (var country in CountryList)
+                                                    {
+                                                    <option value="@country.CountryDesc">@country.CountryDesc</option>
+                                                    }
+                                                }
+                                        </CustomInputSelect>
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex justify-content-end">
+                                    @*<button type="submit" class="btn btn-primary" disabled="@(!context.Validate() || !context.IsModified())">Save</button>*@
+                                    <button type="submit" class="btn btn-primary btn-width-height" disabled="@isSaveButtonDisabled">Save</button>
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

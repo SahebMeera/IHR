@@ -1,0 +1,52 @@
+﻿@page "/holidays"
+@using BlazorTable;
+@using ILT.IHR.DTO;
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+@inherits HolidaysBase;
+
+@inject NavigationManager NavigationManager
+
+@if (HolidayRolePermission != null && HolidayRolePermission.View == false)
+{
+    NavigationManager.NavigateTo("");
+}
+<h3 style="margin-bottom:1px;">Holidays</h3>
+<div class="row reduce-margin-top">
+    <div class="col-12">
+        @if (lstHolidaysList != null)
+        {
+            <Table TableItem="Holiday" Items="lstHolidaysList" ColumnReorder="true" ShowSearchBar="true" SelectionType="SelectionType.Single" RowActions="RowActions" RowClickAction="RowClick" HeaderActions="HeaderAction" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+                   DropDown="lstYear" DropDownLabel="Year:" onDropDownChange="onYearChange" DefaultID="yearId">
+                <Column TableItem="Holiday" Title="Name" Field="@(x => x.Name)" Sortable="true" Filterable="false">
+                </Column>
+                <Column TableItem="Holiday" Title="Date" Field="@(x => x.StartDate)" Sortable="true" Filterable="false" DefaultSortColumn="true">
+                    <Template>
+                        @(context.StartDate != null ? FormatDate(context.StartDate) : "")
+                    </Template>
+                </Column>
+                <Column TableItem="Holiday" Title="Country" Field="@(x => x.Country)" Sortable="true" Filterable="false">
+                </Column>
+                <EmptyDataTemplate>
+                    <div class="text-center">
+                        No rows found!
+                    </div>
+                </EmptyDataTemplate>
+                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+            </Table>
+        }
+        else
+        {
+            @*<NoResultMessage></NoResultMessage>*@
+            <span></span>
+        }
+    </div>
+</div>
+
+
+<AddEditHoliday @ref="AddEditHolidayModal" HolidayUpdated="LoadList"></AddEditHoliday>
+
+
+
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete")>
+</Confirm>

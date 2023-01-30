@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsPendingLeavesInfo" targetNamespace="http://tempuri.org/dsPendingLeavesInfo.xsd" xmlns:mstns="http://tempuri.org/dsPendingLeavesInfo.xsd" xmlns="http://tempuri.org/dsPendingLeavesInfo.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsPendingLeavesInfo" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsPendingLeavesInfo" msprop:Generator_UserDSName="dsPendingLeavesInfo">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsPendingLeavesInfo" msprop:Generator_TableClassName="dsPendingLeavesInfoDataTable" msprop:Generator_TableVarName="tabledsPendingLeavesInfo" msprop:Generator_TablePropName="_dsPendingLeavesInfo" msprop:Generator_RowDeletingName="dsPendingLeavesInfoRowDeleting" msprop:Generator_RowChangingName="dsPendingLeavesInfoRowChanging" msprop:Generator_RowEvHandlerName="dsPendingLeavesInfoRowChangeEventHandler" msprop:Generator_RowDeletedName="dsPendingLeavesInfoRowDeleted" msprop:Generator_UserTableName="dsPendingLeavesInfo" msprop:Generator_RowChangedName="dsPendingLeavesInfoRowChanged" msprop:Generator_RowEvArgName="dsPendingLeavesInfoRowChangeEvent" msprop:Generator_RowClassName="dsPendingLeavesInfoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EmployeeName" msprop:Generator_ColumnVarNameInTable="columnEmployeeName" msprop:Generator_ColumnPropNameInRow="EmployeeName" msprop:Generator_ColumnPropNameInTable="EmployeeNameColumn" msprop:Generator_UserColumnName="EmployeeName" type="xs:string" minOccurs="0" />
+              <xs:element name="LeaveType" msprop:Generator_ColumnVarNameInTable="columnLeaveType" msprop:Generator_ColumnPropNameInRow="LeaveType" msprop:Generator_ColumnPropNameInTable="LeaveTypeColumn" msprop:Generator_UserColumnName="LeaveType" type="xs:string" minOccurs="0" />
+              <xs:element name="StartDate" msprop:Generator_ColumnVarNameInTable="columnStartDate" msprop:Generator_ColumnPropNameInRow="StartDate" msprop:Generator_ColumnPropNameInTable="StartDateColumn" msprop:Generator_UserColumnName="StartDate" type="xs:string" minOccurs="0" />
+              <xs:element name="EndDate" msprop:Generator_ColumnVarNameInTable="columnEndDate" msprop:Generator_ColumnPropNameInRow="EndDate" msprop:Generator_ColumnPropNameInTable="EndDateColumn" msprop:Generator_UserColumnName="EndDate" type="xs:string" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" type="xs:string" minOccurs="0" />
+              <xs:element name="Approver" msprop:Generator_ColumnVarNameInTable="columnApprover" msprop:Generator_ColumnPropNameInRow="Approver" msprop:Generator_ColumnPropNameInTable="ApproverColumn" msprop:Generator_UserColumnName="Approver" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

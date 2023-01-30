@@ -1,0 +1,77 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="1000" #addEditAssignmentRateModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <div class="p-grid">
+            <div class="p-md-12 p-p-0">
+                <form [formGroup]="AssignmentRateForm">
+                    <div class="p-grid pathx-frm">
+                        <div class="p-col-12 p-pt-5">
+                            <div class="p-col-12 p-p-0 p-text-center remove-padding" style="margin-bottom: 2rem;" *ngIf="ErrorMessage !== null || ErrorMessage !== ''" [ngStyle]="{'display': ErrorMessage !== '' ? 'block' : 'none' }">
+                                <span class="error-message-color" style="color: red;">{{ErrorMessage}} &nbsp;</span>
+                            </div>
+                            <div class="p-fluid p-formgrid">
+                                <div class="p-grid p-pb-2 mobile-display-block">
+                                    <div class="p-md-6 p-d-flex p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label" for="dateformat">* Start Date </label>
+                                        <p-calendar class="p-md-8 p-p-0"
+                                                    formControlName="StartDate" [ngClass]="{ 'is-invalid': submitted && addEditAssignmentRateControls.StartDate.errors }"
+                                                    [showIcon]="true"
+                                                    dateFormat="mm/dd/yy"
+                                                    [monthNavigator]="true"
+                                                    [yearNavigator]="true"
+                                                    inputId="dateformat"
+                                                    [yearRange]="commonUtils.getDateRange()"
+                                                    appendTo="body"></p-calendar>
+                                    </div>
+                                    <div class="p-md-6 p-d-flex p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label" for="firstname2"> End Date </label>
+                                        <p-calendar class="p-md-8 p-p-0" formControlName="EndDate"
+                                                    [showIcon]="true"
+                                                    dateFormat="mm/dd/yy"
+                                                    inputId="firstname6"
+                                                    [monthNavigator]="true"
+                                                    [yearNavigator]="true"
+                                                    [yearRange]="commonUtils.getDateRange()"
+                                                    appendTo="body"></p-calendar>
+                                    </div>
+                                </div>
+                                <div class="p-grid p-pb-2 mobile-display-block">
+                                    <div class="p-md-6 p-d-flex p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label" for="firstname3">* Billing Rate</label>
+                                        <div class="p-md-8 p-p-0">
+                                            <p-inputNumber formControlName="BillingRate" [ngClass]="{ 'is-invalid': submitted && addEditAssignmentRateControls.BillingRate.errors }"
+                                                           inputId="firstname3"
+                                                           [useGrouping]="false"
+                                                           mode="decimal"
+                                                           [minFractionDigits]="2"
+                                                           [maxFractionDigits]="2"
+                                                           [maxlength]="13">
+                                            </p-inputNumber>
+                                        </div>
+                                    </div>
+                                    <div class="p-md-6 p-d-flex p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label" for="firstname4">* Payment Rate</label>
+                                        <div class="p-md-8 p-p-0">
+                                            <p-inputNumber formControlName="PaymentRate" [ngClass]="{ 'is-invalid': submitted && addEditAssignmentRateControls.PaymentRate.errors }"
+                                                           inputId="firstname3"
+                                                           [useGrouping]="false"
+                                                           mode="decimal"
+                                                           [minFractionDigits]="2"
+                                                           [maxFractionDigits]="2"
+                                                           [maxlength]="13">
+                                            </p-inputNumber>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>

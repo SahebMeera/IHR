@@ -1,0 +1,276 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="1200" #addEditAssignmentModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <div class="p-grid display-flex-block">
+            <div class="p-md-9 p-p-0" style="padding-right:15px !important;">
+                <form [formGroup]="AssignmentForm">
+                    <div class="p-grid pathx-frm display-flex-block">
+                        <div class="p-col-12 p-pt-5">
+                            <div class="p-col-12 p-p-0 p-text-center remove-padding" style="margin-bottom: 2rem;" *ngIf="ErrorMessage !== null || ErrorMessage !== ''" [ngStyle]="{'display': ErrorMessage !== '' ? 'block' : 'none' }">
+                                <span class="error-message-color" style="color: red;">{{ErrorMessage}} &nbsp;</span>
+                            </div>
+                            <div class="p-fluid p-formgrid">
+                                <div class="p-grid p-pb-2 mobile-display-block">
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">* Start Date </label>
+                                        <p-calendar class="p-md-8 p-p-0" formControlName="StartDate" [ngClass]="{ 'is-invalid': submitted && addEditAssignmentControls.StartDate.errors }"
+                                                    [showIcon]="true"
+                                                    dateFormat="mm/dd/yy"
+                                                    inputId="firstname6"
+                                                    [monthNavigator]="true"
+                                                    [yearNavigator]="true"
+                                                    [yearRange]="commonUtils.getDateRange()"
+                                                    appendTo="body"></p-calendar>
+                                    </div>
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2"> End Date </label>
+                                        <p-calendar class="p-md-8 p-p-0" formControlName="EndDate"
+                                                    [showIcon]="true"
+                                                    dateFormat="mm/dd/yy"
+                                                    inputId="firstname6"
+                                                    [monthNavigator]="true"
+                                                    [yearNavigator]="true"
+                                                    [yearRange]="commonUtils.getDateRange()"
+                                                    (onSelect)="onchangeAssignmentEndDate($event)"
+                                                    appendTo="body"></p-calendar>
+                                    </div>
+                                </div>
+                                <div class="p-grid p-pb-2 mobile-display-block">
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname3">* Client</label>
+                                        <div class="p-md-8 p-p-0">
+                                            <p-dropdown [options]="ClientList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditAssignmentControls.ClientID.errors }"
+                                                        appendTo="body"
+                                                        formControlName="ClientID"
+                                                        placeholder="Select Client"
+                                                        (onChange)="onChangeClient($event)"
+                                                        optionValue="companyID"
+                                                        optionLabel="name"></p-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">* EndClient</label>
+                                        <div class="p-md-8 p-p-0">
+                                            <p-dropdown [options]="endClientList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditAssignmentControls.EndClientID.errors }"
+                                                        appendTo="body"
+                                                        formControlName="EndClientID"
+                                                        placeholder="Select End Client"
+                                                        (onChange)="onChangeEndClient($event)"
+                                                        optionValue="endClientID"
+                                                        optionLabel="name"></p-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-grid p-pb-2 mobile-display-block">
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8">Title</label>
+                                        <input type="text" formControlName="Title" pInputText />
+                                    </div>
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname9"> Vendor</label>
+                                        <div class="p-md-8 p-p-0">
+                                            <p-dropdown [options]="VendorList"
+                                                        appendTo="body"
+                                                        formControlName="VendorID"
+                                                        placeholder="Select Vendor"
+                                                        (onChange)="commonUtils.setDropdownvalue(VendorList,'CompanyID', $event, AssignmentForm,'Vendor', 'Name', false)"
+                                                        optionValue="companyID"
+                                                        optionLabel="name"></p-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-grid p-pb-2 mobile-display-block">
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8">Client Manager</label>
+                                        <input type="text" formControlName="ClientManager" pInputText />
+                                    </div>
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname9"> * Payment Type</label>
+                                        <div class="p-md-8 p-p-0">
+                                            <p-dropdown [options]="PaymentTypeList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditAssignmentControls.PaymentTypeID.errors }"
+                                                        appendTo="body"
+                                                        formControlName="PaymentTypeID"
+                                                        placeholder="Select Payment Type"
+                                                        (onChange)="commonUtils.setDropdownvalue(PaymentTypeList,'listValueID', $event, AssignmentForm,'PaymentType', 'valueDesc', false)"
+                                                        optionValue="listValueID"
+                                                        optionLabel="valueDesc"></p-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-grid p-pb-2 mobile-display-block">
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname8">TimeSheet Type</label>
+                                        <div class="p-md-8 p-p-0">
+                                            <p-dropdown [options]="WeekEndingDayList"
+                                                        appendTo="body"
+                                                        formControlName="TimesheetTypeID"
+                                                        placeholder="Select TimesheetType"
+                                                         (onChange)="commonUtils.setDropdownvalue(WeekEndingDayList,'listValueID', $event, AssignmentForm,'TimesheetType', 'valueDesc', false)"
+                                                        optionValue="listValueID"
+                                                        optionLabel="valueDesc"></p-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="p-md-6 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname9">TS Approver Email</label>
+                                        <div class="p-md-8 p-p-0">
+                                            <input type="text" formControlName="TSApproverEmail" pInputText />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-grid p-pb-2 mobile-display-block">
+                                    <div class="p-md-12 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8">Approved EmailTo</label>
+                                        <div class="p-md-10 p-p-0">
+                                            <input type="text" formControlName="ApprovedEmailTo" pInputText />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-grid p-pb-2 mobile-display-block">
+                                    <div class="p-md-12 display-flex-block p-pt-0 ">
+                                        <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8">Comments</label>
+                                        <div class="p-md-10 p-p-0">
+                                            <input type="text" formControlName="Comments" pInputText />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p-fieldset class="employee-part-2" legend="Address">
+                                    <div class="p-p-md-12 p-p-0">
+                                        <div class="p-fluid p-formgrid">
+
+                                            <div class="p-grid p-pb-2 mobile-display-block">
+                                                <div class="p-md-6 p-pl-0 display-flex-block p-pt-0 ">
+                                                    <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">* Address1 </label>
+                                                    <input type="text" formControlName="Address1" pInputText [ngClass]="{ 'is-invalid': submitted && addEditAssignmentControls.Address1.errors }" />
+                                                </div>
+                                                <div class="p-md-6 display-flex-block p-pt-0 remove-padding-left">
+                                                    <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2">Address2 </label>
+                                                    <input type="text" formControlName="Address2" pInputText />
+                                                </div>
+                                            </div>
+                                            <div class="p-grid p-pb-2 mobile-display-block">
+                                                <div class="p-md-6  p-pl-0 display-flex-block p-pt-0 ">
+                                                    <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname3">* City</label>
+                                                    <input type="text" formControlName="City" pInputText [ngClass]="{ 'is-invalid': submitted && addEditAssignmentControls.City.errors }" />
+                                                </div>
+                                                <div class="p-md-6 display-flex-block p-pt-0 remove-padding-left">
+                                                    <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">* State </label>
+                                                    <div class="p-md-8 p-p-0">
+                                                        <p-dropdown [options]="StateList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditAssignmentControls.State.errors }"
+                                                                    appendTo="body"
+                                                                    formControlName="State"
+                                                                    placeholder="Select State"
+                                                                    optionValue="stateDesc"
+                                                                    optionLabel="stateDesc"></p-dropdown>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-grid p-pb-2 mobile-display-block">
+                                                <div class="p-md-6 p-pl-0 display-flex-block p-pt-0 ">
+                                                    <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname5">* Country</label>
+                                                    <div class="p-md-8 p-p-0">
+                                                        <p-dropdown [options]="CountryList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditAssignmentControls.Country.errors }"
+                                                                    appendTo="body"
+                                                                    formControlName="Country"
+                                                                    (onChange)="onChangeCountry($event)"
+                                                                    placeholder="Select Country"
+                                                                    optionValue="countryDesc"
+                                                                    optionLabel="countryDesc"></p-dropdown>
+                                                    </div>
+                                                </div>
+                                                <div class="p-md-6 display-flex-block p-pt-0 remove-padding-left">
+                                                    <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname9">* ZipCode </label>
+                                                    <div class="p-md-8 p-p-0">
+                                                        <input type="text" formControlName="ZipCode" pInputText [ngClass]="{ 'is-invalid': submitted && addEditAssignmentControls.ZipCode.errors }" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p-fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+
+            <div class="p-md-3 p-mt-3 p-pr-0 p-pl-0 assignment-endclient p-jc-md-center" style=" border: 1px solid #dee2e6; height: 33.4rem; overflow-y: auto; overflow-x: hidden;" >
+                <div class="p-grid no-gutters display-flex-block">
+                    <div class="p-md-12 p-pr-3 p-pl-3 p-pb-1 p-pt-2">
+                        <div class="p-grid align-items-baseline display-flex-block">
+                            <div class="p-md-12 p-p-0" style="justify-content: center !important">
+                                <label class="control-label col-form-label mobile-col-form-label p-p-0" style="padding-bottom:0px; justify-content: center !important;">Client</label>
+                            </div>
+                            <div class="p-md-12 p-pt-0 p-pb-0 p-pr-3 p-pl-3">
+                                <input type="text" pInputText class="form-control form-control-sm disabled" style="font-weight: 600;text-align: center; font-size:12px !important; justify-content: center !important;" [(ngModel)]="selectedClient" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="p-md-12 p-pr-3 p-pt-0 p-pb-0 p-pl-3">
+                        <div class="row align-items-baseline">
+
+                            <div class="p-md-12 p-p-0 flex-mobile p-jc-center p-pl-4" style="top: 2px; align-items: center; display:flex;">
+                                <div class="arrow">
+                                    <img src="../../../../../assets/layout/images/pages/arrow.png" class="add-subClient" />
+                                </div>
+
+                                <div style="padding-bottom: 5px;padding-left: 3px;" *ngIf="isEndClient()">
+                                    <button type="button" class="btn btn-primary"  icon="fa fa-plus-circle add-sub-client" style="width:1.7rem !important;" pButton (click)="addSubClient(true, {Text: null, isValidSubClient: false})">
+                                        <!--<i class="fas fa-plus"></i>-->
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="subClients !== null && subClients !== undefined && subClients.length > 0">
+                                <div class="p-grid" *ngFor="let item of subClients;">
+                                    <div class="p-md-12  p-pb-0">
+                                        <div class="p-grid p-pr-1" style="justify-content: center;align-items: center;">
+                                            <div class="p-md-10 p-pr-0">
+                                                <input type="text" pInputText style="text-align: center;" placeholder="Sub Client" class="form-control form-control-sm placeholder-color" [(ngModel)]="item.Text" />
+                                            </div>
+                                            <div class="p-md-1 p-pl-1">
+                                                <button class="btn btn-danger add-sub-client" style="background: #a46363; width: 1.7rem !important;" icon="fas fa-times" type="button" pButton  (click)="removeSubClient(item)">
+                                                    <!--<i class="fas fa-times"></i>-->
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-md-12 p-pt-0  flex-mobile p-pb-0 p-jc-center p-pl-3" style="top: 2px; align-items: center; display: flex;">
+                                        <div class="arrow">
+                                            <img src="../../../../../assets/layout/images/pages/arrow.png" class="add-subClient" />
+                                        </div>
+                                        <div style="padding-bottom: 5px;padding-left: 3px;">
+                                            <button type="button" pButton class="btn btn-primary add-sub-client" style="width:1.7rem !important;" icon="fa fa-plus-circle" (click)="addSubClient(false, item)">
+                                                <!--<i class="fas fa-plus"></i>-->
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+
+                        </div>
+                    </div>
+                    <div class="p-md-12 p-pt-0 p-pb-0 p-pr-3 p-pl-3">
+                        <div class="">
+                            <div class="p-md-12 p-pt-0 p-pb-0">
+                                <input type="text" pInputText class="form-control form-control-sm disabled" style="font-weight: 600;text-align: center; font-size:12px !important; justify-content:center !important;" [(ngModel)]="selectedEndClient">
+                            </div>
+                            <div class="p-md-12 p-p-0 client-label" style="justify-content: center !important">
+                                <label class="control-label col-form-label mobile-col-form-label p-p-0 p-text-center" style="padding-top: 0px !important; justify-content: center !important;">EndClient</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>

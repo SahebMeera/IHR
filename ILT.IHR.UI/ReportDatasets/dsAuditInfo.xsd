@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsAuditInfo" targetNamespace="http://tempuri.org/dsAuditInfo.xsd" xmlns:mstns="http://tempuri.org/dsAuditInfo.xsd" xmlns="http://tempuri.org/dsAuditInfo.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsAuditInfo" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsAuditInfo" msprop:Generator_UserDSName="dsAuditInfo">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsAuditInfo" msprop:Generator_TableClassName="dsAuditInfoDataTable" msprop:Generator_TableVarName="tabledsAuditInfo" msprop:Generator_RowChangedName="dsAuditInfoRowChanged" msprop:Generator_TablePropName="_dsAuditInfo" msprop:Generator_RowDeletingName="dsAuditInfoRowDeleting" msprop:Generator_RowChangingName="dsAuditInfoRowChanging" msprop:Generator_RowEvHandlerName="dsAuditInfoRowChangeEventHandler" msprop:Generator_RowDeletedName="dsAuditInfoRowDeleted" msprop:Generator_RowClassName="dsAuditInfoRow" msprop:Generator_UserTableName="dsAuditInfo" msprop:Generator_RowEvArgName="dsAuditInfoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AuditLogID" msprop:Generator_ColumnVarNameInTable="columnAuditLogID" msprop:Generator_ColumnPropNameInRow="AuditLogID" msprop:Generator_ColumnPropNameInTable="AuditLogIDColumn" msprop:Generator_UserColumnName="AuditLogID" type="xs:int" minOccurs="0" />
+              <xs:element name="Action" msprop:Generator_ColumnVarNameInTable="columnAction" msprop:Generator_ColumnPropNameInRow="Action" msprop:Generator_ColumnPropNameInTable="ActionColumn" msprop:Generator_UserColumnName="Action" type="xs:string" minOccurs="0" />
+              <xs:element name="TableName" msprop:Generator_ColumnVarNameInTable="columnTableName" msprop:Generator_ColumnPropNameInRow="TableName" msprop:Generator_ColumnPropNameInTable="TableNameColumn" msprop:Generator_UserColumnName="TableName" type="xs:string" minOccurs="0" />
+              <xs:element name="RecordId" msprop:Generator_ColumnVarNameInTable="columnRecordId" msprop:Generator_ColumnPropNameInRow="RecordId" msprop:Generator_ColumnPropNameInTable="RecordIdColumn" msprop:Generator_UserColumnName="RecordId" type="xs:int" minOccurs="0" />
+              <xs:element name="Values" msprop:Generator_ColumnVarNameInTable="columnValues" msprop:Generator_ColumnPropNameInRow="Values" msprop:Generator_ColumnPropNameInTable="ValuesColumn" msprop:Generator_UserColumnName="Values" type="xs:string" minOccurs="0" />
+              <xs:element name="CreatedDate" msprop:Generator_ColumnVarNameInTable="columnCreatedDate" msprop:Generator_ColumnPropNameInRow="CreatedDate" msprop:Generator_ColumnPropNameInTable="CreatedDateColumn" msprop:Generator_UserColumnName="CreatedDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CreatedBy" msprop:Generator_ColumnVarNameInTable="columnCreatedBy" msprop:Generator_ColumnPropNameInRow="CreatedBy" msprop:Generator_ColumnPropNameInTable="CreatedByColumn" msprop:Generator_UserColumnName="CreatedBy" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

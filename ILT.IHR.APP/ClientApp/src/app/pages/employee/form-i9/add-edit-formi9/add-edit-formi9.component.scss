@@ -1,0 +1,18 @@
+:host::ng-deep .employee-part-2 .p-fieldset .p-fieldset-content {
+    padding-top: 0px !important;
+}
+:host::ng-deep .p-fieldset .p-fieldset-legend {
+    border: none !important;
+    color: black;
+    background: white !important;
+}
+
+@media screen and (max-width: 769px) {
+:host::ng-deep .p-dialog {
+        max-height: 90% !important;
+    }
+}
+
+:host::ng-deep .p-dialog {
+    max-height: 56rem;
+}

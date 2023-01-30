@@ -1,0 +1,57 @@
+﻿@typeparam T
+@inherits InputNumber<T>
+
+@inject IJSRuntime JSRuntime
+
+<input @attributes="AdditionalAttributes"
+       class="@CssClass"
+       @bind="@stringValue"
+       @oninput="OnInput"
+       @onblur="OnBlur"
+       />
+
+@code {
+    private string stringValue;
+    private T lastParsedValue;
+
+    protected override void OnParametersSet()
+    {
+        // Only overwrite the "stringValue" when the Value is different
+        //if (!Equals(CurrentValue, lastParsedValue))
+        //{
+        lastParsedValue = CurrentValue;
+        stringValue = CurrentValueAsString;
+        //}
+    }
+    private void OnInput(ChangeEventArgs e)
+    {
+        // Update the value
+        stringValue = (string)e.Value;
+        CurrentValueAsString = stringValue;
+        lastParsedValue = CurrentValue;
+         if(stringValue == "")
+        {
+            CurrentValueAsString = "0";
+        }
+    }
+
+    private void OnBlur(FocusEventArgs e)
+    {
+        // Overwrite the stringValue property with the parsed value.
+        // This call Value.ToString(), so the value in the input is well formatted.
+        // note: Ensure the string value is valid before updating the content
+        if (!EditContext.GetValidationMessages(FieldIdentifier).Any())
+        {
+            stringValue = CurrentValueAsString;
+            // var dd = JSRuntime.InvokeVoidAsync("DecimalInput");
+            //var dd =  JSRuntime.InvokeAsync<string>("DecimalInput");
+            //stringValue = dd;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var Value = JSRuntime.InvokeVoidAsync("DecimalPonints");
+
+    }
+}

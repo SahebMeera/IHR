@@ -1,0 +1,64 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="800" #addEditLeaveAccrueModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="LeaveAccrueForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">* Country</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="CountryList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditWFHFormControls.Country.errors }"
+                                                appendTo="body"
+                                                formControlName="Country"
+                                                (onChange)="onChangeCountry($event)"
+                                                placeholder="Select Country"
+                                                optionValue="countryDesc"
+                                                optionLabel="countryDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2">* Month </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="lstMonth" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditWFHFormControls.MonthID.errors }"
+                                                appendTo="body"
+                                                formControlName="MonthID"
+                                                placeholder="Select Month"
+                                                (onChange)="onMonthChange($event)"
+                                                optionValue="ID"
+                                                optionLabel="Value"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="integeronly">* Accrue Value</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-inputNumber formControlName="AccruedValue"
+                                                   inputId="firstname3"
+                                                   [useGrouping]="false"
+                                                   mode="decimal"
+                                                   (onBlur)="onAccrualValueChange($event)"
+                                                   [minFractionDigits]="0"
+                                                   [maxFractionDigits]="0"
+                                                   [maxlength]="5">
+                                    </p-inputNumber>
+                                </div>
+                            </div> <div class="p-md-6 display-flex-block p-pt-0">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>
+

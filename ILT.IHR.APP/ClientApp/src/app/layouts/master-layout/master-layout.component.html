@@ -1,0 +1,114 @@
+<div class="wrapper" [ngClass]="{'menu-layout-overlay':isOVerlay(),
+                                'menu-layout-static':isStatic(),
+                                'layout-light':app.lightMenu,
+                                'sidebar-inactive-l':menuInactiveDesktop,
+                                'sidebar-active-m':menuActiveMobile,
+                                'p-ripple-disabled': !app.ripple, 'p-input-filled': app.inputStyle === 'filled'}">
+    <header>
+        <div class="topbar hidden-mobile" style="left: 0px; padding-right: 0.5rem; padding-left: 0.5rem; height: 3.7rem;">
+            <div id="topbar-left" style="display: flex;">
+                <div>
+                    <img *ngIf="showSideBar" class="navbar-brand" src="../../../assets/layout/images/pages/DEV.jpg" width="160" height="40" />
+                    <img *ngIf="!showSideBar" class="navbar-brand pb-2 DEVShort" src="../../../assets/layout/images/pages/DEV_Short.jpg" width="60" height="47" style="display:flex;" />
+                </div>
+            </div>
+        </div>
+        <div class="topbar hidden-web" style="left:0px; padding-right: 0.5rem; padding-left: 0.5rem; height:3.7rem;">
+            <div id="topbar-left">
+                <div style="padding-top: 5px;">
+                    <img class="navbar-brand" src="../../../assets/layout/images/pages/DEV.jpg" width="160" height="40" />
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="p-grid p-d-flex  topbar mobile-top-bar" style="background-color: #1979c5;" [ngStyle]="{'left': topLeftWidth }">
+               <div class="p-col-7 p-pr-0 flex-display login-user-display">
+
+                    <div class="p-md-2 pl-0 mobile-display-none hidden-mobile" id="topbar-left">
+                        <a id="omega-menu-button" style="color:white; cursor: pointer;">
+                            <span class="pi pi-bars" (click)="openCloseMenu()"></span>
+                        </a>
+                        <ng-template ngFor let-item let-last="last" [ngForOf]="items">
+                        </ng-template>
+                    </div>
+                    <div class="p-md-2 pl-0 hidden-web" id="topbar-left">
+                        <a id="omega-menu-button" style="color:white; cursor: pointer;">
+                            <span class="pi pi-bars" (click)="openCloseMenuMobile()"></span>
+                        </a>
+                        <ng-template ngFor let-item let-last="last" [ngForOf]="items">
+                        </ng-template>
+                    </div>
+                    <div class="p-col-4 p-pr-0  display-contents" >
+                        <img src="../../../assets/layout/images/pages/InfoHRAppLogo.png" width="290px;" height="55px;">
+                    </div>
+                   </div>
+                <!--<div class="p-grid ">-->
+                  <div class="p-col-5 p-pr-0  info-logo-side-icon" style="">
+                    <div class="p-col-3  role" style=" display: flex; justify-content: end;">
+                        <div class="form-group row align-items-baseline mb-0 padding-left-add" style="display:flex; justify-content:center;align-items:center;">
+                            <label class="control-label  pr-2 col-4 d-flex justify-content-end text-white mb-0" style=" padding-right: 9px; font-size: 17px; color: white;">Role : </label>
+                            <div class="col-8 col-control">
+                                <p-dropdown [options]="userRoles" class="role" (onChange)="onRoleChange($event)"
+                                            placeholder="Select Role"
+                                            appendTo="body"
+                                            [(ngModel)]="RoleID"
+                                            optionValue="roleID"
+                                            optionLabel="roleName"></p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" p-col-6 p-pr-0 user-image-display pr-0">
+                        <div class="row" style="display: flex;justify-content:space-between;align-items: center; padding-right:7px;">
+                            <div class="col-3 pr-0 mobile-left-padding" style="display:flex;">
+                             <span style="font-size: 32px; color: white; cursor: pointer;" (click)="notificationDocumentation()">
+                                    <i class="fa fa-bell" aria-hidden="true"></i>
+                                </span>
+                                <div class="padding-add" style="cursor: pointer;  display: flex; justify-content: center; align-items: center;" (click)="helpDocumentation()">
+                                    <span style="font-size: 32px; color: white; cursor: pointer;" class="fa fa-question-circle"></span>
+                                </div>
+                            </div>
+                            <div class="col-9 img-margin-left " style="display:flex; justify-content:center; align-content:center;" (click)="onConfigButtonClick($event)">
+                                <div class="col-7 remove-left-padding " style="padding-right:7px;">
+                                    <div class="user-display white-space-nowrap">{{userName}}</div>
+                                    <div class="user-display">{{ClientName}}</div>
+                                </div>
+                                <img src="../../../assets/layout/images/pages/user-icon.png" class="rounded-circle menu-pointer" width="41">
+                            </div>
+                            <div id="layout-config" class="layout-config" [ngClass]="{'layout-config-active': configActive}"
+                                 (click)="onConfigClick($event)">
+                                <div class="p-grid p-field p-pb-0 p-pl-3 p-col-12">
+                                    <div class="p-col-4 username-circle">{{UserNameShort}}</div>
+                                    <div class="p-col-8">
+                                        <div class="p-col-12 itemname text-start-mobile">{{userName}}</div>
+                                        <div class="p-col-12 itememail text-start-mobile ">{{userDetails !== null ? userDetails.email: ''}}</div>
+                                        <div class="p-col-12 itememail text-start-mobile">{{ClientName}}</div>
+                                        <div class="p-col-12 itemlinkcolor" (click)="myProfile()">My profile</div>
+                                        <div class="p-col-12 itemlinkcolor" (click)="signout()">Sign out</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            </div>
+    </header>
+    <aside id="mySidebar" class="left-sidebar">
+        <div class="sidebar" [ngStyle]="{'width': sideBarWidth}" (click)="onMenuClick()">
+            <div class="sidebar-scroll-content">
+                <app-menu #appMenu [RoleID]="RoleID" [showSideBars]="showSideBar"></app-menu>
+            </div>
+        </div>
+    </aside>
+
+    <div class="main" [ngStyle]="{'margin-left': marginLeft}">
+        <router-outlet></router-outlet>
+    </div>
+    <!-- <app-config></app-config> -->
+</div>
+<app-help-documentation #HelpDocumentation></app-help-documentation>
+<app-user-notification #userNotification></app-user-notification>
+<app-add-edit-user #AddEditUserModal></app-add-edit-user>

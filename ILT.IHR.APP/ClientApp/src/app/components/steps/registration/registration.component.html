@@ -1,0 +1,64 @@
+<div class="stepsdemo-content p-pt-4">
+    <div class="card">
+        <form [formGroup]="registrationForm">
+            <div class="p-col-12">
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-col-12 p-md-6 p-lg-4">
+                    <label for="firstname6">FirstName</label>
+                    <input id="firstname6" type="text" pInputText formControlName="FirstName">
+                    <div *ngIf="registrationFormControls.FirstName.touched && registrationFormControls.FirstName.errors" class="invalid-feedback">
+                        FirstName is required
+                  </div>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-4">
+                    <label for="lastname6">LastName</label>
+                    <input id="lastname6" type="text" pInputText formControlName="LastName">
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-4">
+                    <label for="Phone">Phone</label>
+                    <p-inputMask mask="(999) 999-9999" formControlName="Phone" placeholder="phone"></p-inputMask>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-4">
+                    <label for="Company">Company</label>
+                    <input id="Company" type="text" pInputText formControlName="Company">
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-4">
+                    <label for="WebSite">WebSite</label>
+                    <input id="WebSite" type="text" pInputText formControlName="WebSite">
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-4">
+                    <label for="City">City</label>
+                    <input id="City" type="text" pInputText formControlName="City">
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-4">
+                    <label for="State">State</label>
+                    <input id="State" type="text" pInputText formControlName="State">
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-4">
+                    <label for="Country">Country</label>
+                    <input id="Country" type="text" pInputText formControlName="Country">
+                    <div *ngIf="registrationFormControls.Country.touched && registrationFormControls.Country.errors" class="invalid-feedback">
+                        Country is required
+                  </div>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-4">
+                    <label for="lastname6">Zip</label>
+                    <p-inputNumber formControlName="Zip"></p-inputNumber>
+                    <div *ngIf="registrationFormControls.Zip.touched && registrationFormControls.Zip.errors" class="invalid-feedback">
+                        Zip is required
+                  </div>
+                </div>
+            </div>
+            <div style="padding-top: 10px;  display: flex; justify-content: space-between;">
+                <div style="padding-left: 0px;">
+                    <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+                </div>
+                <div  style="padding-right: 0px;">
+                    <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+                </div>
+            </div>
+           
+        </div>
+        </form>        
+    </div>
+</div>

@@ -1,0 +1,173 @@
+﻿@using BlazorTable
+@using ILT.IHR.DTO;
+
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+
+@inherits FormI9Base;
+
+<div class="row reduce-margin-top hidden-web">
+    <div class="col-12 pl-1 pr-1">
+        @if (FormI9List != null)
+        {
+        <Table TableItem="DTO.FormI9" Items="FormI9List"  ColumnReorder="true"  ShowSearchBar="true" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+               SelectionType="SelectionType.Single" RowClickAction="RowClick" RowActions="RowActions" HeaderActions="HeaderAction">
+            <Column TableItem="DTO.FormI9" Title="Employee Name " Field="@(x => x.EmployeeName )" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="false">
+            </Column>
+            <Column TableItem="DTO.FormI9" Title="Work Auth" Field="@(x => x.WorkAuthorization)" Sortable="true" Filterable="false">
+
+            </Column>
+            <Column TableItem="DTO.FormI9" Title="I94 Expiry" Field="@(x => x.I94ExpiryDate)" Sortable="true" Filterable="false">
+                <Template>
+                    @commonUtils.FormatDate(context.I94ExpiryDate)
+                </Template>
+            </Column>
+            <Column TableItem="DTO.FormI9" Title="List A Document" Field="@(x => x.ListADocumentTitle)" Sortable="true" Filterable="false">
+            </Column>
+            <Column TableItem="DTO.FormI9" Title="List A Expiry" Field="@(x => x.ListAExpirationDate)" Sortable="true" Filterable="false">
+                <Template>
+                    @commonUtils.FormatDate(context.ListAExpirationDate)
+                </Template>
+            </Column>
+            <Column TableItem="DTO.FormI9" Title="List B Document" Field="@(x => x.ListBDocumentTitle)" Sortable="true" Filterable="false">
+            </Column>
+            <Column TableItem="DTO.FormI9" Title="List B Expiry" Field="@(x => x.ListBExpirationDate)" Sortable="true" Filterable="false">
+                <Template>
+                    @commonUtils.FormatDate(context.ListBExpirationDate)
+                </Template>
+            </Column>
+            <Column TableItem="DTO.FormI9" Title="List C Document" Field="@(x => x.ListCDocumentTitle)" Sortable="true" Filterable="false">
+            </Column>
+            <Column TableItem="DTO.FormI9" Title="List C Expiry" Field="@(x => x.ListCExpirationDate)" Sortable="true" Filterable="false">
+                <Template>
+                    @commonUtils.FormatDate(context.ListCExpirationDate)
+                </Template>
+            </Column>
+            <EmptyDataTemplate>
+                <div class="text-center">
+                    No rows found!
+                </div>
+            </EmptyDataTemplate>
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </Table>
+        }
+        else
+        {
+            @*<NoResultMessage></NoResultMessage>*@
+            <span></span>
+        }
+    </div>
+</div>
+<div class="row mt-2 hidden-web hidden-mobile">
+    <div class="col-12 ">
+        <div class="row mr-0 pb-1 display-flex mobile-display">
+            <div class="col-12 col-sm-3 pr-1 mobile-padding-remove mobile-pad-left-add">
+                <input type="text" id="myFilter" class="form-control form-control-sm float-left" placeholder="Global Search..." @onkeyup="SearchFuntion" />
+            </div>
+            <div class="col-12 col-sm-6 header-actions mobile-pad-top-add">
+                <div class="col-12 col-sm-12 display-end pl-0 pr-0 ">
+                    <div class="col-12 col-sm-8 display-dropdown2 pr-0 ">
+                    </div>
+                    <div class="col-sm-4 header-buttons  pr-0">
+                        @if (HeaderAction != null)
+                        {
+                            @foreach (var HeaderAction in HeaderAction)
+                            {
+                                @if (HeaderAction.IsShow)
+                                {
+                                    <button type="button" class="btn remove-margin-moblie @(HeaderAction.ButtonClass == null ? " btn-primary" : @HeaderAction.ButtonClass) action-btn-lineheight float-right ml-2
+                                                    @(HeaderAction.IsDisabled ? "disabled" : "" )" @onclick="HeaderAction.ActionMethod">
+                                        <i class="@HeaderAction.IconClass" style="padding-right: 7px;" aria-hidden="true"></i>@HeaderAction.ActionText
+                                    </button>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (FormI9List != null && FormI9List.Count > 0)
+    {
+        <div class="col-12 pt-2" id="myItems">
+            @foreach (var FormI9 in FormI9List)
+            {
+                <div class="col-sm-6  pl-0 pr-0">
+                    <div class="card mobile-card-view mb-2" @onclick="(() => EditMobile(FormI9))">
+                        <div class="card-body" style="padding-bottom:0.5rem !important;">
+                            <div class="row">
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-6 pr-2 mobile-card-view-label">Employee Name :</label>
+                                    <div class="col-6 pl-0 pr-0 mobile-card-view-value">
+                                        @FormI9.EmployeeName
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-6 pr-2 mobile-card-view-label">Work Authorization :</label>
+                                    <div class="col-6 pl-0 pr-0 mobile-card-view-value">
+                                        @FormI9.WorkAuthorization
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-6 pr-2 mobile-card-view-label">I94 Expiry :</label>
+                                    <div class="col-6 pl-0 pr-0 mobile-card-view-value">
+                                        @FormatDate(@FormI9.I94ExpiryDate)
+                                    </div>
+                                </div>
+
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-6 pr-2 mobile-card-view-label">List A Document :</label>
+                                    <div class="col-6 pl-0 pr-0 mobile-card-view-value">
+                                        @FormI9.ListADocumentTitle
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-6 pr-2 mobile-card-view-label">List A Expiry :</label>
+                                    <div class="col-6 pl-0 pr-0 mobile-card-view-value">
+                                        @FormatDate(FormI9.ListAExpirationDate)
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-6 pr-2 mobile-card-view-label">List B Document :</label>
+                                    <div class="col-6 pl-0 pr-0 mobile-card-view-value">
+                                        @FormI9.ListBDocumentTitle
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-6 pr-2 mobile-card-view-label">List B Expiry :</label>
+                                    <div class="col-6 pl-0 pr-0 mobile-card-view-value">
+                                        @FormatDate(FormI9.ListBExpirationDate)
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-6 pr-2 mobile-card-view-label">List C Document :</label>
+                                    <div class="col-6 pl-0 pr-0 mobile-card-view-value">
+                                        @FormI9.ListCDocumentTitle
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-6 pr-2 mobile-card-view-label">List C Expiry :</label>
+                                    <div class="col-6 pl-0 pr-0 mobile-card-view-value">
+                                        @FormatDate(FormI9.ListCExpirationDate)
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <div class="col-12" style="padding-top:10rem;"></div>
+    }
+</div>
+<AddEditFormI9 @ref="AddEditFormI9BaseModal" ListValueUpdated="LoadFormI9s" EmployeeName="@Name"></AddEditFormI9>
+<ILT.IHR.UI.Pages.Employee.FormI9.FormI9ChangesSet.FormI9ChangeSet @ref="FormI9ChangeSetModal"></ILT.IHR.UI.Pages.Employee.FormI9.FormI9ChangesSet.FormI9ChangeSet>
+
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete")>
+</Confirm>

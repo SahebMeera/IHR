@@ -1,0 +1,174 @@
+﻿
+/*Login*/
+/* Made with love by Mutiullah Samim*/
+
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+app {
+    flex-direction: column;
+}
+
+body {
+    background-image: url('../images/Login_Background.jpg');
+    background-color: #f7f7fb;
+    background-attachment: fixed;
+    /* background-size: cover;*/
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+}
+
+.container {
+    height: 100%;
+    align-content: center;
+    max-width: 100%;
+}
+
+.card {
+    margin-top: 14%;
+    height: 470px;
+    /* margin-top: auto; */
+    margin-top: 100px;
+    margin-bottom: auto;
+    width: 450px;
+}
+
+.card-body {
+    padding: 35px;
+}
+
+.social_icon span {
+    font-size: 60px;
+    margin-left: 10px;
+    color: #FFC312;
+}
+
+.social_icon span:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.card-header h3 {
+    color: white;
+}
+
+.social_icon {
+    position: absolute;
+    right: 20px;
+    top: -45px;
+}
+
+.input-group-prepend span {
+    width: 50px;
+    background-color: #f5821f;
+    color: black;
+    border: 0 !important;
+}
+
+input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+}
+
+.remember {
+    color: black;
+}
+
+    .remember input {
+        width: 20px;
+        height: 20px;
+        margin-left: 15px;
+        margin-right: 5px;
+    }
+
+.login_btn {
+    color: #ffffff;
+    background-color: #1979c5;
+    width: 100px;
+}
+
+    .login_btn:hover {
+        color: #ffffff;
+        background-color: #515151;
+    }
+
+.links {
+    color: white;
+}
+
+    .links a {
+        margin-left: 4px;
+    }
+
+.section-header {
+    margin-top: 35px;
+    font-size: 27px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.17;
+   // margin-bottom: -50px; 
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.login-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.error-message-color {
+    color: red;
+}
+
+.remove-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.login-container {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.login-padding-bottom {
+    margin-bottom: 1rem;
+}
+.spinner {
+    border: 15px solid #fbfbfb;
+    border-top: 15px solid #337AB7;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    animation: spin 700ms linear infinite;
+    top: 10%;
+    position: absolute;
+}
+
+.spinner1 {
+    border: 15px solid #fbfbfb;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1500ms linear infinite;
+    top: 19%;
+    position: absolute;
+    border: dotted;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}

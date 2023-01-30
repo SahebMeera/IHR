@@ -1,0 +1,53 @@
+export class ISalary {
+    SalaryID: number;
+    EmployeeID: number;
+    BasicPay: string;
+    EmployeeName: string;
+    HRA: string;
+    LTA: string;
+    Bonus: string;
+    EducationAllowance: string;
+    VariablePay: string;
+    SpecialAllowance: string;
+    ProvidentFund: string;
+    TelephoneAllowance: string;
+    MedicalAllowance: string;
+    MedicalInsurance: string;
+    MealAllowance: string;
+    Conveyance: string;
+    Gratuity: string;
+    CostToCompany: string;
+    StartDate: Date;
+    EndDate?: Date;
+    CreatedBy: string;
+    CreatedDate: Date;
+    ModifiedBy: string;
+    ModifiedDate: Date;
+    TimeStamp: ['']
+}
+export class ISalaryDisplay {
+    salaryID: number;
+    employeeID: number;
+    basicPay: string;
+    employeeName: string;
+    hra: string;
+    lta: string;
+    bonus: string;
+    educationAllowance: string;
+    variablePay: string;
+    specialAllowance: string;
+    providentFund: string;
+    telephoneAllowance: string;
+    medicalAllowance: string;
+    medicalInsurance: string;
+    mealAllowance: string;
+    conveyance: string;
+    gratuity: string;
+    costToCompany: string;
+    startDate: Date;
+    endDate?: Date;
+    createdBy: string;
+    createdDate: Date;
+    modifiedBy: string;
+    modifiedDate: Date;
+}

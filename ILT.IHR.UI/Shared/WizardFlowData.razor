@@ -1,0 +1,460 @@
+﻿@inherits WizardFlowDataBase
+@using BlazorTable
+@using IHR.UI.Pages.DeleteConfirmation
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog" style="overflow: auto !important;">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1350px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @if (!isShowTickets)
+                    {
+                        <span class="float-left pl-2">@WizardName</span>
+                    }
+                    else
+                    {
+                        <span class="float-left pl-2">@WizardName (@TicketsFor)</span>
+                    }
+
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            @if (!isShowTickets)
+                            {
+                                <EditForm Model="@DataContext">
+                                    <DataAnnotationsValidator />
+                                    @for (var i = 0; i < steps.Count; i++)
+                                    {
+                                        var stepname = steps[i];
+
+                                        <div class="row" style="padding-left: 10px; padding-right: 10px; @(isControlDisable == true ? "pointer-events: none;opacity: 0.8;" : "")">
+                                            <div class="col-12 card card-border not-rounded clearfix mt-3 pl-0">
+                                                <div class="card-body pl-1">
+                                                    <h4 class="card-title mb-1">@stepname</h4>
+                                                    <div class="row">
+                                                        @foreach (var element in Elements)
+                                                        {
+                                                            @if (element.Position.ToUpper() == stepname.ToUpper())
+                                                            {
+
+                                                                @if (element.FullWidth.ToUpper() == "TRUE")
+                                                                {
+                                                                    <div class="col-sm-2 display-flex pr-0">
+                                                                        <label class="control-label col-form-label col-sm-12">@element.Label</label>
+                                                                    </div>
+                                                                    <div class="col-sm-10 display-flex pl-0 pr-0">
+                                                                    @switch (element.ElementType)
+                                                                    {
+                                                                        case "TextInput":
+                                                                        case "DecimalInput":
+                                                                        case "EmailInput":
+                                                                            {
+                                                                                <div class="col-sm-12 pl-0 pr-2">
+                                                                                    <InputText class="form-control form-control-sm" @bind-Value="element.Value" />
+                                                                                </div>
+                                                                                break;
+                                                                            }
+                                                                        case "TextAreaInput":
+                                                                            {
+                                                                                <div class="col-sm-12 pl-0 pr-2">
+                                                                                    <InputTextArea class="form-control form-control-sm" rows="5" @bind-Value="element.Value" />
+                                                                                </div>
+                                                                                break;
+                                                                            }
+                                                                        case "NumberInput":
+                                                                            {
+                                                                                <div class="col-sm-12 pl-0 pr-2">
+                                                                                    <InputMask class="form-control form-control-sm" @bind-Value="element.Value" data-mask="0000000000" />
+                                                                                </div>
+                                                                                break;
+                                                                            }
+                                                                        case "SelectInput":
+                                                                            {
+                                                                                <div class="col-sm-12 pl-0 pr-2">
+                                                                                    <CustomInputSelect @bind-Value="element.Value" class="form-control form-control-sm" @oninput="@((e) => onChange(e, element.Name))">
+                                                                                        <option value="">select</option>
+                                                                                        @if (element.Name.ToUpper() == "EMPLOYEE")
+                                                                                                                            {
+                                                                                            @if (EmployeeList != null)
+                                                                                                                                {
+                                                                                                @foreach (var emp in EmployeeList)
+                                                                                                                                    {
+                                                                                                    @if (emp.TermDate == null || DateTime.Now <= emp.TermDate)
+                                                                                                                                        {
+                                                                                                        <option value="@emp.EmployeeName">@(emp.EmployeeName)</option>
+                                                                                                                                        }
+                                                                                                                                        else
+                                                                                                                                        {
+                                                                                                        <option value="@emp.EmployeeName">@emp.EmployeeName *</option>
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                        @if (element.Name.ToUpper() == "STATE")
+                                                                                                                            {
+                                                                                            @if (StateList != null)
+                                                                                                                                {
+                                                                                                @foreach (var State in StateList)
+                                                                                                                                    {
+                                                                                                    <option value="@State.StateDesc">@State.StateDesc</option>
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                        @if (element.Name.ToUpper() == "COUNTRY")
+                                                                                                                            {
+                                                                                            @if (CountryList != null)
+                                                                                                                                {
+                                                                                                @foreach (var country in CountryList)
+                                                                                                                                    {
+                                                                                                    <option value="@country.CountryDesc">@country.CountryDesc</option>
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                        @if (element.Name.ToUpper() == "JOBTITLE")
+                                                                                                                            {
+                                                                                            @if (TitleList != null)
+                                                                                                                                {
+                                                                                                @foreach (var Title in TitleList)
+                                                                                                                                    {
+                                                                                                    <option value="@Title.Value">@Title.ValueDesc</option>
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                        @if (element.Name.ToUpper() == "EMPLOYMENTTYPE")
+                                                                                                                            {
+                                                                                            @if (EmployMentList != null)
+                                                                                                                                {
+                                                                                                @foreach (var employment in EmployMentList)
+                                                                                                                                    {
+                                                                                                    <option value="@employment.ListValueID">@employment.ValueDesc</option>
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                        @if (element.Name.ToUpper() == "INVOICINGPERIOD")
+                                                                                                                            {
+                                                                                            @if (InvoicingPeriodList != null)
+                                                                                                                                {
+                                                                                                @foreach (var InvoicingPeriod in InvoicingPeriodList)
+                                                                                                                                    {
+                                                                                                    <option value="@InvoicingPeriod.ListValueID">@InvoicingPeriod.ValueDesc</option>
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                        @if (element.Name.ToUpper() == "PAYMENTTERM")
+                                                                                                                            {
+                                                                                            @if (PaymentTermList != null)
+                                                                                                                                {
+                                                                                                @foreach (var PaymentTerm in PaymentTermList)
+                                                                                                                                    {
+                                                                                                    <option value="@PaymentTerm.ListValueID">@PaymentTerm.ValueDesc</option>
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                        @if (element.Name.ToUpper() == "GENDER")
+                                                                                                                            {
+                                                                                            @if (GenderList != null)
+                                                                                                                                {
+                                                                                                @foreach (var Gender in GenderList)
+                                                                                                                                    {
+                                                                                                    <option value="@Gender.ListValueID">@Gender.ValueDesc</option>
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                        @if (element.Name.ToUpper() == "WORKAUTHORIZATION")
+                                                                                                                            {
+                                                                                            @if (WorkAuthorizationList != null)
+                                                                                                                                {
+                                                                                                @foreach (var WorkAuthorization in WorkAuthorizationList)
+                                                                                                                                    {
+                                                                                                    <option value="@WorkAuthorization.ListValueID">@WorkAuthorization.ValueDesc</option>
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                        @if (element.Name.ToUpper() == "MARITALSTATUS")
+                                                                                                                            {
+                                                                                            @if (MaritalStautsList != null)
+                                                                                                                                {
+                                                                                                @foreach (var MaritalStauts in MaritalStautsList)
+                                                                                                                                    {
+                                                                                                    <option value="@MaritalStauts.ListValueID">@MaritalStauts.ValueDesc</option>
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                        @if (element.Name.ToUpper() == "PAYMENTTYPE")
+                                                                                                                            {
+                                                                                            @if (PaymentTypeList != null)
+                                                                                                                                {
+                                                                                                @foreach (var PaymentType in PaymentTypeList)
+                                                                                                                                    {
+                                                                                                    <option value="@PaymentType.ListValueID">@PaymentType.ValueDesc</option>
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                    </CustomInputSelect>
+                                                                                </div>
+                                                                                break;
+                                                                            }
+                                                                        case "DateInput":
+                                                                            {
+                                                                                <div class="col-sm-12 pl-0 pr-2">
+                                                                                    <InputMask class="form-control form-control-sm" @bind-Value="element.Value" data-mask="00/00/0000" />
+                                                                                </div>
+                                                                                break;
+                                                                            }
+                                                                    }
+                                                                </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="col-sm-2 display-flex pr-0">
+                                                                        <label class="control-label col-form-label col-sm-12">@element.Label</label>
+                                                                    </div>
+                                                                    <div class="col-sm-2 display-flex pl-0 pr-0">
+                                                                        @switch (element.ElementType)
+                                                                        {
+                                                                            case "TextInput":
+                                                                            case "DecimalInput":
+                                                                            case "EmailInput":
+                                                                                {
+                                                                                    <div class="col-sm-12 pl-0 pr-2">
+                                                                                        <InputText class="form-control form-control-sm" @bind-Value="element.Value" />
+                                                                                    </div>
+                                                                                    break;
+                                                                                }
+                                                                            case "TextAreaInput":
+                                                                                {
+                                                                                    <div class="col-sm-12 pl-0 pr-2">
+                                                                                        <InputTextArea class="form-control form-control-sm" rows="5" @bind-Value="element.Value" />
+                                                                                    </div>
+                                                                                    break;
+                                                                                }
+                                                                            case "NumberInput":
+                                                                                {
+                                                                                    <div class="col-sm-12 pl-0 pr-2">
+                                                                                        <InputMask class="form-control form-control-sm" @bind-Value="element.Value" data-mask="0000000000" />
+                                                                                    </div>
+                                                                                    break;
+                                                                                }
+                                                                            case "SelectInput":
+                                                                                {
+                                                                                    <div class="col-sm-12 pl-0 pr-2">
+                                                                                        <CustomInputSelect @bind-Value="element.Value" class="form-control form-control-sm" @oninput="@((e) => onChange(e, element.Name))">
+                                                                                            <option value="">select</option>
+                                                                                            @if (element.Name.ToUpper() == "EMPLOYEE")
+                                                                                                                                {
+                                                                                                @if (EmployeeList != null)
+                                                                                                                                    {
+                                                                                                    @foreach (var emp in EmployeeList)
+                                                                                                                                        {
+                                                                                                        @if (emp.TermDate == null || DateTime.Now <= emp.TermDate)
+                                                                                                                                            {
+                                                                                                            <option value="@emp.EmployeeName">@(emp.EmployeeName)</option>
+                                                                                                                                            }
+                                                                                                                                            else
+                                                                                                                                            {
+                                                                                                            <option value="@emp.EmployeeName">@emp.EmployeeName *</option>
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                            @if (element.Name.ToUpper() == "STATE")
+                                                                                                                                {
+                                                                                                @if (StateList != null)
+                                                                                                                                    {
+                                                                                                    @foreach (var State in StateList)
+                                                                                                                                        {
+                                                                                                        <option value="@State.StateDesc">@State.StateDesc</option>
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                            @if (element.Name.ToUpper() == "COUNTRY")
+                                                                                                                                {
+                                                                                                @if (CountryList != null)
+                                                                                                                                    {
+                                                                                                    @foreach (var country in CountryList)
+                                                                                                                                        {
+                                                                                                        <option value="@country.CountryDesc">@country.CountryDesc</option>
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                            @if (element.Name.ToUpper() == "JOBTITLE")
+                                                                                                                                {
+                                                                                                @if (TitleList != null)
+                                                                                                                                    {
+                                                                                                    @foreach (var Title in TitleList)
+                                                                                                                                        {
+                                                                                                        <option value="@Title.Value">@Title.ValueDesc</option>
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                            @if (element.Name.ToUpper() == "EMPLOYMENTTYPE")
+                                                                                                                                {
+                                                                                                @if (EmployMentList != null)
+                                                                                                                                    {
+                                                                                                    @foreach (var employment in EmployMentList)
+                                                                                                                                        {
+                                                                                                        <option value="@employment.ListValueID">@employment.ValueDesc</option>
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                            @if (element.Name.ToUpper() == "INVOICINGPERIOD")
+                                                                                                                                {
+                                                                                                @if (InvoicingPeriodList != null)
+                                                                                                                                    {
+                                                                                                    @foreach (var InvoicingPeriod in InvoicingPeriodList)
+                                                                                                                                        {
+                                                                                                        <option value="@InvoicingPeriod.ListValueID">@InvoicingPeriod.ValueDesc</option>
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                            @if (element.Name.ToUpper() == "PAYMENTTERM")
+                                                                                                                                {
+                                                                                                @if (PaymentTermList != null)
+                                                                                                                                    {
+                                                                                                    @foreach (var PaymentTerm in PaymentTermList)
+                                                                                                                                        {
+                                                                                                        <option value="@PaymentTerm.ListValueID">@PaymentTerm.ValueDesc</option>
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                            @if (element.Name.ToUpper() == "GENDER")
+                                                                                                                                {
+                                                                                                @if (GenderList != null)
+                                                                                                                                    {
+                                                                                                    @foreach (var Gender in GenderList)
+                                                                                                                                        {
+                                                                                                        <option value="@Gender.ListValueID">@Gender.ValueDesc</option>
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                            @if (element.Name.ToUpper() == "WORKAUTHORIZATION")
+                                                                                                                                {
+                                                                                                @if (WorkAuthorizationList != null)
+                                                                                                                                    {
+                                                                                                    @foreach (var WorkAuthorization in WorkAuthorizationList)
+                                                                                                                                        {
+                                                                                                        <option value="@WorkAuthorization.ListValueID">@WorkAuthorization.ValueDesc</option>
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                            @if (element.Name.ToUpper() == "MARITALSTATUS")
+                                                                                                                                {
+                                                                                                @if (MaritalStautsList != null)
+                                                                                                                                    {
+                                                                                                    @foreach (var MaritalStauts in MaritalStautsList)
+                                                                                                                                        {
+                                                                                                        <option value="@MaritalStauts.ListValueID">@MaritalStauts.ValueDesc</option>
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                            @if (element.Name.ToUpper() == "PAYMENTTYPE")
+                                                                                                                                {
+                                                                                                @if (PaymentTypeList != null)
+                                                                                                                                    {
+                                                                                                    @foreach (var PaymentType in PaymentTypeList)
+                                                                                                                                        {
+                                                                                                        <option value="@PaymentType.ListValueID">@PaymentType.ValueDesc</option>
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                        </CustomInputSelect>
+                                                                                    </div>
+                                                                                    break;
+                                                                                }
+                                                                            case "DateInput":
+                                                                                {
+                                                                                    <div class="col-sm-12 pl-0 pr-2">
+                                                                                        <InputMask class="form-control form-control-sm" @bind-Value="element.Value" data-mask="00/00/0000" />
+                                                                                    </div>
+                                                                                    break;
+                                                                                }
+                                                                        }
+                                                                    </div>
+
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="form-group d-flex justify-content-end mt-2">
+                                        @if (isProcessBtnClick)
+                                        {
+                                            <button type="submit" class="btn btn-primary" disabled="@isSaveProcessBtnDisable" @onclick="(() => SaveWizardData(true))">Process</button>
+                                        }
+                                        @if (!isProcessBtnClick)
+                                        {
+                                            <button type="submit" class="btn btn-primary" disabled="@isSaveProcessBtnDisable" @onclick="(() => SaveWizardData(false))">Save</button>
+                                        }
+                                        <button type="button" class="btn btn-danger ml-1" @onclick="Cancel">Cancel</button>
+
+                                    </div>
+                                    <div class="col-12 align-center remove-padding">
+                                        <span class="error-message-color">@LoginMessage</span>
+                                    </div>
+                                </EditForm>
+                            }
+                            else
+                            {
+                                @if (wizardDataTickets != null)
+                                {
+                                    <Table TableItem="DTO.ProcessDataTicket" Items="wizardDataTickets" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+                                           SelectionType="SelectionType.Single">
+                                        <Column TableItem="DTO.ProcessDataTicket" Title="Ticket ID" Field="@(x => x.TicketID)" Filterable="false">
+                                            <Template>
+                                                @{
+                                                    var ticketId = (context.TicketID);
+                                                    <div><a rel='nofollow' href="javascript:void(0)" @onclick="@(() => ProcessTicket(ticketId))">@(context.TicketID)</a></div>
+                                                }
+                                            </Template>
+                                        </Column>
+                                        <Column TableItem="DTO.ProcessDataTicket" Title="Title" Field="@(x => x.Title)" Filterable="false">
+                                        </Column>
+                                        @*<Column TableItem="DTO.ProcessDataTicket" Title="Description" Field="@(x => x.TicketDescription)" Filterable="false">
+                                            </Column>*@
+                                        <Column TableItem="DTO.ProcessDataTicket" Title="Assigned To" Field="@(x => x.AssignedToUser)" Filterable="false">
+                                        </Column>
+                                        <Column TableItem="DTO.ProcessDataTicket" Title="Status" Field="@(x => x.Status)" Filterable="false">
+                                        </Column>
+                                        <Column TableItem="DTO.ProcessDataTicket" Title="Created Date" Field="@(x => x.CreatedDate)" Filterable="false">
+                                            <Template>
+                                                @(context.CreatedDate != null ? FormatDate(context.CreatedDate) : "")
+                                            </Template>
+                                        </Column>
+                                        <Column TableItem="DTO.ProcessDataTicket" Title="Resolved Date" Field="@(x => x.ResolvedDate)" Filterable="false">
+                                            <Template>
+                                                @(context.ResolvedDate != null ? FormatDate(context.ResolvedDate) : "")
+                                            </Template>
+                                        </Column>
+                                        <EmptyDataTemplate>
+                                            <div class="text-center">
+                                                No rows found!
+                                            </div>
+                                        </EmptyDataTemplate>
+                                        <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                    </Table>
+                                }
+                                else
+                                {
+                                    @*<NoResultMessage></NoResultMessage>*@
+                                    <span></span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ILT.IHR.UI.Pages.Ticket.AddEditTicket @ref="TicketModal" WizadTicketUpdatedList="LoadTicketList"></ILT.IHR.UI.Pages.Ticket.AddEditTicket>
+
+    @*<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+             ConfirmationMessage=@($"Are you sure you want to delete")>
+    </Confirm>*@
+}

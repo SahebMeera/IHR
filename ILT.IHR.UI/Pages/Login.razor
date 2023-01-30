@@ -1,0 +1,225 @@
+﻿@page "/login"
+@using Newtonsoft.Json
+@using System.Text
+@using System.Net.Http.Headers
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject HttpClient Http
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+
+
+
+<link href="css/Login.css" rel="stylesheet" />
+<div class="row login-container">
+    <div class="col-12">
+        <div>
+            <div class="container">
+                <div class="d-flex justify-content-center h-100">
+                    <div class="card">
+                        <div class="justify-content-center section-header" style="display: flex; pointer-events:none;">
+                            <img src="images/InfoHRAppLogo.png" width="290px" height="60px">
+                            @*<div class="justify-content-center section-header" style="display: flex; padding:10px;">
+                                <img src="images/AppLogo1.png" width="300" height="120">*@
+                        </div>
+                        <div class="card-body">
+                            <EditForm Model="@user" OnValidSubmit="ValidateUser">
+                                <DataAnnotationsValidator />
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="input-group login-label">
+                                            CLIENT ID
+                                        </div>
+                                    </div>
+                                    <div class="col-12 login-padding-bottom">
+                                        <div class="input-group">
+                                            <InputText id="ClientId" class="form-control" placeholder="Client ID"
+                                                       @bind-Value="user.ClientID" />
+                                        </div>
+                                        @*<ValidationMessage For="@(() => user.ClientID)" />*@
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="input-group login-label">
+                                            EMAIL ADDRESS
+                                        </div>
+                                    </div>
+                                    <div class="col-12 login-padding-bottom">
+                                        <div class="input-group">
+                                            <InputText id="Email" class="form-control" placeholder="Email Address"
+                                                       @bind-Value="user.Email" />
+                                        </div>
+                                        @*<ValidationMessage For="@(() => user.Email)" />*@
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="input-group login-label">
+                                            PASSWORD
+                                        </div>
+
+                                    </div>
+                                    <div class="col-12 login-padding-bottom">
+                                        <div class="input-group">
+                                            <InputText type="Password" id="password" class="form-control" placeholder="Password"
+                                                       @bind-Value="user.Password" />
+                                        </div>
+                                        @*<ValidationMessage For="@(() => user.Password)" />*@
+                                    </div>
+                                </div>
+                                <div class="col-12 form-group align-center">
+                                    <button class="btn login_btn" style="width:@btnwidth">
+                                        Sign In
+                                        @if (showSpinner)
+                                        {
+                                            <div class="spinner1"></div>
+                                        }
+                                    </button>
+                                </div>
+                                @*<div class="form-group align-right">
+                                        <a href="#">Forgot password?</a>
+                                    </div>*@
+                                <div class="col-12 align-center remove-padding">
+                                    <span class="error-message-color">@LoginMessage</span>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private ILT.IHR.DTO.User user;
+    private ILT.IHR.DTO.UserToken userToken;
+    private string LoginMessage;
+    private bool showSpinner;
+    public string btnwidth = "100px";
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        user = new DTO.User();
+        // return base.OnInitializedAsync();
+    }
+
+    private async Task<bool> ValidateUser()
+    {
+        btnwidth = "150px";
+        showSpinner = true;
+        StateHasChanged();
+        LoginMessage = "";
+        List<string> Clients;
+        Clients = Configuration["ClientID"].Split(',').ToList();
+        if ((user.ClientID == null || user.ClientID == "") && (user.Email == null || user.Email == "")
+            && (user.Password == null || user.Password == ""))
+        {
+            LoginMessage = "Please enter Client ID, Email Address and Password";
+        }
+        else if (user.ClientID == null || user.ClientID == "")
+        {
+            LoginMessage = "Please enter Client ID";
+        }
+        else if (user.Email == null || user.Email == "")
+        {
+            LoginMessage = "Please enter Email Address";
+        }
+        else if (user.Password == null || user.Password == "")
+        {
+            LoginMessage = "Please enter Password";
+        }
+        else if (!Clients.Any(s => s.Contains(user.ClientID)))
+        {
+            LoginMessage = "Invalid Email Address or Password";
+        }
+        else
+        {
+            string serializedUser = JsonConvert.SerializeObject(user);
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage();
+
+            var configValue = Configuration["ApiUrl"];
+            httpRequestMessage.Method = new HttpMethod("GET");
+            httpRequestMessage.RequestUri = new Uri(configValue + "User/ValidateUser");
+            httpRequestMessage.Content = new StringContent(serializedUser);
+
+            httpRequestMessage.Content.Headers.ContentType
+                = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var response = await Http.SendAsync(httpRequestMessage);
+
+            var responseStatusCode = response.StatusCode;
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (responseStatusCode.ToString() == "OK")
+            {
+                var returnedUser = JsonConvert.DeserializeObject<ILT.IHR.DTO.UserToken>(responseBody);
+
+                if (returnedUser.user != null && returnedUser.token != null)
+                {
+                    if (returnedUser.user.IsActive == false)
+                    {
+                        LoginMessage = "Invalid Email Address or Password";
+                    }
+                    else
+                    {
+                        await sessionStorage.SetItemAsync("email", returnedUser.user.Email);
+                        await sessionStorage.SetItemAsync("token", returnedUser.token);
+                        await sessionStorage.SetItemAsync("User", returnedUser.user);
+                        await sessionStorage.SetItemAsync("ClientID", user.ClientID);
+                        await sessionStorage.SetItemAsync(SessionConstants.USERROLES, returnedUser.user.UserRoles);
+                        await sessionStorage.SetItemAsync(SessionConstants.USERROLEPERMISSIONS, returnedUser.user.RolePermissions);
+                        int roleID = 0;
+                        string roleName = "";
+                        string roleShort = "";
+                        if (returnedUser.user.UserRoles.Count() == 1)
+                        {
+                            roleID = returnedUser.user.UserRoles[0].RoleID;
+                            roleName = returnedUser.user.UserRoles[0].RoleName;
+                            roleShort = returnedUser.user.UserRoles[0].RoleShort;
+
+                        }
+                        else
+                        {
+                            var role = returnedUser.user.UserRoles.Find(x => x.IsDefault == true);
+                            if (role != null)
+                            {
+                                roleID = role.RoleID;
+                                roleName = role.RoleName;
+                                roleShort = role.RoleShort;
+                            }
+                            else
+                            {
+                                roleID = returnedUser.user.UserRoles[0].RoleID;
+                                roleName = returnedUser.user.UserRoles[0].RoleName;
+                                roleShort = returnedUser.user.UserRoles[0].RoleShort;
+                            }
+                        }
+                        await sessionStorage.SetItemAsync("RoleID", roleID);
+                        await sessionStorage.SetItemAsync("RoleName", roleName);
+                        await sessionStorage.SetItemAsync("RoleShort", roleShort);
+                        var defaultRolePermissions = returnedUser.user.RolePermissions.Where(x => x.RoleID == roleID).ToList();
+                        await sessionStorage.SetItemAsync(SessionConstants.ROLEPERMISSION, defaultRolePermissions);
+                        ((ILT.IHR.UI.Data.CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(user.Email);
+                        NavigationManager.NavigateTo("/");
+                    }
+                }
+                else
+                {
+                    LoginMessage = "Invalid Email Address or Password";
+                }
+            }
+            else
+            {
+                LoginMessage = "Invalid Email Address or Password";
+            }
+            //showSpinner = false;
+            //btnwidth = "100px";
+        }
+        showSpinner = false;
+        btnwidth = "100px";
+        // await sessionStorage.SetItemAsync("email", user.Email);
+        // ((ILT.IHR.UI.Data.CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(user.Email);
+        // NavigationManager.NavigateTo("/");
+        return await Task.FromResult(true);
+    }
+
+}

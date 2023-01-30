@@ -1,0 +1,88 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="860" #addEditDirectDepositModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="DirectDepositForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">* Bank Name </label>
+                                <div class="p-md-8 p-p-0">
+                                    <input type="text" formControlName="BankName" pInputText [ngClass]="{ 'is-invalid': submitted && addEditDirectDepositControls.BankName.errors }" />
+                                </div>
+                            </div>
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2">* Account Type </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="AccountTypeList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditDirectDepositControls.AccountTypeID.errors }"
+                                                appendTo="body"
+                                                formControlName="AccountTypeID"
+                                                placeholder="Select AccountType"
+                                                (onChange)="commonUtils.setDropdownvalue(AccountTypeList,'listValueID', $event, DirectDepositForm,'AccountType', 'valueDesc', false)"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname3">* Routing Number </label>
+                                <div class="p-md-8 p-p-0">
+                                    <input type="text" pInputText formControlName="RoutingNumber" maxlength="20" [ngClass]="{ 'is-invalid': submitted && addEditDirectDepositControls.RoutingNumber.errors }" />
+                                </div>
+                            </div>
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">* Account Number</label>
+                                <div class="p-md-8 p-p-0">
+                                    <input type="text" formControlName="AccountNumber" pInputText maxlength="20" [ngClass]="{ 'is-invalid': submitted && addEditDirectDepositControls.AccountNumber.errors }" />
+                                </div>
+                            </div>
+                            </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname9">State </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="StateList"
+                                                appendTo="body"
+                                                formControlName="State"
+                                                placeholder="Select State"
+                                                optionValue="stateDesc"
+                                                optionLabel="stateDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname10">* Country</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="CountryList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditDirectDepositControls.Country.errors }"
+                                                appendTo="body"
+                                                formControlName="Country"
+                                                (onChange)="onChangeCountry($event)"
+                                                placeholder="Select Country"
+                                                optionValue="countryDesc"
+                                                optionLabel="countryDesc"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="integeronly">* Amount </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-inputNumber inputId="integeronly" formControlName="Amount" [ngClass]="{ 'is-invalid': submitted && addEditDirectDepositControls.Amount.errors }">
+                                    </p-inputNumber>
+                                    <!--<p-inputNumber formControlName="Amount" mode="decimal" inputId="withoutgrouping" [useGrouping]="false" [ngClass]="{ 'is-invalid': submitted && addEditDirectDepositControls.Amount.errors }">
+                                    </p-inputNumber>-->
+                                </div>
+                            </div>
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>

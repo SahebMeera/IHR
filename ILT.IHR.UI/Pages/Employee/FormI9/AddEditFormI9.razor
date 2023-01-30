@@ -1,0 +1,465 @@
+﻿@inherits AddEditFormI9Base;
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block overflow-y-auto-mobile" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1150px; margin-top: 0.5rem;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">@Title I9</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-12 pl-0 pr-0">
+                            <EditForm Model="@FormI9" OnValidSubmit="OnSubmitI9">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="row no-gutters">
+                                    <div class="col-sm-12 pr-2 pl-2">
+                                        <div class="card card-border not-rounded clearfix mt-2">
+                                            <div class="card-body pl-1">
+                                                <div class="col-sm-12 pr-0 pl-0">
+                                                    <div class="form-group row align-items-baseline">
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">First Name</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputText class="form-control form-control-sm disabled" @bind-Value="FormI9.FirstName" maxlength="50" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">Middle Name</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputText class="form-control form-control-sm disabled" @bind-Value="FormI9.MiddleName" maxlength="50" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">Last Name</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputText class="form-control form-control-sm disabled" @bind-Value="FormI9.LastName" maxlength="50" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-2 pl-2" style="padding-top: .5rem;">
+                                        <div class="card card-border not-rounded clearfix mt-2">
+                                            <div class="card-body pl-1">
+                                                <h4 class="card-title mb-1">Address</h4>
+                                                <div class="col-sm-12 pr-0 pl-0">
+                                                    <div class="form-group0 row align-items-baseline">
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">Address 1</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputText class="form-control form-control-sm disabled" @bind-Value="FormI9.Address1" maxlength="100" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">Address 2</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputText class="form-control form-control-sm disabled" @bind-Value="FormI9.Address2" maxlength="100" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">City</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputText class="form-control form-control-sm disabled" @bind-Value="FormI9.City" maxlength="50" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 pr-0 pl-0">
+                                                    <div class="form-group row align-items-baseline">
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">State</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputText class="form-control form-control-sm disabled" @bind-Value="StateName" />
+                                                                @*<CustomInputSelect id="paymentType" @bind-Value="FormI9.State" class="form-control form-control-sm disabled" maxlength="50">
+                                                                        <option value="">select</option>
+                                                                        @if (StateList != null)
+                                                                            {
+                                                                            @foreach (var State in StateList)
+                                                                                {
+                                                                                <option value="@State.StateDesc">@State.StateDesc</option>
+                                                                                }
+                                                                            /**/
+                                                                            }
+                                                                    </CustomInputSelect>*@
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">Country</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputText class="form-control form-control-sm disabled" @bind-Value="CountryName" />
+
+                                                                @*<CustomInputSelect id="paymentType" @bind-Value="FormI9.Country" class="form-control form-control-sm disabled" @oninput="onChangeCountry" maxlength="50">
+                                                                        <option value="">select</option>
+                                                                        @if (CountryList != null)
+                                                                            {
+                                                                            @foreach (var country in CountryList)
+                                                                                {
+                                                                                <option value="@country.CountryDesc">@country.CountryDesc</option>
+                                                                                }
+                                                                            }
+                                                                    </CustomInputSelect>*@
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">Zip Code</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputText class="form-control form-control-sm disabled" @bind-Value="FormI9.ZipCode" maxlength="10" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-2 pl-2">
+                                        <div class="card card-border not-rounded clearfix mt-2">
+                                            <div class="card-body pl-1">
+                                                <div class="col-sm-12 pr-0 pl-0">
+                                                    <div class="form-group0 row align-items-baseline">
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">Birth Date</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputDate class="form-control form-control-sm disabled" max="9999-12-31" @bind-Value="FormI9.BirthDate" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">SSN</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputMask @ref="mask" class="form-control form-control-sm disabled" @bind-Value="SSNNumber" style=" @(ssnRequired == true ? "outline: 1px solid red;" : "" )" data-mask="@(isViewPermissionForNPIRole == false? "000-00-0000" : "***-**-****" )" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">Work Authorization</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputText class="form-control form-control-sm disabled" @bind-Value="FormI9.WorkAuthorization" />
+                                                                @*<CustomInputSelect class="form-control form-control-sm disabled" id="gender" @bind-Value="FormI9.WorkAuthorizationID">
+                                                                        <option value="0">select</option>
+                                                                        @if (WorkAuthorizationList != null)
+                                                                            {
+                                                                            @foreach (var WorkAuthorization in WorkAuthorizationList)
+                                                                                {
+                                                                                <option value="@WorkAuthorization.ListValueID">@WorkAuthorization.ValueDesc</option>
+                                                                                }
+                                                                            }
+                                                                    </CustomInputSelect>*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 pr-0 pl-0">
+                                                    <div class="form-group0 row align-items-baseline">
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">Hire Date</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputDate class="form-control form-control-sm disabled" max="9999-12-31" @bind-Value="FormI9.HireDate" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">Phone</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputText class="form-control form-control-sm disabled" @bind-Value="FormI9.Phone" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">Email</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputText class="form-control form-control-sm disabled" @bind-Value="FormI9.Email" maxlength="50" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-12 pr-2 pl-2">
+                                        <div class="card card-border not-rounded clearfix mt-2">
+                                            <div class="card-body pl-1">
+                                                <div class="col-sm-12 pr-0 pl-0">
+                                                    <div class="form-group0 row align-items-baseline">
+                                                        @*<div class="col-sm-4 pr-0 display-flex">
+                                                                <label class="control-label col-sm-4 col-form-label">Passport Country</label>
+                                                                <div class="col-sm-8 pl-0">
+                                                                    <CustomInputSelect id="passportCountry" @bind-Value="FormI9.PassportCountry" style=" @(I9PassportCountry == true ? "outline: 1px solid red;" : "" )" class="form-control form-control-sm autofocus" maxlength="50">
+                                                                        <option value="">select</option>
+                                                                        @if (CountryList != null)
+                                                                            {
+                                                                            @foreach (var country in CountryList)
+                                                                                {
+                                                                                <option value="@country.CountryDesc">@country.CountryDesc</option>
+                                                                                }
+                                                                            }
+                                                                    </CustomInputSelect>
+                                                                </div>
+                                                            </div>*@
+                                                        @*<div class="col-sm-4 pr-0 display-flex">
+                                                                <label class="control-label col-sm-4 col-form-label">Passport No</label>
+                                                                <div class="col-sm-8 pl-0">
+                                                                    <InputText class="form-control form-control-sm" @bind-Value="FormI9.PassportNumber" style=" @(I9PassportNumber == true ? "outline: 1px solid red;" : "" )" maxlength="20"/>
+                                                                </div>
+                                                            </div>*@
+                                                        <div class="col-sm-4 pr-0 display-flex">
+                                                            <label class="control-label col-sm-4 col-form-label">A Number</label>
+                                                            <div class="col-sm-8 pl-0">
+                                                                <InputMask class="form-control form-control-sm" disabled="@I9ANumberDisabled" @bind-Value="FormI9.ANumber" style="@(I9ANumber == true ? "outline: 1px solid red;" : "" )" data-mask="A000000000" @oninput="onANumberChange" />
+                                                            </div>
+                                                        </div>
+                                                        @if (I94FieldsShow == false)
+                                                        {
+                                                            <div class="col-sm-4 pr-0 display-flex">
+                                                                <label class="control-label col-sm-4 col-form-label">USCIS Number</label>
+                                                                <div class="col-sm-8 pl-0">
+                                                                    <InputMask class="form-control form-control-sm" disabled="@I9USCISNumberDisabled" @bind-Value="FormI9.USCISNumber" style="@(I9USCISNumber == true ? "outline: 1px solid red;" : "" )" data-mask="0000000000" @oninput="onUSCISNumberChange" />
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        @if (I94FieldsShow == true)
+                                                        {
+                                                            <div class="col-sm-4 pr-0 display-flex">
+                                                                <label class="control-label col-sm-4 col-form-label">I94 Number</label>
+                                                                <div class="col-sm-8 pl-0">
+                                                                    <InputText class="form-control form-control-sm" @bind-Value="FormI9.I94Number" style=" @(I9I94Number == true ? "outline: 1px solid red;" : "" )" maxlength="11" @oninput="onI94NumberChange" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4 pr-0 display-flex">
+                                                                <label class="control-label col-sm-4 col-form-label">I94 Expiry Date</label>
+                                                                <div class="col-sm-8 pl-0">
+                                                                    <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="FormI9.I94ExpiryDate" style="@(I9I94ExpiryDate == true ? "outline: 1px solid red;" : "" )" @oninput="onI94ExpiryDateChange" />
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                @*<div class="col-sm-12 pr-0 pl-0">
+                                                        <div class="form-group row align-items-baseline">
+                                                            <div class="col-sm-4 pr-0 display-flex">
+                                                                <label class="control-label col-sm-4 col-form-label">A Number</label>
+                                                                <div class="col-sm-8 pl-0">
+                                                                    <InputMask class="form-control form-control-sm" @bind-Value="FormI9.ANumber" style=" @(I9ANumber == true ? "outline: 1px solid red;" : "" )" data-mask="A000000000" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4 pr-0 display-flex">
+                                                                <label class="control-label col-sm-4 col-form-label">Start Date</label>
+                                                                <div class="col-sm-8 pl-0">
+                                                                    <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="FormI9.StartDate" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4 pr-0 display-flex">
+                                                                <label class="control-label col-sm-4 col-form-label">End Date</label>
+                                                                <div class="col-sm-8 pl-0">
+                                                                    <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="FormI9.EndDate" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 pl-2 pr-2">
+                                        <div class="card card-border not-rounded clearfix mt-3">
+                                            <div class="card-body pl-1">
+                                                <h4 class="card-title mb-1">List A</h4>
+                                                <div class="form-group0 row align-items-baseline">
+                                                    <div class="col-sm-12  pr-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Document Title</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <CustomInputSelect class="form-control form-control-sm" id="gender" @bind-Value="FormI9.ListADocumentTitleID" @oninput="onChangeListADocumentTitle">
+                                                                <option value="0">select</option>
+                                                                @if (ListADocumentList != null)
+                                                                    {
+                                                                    @foreach (var ListADocument in ListADocumentList)
+                                                                        {
+                                                                        <option value="@ListADocument.I9DocumentID">@ListADocument.I9DocName</option>
+                                                                        }
+                                                                    }
+                                                            </CustomInputSelect>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group0 row align-items-baseline">
+                                                    <div class="col-sm-12  pr-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Issuing Authority</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="FormI9.ListAIssuingAuthority" maxlength="50" style="@(I9ListAIssAuth == true ? "outline: 1px solid red;" : "" )" @oninput="onListAIssuAuthChange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group0 row align-items-baseline">
+                                                    <div class="col-sm-12  pr-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Document No</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="FormI9.ListADocumentNumber" maxlength="50" style="@(I9ListADocNum == true ? "outline: 1px solid red;" : "" )" @oninput="onListADocNumChange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12  pr-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Start Date</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="FormI9.ListAStartDate" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12  pr-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Expiration Date</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="FormI9.ListAExpirationDate" style="@(I9ListAExpDate == true ? "outline: 1px solid red;" : "" )" @oninput="onListAExpDateChange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 pl-0 pr-2">
+                                        <div class="card card-border not-rounded clearfix mt-3">
+                                            <div class="card-body pl-3 pr-2">
+                                                <h4 class="card-title mb-1">List B</h4>
+                                                <div class="form-group0 row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Document Title</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <CustomInputSelect class="form-control form-control-sm" id="gender" @bind-Value="FormI9.ListBDocumentTitleID" @oninput="onChangeListBDocumentTitle">
+                                                                <option value="0">select</option>
+                                                                @if (ListBDocumentList != null)
+                                                                    {
+                                                                    @foreach (var ListBDocument in ListBDocumentList)
+                                                                        {
+                                                                        <option value="@ListBDocument.I9DocumentID">@ListBDocument.I9DocName</option>
+                                                                        }
+                                                                    }
+                                                            </CustomInputSelect>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group0 row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Issuing Authority</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="FormI9.ListBIssuingAuthority" maxlength="50" style="@(I9ListBIssAuth == true ? "outline: 1px solid red;" : "" )" @oninput="onListBIssuAuthChange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group0 row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Document No</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="FormI9.ListBDocumentNumber" maxlength="50" style="@(I9ListBDocNum == true ? "outline: 1px solid red;" : "" )" @oninput="onListBDocNumChange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12  pr-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Start Date</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="FormI9.ListBStartDate" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Expiration Date</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="FormI9.ListBExpirationDate" style="@(I9ListBExpDate == true ? "outline: 1px solid red;" : "" )" @oninput="onListBExpDateChange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 pr-2 pl-0">
+                                        <div class="card card-border not-rounded clearfix mt-3">
+                                            <div class="card-body pl-3 pr-2">
+                                                <h4 class="card-title mb-1">List C</h4>
+                                                <div class="form-group0 row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Document Title</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <CustomInputSelect class="form-control form-control-sm" id="gender" @bind-Value="FormI9.ListCDocumentTitleID" @oninput="onChangeListCDocumentTitle">
+                                                                <option value="0">select</option>
+                                                                @if (ListCDocumentList != null)
+                                                                    {
+                                                                    @foreach (var ListCDocument in ListCDocumentList)
+                                                                        {
+                                                                        <option value="@ListCDocument.I9DocumentID">@ListCDocument.I9DocName</option>
+                                                                        }
+                                                                    }
+                                                            </CustomInputSelect>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group0 row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Issuing Authority</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="FormI9.ListCIssuingAuthority" maxlength="50" style="@(I9ListCIssAuth == true ? "outline: 1px solid red;" : "" )" @oninput="onListCIssuAuthChange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group0 row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Document No</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputText class="form-control form-control-sm" @bind-Value="FormI9.ListCDocumentNumber" maxlength="50" style="@(I9ListCDocNum == true ? "outline: 1px solid red;" : "" )" @oninput="onListCDocNumChange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12  pr-0 display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Start Date</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="FormI9.ListCStartDate" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-sm-12 pr-0  display-flex">
+                                                        <label class="control-label col-sm-4 col-form-label">Expiration Date</label>
+                                                        <div class="col-sm-8 pl-0">
+                                                            <InputDate class="form-control form-control-sm" max="9999-12-31" @bind-Value="FormI9.ListCExpirationDate" disabled="@isListCExpirationDate" style="@(I9ListCExpDate == true ? "outline: 1px solid red;" : "" )" @oninput="onListCExpDateChange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 row align-center remove-margin mt-2">
+                                    <div class="col-10 align-center">
+                                        <span class="error-message-color">@ErrorMessage</span>
+                                    </div>
+                                    <div class="col-2 form-group d-flex justify-content-end remove-padding">
+                                        @if (isShow)
+                                        {
+                                            @*<button type="submit" class="btn btn-primary" disabled="@(!context.Validate() || !context.IsModified())">Save</button>*@
+                                            <button type="submit" class="btn btn-primary btn-width-height  @(isSaveButtonHidden == true ? "hidden" : "")" disabled="@isSaveButtonDisabled">Save</button>
+                                        }
+                                        <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                    </div>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <Confirm @ref="SubmitConfirmation" ConfirmationChanged="ConfirmSubmit_Click"
+             ConfirmationTitle="Confirmation"
+             buttonType="Yes"
+             ConfirmationMessage=@ConfirmMessage>
+    </Confirm>
+}

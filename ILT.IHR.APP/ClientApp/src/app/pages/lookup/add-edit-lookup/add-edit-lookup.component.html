@@ -1,0 +1,32 @@
+  <app-ihr-modal-popup [options]="modalOptions" [width]="600" #addEditLookupModal>
+        <div class="modal-header-text">
+            {{ModalHeading}}
+        </div>
+        <div class="modal-popup-body">
+            <form [formGroup]="LookupForm">
+                <div class="p-grid pathx-frm display-flex-block">
+                    <div class="p-col-12 p-pt-3">
+                        <div class="p-field p-formgrid p-md-12 display-flex-block p-p-0">
+                            <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="username2">Look Type</label>
+                            <div class="p-md-9 p-pl-0 col-form-label"  style="justify-content: flex-start !important;" id="username2" type="username" aria-describedby="username2-help">
+                                {{lookupType}}
+                            </div>
+                            </div>
+                            <div class="p-field p-formgrid p-md-12 display-flex-block p-p-0">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="username6">* Lookup Value </label>
+                                <input class="p-md-9 p-pl-0 " id="username6" type="text" aria-describedby="username6-help" formControlName="Value" pInputText [ngClass]="{ 'is-invalid': submitted && addEditLookupFormControls.Value.errors }" />
+                            </div>
+                            <div class="p-field p-formgrid p-md-12 display-flex-block p-p-0">
+                                <label for="username2" class="control-label p-md-3 col-form-label mobile-col-form-label"  for="username9">* Lookup Description </label>
+                                <input class="p-md-9 p-pl-0" id="username9" type="text" aria-describedby="username-help" formControlName="ValueDesc"  pInputText [ngClass]="{ 'is-invalid': submitted && addEditLookupFormControls.ValueDesc.errors }" />
+                            </div>
+                            <div class="p-field p-formgrid p-md-12 p-d-flex p-p-0">
+                                <label  for="binary" class="control-label p-md-3 col-form-label mobile-col-form-label"> Active </label>
+                                <p-checkbox class="p-md-9 p-pl-0" formControlName="IsActive" binary="true" inputId="binary"></p-checkbox>
+                            </div>
+                        </div>
+                </div>
+            </form>
+        </div>
+    </app-ihr-modal-popup>
+    <p-toast></p-toast>

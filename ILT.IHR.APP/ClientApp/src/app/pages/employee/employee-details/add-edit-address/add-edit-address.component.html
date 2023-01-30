@@ -1,0 +1,94 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="850" #addEditAddressModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="EmployeeAddressForm">
+            <div class="p-grid pathx-frm">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname1">* Address Line1 </label>
+                                <input type="text" formControlName="Address1" pInputText [ngClass]="{ 'is-invalid': submitted && addEditAddressFormControls.Address1.errors }"/>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname2">Address Line2 </label>
+                                <input type="text" formControlName="Address2" pInputText />
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname3">* City</label>
+                                <input type="text" formControlName="City" pInputText [ngClass]="{ 'is-invalid': submitted && addEditAddressFormControls.City.errors }"/>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname5">* State </label>
+                                <div class="p-md-9 p-p-0">
+                                    <p-dropdown [options]="StateList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditAddressFormControls.State.errors }"
+                                                appendTo="body"
+                                                formControlName="State"
+                                                placeholder="Select State"
+                                                optionValue="stateDesc"
+                                                optionLabel="stateDesc"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname4">* Country</label>
+                                <div class="p-md-9 p-p-0">
+                                    <p-dropdown [options]="CountryList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditAddressFormControls.Country.errors }"
+                                                appendTo="body"
+                                                formControlName="Country"
+                                                (onChange)="onChangeCountry($event)"
+                                                placeholder="Select Country"
+                                                optionValue="countryDesc"
+                                                optionLabel="countryDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname7">* ZipCode </label>
+                                <div class="p-md-9 p-p-0">
+                                    <input type="text" formControlName="ZipCode" maxlength="10" pInputText [ngClass]="{ 'is-invalid': submitted && addEditAddressFormControls.ZipCode.errors }"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname8">* Start Date</label>
+                                    <p-calendar class="p-md-9 p-p-0" formControlName="StartDate" [ngClass]="{ 'is-invalid': submitted && addEditAddressFormControls.StartDate.errors }"
+                                                [showIcon]="true"
+                                                inputId="firstname6"
+                                                [monthNavigator]="true"
+                                                [yearNavigator]="true"
+                                                [yearRange]="commonUtils.getDateRange()"
+                                                appendTo="body"></p-calendar>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname9">End Date</label>
+                                    <p-calendar class="p-md-9 p-p-0" formControlName="EndDate"
+                                                [showIcon]="true"
+                                                inputId="firstname6"
+                                                [monthNavigator]="true"
+                                                [yearNavigator]="true"
+                                                [yearRange]="commonUtils.getDateRange()"
+                                                appendTo="body"></p-calendar>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block"  *ngIf="copyFromCurrent">
+                            <div class="p-md-6 display-flex-block p-pt-0 " *ngIf="copyFromCurrent">
+                                <label class="control-label p-md-3 col-form-label mobile-col-form-label" for="firstname89"></label>
+                                <a href="javascript:vod(0)" (click)="CopyFromCurrent()">Copy from current address</a>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>

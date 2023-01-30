@@ -1,0 +1,144 @@
+<div class="p-grid  hidden-web">
+    <div class="p-col-12 p-pt-0 p-pb-0">
+        <h3 style="margin-bottom:1px;">Employee</h3>
+    </div>
+    <div class="p-col-12">
+        <app-ihr-table #dt [data]="lstEmployees" [isPagination]="isPagination"
+                       [DropDownLabel]="'Country :'"
+                       [DropDown]="lstCountry"
+                       [DefaultID]="DefaultDwnDn1ID"
+                       (onDropDownChange)="OncountryChange($event)"
+                       [DropDown2Label]="'Employee Type :'"
+                       [onMultiSelectDropDown]="lstEmployeeType"
+                       [onMultiSelectedDropDown]="selectedEmpTypeList"
+                       (onMultiSelectDropDownChange)="onChangeEmpTypes($event)"
+                       [DropDown3Label]="'Status :'"
+                       [DropDown3]="lstStatus"
+                       [DropDown3DefaultID]="DefaultDwnDn3ID"
+                       (onDropDown3Change)="OnStatusChange($event)"
+                       [sortingField]="'employeeName'"
+                       [sortingFieldOrder]="1"
+                       [globalFilterFields]="globalFilterFields"
+                       [hasChanged]="true"
+                       [loading]="loading"
+                       [showCurrentPageReport]="showCurrentPageReport" [cols]="cols" [selectedColumns]="selectedColumns"
+                       [rowActions]="rowActions" [headerActions]="headerActions" [tableState]="patientLanding">
+        </app-ihr-table>
+    </div>
+
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+
+<div class="p-grid  hidden-web hidden-mobile" *ngIf="true">
+    <div class="p-col-12 p-pt-0 p-pb-0">
+        <h3 style="margin-bottom:1px;">Employee</h3>
+    </div>
+    <div class="p-col-12">
+        <div class="p-grid p-mr-0 p-pb-1 display-flex mobile-display">
+            <div class="p-col-12 p-pr-1 mobile-padding-remove mobile-pad-left-add">
+                <div class="p-d-grid p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Global Search..." autocomplete="off"  [(ngModel)]="searchText"  />
+                    <!--<input pInputText type="text" [(ngModel)]="searchText" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search..." />-->
+
+                </div>
+                <!--<input type="text" id="myFilter" class="form-control form-control-sm float-left" placeholder="Global Search..." @onkeyup="SearchFuntion" />-->
+            </div>
+            <div class="p-col-12 p-lg-4 p-pb-0 p-pr-3">
+                <div class="p-grid grid-dropdown" *ngIf="lstCountry != null && lstCountry.length > 0">
+                    <label class="p-col-5 p-pb-0 p-pl-0 col-form-label mobile-transform-translate drpdwn" style="padding-right: 7px; padding-top: 0px !important; font-weight: 600;">Country :</label>
+                    <div class="p-col-7 p-pl-0 p-pt-0 p-pr-0 p-pb-0 mobile-first-dropdown-padding text-left" *ngIf="lstCountry != null && lstCountry.length > 0">
+                        <p-dropdown [options]="lstCountry"
+                                    appendTo="body"
+                                    [(ngModel)]="DefaultDwnDn1ID"
+                                    (onChange)="onChangeCountry($event)"
+                                    placeholder="Select"
+                                    optionValue="ID"
+                                    optionLabel="Value"></p-dropdown>
+                    </div>
+                </div>
+                <div class="p-grid grid-dropdown" *ngIf="lstEmployeeType !=null && lstEmployeeType.length > 0" style="padding-top:14px;">
+                    <label class="p-col-5 p-pb-0 p-pl-0 col-form-label mobile-transform-translate" style="padding-right: 7px; padding-top: 0px !important; font-weight: 600;">Employee Type :</label>
+                    <div class="p-col-7 p-pl-0 p-pt-0 p-pr-0 p-pb-0 mobile-first-dropdown-padding text-left" *ngIf="lstEmployeeType != null">
+                        <p-multiSelect [options]="lstEmployeeType"
+                                       defaultLabel="Select"
+                                       [(ngModel)]="selectedEmpTypeList"
+                                       (onChange)="OnEmpChange($event)"
+                                       optionValue="ID"
+                                       optionLabel="Value"></p-multiSelect>
+                    </div>
+                </div>
+                <div class="p-grid grid-dropdown" *ngIf="lstStatus != null && lstStatus.length > 0" style="padding-top:14px;">
+                    <label class="p-col-5 p-pb-0 p-pl-0 col-form-label mobile-transform-translate drpdwn" style="padding-right: 7px; padding-top: 0px !important; font-weight: 600;">Status :</label>
+                    <div class="p-col-7 p-pl-0 p-pt-0 p-pr-0 p-pb-0 mobile-first-dropdown-padding text-left" *ngIf="lstStatus != null && lstStatus.length > 0">
+                        <p-dropdown [options]="lstStatus"
+                                    appendTo="body"
+                                    [(ngModel)]="DefaultDwnDn3ID"
+                                    (onChange)="onChangeStatus($event)"
+                                    placeholder="Select"
+                                    optionValue="ID"
+                                    optionLabel="Value"></p-dropdown>
+                    </div>
+                </div>
+                <div class="p-grid grid-dropdown"  style="padding-top:14px; justify-content: end;">
+                    <div class="p-md-12  p-p-0 p-text-right">
+                        <button pButton pRipple type="button" label="Add" class=" btn-width-height p-button-raised btn-width-height btn btn-block btn-sm btn-info" style="margin: 0px !important;" (click)="AddEmployee()">
+                            <i style="padding-right:6px;" class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-col-12  p-pt-2" id="myItems" *ngIf="lstEmployees != null && lstEmployees.length > 0">
+        <div class="p-col-12  p-pl-0 p-pr-0" *ngFor="let lstEmployee of lstEmployees | FilterPipe: searchText : searchableList">
+            <div class="p-card mobile-card-view p-mb-2" (click)="EditMobile(lstEmployee)">
+                <div class="p-card-body" style="padding-bottom:0.5rem !important;">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Employee Name :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{lstEmployee.employeeName}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2  p-pt-0 p-pb-0 mobile-card-view-label">Employee Code :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{lstEmployee.employeeCode}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Title :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{lstEmployee.title}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Email :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0 p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{lstEmployee.email}}
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-p-0 display-flex">
+                            <label class="control-label p-col-5 p-pr-2 p-pt-0 p-pb-0 mobile-card-view-label">Phone :</label>
+                            <div class="p-col-7 p-pl-0 p-pr-0  p-pt-0 p-pb-0 mobile-card-view-value">
+                                {{lstEmployee.phone}}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</div>
+<app-employee-notification-modal #employeeNotificationModal (EmployeeUpdated)="LoadEmployees()"></app-employee-notification-modal>
+

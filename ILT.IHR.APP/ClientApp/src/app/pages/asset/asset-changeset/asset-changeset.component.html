@@ -1,0 +1,23 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="1100" #notificationModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <div class="p-col-12">
+            <app-ihr-table #dt [data]="assetChangeSet" [isPagination]="isPagination"
+                           [sortingField]="'assetType'"
+                           [sortingFieldOrder]="1"
+                           [globalFilterFields]="globalFilterFields"
+                           [loading]="loading"
+                           [showCurrentPageReport]="showCurrentPageReport"
+                           [cols]="cols"
+                           [selectedColumns]="selectedColumns"
+                           [rowActions]="rowActions"
+                           [isSearchRequired]="true"
+                           [headerActions]="headerActions"
+                           [tableState]="patientLanding">
+            </app-ihr-table>
+        </div>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>

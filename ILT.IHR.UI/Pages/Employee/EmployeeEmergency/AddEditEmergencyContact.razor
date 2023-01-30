@@ -1,0 +1,169 @@
+﻿@inherits AddEditEmergencyContactBase;
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 800px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">@Title Contact</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 pl-0 pr-0 mobile-pad-right-add">
+                            <EditForm Model="@Contact" OnValidSubmit="SaveDependent">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="row no-gutters">
+                                    <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">* First Name</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <InputText Autofocus="true" class="form-control form-control-sm autofocus" @bind-Value="Contact.FirstName" maxlength="50" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding-right">
+                                                <label class="control-label col-sm-4 col-form-label">* Last Name</label>
+                                                <div class="col-sm-8 pl-0 remove-padding-right">
+                                                    <InputText class="form-control form-control-sm" @bind-Value="Contact.LastName" maxlength="50" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">* Phone</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <InputMask class="form-control form-control-sm" @bind-Value="Contact.Phone" data-mask="0000000000" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding-right">
+                                                <label class="control-label col-sm-4 col-form-label">* Email</label>
+                                                <div class="col-sm-8 pl-0 remove-padding-right">
+                                                    <InputText class="form-control form-control-sm" @bind-Value="Contact.Email" maxlength="50" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">* Address 1</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <InputText class="form-control form-control-sm" @bind-Value="Contact.Address1" maxlength="100" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding-right">
+                                                <label class="control-label col-sm-4 col-form-label">Address 2</label>
+                                                <div class="col-sm-8 pl-0 remove-padding-right">
+                                                    <InputText class="form-control form-control-sm" @bind-Value="Contact.Address2" maxlength="100" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">* City</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <InputText class="form-control form-control-sm" @bind-Value="Contact.City" maxlength="50" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding-right">
+                                                <label class="control-label col-sm-4 col-form-label">* State</label>
+                                                <div class="col-sm-8 pl-0 remove-padding-right">
+                                                    <CustomInputSelect id="paymentType" @bind-Value="Contact.State" class="form-control form-control-sm" maxlength="50">
+                                                        <option value="">select</option>
+                                                        @if (StateList != null)
+                                                            {
+                                                            @foreach (var State in StateList)
+                                                                {
+                                                                <option value="@State.StateDesc">@State.StateDesc</option>
+                                                                }
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">* Country</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <CustomInputSelect id="paymentType" @bind-Value="Contact.Country" class="form-control form-control-sm" @oninput="onChangeCountry" maxlength="50">
+                                                        <option value="">select</option>
+                                                        @if (CountryList != null)
+                                                            {
+                                                            @foreach (var country in CountryList)
+                                                                {
+                                                                <option value="@country.CountryDesc">@country.CountryDesc</option>
+                                                                }
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                    </CustomInputSelect>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding-right">
+                                                <label class="control-label col-sm-4 col-form-label">* ZipCode</label>
+                                                <div class="col-sm-8 pl-0 remove-padding-right">
+                                                    <InputText class="form-control form-control-sm" @bind-Value="Contact.ZipCode" maxlength="10" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 pr-0 pl-0 mobile-pad-right-add">
+                                        <div class="form-group row align-items-baseline">
+
+                                            <div class="col-sm-6 pr-0 display-flex">
+                                                <label class="control-label col-sm-4 col-form-label">* Contact Type</label>
+                                                <div class="col-sm-8 pl-0 pr-0">
+                                                    <CustomInputSelect class="form-control form-control-sm" @bind-Value="Contact.ContactTypeID" @oninput="onContactChange">
+                                                        <option value='0'>select</option>
+                                                        @if (ContactTypeList != null)
+                                                            {
+
+                                                            @foreach (var invoicingPeriod in ContactTypeList)
+                                                                {
+                                                                <option value="@invoicingPeriod.ListValueID">@invoicingPeriod.ValueDesc</option>
+                                                                }
+                                                            /**/
+                                                            }
+                                                        /**/
+                                                        /**/
+                                                        /**/
+                                                    </CustomInputSelect>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 display-flex remove-padding-right">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group pr-3 pt-2 d-flex justify-content-end remove-padding-right">
+                                    @if (isShow)
+                                    {
+                                        @*<button type="submit" class="btn btn-primary" disabled="@(!context.Validate() || !context.IsModified())">Save</button>*@
+                                        <button type="submit" class="btn btn-primary btn-width-height" disabled="@isSaveButtonDisabled">Save</button>
+                                    }
+                                    <button type="button" class="btn btn-danger btn-width-height ml-1" @onclick="Cancel">Cancel</button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

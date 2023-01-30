@@ -1,0 +1,41 @@
+﻿@using BlazorTable
+@using ILT.IHR.DTO;
+
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+
+@inherits EmployeeSkillBase;
+
+<div class="row reduce-margin-top hidden-web">
+    <div class="col-12 pl-1 pr-1">
+        @if (EmployeeSkillList != null)
+        {
+        <Table TableItem="DTO.EmployeeSkill" Items="EmployeeSkillList" ColumnReorder="true" ShowSearchBar="true" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+               SelectionType="SelectionType.Single" RowClickAction="RowClick" RowActions="RowActions" HeaderActions="HeaderAction">
+            <Column TableItem="DTO.EmployeeSkill" Title="Skill" Field="@(x => x.Skill)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="false">
+            </Column>
+            <Column TableItem="DTO.EmployeeSkill" Title="Skill Type" Field="@(x => x.SkillType)" Sortable="true" Filterable="false">
+            </Column>
+            <Column TableItem="DTO.EmployeeSkill" Title="Experience" Field="@(x => x.Experience)" Sortable="true" Filterable="false">
+            </Column>
+            <EmptyDataTemplate>
+                <div class="text-center">
+                    No rows found!
+                </div>
+            </EmptyDataTemplate>
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </Table>
+        }
+        else
+        {
+            @*<NoResultMessage></NoResultMessage>*@
+            <span></span>
+        }
+    </div>
+</div>
+
+<AddEditEmployeeSkill @ref="AddEditEmployeeSkillBaseModal" ListValueUpdated="LoadEmployeeSkill" EmployeeName="@Name"></AddEditEmployeeSkill>
+
+
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete")>
+</Confirm>

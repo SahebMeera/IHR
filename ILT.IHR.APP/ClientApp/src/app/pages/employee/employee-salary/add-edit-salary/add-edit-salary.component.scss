@@ -1,0 +1,47 @@
+.salary-table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+.table-bordered td {
+    border-left: 1px solid #c8c8c8;
+  //  border-right: 1px solid #c8c8c8;
+    border-top: 0.5px solid #c8c8c8;
+  //  border-bottom: 0.5px solid #c8c8c8 !important;
+    transition: box-shadow 0.2s;
+    // border: 1px solid #dee2e6;
+}
+.salary-table .table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.salary-table th td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.salary-tableth, td {
+    /*// padding: 2px;*/
+    transform: translate(0px, -2px);
+    text-align: left;
+}
+
+.salaryTableComponent {
+    padding-left: 5px;
+}
+
+.salaryTablePMPA {
+    padding-right: 5px;
+    text-align: right;
+}
+
+@media screen and (max-width: 769px) {
+    :host::ng-deep .p-dialog {
+        max-height: 90% !important;
+    }
+}
+
+:host::ng-deep .p-dialog {
+    max-height: 55rem;
+}

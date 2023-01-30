@@ -1,0 +1,169 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="850" #addEditLeaveApproveModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="LeaveForm">
+            <div class="p-grid pathx-frm display-flex-bloc">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">Employee Name </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="lstEmployees" [disabled]="true" 
+                                                appendTo="body"
+                                                formControlName="EmployeeID"
+                                                placeholder="Select Employee"
+                                                optionValue="employeeID"
+                                                optionLabel="employeeName"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2"> Leave Type </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="VacationTypeList" [disabled]="isCancel"
+                                                appendTo="body"
+                                                formControlName="LeaveTypeID"
+                                                placeholder="Select Status"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname3">Start Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="StartDate" 
+                                            [showIcon]="true"
+                                            [disabled]="true"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">End Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="EndDate"
+                                            [showIcon]="true"
+                                            [disabled]="true"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6  display-flex-block p-pt-0">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="binary">Includes Half Day</label>
+                                <div class="p-md-8 p-p-0  remove-padding-right" style="display:flex;">
+                                    <p-checkbox [disabled]="true" formControlName="IncludesHalfDay" binary="true" inputId="binary"></p-checkbox>
+                                </div>
+                            </div>
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="integeronly">Balance Leave</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-inputNumber formControlName="BalanceLeaves"
+                                                   inputId="firstname3"
+                                                   [useGrouping]="false"
+                                                   [disabled]="true"
+                                                   mode="decimal"
+                                                   [minFractionDigits]="1"
+                                                   [maxFractionDigits]="1"
+                                                   [maxlength]="5">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8">* Title</label>
+                                <div class="p-md-10 p-p-0">
+                                    <input type="text" id="disabled-input" class="disabled" formControlName="Title" [ngClass]="isCancel === true ? 'disabled' : ''" pInputText />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8" style=" display: flex !important; align-items: flex-start;">Detail</label>
+                                <div class="p-md-10 p-p-0">
+                                    <textarea id="float-input" rows="3" cols="30" formControlName="Detail" [ngClass]="isCancel === true ? 'disabled' : ''" pInputTextarea></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8" style=" display: flex !important; align-items: flex-start;">Comment</label>
+                                <div class="p-md-10 p-p-0">
+                                    <textarea id="float-input" rows="3" cols="30"  formControlName="Comment" pInputTextarea></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">Requester </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="EmployeeList"
+                                                appendTo="body"
+                                                [disabled]="true"
+                                                formControlName="RequesterID"
+                                                placeholder="Select W4Type"
+                                                optionValue="employeeID"
+                                                optionLabel="employeeName"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2"> Approver </label>
+                                <div class="p-md-8 p-p-0">
+                                    <input type="text" formControlName="Approver" disabled="disabled" pInputText />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2"> Status </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="StatusList" [disabled]="true"
+                                                appendTo="body"
+                                                formControlName="StatusID"
+                                                placeholder="Select Status"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6  display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4  col-form-label mobile-col-form-label" for="integeronly">Duration</label>
+                                <div class="p-md-8 p-p-0  remove-padding-right">
+                                    <p-inputNumber formControlName="Duration"
+                                                   inputId="firstname3"
+                                                   [useGrouping]="false"
+                                                   [disabled]="true"
+                                                   mode="decimal"
+                                                   [minFractionDigits]="1"
+                                                   [maxFractionDigits]="1"
+                                                   [maxlength]="7">
+                                    </p-inputNumber>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>
+

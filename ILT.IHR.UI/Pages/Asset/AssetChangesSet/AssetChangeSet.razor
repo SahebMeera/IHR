@@ -1,0 +1,60 @@
+﻿@using BlazorTable
+@using ILT.IHR.DTO;
+@inherits AssetChangeSetBase
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="min-width: 1200px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="float-left pl-2">Asset Changes</span>
+                    <button type="button" class="btn-close close-modal close pr-4" @onclick="@Close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding-top: 0.25rem;">
+                    @*<div class="row">
+                        <div class="col-12" style="padding-bottom:0.25rem;">
+                            <button type="button" class="btn  btn-primary float-right" @onclick="@Acknowledge">
+                                Acknowledge
+                            </button>
+                        </div>
+                    </div>*@
+                    <div class="row">
+                        <div class="col-12">
+                            @if (assetChangeSet != null)
+                            {
+                            <Table TableItem="DTO.AssetChangeSet" Items="assetChangeSet" 
+                                   SelectionType="SelectionType.Single">
+                                <Column TableItem="DTO.AssetChangeSet" Title="Asset Type" Field="@(x => x.AssetType)"  Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.AssetChangeSet" Title="Assigned To" Field="@(x => x.AssignedTo)"  Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.AssetChangeSet" Title="Status" Field="@(x => x.Status)"  Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.AssetChangeSet" Title="Modified By" Field="@(x => x.ModifiedBy)"  Filterable="false">
+                                </Column>
+                                <Column TableItem="DTO.AssetChangeSet" Title="Modified Date" Field="@(x => x.ModifiedDate)"  Filterable="false">
+                                </Column>
+
+                                <EmptyDataTemplate>
+                                    <div class="text-center">
+                                        No rows found!
+                                    </div>
+                                </EmptyDataTemplate>
+                                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                            </Table>
+                            }
+                            else
+                            {
+                                @*<NoResultMessage></NoResultMessage>*@
+                                <span></span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

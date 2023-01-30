@@ -1,0 +1,33 @@
+<div class="stepsdemo-content">
+    <div class="card">
+        <form [formGroup]="confirmationForm">
+            <div class="p-col-12">
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-col-12 p-md-6 p-lg-4" style="display: flex;">
+                    <label for="firstname6" style="padding-right: 10px;">IsComplete</label>
+                    <p-inputSwitch formControlName="IsComplete"></p-inputSwitch>
+                    <div *ngIf="confirmationFormControls.IsComplete.touched && confirmationFormControls.IsComplete.errors" class="invalid-feedback">
+                        IsComplete is required
+                  </div>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-4" style="display: flex;">
+                    <label for="lastname6" style="padding-right: 10px;">IsActivated</label>
+                    <p-inputSwitch formControlName="IsActivated"></p-inputSwitch>
+                    <div *ngIf="confirmationFormControls.IsActivated.touched && confirmationFormControls.IsActivated.errors" class="invalid-feedback">
+                        IsActivated is required
+                  </div>
+                </div>
+            </div>
+            <div style="padding-top: 10px;  display: flex; justify-content: space-between;">
+                <div style="padding-left: 0px;">
+                    <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+                </div>
+                <div  style="padding-right: 0px;">
+                    <p-button label="Submit" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+                </div>
+            </div>
+           
+        </div>
+        </form>        
+    </div>
+</div>

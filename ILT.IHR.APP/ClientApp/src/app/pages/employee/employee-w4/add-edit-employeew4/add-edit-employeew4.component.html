@@ -1,0 +1,135 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="850" #addEditEmployeeW4Modal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="EmployeeW4Form">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4  col-form-label mobile-col-form-label" for="firstname1">* W4Type </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="W4TypeList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditEmployeeW4Controls.W4TypeID.errors }"
+                                                appendTo="body"
+                                                formControlName="W4TypeID"
+                                                (onChange)="onChangeW4Type($event)"
+                                                placeholder="Select W4Type"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4  col-form-label mobile-col-form-label" for="firstname2"> SSN </label>
+                                <p-inputMask *ngIf="isViewPermissionForNPIRole" mask="999-99-9999" class="p-md-8 p-p-0" disabled="true" formControlName="SSN"></p-inputMask>
+                                <p-inputMask *ngIf="!isViewPermissionForNPIRole" mask="xxx-xx-xxxx" class="p-md-8 p-p-0 " disabled="true" formControlName="SSN" ></p-inputMask>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4  col-form-label mobile-col-form-label" for="firstname3">* Withholding Status</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="withHoldingStausList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditEmployeeW4Controls.WithHoldingStatusID.errors }"
+                                                appendTo="body"
+                                                formControlName="WithHoldingStatusID"
+                                                placeholder="Select WithHoldingStatus"
+                                                (onChange)="commonUtils.setDropdownvalue(withHoldingStausList,'listValueID', $event, EmployeeW4Form,'WithHoldingStatus', 'valueDesc', false)"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0" *ngIf="w4TypePre">
+                                <label class="control-label p-md-4   col-form-label mobile-col-form-label" for="integeronly">Allowances</label>
+                                <div class="p-md-8 p-p-0  remove-padding-right">
+                                    <p-inputNumber inputId="integeronly" formControlName="Allowances" [maxlength]="10">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                            <div class="p-md-6 p-d-flex p-pt-0" *ngIf="isMultipleJob">
+                                <label class="control-label p-md-4  col-form-label mobile-col-form-label" for="binary">Multiple Jobs</label>
+                                <div class="p-md-8 p-p-0  remove-padding-right" style="display:flex;">
+                                    <p-checkbox formControlName="IsMultipleJobsOrSpouseWorks" binary="true" inputId="binary"></p-checkbox>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="p-grid p-pb-2 mobile-display-block" *ngIf="w4TypeCurrent">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4  col-form-label mobile-col-form-label" for="firstname3">Qualifying Children</label>
+                                <div class="p-md-8 p-p-0  remove-padding-right">
+                                    <p-inputNumber inputId="integeronly" formControlName="QualifyingChildren" [maxlength]="1">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0">
+                                <label class="control-label p-md-4   col-form-label mobile-col-form-label" for="minmaxfraction">Other Dependents</label>
+                                <div class="p-md-8 p-p-0  remove-padding-right">
+                                    <p-inputNumber inputId="integeronly" formControlName="OtherDependents" [maxlength]="1">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block" *ngIf="w4TypeCurrent">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4  col-form-label mobile-col-form-label" for="firstname3">Other Income</label>
+                                <div class="p-md-8 p-p-0  remove-padding-right">
+                                    <p-inputNumber formControlName="OtherIncome"
+                                                   inputId="firstname3"
+                                                   [useGrouping]="false"
+                                                   mode="decimal"
+                                                   [minFractionDigits]="2"
+                                                   [maxFractionDigits]="2"
+                                                   [maxlength]="19">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0">
+                                <label class="control-label p-md-4   col-form-label mobile-col-form-label" for="integeronly">Deductions</label>
+                                <div class="p-md-8 p-p-0  remove-padding-right">
+                                    <p-inputNumber formControlName="Deductions"
+                                                   inputId="firstname3"
+                                                   [useGrouping]="false"
+                                                   mode="decimal"
+                                                   [minFractionDigits]="2"
+                                                   [maxFractionDigits]="2"
+                                                   [maxlength]="19">
+                                    </p-inputNumber>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4  col-form-label mobile-col-form-label" for="firstname3">* Start Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="StartDate"  [ngClass]="{ 'is-invalid': submitted && addEditEmployeeW4Controls.StartDate.errors }"
+                                            [showIcon]="true"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4  col-form-label mobile-col-form-label" for="firstname4">End Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="EndDate"
+                                            [showIcon]="true"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>
+

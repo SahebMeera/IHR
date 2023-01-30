@@ -1,0 +1,183 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="900" #AddWizardFlowModal>
+<div class="modal-header-text">
+    {{ModalHeading}}
+</div>
+<div class="modal-popup-body">
+    <div class="p-grid" *ngIf=" WizardSteps != undefined && WizardSteps != null">
+        
+        <div class="p-col-12 p-p-0" *ngIf="WizardSteps != null && WizardSteps !== undefined && WizardSteps.length > 0">
+            <form [formGroup]="TimesheetForm">
+                <form-wizard class="step-body" #wizardStep (validationMessage)="fieldValidationMessage($event)" (submit)="SaveWizardData($event)" *ngIf="isWizardComponentVisiable">
+                    <wizard-step  class="p-col-12 p-p-0" *ngFor="let step of WizardSteps; let i = index;" [stepNumber]="step.name" [data]="step" (onNext)="onStep1Next($event, step)">
+                        <div class="p-grid p-col-12 p-p-0 display-contents"  *ngIf="step.fields != null && step.fields !== undefined && step.fields.length > 0">
+                            <div class="p-grid pathx-frm  p-pt-4" style="display: contents;">
+                                <div class="p-pb-2 p-pl-0" *ngFor="let element of step.fields; let f = index;" [ngClass]="element.fullWidth.toString().toUpperCase() !== 'TRUE' ? 'p-md-6' : 'p-md-12'" [ngStyle]="{'display': element.position.toUpperCase() !== step.name.toUpperCase() ? 'none' : 'block' }">
+                                    <div *ngIf="element.position.toUpperCase() == step.name.toUpperCase()" [ngStyle]="{'display': element.position.toUpperCase() !== step.name.toUpperCase() ? 'none' : '' }">
+                                        <div class="p-grid p-pb-0 mobile-display-block" *ngIf="element.fullWidth.toString().toUpperCase() !== 'TRUE'">
+                                            <div class="p-md-12  p-p-0  display-flex-block p-pt-0 " *ngIf="element.elementType.toUpperCase() === 'TextInput'.toUpperCase()">
+                                                <label class="control-label p-md-5 col-form-label mobile-col-form-label" for="firstname8" style="display: flex !important; align-items: flex-start;">{{element.label}}</label>
+                                                <div class="p-md-7 p-p-0">
+                                                    <input type="text" [(ngModel)]="element.value" ngDefaultControl [ngModelOptions]="{standalone: true}" pInputText />
+                                                </div>
+                                            </div>
+                                            <div class="p-md-12 p-p-0 p-pb-2  display-flex-block p-pt-0 " *ngIf="element.elementType.toUpperCase() === 'DateInput'.toUpperCase()">
+                                                <label class="control-label p-md-5 col-form-label mobile-col-form-label" for="firstname8" style=" display: flex !important; align-items: flex-start;">{{element.label}}</label>
+                                                <div class="p-md-7 p-p-0">
+                                                    <p-calendar class="p-md-7 p-p-0" ngDefaultControl [(ngModel)]="element.value"
+                                                                [showIcon]="true"
+                                                                dateFormat="mm/dd/yy"
+                                                                inputId="firstname6"
+                                                                [monthNavigator]="true"
+                                                                [yearNavigator]="true"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [yearRange]="commonUtils.getDateRange()"
+                                                                appendTo="body"></p-calendar>
+                                                </div>
+                                            </div>
+                                            <div class="p-md-12  p-p-0  display-flex-block p-pt-0 " *ngIf="element.elementType.toUpperCase() === 'EmailInput'.toUpperCase()">
+                                                <label class="control-label p-md-5 col-form-label mobile-col-form-label" for="firstname8" style="display: flex !important; align-items: flex-start;">{{element.label}}</label>
+                                                <div class="p-md-7 p-p-0">
+                                                    <input type="text" [(ngModel)]="element.value" ngDefaultControl [ngModelOptions]="{standalone: true}" pInputText />
+                                                </div>
+                                            </div>
+                                            <div class="p-md-12  p-p-0  display-flex-block p-pt-0 " *ngIf="element.elementType.toUpperCase() === 'TextAreaInput'.toUpperCase()">
+                                                <label class="control-label p-md-5 col-form-label mobile-col-form-label" for="firstname8" style="display: flex !important; align-items: flex-start;">{{element.label}}</label>
+                                                <div class="p-md-7 p-p-0">
+                                                    <textarea id="float-input" rows="4" cols="40" [(ngModel)]="element.value" ngDefaultControl [ngModelOptions]="{standalone: true}" pInputTextarea></textarea>
+                                                    <!--<input type="text" [(ngModel)]="element.value" ngDefaultControl [ngModelOptions]="{standalone: true}" pInputText />-->
+                                                </div>
+                                            </div>
+                                            <div class="p-md-12 p-p-0 p-pb-2  display-flex-block p-pt-0 " *ngIf="element.elementType.toUpperCase() === 'NumberInput'.toUpperCase()">
+                                                <label class="control-label p-md-5 col-form-label mobile-col-form-label" for="firstname54" style=" display: flex !important; align-items: flex-start;">{{element.label}}</label>
+                                                <div class="p-md-7 p-p-0">
+                                                    <p-inputMask mask="9999999999" ngDefaultControl class="p-md-9 p-p-0" [(ngModel)]="element.value" [ngModelOptions]="{standalone: true}"></p-inputMask>
+                                                </div>
+                                            </div>
+                                            <div class="p-md-12 p-p-0 p-pb-2  display-flex-block p-pt-0 " *ngIf="element.elementType.toUpperCase() === 'SelectInput'.toUpperCase()">
+                                                <label class="control-label p-md-5 col-form-label mobile-col-form-label" for="firstname32" style=" display: flex !important; align-items: flex-start;">{{element.label}}</label>
+                                                <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'EMPLOYEE'">
+                                                    <p-dropdown [options]="EmployeeList"
+                                                                appendTo="body"
+                                                                ngDefaultControl
+                                                                [(ngModel)]="element.value"
+                                                                placeholder="Select Employee"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionValue="employeeName"
+                                                                optionLabel="employeeName"></p-dropdown>
+                                                </div>
+                                                <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'COUNTRY'">
+                                                    <p-dropdown [options]="CountryList"
+                                                                appendTo="body"
+                                                                ngDefaultControl
+                                                                [(ngModel)]="element.value"
+                                                                placeholder="Select Country"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionValue="countryDesc"
+                                                                optionLabel="countryDesc"></p-dropdown>
+                                                </div>
+                                                <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'JOBTITLE'">
+                                                    <p-dropdown [options]="TitleList"
+                                                                appendTo="body"
+                                                                ngDefaultControl
+                                                                [(ngModel)]="element.value"
+                                                                placeholder="Select Titile"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionValue="value"
+                                                                optionLabel="valueDesc"></p-dropdown>
+                                                </div>
+                                                <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'EMPLOYMENTTYPE'">
+                                                    <p-dropdown [options]="EmployMentList"
+                                                                appendTo="body"
+                                                                [(ngModel)]="element.value"
+                                                                placeholder="Select Type"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionValue="listValueID"
+                                                                optionLabel="valueDesc"></p-dropdown>
+                                                </div>
+                                                <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'INVOICINGPERIOD'">
+                                                    <p-dropdown [options]="InvoicingPeriodList"
+                                                                appendTo="body"
+                                                                ngDefaultControl
+                                                                [(ngModel)]="element.value"
+                                                                placeholder="Select Invoice"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionValue="listValueID"
+                                                                optionLabel="valueDesc"></p-dropdown>
+                                                </div>
+                                                <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'PAYMENTTERM'">
+                                                    <p-dropdown [options]="InvoicingPeriodList"
+                                                                appendTo="body"
+                                                                [(ngModel)]="element.value"
+                                                                placeholder="Select Payment Term"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionValue="listValueID"
+                                                                optionLabel="valueDesc"></p-dropdown>
+                                                </div>
+                                                <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'GENDER'">
+                                                    <p-dropdown [options]="GenderList"
+                                                                appendTo="body"
+                                                                ngDefaultControl
+                                                                [(ngModel)]="element.value"
+                                                                placeholder="Select Gender"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionValue="listValueID"
+                                                                optionLabel="valueDesc"></p-dropdown>
+                                                </div>
+                                                <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'WORKAUTHORIZATION'">
+                                                    <p-dropdown [options]="WorkAuthorizationList"
+                                                                appendTo="body"
+                                                                ngDefaultControl
+                                                                [(ngModel)]="element.value"
+                                                                placeholder="Select Work Auth"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionValue="listValueID"
+                                                                optionLabel="valueDesc"></p-dropdown>
+                                                </div>
+                                                <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'MARITALSTATUS'">
+                                                    <p-dropdown [options]="MaritalStautsList"
+                                                                appendTo="body"
+                                                                ngDefaultControl
+                                                                [(ngModel)]="element.value"
+                                                                placeholder="Select Marital Status"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionValue="listValueID"
+                                                                optionLabel="valueDesc"></p-dropdown>
+                                                </div>
+                                                <div class="p-md-7 p-p-0" *ngIf="element.name.toUpperCase() == 'PAYMENTTYPE'">
+                                                    <p-dropdown [options]="PaymentTypeList"
+                                                                appendTo="body"
+                                                                ngDefaultControl
+                                                                [(ngModel)]="element.value"
+                                                                placeholder="Select Payment Type"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionValue="listValueID"
+                                                                optionLabel="valueDesc"></p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-grid p-pb-0 mobile-display-block" *ngIf="element.fullWidth.toString().toUpperCase() === 'TRUE'">
+                                            <div class="p-md-12 p-p-0  display-flex-block p-pt-0" *ngIf="element.elementType.toUpperCase() === 'TextAreaInput'.toUpperCase()">
+                                                <label class="control-label p-md-2 p-pt-0 p-pr-0 col-form-label mobile-col-form-label" for="firstname8" style="display: flex !important; align-items: flex-start;">{{element.label}}</label>
+                                                <div class="p-md-10">
+                                                    <textarea id="float-input" rows="4" cols="40" [(ngModel)]="element.value" ngDefaultControl [ngModelOptions]="{standalone: true}" pInputTextarea></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="p-col-12 p-p-0 p-text-center remove-padding" *ngIf="stepErrorMessage !== null || stepErrorMessage !== ''" [ngStyle]="{'display': stepErrorMessage !== '' ? 'block' : 'none' }">
+                            <span class="error-message-color" style="color: red;">{{stepErrorMessage}} &nbsp;</span>
+                        </div>
+                    </wizard-step>
+                </form-wizard>
+            </form>
+        </div>
+    </div>
+   
+
+</div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>

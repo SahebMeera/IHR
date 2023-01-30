@@ -1,0 +1,124 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>64a089a6-98df-4b79-8889-0f0e6ed29b2f</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\Reports\LeaveInfo.rdlc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="wwwroot\Reports\LeaveInfo.rdlc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.7.0" />
+    <PackageReference Include="Blazor.ContextMenu" Version="1.8.0" />
+    <PackageReference Include="BlazorDownloadFile" Version="2.1.6" />
+    <PackageReference Include="Blazored.SessionStorage" Version="1.0.12" />
+    <PackageReference Include="Blazored.Toast" Version="3.1.2" />
+    <PackageReference Include="BlazorInputMask" Version="1.0.4" />
+    <PackageReference Include="MicroKnights.Log4NetAdoNetAppender" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.2.0-preview3.20168.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="6.0.0" />
+    <PackageReference Include="ReportViewerCore.NETCore" Version="15.1.14" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.CodeDom" Version="6.0.0-preview.5.21301.5" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorInputFile\BlazorInputFile.csproj" />
+    <ProjectReference Include="..\BlazorTable\BlazorTable.csproj" />
+    <ProjectReference Include="..\ILT.IHR.DTO\ILT.IHR.DTO.csproj" />
+    <ProjectReference Include="..\ILT.IHR.Factory\ILT.IHR.Factory.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\EmployeeLeaveRequest\AddEditLeave.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Pages\EmployeeLeaveRequest\ApproveDenyLeave.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Pages\EmployeeLeaveRequest\EmployeeLeave.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Pages\EmployeeLeaveRequest\EmployeeLeaveApproval.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ReportDatasets\dsAuditInfo.cs">
+      <DependentUpon>dsAuditInfo.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="ReportDatasets\dsAuditInfo.Designer.cs">
+      <DependentUpon>dsAuditInfo.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="ReportDatasets\dscommonInfo.cs">
+      <DependentUpon>dscommonInfo.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="ReportDatasets\dscommonInfo.Designer.cs">
+      <DependentUpon>dscommonInfo.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="ReportDatasets\dsLeaveInfo - Copy.Designer.cs">
+      <DependentUpon>dsLeaveInfo.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ReportDatasets\dsAuditInfo.xsc">
+      <DependentUpon>dsAuditInfo.xsd</DependentUpon>
+    </None>
+    <None Update="ReportDatasets\dsAuditInfo.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsAuditInfo.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="ReportDatasets\dsAuditInfo.xss">
+      <DependentUpon>dsAuditInfo.xsd</DependentUpon>
+    </None>
+    <None Update="ReportDatasets\dscommonInfo.xsc">
+      <DependentUpon>dscommonInfo.xsd</DependentUpon>
+    </None>
+    <None Update="ReportDatasets\dscommonInfo.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dscommonInfo.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="ReportDatasets\dscommonInfo.xss">
+      <DependentUpon>dscommonInfo.xsd</DependentUpon>
+    </None>
+    <None Update="ReportDatasets\dsLeaveInfo - Copy.xsc">
+      <DependentUpon>dsLeaveInfo.xsd</DependentUpon>
+    </None>
+    <None Update="ReportDatasets\dsLeaveInfo - Copy.xss">
+      <DependentUpon>dsLeaveInfo.xsd</DependentUpon>
+    </None>
+    <None Update="ReportDatasets\dsLeaveInfo.xsc">
+      <DependentUpon>dsLeaveInfo.xsd</DependentUpon>
+    </None>
+    <None Update="ReportDatasets\dsLeaveInfo.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsAuditInfo.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="ReportDatasets\dsLeaveInfo.xss">
+      <DependentUpon>dsLeaveInfo.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties wwwroot_4css_4bootstrap_4bootstrap_1min_1css_1map__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>

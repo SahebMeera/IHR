@@ -1,0 +1,44 @@
+<div class="stepsdemo-content p-pt-2">
+    <div class="card">
+            <div class="p-fluid">
+                <form [formGroup]="personalDetailForm">
+                        <div class="p-col-12 p-d-flex p-jc-center" *ngIf="ErrorMessage != '' && ErrorMessage != undefined">
+                            <span class="invalid-feedback">{{ErrorMessage}}</span>
+                        </div>
+                        <div class="p-col-12">
+                        <div class="p-fluid p-formgrid p-grid mobile-display-block">
+                            <div class="p-md-6">
+                                <input id="firstname6" type="text" pInputText formControlName="FirstName" placeholder="First Name" maxlength="50" [ngClass]="{ 'is-invalid': submitted && caseFormControls.FirstName.errors }">
+                            </div>
+                            <div class="p-md-6">
+                                <input id="lastname6" type="text" pInputText formControlName="LastName" placeholder="Last Name" maxlength="50" [ngClass]="{ 'is-invalid': submitted && caseFormControls.LastName.errors }">
+                            </div>
+                            <div class="p-md-6">
+                                <input id="firstname6" type="text" pInputText formControlName="Email" placeholder="Email" maxlength="50" [ngClass]="{ 'is-invalid': submitted && caseFormControls.Email.errors }">
+                            </div>
+                            <div class="p-md-6">
+                                <p-inputMask mask="(999) 999-9999" formControlName="Phone" placeholder="Phone" [ngClass]="{ 'is-invalid': submitted && caseFormControls.Phone.errors }"></p-inputMask>
+                            </div>
+                            <div class="p-md-6">
+                                <input type="password"  formControlName="Password" pInputText placeholder="Password" [ngClass]="{ 'is-invalid': submitted && caseFormControls.Password.errors }"/>
+                            </div>
+                            <div class="p-md-6">
+                                <input type="password"  formControlName="ConfirmPassword" pInputText placeholder="Confirm Password" [ngClass]="{ 'is-invalid': submitted && caseFormControls.ConfirmPassword.errors }"/>
+                            <div *ngIf="caseFormControls.ConfirmPassword.touched && caseFormControls.ConfirmPassword.invalid"
+                                class="invalid-feedback">
+                                <div *ngIf="caseFormControls.ConfirmPassword.errors.confirmedValidator">Password and Confirm Password must be match.
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="p-col-12" style="padding-right: 0px; display: flex; justify-content: end;">
+                            <div>
+                                <button pButton pRipple type="button" label="Next" class="p-button-raised p-mr-2 p-mb-2" (click)="nextPage()"></button>
+                            </div>
+                            <!-- <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button> -->
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+</div>

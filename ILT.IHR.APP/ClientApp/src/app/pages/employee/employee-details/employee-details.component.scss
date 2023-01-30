@@ -1,0 +1,131 @@
+
+:host::ng-deep .addressValidation .p-card {
+    outline: 1px solid red !important;
+}
+:host::ng-deep .p-card {
+    .p-card-body {
+        padding: 0.5rem !important;
+        background-color: #1979c5 !important;
+        color: white;
+    }
+
+    .p-card-content {
+        padding: 0rem !important;
+    }
+}
+
+.employee-details-header {
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    font-family: sans-serif;
+    /*font-family: "Open Sans", "Helvetica Neue", sans-serif !important;*/
+}
+
+
+
+:host::ng-deep .p-fieldset {
+    padding: 0px !important;
+}
+:host::ng-deep .field-set .p-fieldset {
+    margin-top: 10px !important;
+}
+:host::ng-deep .employee-part-2 {
+
+    .p-fieldset {
+        margin-top: 0.4rem !important;
+    }
+    .p-fieldset-legend {
+         padding:0.4rem !important;
+     }
+}
+
+:host::ng-deep .employee-part-1 .p-fieldset .p-fieldset-legend {
+    display: none !important;
+}
+:host::ng-deep .p-dropdown {
+    display: flex !important;
+}
+:host::ng-deep .p-fieldset .p-fieldset-content {
+   padding-bottom: 0px !important;
+}
+:host::ng-deep .employee-address .p-card .p-card-body {
+    border: 1px solid #ced4da;
+    padding: 0.5rem !important;
+    color: #495057 !important;
+    background-color: white !important;
+}
+.address-row-action {
+    display: flex;
+    align-items: center;
+}
+:host::ng-deep .address-row-action .p-button.p-button-icon-only {
+    height: 1.7rem !important;
+}
+
+.address-card-action-align {
+    bottom: 2px;
+    display: flex;
+    justify-content: flex-end;
+}
+:host::ng-deep .address-card .address-height{
+    min-height: 7rem;
+}
+.address-button {
+   /* bottom: 89px;
+    position: absolute*/
+}
+:host::ng-deep .address-button .address-row-action .p-fluid.p-button-icon-only {
+    height: 1.6rem !important;
+    width: 1.8rem !important;
+}
+:host::ng-deep .p-tabview-nav-content {
+    padding-left: 0px !important;
+}
+
+
+:host ::ng-deep .is-invalid-dropdown .p-dropdown {
+    outline: 1px solid #E91E63 !important;
+}
+
+:host ::ng-deep .is-invalid-dropdown .p-autocomplete {
+    outline: 1px solid #E91E63;
+}
+@media (max-width: 991px) {
+    ul.p-tabview-nav li {
+        width: 100% !important;
+    }
+
+    .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+        border-color: #efefef !important;
+        border-top-right-radius: 0px !important;
+        border-top-left-radius: 0px !important;
+    }
+
+    .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+        background: #efefef !important;
+        font-weight: bold;
+    }
+    .marrgin-top-bottom {
+        margin-bottom: 10px;
+        margin-top: 1px;
+        justify-content: end;
+    }
+    .remove-padding-left {
+        padding-left: 0px !important;
+    }
+    
+}
+.display-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.maskpan {
+    text-transform: uppercase;
+    display: contents;
+}
+
+.maskAadhar {
+    display: contents;
+}
+

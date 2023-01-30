@@ -1,0 +1,17 @@
+.add-subClient {
+    width: 18px;
+    height: 26px;
+}
+.add-sub-client{
+  
+}
+:host::ng-deep .add-sub-client .p-fluid .p-button-icon-only {
+    width:1.5rem !important;
+}
+:host ::ng-deep .is-invalid-dropdown .p-dropdown {
+    outline: 1px solid #E91E63 !important;
+}
+
+:host ::ng-deep .is-invalid-dropdown .p-autocomplete {
+    outline: 1px solid #E91E63;
+}

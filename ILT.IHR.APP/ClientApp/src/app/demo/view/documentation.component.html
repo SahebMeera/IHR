@@ -1,0 +1,325 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <div class="card docs">
+
+            <h4>Current Version</h4>
+            <p>Angular 13 and PrimeNG 13</p>
+
+            <h4>Dependencies</h4>
+            <p>Omega has no direct dependency. More information about dependencies is available at <a href="https://www.primefaces.org/why-primeng-templates/">Why PrimeNG Templates</a> article.</p>
+
+            <h4>Getting Started</h4>
+            <p>Omega Template is distributed as an Angular CLI project. If you don't have CLI installed already run the following commands to set it up. In case
+            you have an application that do not use CLI, skip the <b>Integration with an Existing Non CLI Application</b> part.</p>
+<app-code ngPreserveWhitespaces ngNonBindable lang="markup">
+npm install -g angular-cli
+</app-code>
+
+            <p>Once CLI is ready in your system, extract the contents of the omega zip file distribution, cd to the directory,
+            install the libraries from npm and then execute "ng serve" to run the application in your local environment at http://localhost:4200/.</p>
+<app-code ngPreserveWhitespaces ngNonBindable lang="markup">
+cd omega
+npm install
+ng serve
+</app-code>
+
+            <p>That's it, you may now start with the development of your application.</p>
+
+            <h4>Important CLI Commands</h4>
+            <p>Following commands are derived from CLI.</p>
+<app-code ngPreserveWhitespaces ngNonBindable lang="markup">
+Run 'ng serve' for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+Run 'ng generate component component-name' to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+
+Run 'ng build' to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+
+Run 'ng test' to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+Run 'ng e2e' to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+Run 'ng help' for more options.
+</app-code>
+
+            <h4>Template</h4>
+            <p>Omega layout consists of two parts; the main application template and the menu component. <i>app.component.html</i> inside app folder is the main html template for the base layout having a router-outlet
+                for routing whereas the menu component is defined using the &lt;app-menu /&gt; element.
+            </p>
+
+            <h4>Menu</h4>
+            <p>Menu is a separate component defined in app.menu.component.ts file based on PrimeNG MenuModel API. In order to define the menuitems,
+            navigate to app.menu.component.ts and define your own model. Here is the menu component from the sample application.</p>
+
+<div style="height:400px;overflow: auto;">
+<app-code ngPreserveWhitespaces ngNonBindable lang="javascript">
+import &#123;Component, OnInit &#125; from '@angular/core';
+import &#123;MenuItem&#125; from 'primeng/primeng';
+
+@Component(&#123;
+    selector: 'app-menu',
+    template: `
+        &lt;div class=&quot;menu&quot;&gt;
+            &lt;ul class=&quot;layout-menu&quot;&gt;
+                &lt;li app-menuitem *ngFor=&quot;let item of model; let i = index;&quot; [item]=&quot;item&quot; [index]=&quot;i&quot; [root]=&quot;true&quot;&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    `
+&#125;)
+export class AppMenuComponent implements OnInit &#123;
+
+    model: any[];
+
+    ngOnInit() &#123;
+        this.model = [
+            &#123;label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/']&#125;,
+            &#123;
+                label: 'UI Kit', icon: 'pi pi-fw pi-star', routerLink: ['/uikit'], badge: 2,
+                items: [
+                    &#123;label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout']&#125;,
+                    &#123;label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input']&#125;,
+                    &#123;label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel']&#125;,
+                    &#123;label: 'Invalid State', icon: 'pi pi-exclamation-circle', routerLink: ['/uikit/invalidstate']&#125;,
+                    &#123;label: 'Button', icon: 'pi pi-fw pi-mobile', routerLink: ['/uikit/button']&#125;,
+                    &#123;label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table']&#125;,
+                    &#123;label: 'List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/list']&#125;,
+                    &#123;label: 'Tree', icon: 'pi pi-fw pi-share-alt', routerLink: ['/uikit/tree']&#125;,
+                    &#123;label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel']&#125;,
+                    &#123;label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay']&#125;,
+                    &#123;label: 'Media', icon: 'pi pi-fw pi-image', routerLink: ['/uikit/media']&#125;,
+                    &#123;label: 'Menu', icon: 'pi pi-fw pi-bars', routerLink: ['/uikit/menu']&#125;,
+                    &#123;label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message']&#125;,
+                    &#123;label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file']&#125;,
+                    &#123;label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts']&#125;,
+                    &#123;label: 'Misc', icon: 'pi pi-fw pi-circle-off', routerLink: ['/uikit/misc']&#125;
+                ]
+            &#125;,
+            &#123;
+                label: 'Utilities', icon: 'pi pi-fw pi-compass', routerLink: ['utilities'],
+                items: [
+                    &#123;label: 'Display', icon: 'pi pi-fw pi-desktop', routerLink: ['utilities/display']&#125;,
+                    &#123;label: 'Elevation', icon: 'pi pi-fw pi-external-link', routerLink: ['utilities/elevation']&#125;,
+                    &#123;label: 'FlexBox', icon: 'pi pi-fw pi-directions', routerLink: ['utilities/flexbox']&#125;,
+                    &#123;label: 'Icons', icon: 'pi pi-fw pi-search', routerLink: ['utilities/icons']&#125;,
+                    &#123;label: 'Text', icon: 'pi pi-fw pi-pencil', routerLink: ['utilities/text']&#125;,
+                    &#123;label: 'Widgets', icon: 'pi pi-fw pi-star', routerLink: ['utilities/widgets']&#125;,
+                    &#123;label: 'Grid System', icon: 'pi pi-fw pi-th-large', routerLink: ['utilities/grid']&#125;,
+                    &#123;label: 'Spacing', icon: 'pi pi-fw pi-arrow-right', routerLink: ['utilities/spacing']&#125;,
+                    &#123;label: 'Typography', icon: 'pi pi-fw pi-align-center', routerLink: ['utilities/typography']&#125;
+                ]
+            &#125;,
+            &#123;
+                label: 'Pages', icon: 'pi pi-fw pi-briefcase', routerLink: ['/pages'], badge: 8,
+                items: [
+                    &#123;label: 'Crud', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/crud']&#125;,
+                    &#123;label: 'Calendar', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/pages/calendar']&#125;,
+                    &#123;label: 'Timeline', icon: 'pi pi-fw pi-calendar', routerLink: ['/pages/timeline']&#125;,
+                    &#123;label: 'Landing', icon: 'pi pi-fw pi-globe', url: 'assets/pages/landing.html', target: '_blank'&#125;,
+                    &#123;label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/login']&#125;,
+                    &#123;label: 'Invoice', icon: 'pi pi-fw pi-dollar', routerLink: ['/pages/invoice']&#125;,
+                    &#123;label: 'Help', icon: 'pi pi-fw pi-question-circle', routerLink: ['/pages/help']&#125;,
+                    &#123;label: 'Error', icon: 'pi pi-fw pi-times-circle', routerLink: ['/error']&#125;,
+                    &#123;label: 'Not Found', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/notfound']&#125;,
+                    &#123;label: 'Access Denied', icon: 'pi pi-fw pi-lock', routerLink: ['/access']&#125;,
+                    &#123;label: 'Empty', icon: 'pi pi-fw pi-circle-off', routerLink: ['/pages/empty']&#125;
+                ]
+            &#125;,
+            &#123;
+                label: 'Hierarchy', icon: 'pi pi-fw pi-align-left',
+                items: [
+                    &#123;
+                        label: 'Submenu 1', icon: 'pi pi-fw pi-align-left',
+                        items: [
+                            &#123;
+                                label: 'Submenu 1.1', icon: 'pi pi-fw pi-align-left',
+                                items: [
+                                    &#123;label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-align-left'&#125;,
+                                    &#123;label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-align-left'&#125;,
+                                    &#123;label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-align-left'&#125;,
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Submenu 1.2', icon: 'pi pi-fw pi-align-left',
+                                items: [
+                                    &#123;label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-align-left'&#125;
+                                ]
+                            &#125;,
+                        ]
+                    &#125;,
+                    &#123;
+                        label: 'Submenu 2', icon: 'pi pi-fw pi-align-left',
+                        items: [
+                            &#123;
+                                label: 'Submenu 2.1', icon: 'pi pi-fw pi-align-left',
+                                items: [
+                                    &#123;label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-align-left'&#125;,
+                                    &#123;label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-align-left'&#125;,
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Submenu 2.2', icon: 'pi pi-fw pi-align-left',
+                                items: [
+                                    &#123;label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-align-left'&#125;,
+                                ]
+                            &#125;,
+                        ]
+                    &#125;
+                ]
+            &#125;,
+            &#123;
+                label: 'Buy Now', icon: 'pi pi-fw pi-shopping-cart', url: ['https://www.primefaces.org/store']
+            &#125;,
+            &#123;
+                label: 'Documentation', icon: 'pi pi-fw pi-info-circle', routerLink: ['/documentation']
+            &#125;
+        ];
+    &#125;
+&#125;
+</app-code>
+</div>
+
+            <h4>Integration with an Existing CLI Project</h4>
+            <p>To setup Omega in an existing project, copy the <i>src/assets</i> folder to your projects folder with the same name
+                and replace the contents of as app.component.ts, app.component.html with their counterparts in Omega under <i>src/app</i> folder. In addition, copy the menu.components.ts to your project.</p>
+
+            <p>Install PrimeNG</p>
+<app-code ngPreserveWhitespaces ngNonBindable lang="markup">
+npm install primeng@latest --save
+npm install primeicons@latest --save
+</app-code>
+
+            <p>Add PrimeNG CSS at styles section in angular.json.</p>
+
+<app-code ngPreserveWhitespaces ngNonBindable lang="markup">
+"styles": [
+    "styles.scss"                                               //your styles and overrides
+],
+</app-code>
+            <h4 id="noncli">Integration with an Existing Non-CLI Project</h4>
+            <p>For an existing project that do not use CLI, setup steps are more or less similar. Start with installing the dependencies listed above in package.json</p>
+            <p>Copy the <i>src/assets</i> folder to your application and include the resources listed above with a module bundler like webpack or using link-script tags.</p>
+            <p>Finally copy the contents of app.component.html to your application's main component template such as <i>app/application.html</i> along with the application component and the menu component typescript files.</p>
+
+            <h4>Icons</h4>
+            <p>Omega Layout uses font awesome icons for layout so enable font awesome support in PrimeFaces by setting primefaces.FONT_AWESOME context parameter in web.xml as true. If your PrimeFaces version does
+                not have the font awesome integration, include the font-awesome manually in your application.</p>
+            <p>Default icons of Omega theme are png based and Omega Layout enhances them using sharp looking font awesome icons as well.</p>
+
+            <h4>Grid CSS</h4>
+            <p>Omega uses new PrimeNG Grid CSS throughout the samples, we strongly suggest using Grid CSS as your layout framework as it is well tested and supported by PrimeNG however other grid css solutions can also be used instead.</p>
+
+            <h4>Cards</h4>
+            <p>Card is a section to group content and layout provides a built-in css for it. Apply .card style class to your container to use it.</p>
+<app-code ngPreserveWhitespaces ngNonBindable lang="javascript">
+&lt;div class="card"&gt;
+    Content here
+&lt;/div&gt;
+
+&lt;div class="card card-w-title"&gt;
+    &lt;h4>Title&lt;/h4&gt;
+    Content here
+&lt;/div&gt;
+</app-code>
+
+            <h4>SASS Customization</h4>
+            <p>Omega is implemented using sass where sections are organized in different scss files under sass folder such as _dashboard.scss, _login.scss, _main.scss. The _variables.scss file contains common parameters like fontSize, colors and more. In order to customize the layout, you need to make changes to the .scss files and generate a css file called layout.css. Contents of the variables is as follows;</p>
+
+<app-code ngPreserveWhitespaces ngNonBindable lang="css">
+/* General */
+$fontSize: 14px;
+
+/* Menu */
+$submenuFontSize: 13px;
+$menuBgColor: #3b3e47;
+$menuitemColor: #ffffff;
+$menuitemHoverColor: #2399e5;
+$menuitemActiveColor: #2399e5;
+$menuitemActiveBgColor: #2e3035;
+$menuitemBorderColor: #4e5159;
+$menuitemBadgeBgColor: #007be5;
+$topbarItemBadgeColor: #ef6262;
+$dividerColor: #e3e3e3;
+
+/* Topbar */
+$topbarItemColor: #ffffff;
+$topbarItemHoverColor: #77c7ff;
+
+// === Button Colors === //
+/* GreenButton */
+$greenButton: #1f9e53;
+$greenButtonBorder: #107533;
+$greenButtonHover: #2eb971;
+$greenButtonActive: #178544;
+
+/* YellowButton */
+$yellowButton: #eed511;
+$yellowButtonBorder: #cdb80d;
+$yellowButtonHover: #f8e653;
+$yellowButtonActive: #d4b301;
+
+/* RedButton */
+$redButton: #b8312e;
+$redButtonBorder: #9c1627;
+$redButtonHover: #d2524f;
+$redButtonActive: #9c1627;
+
+/* greyButton */
+$greyButton: #ECEFF1;
+$greyButtonBorder: #CCCFD2;
+$greyButtonText: #525252;
+$greyButtonHover: #F5FBFF;
+$greyButtonActive: #CCCFD2;
+
+/* BlackButton */
+$blackButton: #353535;
+$blackButtonBorder: #212121;
+$blackButtonHover: #4a4a4a;
+$blackButtonActive: #212121;
+
+/* BlueButton */
+$blueButton: #2c78c7;
+$blueButtonBorder: #1a51b0;
+$blueButtonHover: #409cdc;
+$blueButtonActive: #1a51b0;
+
+/* AquaButton */
+$aquaButton: #0084b4;
+$aquaButtonBorder: #087298;
+$aquaButtonHover: #03A8E4;
+$aquaButtonActive: #087298;
+
+/* NavyButton */
+$navyButton: #1f3b59;
+$navyButtonBorder: #21374f;
+$navyButtonHover: #3C6592;
+$navyButtonActive: #21374f;
+</app-code>
+
+
+        <h4>Menu Item Badges</h4>
+        <p>Badges are numerical indicators of how many items are associated with a link.
+           The badge property is value of the badge and badgeStyleClass is style class of the badge.</p>
+<app-code ngPreserveWhitespaces ngNonBindable lang="javascript">
+label: 'Components', icon: 'list', badge: '2', badgeStyleClass: 'red-badge'
+</app-code>
+        <p>Omega layout has 4 different badge style.There is a default badge which uses the omega blue. And there is 3 other badge class for menu items.</p>
+        <ul>
+            <li>red-badge</li>
+            <li>green-badge</li>
+            <li>yellow-badge</li>
+        </ul>
+
+            <h4>Customizing Styles</h4>
+            <p>It is suggested to add your customizations in the following sass files under the override folder instead of adding them to the
+                scss files under sass folder to avoid maintenance issues after an update.</p>
+
+            <ul>
+                <li><b>_layout_styles</b>: Styles for the layout.</li>
+                <li><b>_theme_styles</b>: Styles for the theme.</li>
+            </ul>
+
+            <h4>Migration Guide</h4>
+            <p>Every change is included in <b>CHANGELOG.md</b> file at the root folder of the distribution along with the instructions to update.</p>
+
+        </div>
+    </div>
+</div>

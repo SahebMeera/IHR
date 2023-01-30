@@ -1,0 +1,51 @@
+:host ::ng-deep .is-invalid-dropdown .p-dropdown {
+    outline: 1px solid #E91E63 !important;
+}
+
+:host ::ng-deep .is-invalid-dropdown .p-autocomplete {
+    outline: 1px solid #E91E63;
+}
+:host::ng-deep .employee-part-2 .p-fieldset .p-fieldset-content {
+    padding-top: 0px !important;
+}
+
+:host::ng-deep .p-fieldset {
+    padding: 0px !important;
+}
+:host::ng-deep .p-fieldset .p-fieldset-legend {
+    border: none !important;
+    color: black;
+     background: white !important;
+}
+:host::ng-deep .field-set .p-fieldset {
+    margin-top: 10px !important;
+}
+
+:host::ng-deep .employee-part-2 {
+
+    .p-fieldset {
+        margin-top: 0.4rem !important;
+    }
+
+    .p-fieldset-legend {
+        padding: 0.4rem !important;
+    }
+}
+
+:host::ng-deep .employee-part-1 .p-fieldset .p-fieldset-legend {
+    display: none !important;
+}
+:host::ng-deep .p-fieldset .p-fieldset-content {
+    padding-bottom: 0px !important;
+}
+
+:host::ng-deep .p-dialog {
+    max-height: 53rem;
+}
+
+@media screen and (max-width: 769px) {
+    :host ::ng-deep .p-dialog {
+        max-height: 90% !important;
+    }
+}
+

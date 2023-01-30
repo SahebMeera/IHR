@@ -1,0 +1,123 @@
+﻿@inherits EmployeeLeaveApprovalBase
+@using BlazorTable
+@using IHR.DTO
+<div class="row mt-3 hidden-web">
+    <div class="col-12 pl-1 pr-1">
+        @if (lstLeaveRequest != null)
+        {
+        <Table TableItem="Leave" Items="lstLeaveRequest" ColumnReorder="true" ShowSearchBar="true" DropDown="lstStatus" DropDownLabel="Status:" onDropDownChange="onStatusChange" DefaultID="DefaultStatusId" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+               SelectionType="SelectionType.Single" RowClickAction="RowClick" RowActions="RowActions" HeaderActions="HeaderAction">
+            <Column TableItem="Leave" Title="Employee" Field="@(x => x.EmployeeName)" Sortable="true" Filterable="false" />
+            <Column TableItem="Leave" Title="Start Date" Field="@(x => x.StartDate)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="true">
+                <Template>
+                    @(context.StartDate.ToShortDateString())
+                </Template>
+            </Column>
+            <Column TableItem="Leave" Title="End Date" Field="@(x => x.EndDate)" Sortable="true" Filterable="false">
+                <Template>
+                    @(context.EndDate.ToShortDateString())
+                </Template>
+            </Column>
+            <Column TableItem="Leave" Title="Duration" Field="@(x => x.Duration)" Sortable="true" Filterable="false" />
+            <Column TableItem="Leave" Title="Leave Type" Field="@(x => x.LeaveType)" Sortable="true" Filterable="false" />
+            <Column TableItem="Leave" Title="Title" Field="@(x => x.Title)" Sortable="true" Filterable="false" />
+            <Column TableItem="Leave" Title="Status" Field="@(x => x.Status)" Sortable="true" Filterable="false" />
+            <EmptyDataTemplate>
+                <div class="text-center">
+                    No rows found!
+                </div>
+            </EmptyDataTemplate>
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </Table>
+        }
+        else
+        {
+            <span></span>
+        }
+    </div>
+</div>
+<div class="row mt-2 hidden-web hidden-mobile">
+    <div class="col-12 ">
+        <div class="row mr-0 pb-2 display-flex mobile-display">
+            <div class="col-12 col-sm-3 pr-1 mobile-padding-remove mobile-pad-left-add">
+                <input type="text" id="myFilter" class="form-control form-control-sm float-left" placeholder="Global Search..." @onkeyup="SearchFuntion" />
+            </div>
+            <div class="col-12 col-sm-3 pl-0  mobile-pad-right-add" style="display: flow-root; justify-content: center; align-items: center;">
+                @if (lstStatus != null)
+                {
+                    <div class="row align-items-center mobile-pad-top-add">
+                        <label class="col-5 col-form-label mobile-transform-translate">Status:</label>
+
+                        <div class="col-7 pl-0 pr-0 mobile-first-dropdown-padding">
+                            <select class="form-control form-control-sm" @bind="DefaultStatusId" @oninput=OnDrpDwnChange>
+                                @if (lstStatus != null)
+                                {
+                                    @foreach (var item in lstStatus)
+                                    {
+                                        <option value="@item.ID">@item.Value</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @if (lstLeaveRequest != null && lstLeaveRequest.Count > 0)
+    {
+        <div class="col-12 pt-2" id="myItems">
+            @foreach (var leaveRequest in lstLeaveRequest)
+            {
+                <div class="col-sm-6 pb-1 pl-0 pr-0">
+                    <div class="card mobile-card-view" @onclick="(() => EditMobile(leaveRequest))">
+                        <div class="card-body" style="padding-bottom:0.5rem !important;">
+                            <div class="row">
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Employee :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @leaveRequest.EmployeeName
+                                    </div>
+                                </div>
+
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Leave Type :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @leaveRequest.LeaveType
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Start Date :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @FormatDate(leaveRequest.StartDate)
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">End Date :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @FormatDate(leaveRequest.EndDate)
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Status :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @leaveRequest.Status
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <div class="col-12" style="padding-top:10rem;"></div>
+    }
+</div>
+
+<ApproveDenyLeave @ref="ApproveDenyLeaveModal" UpdateLeaveList="RefreshList"></ApproveDenyLeave>

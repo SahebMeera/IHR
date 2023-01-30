@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[EmployeeW4] (
+    [EmployeeW4ID]                INT             IDENTITY (1, 1) NOT NULL,
+    [EmployeeID]                  INT             NOT NULL,
+    [W4TypeID]                    INT             NOT NULL,
+    [SSN]                         VARCHAR (9)     NULL,
+    [WithHoldingStatusID]         INT             NOT NULL,
+    [Allowances]                  INT             NULL,
+    [IsMultipleJobsOrSpouseWorks] BIT             CONSTRAINT [DF_EmployeeW4_IsMultipleJobsOrSpouseWorks] DEFAULT ((0)) NOT NULL,
+    [QualifyingChildren]          INT             NULL,
+    [OtherDependents]             INT             NULL,
+    [OtherIncome]                 DECIMAL (18, 2) NULL,
+    [Deductions]                  DECIMAL (18, 2) NULL,
+    [StartDate]                   DATE            NOT NULL,
+    [EndDate]                     DATE            NULL,
+    [CreatedBy]                   VARCHAR (50)    NOT NULL,
+    [CreatedDate]                 DATETIME        NOT NULL,
+    [ModifiedBy]                  VARCHAR (50)    NULL,
+    [ModifiedDate]                DATETIME        NULL,
+    [TimeStamp]                   ROWVERSION      NOT NULL,
+    CONSTRAINT [PK_EmployeeW4] PRIMARY KEY CLUSTERED ([EmployeeW4ID] ASC),
+    CONSTRAINT [FK_EmployeeW4_Employee] FOREIGN KEY ([EmployeeID]) REFERENCES [dbo].[Employee] ([EmployeeID]),
+    CONSTRAINT [FK_EmployeeW4_ListValue] FOREIGN KEY ([WithHoldingStatusID]) REFERENCES [dbo].[ListValue] ([ListValueID]),
+    CONSTRAINT [FK_EmployeeW4_ListValue_W4Type] FOREIGN KEY ([W4TypeID]) REFERENCES [dbo].[ListValue] ([ListValueID])
+);
+

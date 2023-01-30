@@ -1,0 +1,176 @@
+<app-ihr-modal-popup [options]="modalOptions" [width]="800" #ExpenseModal>
+    <div class="modal-header-text">
+        {{ModalHeading}}
+    </div>
+    <div class="modal-popup-body">
+        <form [formGroup]="ExpenseForm">
+            <div class="p-grid pathx-frm display-flex-block">
+                <div class="p-col-12 p-pt-5">
+                    <div class="p-fluid p-formgrid">
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname1">Employee </label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="Employees"
+                                                appendTo="body"
+                                                [disabled]="true"
+                                                formControlName="EmployeeID"
+                                                placeholder="Select Employee"
+                                                optionValue="employeeID"
+                                                optionLabel="employeeName"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname3">Expense Type</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="ExpenseTypeList" [ngClass]="{ 'is-invalid-dropdown': submitted && addEditTicketControls.ExpenseTypeID.errors }"
+                                                [disabled]="IsApprover"
+                                                appendTo="body"
+                                                formControlName="ExpenseTypeID"
+                                                placeholder="Select Type"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2">Submitted Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="SubmissionDate"
+                                            [showIcon]="true"
+                                            [disabled]="true"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [yearNavigator]="true"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">* Amount</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-inputNumber formControlName="Amount" [ngClass]="{ 'is-invalid': submitted && addEditTicketControls.Amount.errors }"
+                                                   inputId="firstname3"
+                                                   [disabled]="IsApprover"
+                                                   [useGrouping]="false"
+                                                   mode="decimal"
+                                                   [minFractionDigits]="2"
+                                                   [maxFractionDigits]="2"
+                                                   [maxlength]="15">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8"> Description</label>
+                                <div class="p-md-10 p-p-0">
+                                    <input type="text" id="disabled-input" formControlName="SubmissionComment" pInputText [ngClass]="{ 'disabled': IsApprover === true }" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block">
+                            <div class="p-md-12 p-d-flex p-pt-0">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8" *ngIf="ExpenseForm.value.ExpenseID !== 0 && (ExpenseForm.value.FileName !== null && ExpenseForm.value.FileName !== undefined)" style="display: flex !important; align-items: flex-start;"> Attachment</label>
+                                <div class=" p-p-0" *ngIf="ExpenseForm.value.ExpenseID !== 0 && ExpenseForm.value.FileName !== null && ExpenseForm.value.FileName !== undefined">
+                                    <div *ngFor="let fName of isEditFileList; let i=index;" style="padding-top: calc(0.375rem + 1px) !important;">
+                                        <a target="_blank" style="font-size: 12px;color: #0366d6; cursor: pointer;" (click)="fileDownload(fName)">
+                                            <span *ngIf="IsApprover">
+                                                <span class="fas fa-file-image"></span>
+                                                {{fName}}
+                                            </span>
+                                            <span *ngIf="!IsApprover">
+                                                <span class="fas fa-file-image"></span>
+                                                {{fName}} <i class="pi pi-times remove-file" (click)="removeSelectedFile(i)"></i>
+                                            </span>
+                                        </a>
+
+                                       <br />
+                                    </div>
+                                    <div *ngIf="ExpenseForm.value.FileName === null">No Files Attachment</div>
+                                </div>
+                             
+                                <div class="p-md-2" *ngIf="ExpenseForm.value.ExpenseID === 0 || ExpenseForm.value.FileName === null || ExpenseForm.value.FileName === ''">
+                                    <button (click)="fileInput.click()" [disabled]="IsApprover">Choose Files</button>
+                                    <input style="display: none"
+                                           #attachments
+                                           type="file"
+                                           (change)="onFileChanged($event)"
+                                           #fileInput
+                                           accept=".pdf,.docx,.doc,.jpg,.jpeg,.png"
+                                           multiple="true" />
+                                </div>
+                                <div class="p-p-0"  style="padding-top: calc(0.175rem + 1px) !important;" *ngIf="ExpenseForm.value.ExpenseID === 0">
+                                    <div *ngFor="let selected of listOfFiles; let index = index" class=" display-start">
+                                        <span class="display-center">{{ selected }} <i class="pi pi-times remove-file" (click)="removeSelectedFile(index)"></i></span><br />
+                                        <!--<button mat-icon-button (click)="removeSelectedFile(index)">delete</button>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block" *ngIf="ExpenseForm.value.StatusID != submittedStatusID || IsApprover">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname2">Payment Date</label>
+                                <p-calendar class="p-md-8 p-p-0" formControlName="PaymentDate" [ngStyle]="{'outline':  isPaymentDateInValid === true ? '1px solid red': ''  }"
+                                            [showIcon]="true"
+                                            [disabled]="!IsApprover"
+                                            dateFormat="mm/dd/yy"
+                                            inputId="firstname6"
+                                            [monthNavigator]="true"
+                                            [maxDate]="dateTime"
+                                            (onSelect)="onPaymentDateselect()"
+                                            (focusout)="onPaymentDateChange()"
+                                            [yearNavigator]="true"
+                                            [yearRange]="commonUtils.getDateRange()"
+                                            appendTo="body"></p-calendar>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">AmountPaid</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-inputNumber formControlName="AmountPaid"
+                                                   inputId="integeronly"
+                                                   (focusout)="onPaymentAmountChange()"
+                                                   [disabled]="!IsApprover"
+                                                   [useGrouping]="false"
+                                                   [ngStyle]="{'outline':  isPaymentAmountInValid === true ? '1px solid red': ''  }">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block" *ngIf="ExpenseForm.value.StatusID != submittedStatusID || IsApprover">
+                            <div class="p-md-12 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-2 col-form-label mobile-col-form-label" for="firstname8" style=" display: flex !important; align-items: flex-start;">Comments</label>
+                                <div class="p-md-10 p-p-0">
+                                    <textarea id="float-input" rows="1" cols="30"  (focusout)="onPaymentCommentChange()" formControlName="PaymentComment" [ngClass]="{ 'disabled': !IsApprover === true }" [ngStyle]="{'outline':  isPaymentCommnetInValid === true ? '1px solid red': ''  }" pInputTextarea></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-pb-2 mobile-display-block" *ngIf="ExpenseForm.value.ExpenseID !== 0">
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                                <label class="control-label p-md-4 col-form-label mobile-col-form-label" for="firstname4">Status</label>
+                                <div class="p-md-8 p-p-0">
+                                    <p-dropdown [options]="StatusList"
+                                                appendTo="body"
+                                                [disabled]="true"
+                                                formControlName="StatusID"
+                                                placeholder="Select Status"
+                                                optionValue="listValueID"
+                                                optionLabel="valueDesc"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="p-md-6 display-flex-block p-pt-0 ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ihr-modal-popup>
+<p-toast></p-toast>
+

@@ -1,0 +1,167 @@
+@import '../../../assets/sass/_variable.scss';
+
+:host ::ng-deep .modal {
+    z-index: 1049 !important;
+    top: $headerHeight;
+    overflow: scroll;
+    background: linear-gradient(136deg, rgba(104,82,255,.6), rgba(136,208,214,.6));
+}
+
+@media (min-width: 350px) and (max-device-width: 800px) {
+    .modal-dialog {
+        max-width: 350px !important;
+    }
+}
+
+@media (min-width: 800px) and (max-device-width:1000px) {
+    .modal-dialog {
+        max-width: 800px !important;
+    }
+}
+
+
+.modal-dialog {
+    max-width: none;
+    min-height: 200px;
+}
+
+.footer-action-container {
+    padding-right: 0px;
+}
+
+.modal-header {
+    border-radius: 0;
+    border: none;
+    background: var(--pale-grey);
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.5px;
+    background-color: #a2cc38;
+    padding: 0.5rem 0rem;
+    // margin-left: -30px;
+    .div {
+        padding: 0;
+    }
+
+    a {
+        color: #fff;
+        //padding: 8px;
+        display: block;
+        // margin-top: 4px;
+    }
+
+    a:hover {
+        background-color: rgb(49, 10, 87);
+    }
+
+    .btn-close {
+        font-size: 35px;
+        font-weight: 600;
+        font-style: normal;
+        font-stretch: normal;
+        color: #ffff;
+        color: #6852ff;
+        color: var(--cornflower);
+        background: transparent;
+        margin-top: -13px;
+        margin-right: 0px;
+        padding-right: 2px;
+        display: inherit;
+        border: 0px;
+        box-shadow: none;
+    }
+
+    .pull-right {
+        float: right;
+    }
+
+    .pull-left {
+        float: left;
+    }
+
+    .modal-subheader {
+        border-radius: 0;
+        background: transparent;
+        color: #5a5478;
+        font-size: 15px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+    }
+}
+
+.modal-footer {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    padding: 0.75rem !important;
+    border-top: 1px solid #e9edf2 !important;
+    border-bottom-right-radius: 1px !important;
+    border-bottom-left-radius: 1px !important;
+}
+
+:host::ng-deep .modal-popup-body .p-component:disabled {
+    cursor: default !important;
+    background-color: #e9ecef;
+    opacity: 0.6;
+    pointer-events: none;
+    color: black;
+}
+
+:host::ng-deep .modal-popup-body .p-disabled, .p-disabled * {
+    cursor: default !important;
+    background-color: #e9ecef;
+    opacity: 0.6;
+    pointer-events: none;
+    color: black;
+}
+
+:host::ng-deep .modal-footer .p-disabled, .p-component:disabled {
+    cursor: default !important;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+:host::ng-deep .p-dialog .p-dialog-footer {
+    padding: 0px !important;
+}
+
+.display-none {
+    display: none;
+}
+:host::ng-deep .p-dialog {
+    top: 52px !important;
+    position: fixed !important;
+    margin:0px !important;
+}
+.content-header {
+    text-decoration: underline;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.help ul li {
+    list-style-Type: none;
+    padding: 0 0 4px 23px;
+    background: url(https://www.computerhope.com/cdn/arrow.png) no-repeat left center;
+}
+
+.help ol li {
+    padding-top: 15px;
+}
+
+.help ol img {
+    border: 1px solid;
+}
+
+#myImg {
+    cursor: pointer;
+    transition: 0.3s;
+}

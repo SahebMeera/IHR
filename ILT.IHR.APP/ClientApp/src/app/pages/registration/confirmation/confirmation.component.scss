@@ -1,0 +1,12 @@
+.invalid-feedback {
+    color: #E91E63;
+    display: block;
+}
+:host ::ng-deep .signUp-form-block {
+    display: inherit !important;
+}
+.text-align {
+    font-size: 42px;
+    text-align: center;
+    color: green;
+}

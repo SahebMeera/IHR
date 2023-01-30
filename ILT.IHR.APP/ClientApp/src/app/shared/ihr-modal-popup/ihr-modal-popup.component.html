@@ -1,0 +1,24 @@
+<p-dialog [(visible)]="visibleAnimate" [style]="{width: getMinWidth()}" [modal]="true" styleClass="p-fluid"
+  [closable]="true" (onHide)="close()">
+  <p-header>
+    <ng-content select=".modal-header-text"></ng-content>
+  </p-header>
+  <div class="modal-body">
+    <ng-content #modalPopupBody select=".modal-popup-body"></ng-content>
+  </div>
+  <p-footer class="modal-footer" *ngIf="options.footerActions.length > 0">
+      <span *ngFor="let action of options.footerActions" style="display: flex;">
+          <div *ngIf="action?.isConfirm === true" style="display: flex; align-items: center; font-weight: 600; padding-right:12px;">
+              Are you sure you want to cancel?
+          </div>
+          <button [ngStyle]="{'display': action.disabled && action.disabled != null && action.disabled != undefined && action.disabled ? 'none': 'block' }" pButton pRipple type="button" [label]="action.actionText"
+                  class="btn footer-action btn-primary not-rounded"
+                  [disabled]="action.disabled && action.disabled != null && action.disabled != undefined ? action.disabled : false"
+                  [ngClass]="action.styleClass" (click)="action.actionMethod(data)">
+              <!-- <i [ngClass]="action.iconClass"></i>
+              {{ action.actionText }} -->
+          </button>
+      </span>
+  </p-footer>
+</p-dialog>
+  

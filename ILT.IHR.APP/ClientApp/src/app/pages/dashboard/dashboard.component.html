@@ -1,0 +1,28 @@
+<div class="dashboard-container">
+    <h1 style="font-size:3rem;">Hello, {{UserName}}!</h1>
+    <span style="font-size: 20px;">Welcome to InfoHR.</span>
+</div>
+<div class="p-gird align-items-center my-auto web-transform">
+    <div class="p-grid p-md-12 align-self-center  dashboard-row-top dashboard-main"  *ngIf="lstDashboardRequest !== undefined && lstDashboardRequest.length > 0"  [ngStyle]="{'justify-content': lstDashboardRequest !== null && lstDashboardRequest.length === 5 ? 'left' : 'center'}">
+        <div class="p-md-4" *ngFor="let dashboardRequest of lstDashboardRequest" [ngClass]="lstDashboardRequest.length === 4 ? 'p-md-3 max-width-set' : 'p-md-4' ">
+            <div class="dashboard-height dashboard-column-bottom" style="margin-bottom:20px;  display: flex;" *ngIf="dashboardRequest.dashboardViewPermission">
+                <div class="p-card summary dashboard-card-height" [ngStyle]="{'background-color': dashboardRequest.dashboardCardColor}">
+                    <div class="p-card-body p-d-flex p-justify-center" (click)="redirectToPages(dashboardRequest.dashboardHeading)"
+                         style="cursor: pointer; padding-left: 12px; padding-bottom:0px; padding-right: 9px; display: flex !important; justify-content: space-between;">
+                        <div>
+                            <div class="p-grid height-card-inner ">
+                                <span class="title dashboard-font-size-weight">{{dashboardRequest?.dashboardHeading}} </span>
+                                <span class="detail sub-heading">{{dashboardRequest?.dashboardSubHeading}}</span>
+                            </div>
+                        </div>
+                        <div class="p-d-flex" style="padding-bottom:5px; ">
+                            <div class="p-d-flex p-ac-center dashboard-number">
+                                <span class="count visitors dashboard-font-size-weight">{{dashboardRequest.dashboardListLength}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

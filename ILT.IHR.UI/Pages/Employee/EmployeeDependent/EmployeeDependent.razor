@@ -1,0 +1,125 @@
+﻿@using BlazorTable
+@using ILT.IHR.DTO;
+
+@using ILT.IHR.UI.Pages.DeleteConfirmation;
+
+@inherits EmployeeDependentBase;
+
+<div class="row reduce-margin-top hidden-web">
+    <div class="col-12 pl-1 pr-1">
+        @if (EmployeeDependentList != null)
+        {
+            <Table TableItem="Dependent" Items="EmployeeDependentList" ColumnReorder="true" ShowSearchBar="true" PageSize="DefaultPageSize" UpdatePageSize="UpdatePageSize"
+                   SelectionType="SelectionType.Single" RowClickAction="RowClick" RowActions="RowActions" HeaderActions="HeaderAction">
+                <Column TableItem="Dependent" Title="Name" Field="@(x => x.FirstName)" Sortable="true" Filterable="false" DefaultSortColumn="true" DefaultSortDescending="false">
+                    <Template>
+                        @(context.FirstName + " " + context.MiddleName + " " + context.LastName)
+                    </Template>
+                </Column>
+                <Column TableItem="Dependent" Title="Relation" Field="@(x => x.Relation)" Sortable="true" Filterable="false">
+                </Column>
+                <Column TableItem="Dependent" Title="BirthDate" Field="@(x => x.BirthDate)" Sortable="true" Filterable="false">
+                    <Template>
+                        @(context.BirthDate.ToShortDateString())
+                    </Template>
+                </Column>
+                <Column TableItem="Dependent" Title="VisaType" Field="@(x => x.VisaType)" Sortable="true" Filterable="false">
+
+                </Column>
+
+                <EmptyDataTemplate>
+                    <div class="text-center">
+                        No rows found!
+                    </div>
+                </EmptyDataTemplate>
+                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+            </Table>
+        }
+        else
+        {
+            @*<NoResultMessage></NoResultMessage>*@
+            <span></span>
+        }
+    </div>
+</div>
+<div class="row mt-2 hidden-web hidden-mobile">
+    <div class="col-12 ">
+        <div class="row mr-0 pb-1 display-flex mobile-display">
+            <div class="col-12 col-sm-3 pr-1 mobile-padding-remove mobile-pad-left-add">
+                <input type="text" id="myFilter" class="form-control form-control-sm float-left" placeholder="Global Search..." @onkeyup="SearchFuntion" />
+            </div>
+            <div class="col-sm-4 header-buttons pr-0 pt-2">
+                @if (HeaderAction != null)
+                {
+                    @foreach (var HeaderAction in HeaderAction)
+                    {
+                        @if (HeaderAction.IsShow)
+                        {
+                            <button type="button" class="btn remove-margin-moblie @(HeaderAction.ButtonClass == null ? " btn-primary" : @HeaderAction.ButtonClass) action-btn-lineheight float-right ml-2
+                                                    @(HeaderAction.IsDisabled ? "disabled" : "" )" @onclick="HeaderAction.ActionMethod">
+                                <i class="@HeaderAction.IconClass" style="padding-right: 7px;" aria-hidden="true"></i>@HeaderAction.ActionText
+                            </button>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    @if (EmployeeDependentList != null && EmployeeDependentList.Count > 0)
+    {
+        <div class="col-12 pt-2" id="myItems">
+            @foreach (var employeeDependent in EmployeeDependentList)
+            {
+                <div class="col-sm-6  pl-0 pr-0">
+                    <div class="card mobile-card-view mb-2" @onclick="(() => EditMobile(employeeDependent))">
+                        <div class="card-body" style="padding-bottom:0.5rem !important;">
+                            <div class="row">
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Name :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @(employeeDependent.FirstName + " " + employeeDependent.MiddleName + " " + employeeDependent.LastName)
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Relation :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @employeeDependent.Relation
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Birth Date :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @FormatDateCard(employeeDependent.BirthDate)
+                                    </div>
+                                </div>
+                                <div class="col-12 pl-0" style="display: flex;">
+                                    <label class="control-label col-5 pr-2 mobile-card-view-label">Visa Type :</label>
+                                    <div class="col-7 pl-0 pr-0 mobile-card-view-value">
+                                        @employeeDependent.VisaType
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <div class="col-12" style="padding-top:10rem;"></div>
+    }
+</div>
+<AddEditDependent @ref="AddEditDependentModal" ListValueUpdated="LoadEmployeeDependents" EmployeeName="@Name"></AddEditDependent>
+
+
+
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete")>
+</Confirm>
+
+
